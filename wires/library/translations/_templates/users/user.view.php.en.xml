@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<page name="/templates/users/user.view.php">
+	<element>
+		<original maxlen="0">Delete</original>
+		<translation>Delete</translation>
+	</element>
+	<element>
+		<original maxlen="0">Password</original>
+		<translation>Password</translation>
+	</element>
+	<element>
+		<original maxlen="0">Edit</original>
+		<translation>Edit</translation>
+	</element>
+	<element>
+		<original maxlen="0">Done</original>
+		<translation>Done</translation>
+	</element>
+</page>

@@ -1,0 +1,281 @@
+ul {
+	display: block;
+	padding: 0 0 10px 10px;
+	margin: 0;
+	list-style: none;
+}
+ul ul {
+	padding: 3px 0 0 0 !important;
+	margin: 0;
+}
+
+li {
+	padding: 2px 0 2px 15px;
+	margin: 0;
+}
+li li {}
+
+ul.list li ul,
+ul.list li.open li ul,
+ul.list li li.open li ul,
+ul.list li li li.open li ul,
+ul.list li li li li.open li ul {
+	display: none;
+}
+ul.list li.open ul,
+ul.list li li.open ul,
+ul.list li li li.open ul,
+ul.list li li li li.open ul,
+ul.list li li li li li.open ul {
+	display: block;
+}
+
+/* image containers */
+
+/* IMAGELIST */
+div#content .imageList {
+	overflow: hidden;
+	padding: 10px 2px 0px 13px;
+	margin: 0;
+}
+/*
+div#content .small li a {
+	display: block;
+	text-align: center;
+}
+*/
+
+div#content .imageList li {
+	margin: 0;
+	padding: 0 8px 10px;
+	width: 170px;
+	text-align: center;
+	float: left;
+}
+div#content .imageList li img {
+	display: block;
+	margin: 0 auto;
+	width: 120px;
+}
+div#content .imageList li img.wide {
+	width: 160px;
+	margin-top: 20px;
+	margin-bottom: 20px;
+}
+div#content .imageList li img.square {}
+
+/* PREVIEW VARIATION */
+div#content .preview .imageList li {width: 108px;}
+div#content .preview .imageList li img {width: 75px;}
+div#content .preview .imageList li img.wide {
+	width: 100px;
+	margin-top: 14px;
+	margin-bottom: 11px;
+}
+div#content .preview .imageList li img.square {}
+
+
+/* FRONT SPLASH */
+div#content .frontSplash {
+	overflow: hidden;
+	padding: 10px 10px;
+	margin: 0;
+}
+div#content .frontSplash li {
+	margin: 0;
+	padding: 0 15px 10px 0;
+	text-align: center;
+	float: right;
+}
+div#content .frontSplash li img {
+	display: block;
+	margin: 0 auto;
+	width: 69px;
+}
+div#content .frontSplash li img.wide {width: 95px;}
+div#content .frontSplash li img.square {}
+
+div#content .frontSplash li.first {
+	float: left;
+	padding: 0 0 10px 15px;
+}
+div#content .frontSplash li.first img {
+	margin: 0 auto;
+	width: 240px;
+}
+div#content .frontSplash li.first img.wide {
+	width: 320px;
+	margin-left: 7px;
+}
+div#content .frontSplash li.first img.square {}
+
+
+
+/*
+div#content .imageList a.fleft,
+div#content .imageList a.fright {
+	text-align: center;
+	padding: 0 10px;
+}
+*/
+div#content .c150.border .imageList {
+	margin: 10px 2px 10px 13px;
+}
+div#content .c150.border .imageList li {
+	padding: 0 8px 20px;
+	width: 164px;
+}
+/*
+div#content .c150.border .small li {
+	padding: 0 8px 20px;
+	width: 103px;
+}
+*/
+
+div#content .itemList li {
+	margin: 0;
+	padding: 0 8px 10px;
+	width: 170px;
+	float: left;
+}
+
+ul.sort {
+	overflow: hidden;
+}
+ul.sort li {
+	float: left;
+	padding: 10px;
+}
+
+ul.mixed a,
+ul.photo a,
+ul.blog a {
+	padding: 0;
+	background: none;
+}
+
+#content ul.listoptions h1,
+#content ul.listoptions h2,
+#content ul.listoptions h3,
+#content ul.listoptions p,
+#content ul.listoptions li,
+#content ul.listoptions ul {background: none; font-size: 12px; margin: 0; padding: 0; overflow: hidden; line-height: 17px;}
+
+/* SMALL */
+#content ul.listoptions.small {margin: 0;}
+#content ul.listoptions.small li {float: none; display: block; width: auto; height: 35px; margin: 0 10px 2px; padding: 2px 0 2px 10px;}
+#content ul.listoptions.small li .timestamp,
+#content ul.listoptions.small li .pagenav {display: none;}
+#content ul.listoptions.small li .tags {padding: 2px 10px; top: 0; right: 0; left: auto;}
+
+#content ul.listoptions.small .html .preview {height: 35px;}
+#content ul.listoptions.small .photo img {height: 35px; width: auto;}
+
+#content ul.listoptions.small .product {background-repeat: no-repeat; background-position: 10px 0; padding-left: 50px;}
+
+#content ul.listoptions.sort.small li.leftover {margin: 35px 10px 2px; overflow: hidden;}
+#content ul.listoptions.sort.small li.rightover {margin: 0 10px 37px; overflow: hidden;}
+
+/* DEFAULT MEDIUM */
+#content ul.listoptions {padding: 0 0 10px; overflow: hidden; margin: 0 9px;}
+#content ul.listoptions li {float: left; padding: 10px 9px; background: #ffffff; overflow: hidden; border: 1px solid #ffffff; width: 165px; height: 150px; position: relative; margin: 0 1px 2px;}
+#content ul.listoptions li .timestamp {padding: 0 0 2px; display: block;}
+#content ul.listoptions li .tags {padding: 2px 10px; position: absolute; left: 0; bottom: 0; background: #ffffff; opacity: 0.85;}
+
+#content ul.listoptions .html .preview {height: 126px; padding: 0px; margin: 0; overflow: hidden;}
+
+#content ul.listoptions .photo,
+#content ul.listoptions .product {padding: 0; width: 183px; height: 170px; background-repeat: no-repeat;}
+#content ul.listoptions .photo p,
+#content ul.listoptions .product p {padding: 2px 10px; float: left; background: #ffffff; opacity: 0.85;}
+
+
+/*
+#content ul.listoptions .product {padding: 10px 1px 0; width: 181px; height: 160px;}
+#content ul.listoptions .product img {padding: 0; width: 181px; float: left;}
+#content ul.listoptions .product p {padding: 2px 10px; position: absolute; left: 0; top: 0; background: #ffffff; opacity: 0.85;}
+*/
+#content ul.listoptions.sort li.leftover {margin-left: 165px; overflow: hidden;}
+#content ul.listoptions.sort li.rightover {margin-right: 165px; overflow: hidden;}
+
+/* LARGE */
+#content ul.listoptions.large {margin: 0;}
+#content ul.listoptions.large li {float: none; display: block; width: auto; height: auto; margin: 0 9px 2px; }
+#content ul.listoptions.large li .tags {position: static; display: block; padding: 10px 0;}
+
+#content ul.listoptions.large .html .preview {height: auto;}
+#content ul.listoptions.large .html .preview li {padding: 0;}
+
+#content ul.listoptions.large .photo,
+#content ul.listoptions.large .product {padding: 10px 9px 0;}
+#content ul.listoptions.large .photo p,
+#content ul.listoptions.large .product p {padding: 2px 10px; float: left;}
+#content ul.listoptions.large .photo .tags,
+#content ul.listoptions.large .product .tags {padding: 2px 10px; float: right;}
+
+#content ul.listoptions.sort.large li.leftover {margin: 100px 9px 2px; overflow: hidden;}
+#content ul.listoptions.sort.large li.rightover {margin: 0 9px 100px; overflow: hidden;}
+
+/*
+#content ul.mixed .blog {padding: 0;}
+#content ul.mixed .blog h2 {padding: 0 20px 10px; margin: 0; background: none;}
+#content ul.mixed .blog p {padding: 0 20px 10px; margin: 0;}
+
+#content ul.mixed .photo {padding: 0;}
+#content ul.mixed .photo img {width: 160px; padding: 0 6px 10px; display: block;}
+#content ul.mixed .photo p {display: none;}
+#content ul.mixed .photo .tags {}
+
+
+#content ul.mixed.sort {padding: 0 63px 10px;}
+#content ul.mixed.sort li {display: block; float: none; background: #ffffff; overflow: hidden; width: auto; height:auto;}
+#content ul.mixed.sort li .timestamp {padding: 0 20px 2px; display: block;}
+#content ul.mixed.sort li .tags {display: none;}
+
+#content ul.mixed.sort .blog {padding: 0; width: 640px;}
+#content ul.mixed.sort .blog h2 {padding: 0 20px 10px; margin: 0; background: none;}
+#content ul.mixed.sort .blog p {padding: 0 20px 10px; margin: 0;}
+
+#content ul.mixed.sort .photo {padding: 0;}
+#content ul.mixed.sort .photo img {width: 600px; padding: 0 20px 10px; display: block;}
+#content ul.mixed.sort .photo p {display: block; padding: 0 20px 10px; margin: 0;}
+
+#content ul.photo {padding: 0;}
+#content ul.photo li {float: left; background: #ffffff; overflow: hidden; padding: 0; width: 172px; height: 150px; position: relative; margin: 0 10px 10px;}
+#content ul.photo li img {padding: 0 6px 10px; width: 160px;}
+#content ul.photo li .tags {padding: 10px 20px; position: absolute; left: 0; bottom: 0; background: #ffffff; opacity: 0.8; display: block;}
+#content ul.photo li p {display: none;}
+
+ul.blog {
+	padding: 0;
+}
+ul.blog li {
+	padding: 0 0 20px;
+}
+ul.blog li a {padding: 0; overflow: hidden;}
+ul.blog li .timestamp {padding: 0 10px 2px;}
+ul.blog li .tags {padding: 0 10px; margin: 0 6px; background: #ffffff;}
+ul.blog li p {}
+*/
+
+
+#content ul.listoptions .options {
+	text-align: right;
+	float: none;
+	overflow: hidden;
+	display: block;
+	width: auto;
+	padding: 2px 0 2px 15px !important;
+	height: auto !important;
+	margin-bottom: 10px !important;
+}
+#content ul.listoptions .options span {
+	padding: 0 10px;
+}
+#content ul.small .options span.small {font-weight: bold;}
+#content ul .options span.medium {font-weight: bold;}
+#content ul.small .options span.medium,
+#content ul.large .options span.medium {font-weight: normal;}
+
+#content ul.large .options span.large {font-weight: bold;}
+

@@ -1,0 +1,30 @@
+* {
+	font-family: verdana;
+}
+body {
+	/* 11px */
+	font-size: 0.689em;
+	font-size: 13px;
+}
+
+#nav a,
+#header h1,
+#content h1 {
+	/* 12px */
+	font-size: 109.2%;
+	font-size: 14px;
+}
+
+#content h2,
+#content h3,
+#content h4,
+#content th,
+#content td,
+#content textarea,
+#content select,
+#content button,
+#content input {
+	/* 11px */
+	font-size: 100%;
+	font-size: 13px;
+}

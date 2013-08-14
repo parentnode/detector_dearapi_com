@@ -1,0 +1,1 @@
+<div class="<?= $this->getResponseColumn() ?> targetContainer" id="<?= $this->getContainerId() ?>"></div>

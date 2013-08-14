@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<page name="/class/translation/translation_tool.view.class.php">
+	<element>
+		<original maxlen="0">Original text</original>
+		<translation>Original text</translation>
+	</element>
+	<element>
+		<original maxlen="0">Search</original>
+		<translation>Search</translation>
+	</element>
+	<element>
+		<original maxlen="0">Translate to ###0###</original>
+		<translation>Translate to ###0###</translation>
+	</element>
+	<element>
+		<original maxlen="0">Translation</original>
+		<translation>Translation</translation>
+	</element>
+	<element>
+		<original maxlen="0">Translation</original>
+		<translation>Translation</translation>
+	</element>
+	<element>
+		<original maxlen="0">Translation languages</original>
+		<translation>Translation languages</translation>
+	</element>
+</page>

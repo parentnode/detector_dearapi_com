@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<page name="/templates/defaults/html.list_search.php">
+	<element>
+		<original maxlen="0">New</original>
+		<translation>New</translation>
+	</element>
+	<element>
+		<original maxlen="0">Search</original>
+		<translation>Search</translation>
+	</element>
+	<element>
+		<original maxlen="0">Search</original>
+		<translation>Search</translation>
+	</element>
+</page>

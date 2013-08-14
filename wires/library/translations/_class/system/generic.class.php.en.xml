@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<page name="/class/system/generic.class.php">
+	<element>
+		<original maxlen="0">The requested item does not exist! ($id, $db)</original>
+		<translation>The requested item does not exist! ($id, $db)</translation>
+	</element>
+	<element>
+		<original maxlen="0">The requested item does not exist! ($id, $db)</original>
+		<translation>The requested item does not exist! ($id, $db)</translation>
+	</element>
+	<element>
+		<original maxlen="0">The requested item does not exist! ($id, $db)</original>
+		<translation>The requested item does not exist! ($id, $db)</translation>
+	</element>
+	<element>
+		<original maxlen="0">Item deleted</original>
+		<translation>Item deleted</translation>
+	</element>
+	<element>
+		<original maxlen="0">No items available</original>
+		<translation>No items available</translation>
+	</element>
+	<element>
+		<original maxlen="0">No items available</original>
+		<translation>No items available</translation>
+	</element>
+</page>

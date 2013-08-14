@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<page name="/class/users/menu.class.php">
+	<element>
+		<original maxlen="0">Item name</original>
+		<translation>Item name</translation>
+	</element>
+	<element>
+		<original maxlen="0">Url</original>
+		<translation>Url</translation>
+	</element>
+	<element>
+		<original maxlen="0">Local pages</original>
+		<translation>Local pages</translation>
+	</element>
+	<element>
+		<original maxlen="0">Item saved</original>
+		<translation>Item saved</translation>
+	</element>
+	<element>
+		<original maxlen="0">Please complete missing information</original>
+		<translation>Please complete missing information</translation>
+	</element>
+	<element>
+		<original maxlen="0">Item updated</original>
+		<translation>Item updated</translation>
+	</element>
+	<element>
+		<original maxlen="0">Please complete missing information</original>
+		<translation>Please complete missing information</translation>
+	</element>
+	<element>
+		<original maxlen="0">Item deleted</original>
+		<translation>Item deleted</translation>
+	</element>
+	<element>
+		<original maxlen="0">Structure updated</original>
+		<translation>Structure updated</translation>
+	</element>
+</page>

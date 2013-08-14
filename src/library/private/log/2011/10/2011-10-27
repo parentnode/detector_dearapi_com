@@ -1,0 +1,147 @@
+2011-10-27 08:22:49 1 2.110.60.241 Login success, U:1
+2011-10-27 08:28:43 1 2.110.60.241 Device updated (741)
+2011-10-27 08:30:17 1 2.110.60.241 Device updated (741)
+2011-10-27 08:31:16 1 2.110.60.241 Useragent deleted from (761): Mozilla/5.0 (Linux; U; Android 2.2; da-dk; Legend Build/FRF91) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 Mobile Safari/533.1
+2011-10-27 08:33:11 1 2.110.60.241 Device updated (6078)
+2011-10-27 08:33:47 1 2.110.60.241 Device updated (6078)
+2011-10-27 08:34:36 1 2.110.60.241 Device updated (6413)
+2011-10-27 08:37:00 1 2.110.60.241 Device updated (5300)
+2011-10-27 08:37:36 1 2.110.60.241 Device updated (5300)
+2011-10-27 08:39:29 1 2.110.60.241 Device updated (745)
+2011-10-27 08:40:08 1 2.110.60.241 Device updated (6068)
+2011-10-27 08:54:55 1 2.110.60.241 Device updated (5300)
+2011-10-27 08:58:01 1 2.110.60.241 Device updated (5722)
+2011-10-27 08:59:07 1 2.110.60.241 Device updated (5722)
+2011-10-27 08:59:37 1 2.110.60.241 Device updated (5722)
+2011-10-27 09:00:07 1 2.110.60.241 Useragent deleted from (5722): Mozilla/5.0 (Linux; U; Android 1.5; ja-jp; HT-03A Build/CDB72) AppleWebKit/528.5+ (KHTML, like Gecko) Version/3.1.2 Mobile Safari/525.20.1
+2011-10-27 09:00:39 1 2.110.60.241 Device updated (751)
+2011-10-27 09:01:31 1 2.110.60.241 Device updated (761)
+2011-10-27 09:02:53 1 2.110.60.241 Device updated (6454)
+2011-10-27 09:04:20 1 2.110.60.241 Device updated (6454)
+2011-10-27 09:05:07 1 2.110.60.241 Device updated (6330)
+2011-10-27 09:06:09 1 2.110.60.241 Device updated (749)
+2011-10-27 09:06:51 1 2.110.60.241 Device updated (6088)
+2011-10-27 09:08:42 1 2.110.60.241 Useragent added to (6502): Mozilla/5.0 (Linux; U; Android 2.3.3; da-dk; HTC Incredible S Build/GRI40) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 Mobile Safari/533.1
+2011-10-27 09:09:38 1 2.110.60.241 Device updated (6502)
+2011-10-27 09:10:45 1 2.110.60.241 Useragent added to (6413): Mozilla/5.0 (Linux; U; Android 2.2; en-dk; HTC Desire Build/FRF91) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 Mobile Safari/533.1
+2011-10-27 09:12:06 1 2.110.60.241 Useragent added to (6503): Mozilla/5.0 (Linux; U; Android 2.2; ru-ru; HTC Legend Build/FRF91) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 Mobile Safari/533.1
+2011-10-27 09:12:26 1 2.110.60.241 Device updated (6503)
+2011-10-27 09:14:58 1 2.110.60.241 Useragent added to (6413): Mozilla/5.0 (Linux; U; Android 2.3.3; en-dk; HTC_DesireZ_A7272 Build/GRI40) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 Mobile Safari/533.1
+2011-10-27 09:15:12 1 2.110.60.241 Useragent added to (6413): Mozilla/5.0 (Linux; U; Android 2.3.3; en-dk; HTC_DesireHD_A9191 Build/GRI40) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 Mobile Safari/533.1
+2011-10-27 09:15:42 1 2.110.60.241 Useragent added to (6413): Mozilla/5.0 (Linux; U; Android 2.3.3; da-dk; HTC_DesireS_S510e Build/GRI40) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 Mobile Safari/533.1
+2011-10-27 09:17:07 1 2.110.60.241 Useragent added to (6504): Mozilla/5.0 (Linux; U; Android 2.3.4; en-dk; HTC Sensation Z710e Build/GRJ22) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 Mobile Safari/533.1
+2011-10-27 09:17:24 1 2.110.60.241 Device updated (6504)
+2011-10-27 09:34:13 1 2.110.60.241 Device updated (6411)
+2011-10-27 09:36:39 1 2.110.60.241 Useragent added to (6505): Mozilla/5.0 (Linux; U; Android 2.2.1; da-dk; HTC Wildfire Build/FRG83D) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 Mobile Safari/533.1
+2011-10-27 09:37:17 1 2.110.60.241 Device updated (6505)
+2011-10-27 09:37:44 1 2.110.60.241 Useragent added to (749): Mozilla/5.0 (Linux; U; Android 1.6; da-dk; HTC Tattoo Build/DRC79) AppleWebKit/528.5+ (KHTML, like Gecko) Version/3.1.2 Mobile Safari/525.20.1
+2011-10-27 10:12:18  2.110.60.241 Login - insufficient privileges: api_devices.users
+2011-10-27 10:12:18  2.110.60.241 Logoff api_devices.users
+2011-10-27 10:12:41 1 2.110.60.241 Login success, U:1
+2011-10-27 10:13:50 1 2.110.60.241 Useragent added to (6506): Mozilla/5.0 (Linux; U; Android 2.3.3; da-dk; HTC_DesireZ_A7272 Build/GRI40) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 Mobile Safari/533.1
+2011-10-27 10:14:32 1 2.110.60.241 Device updated (6506)
+2011-10-27 10:15:43 1 2.110.60.241 Useragent added to (6507): Mozilla/5.0 (Linux; U; Android 2.3.3; zh-tw; HTC_Pyramid Build/GRI40) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 Mobile Safari/533.1 AppEngine-Google; (+http://code.google.com/appengine; appid: qmksync)
+2011-10-27 10:16:10 1 2.110.60.241 Device updated (6507)
+2011-10-27 10:16:48 1 2.110.60.241 Device updated (6505)
+2011-10-27 10:17:22 1 2.110.60.241 Device updated (6506)
+2011-10-27 10:18:28 1 2.110.60.241 Device updated (6504)
+2011-10-27 10:18:55 1 2.110.60.241 Device updated (6503)
+2011-10-27 10:19:13 1 2.110.60.241 Device updated (6502)
+2011-10-27 14:51:33  188.181.72.81 Login - insufficient privileges: api_devices.users
+2011-10-27 14:51:35  188.181.72.81 Logoff api_devices.users
+2011-10-27 14:52:07 1 188.181.72.81 Login success, U:1
+2011-10-27 14:53:12 1 188.181.72.81 Useragent added to (6504): Mozilla/5.0 (Linux; U; Android 2.3.4; da-dk; HTC_Sensation_Z710e Build/GRJ22) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 Mobile Safari/533.1
+2011-10-27 14:53:48 1 188.181.72.81 Device updated (6504)
+2011-10-27 14:55:47 1 188.181.72.81 Useragent added to (6505): Mozilla/5.0 (Linux; U; Android 2.2.1; da-dk; HTC_Wildfire_A3333 Build/FRG83D) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 Mobile Safari/533.1
+2011-10-27 14:56:28 1 188.181.72.81 Useragent added to (6503): Mozilla/5.0 (Linux; U; Android 2.2; da-dk; HTC Legend Build/FRF91) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 Mobile Safari/533.1
+2011-10-27 14:58:38 1 188.181.72.81 Useragent added to (6508): Mozilla/5.0 (Linux; U; Android 2.3.3; da-dk; HTC_WildfireS_A510e Build/GRI40) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 Mobile Safari/533.1
+2011-10-27 14:59:47 1 188.181.72.81 Device updated (6508)
+2011-10-27 15:00:50 1 188.181.72.81 Useragent added to (6503): Mozilla/5.0 (Linux; U; Android 2.2; zh-cn; HTC Legend 3.14.161.1 Build/FRF91) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 Mobile Safari/533.1
+2011-10-27 15:01:32 1 188.181.72.81 Useragent added to (6413): Mozilla/5.0 (Linux; U; Android 2.2; en-us; HTC Desire Build/FRF91) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 Mobile Safari/533.1
+2011-10-27 15:02:42 1 188.181.72.81 Useragent added to (748): Mozilla/5.0 (Linux; U; Android 2.1-update1; da-dk; HTC Hero Build/ERE27) AppleWebKit/530.17 (KHTML, like Gecko) Version/4.0 Mobile Safari/530.17
+2011-10-27 15:03:10 1 188.181.72.81 Device updated (748)
+2011-10-27 15:03:48 1 188.181.72.81 Useragent added to (748): Mozilla/5.0 (Linux; U; Android 2.1-update1; nb-no; HTC Hero Build/ERE27) AppleWebKit/530.17 (KHTML, like Gecko) Version/4.0 Mobile Safari/530.17
+2011-10-27 15:04:50 1 188.181.72.81 Useragent added to (6411): Mozilla/5.0 (Linux; U; Android 2.1-update1; da-dk; HTC Wildfire Build/ERE27) AppleWebKit/530.17 (KHTML, like Gecko) Version/4.0 Mobile Safari/530.17
+2011-10-27 15:05:20 1 188.181.72.81 Useragent added to (6411): Mozilla/5.0 (Linux; U; Android 2.1-update1; de-de; HTC_Wildfire_A3333 Build/ERE27) AppleWebKit/530.17 (KHTML, like Gecko) Version/4.0 Mobile Safari/530.17
+2011-10-27 18:28:19  87.59.239.226 Login - insufficient privileges: api_devices.users
+2011-10-27 18:28:19  87.59.239.226 Logoff api_devices.users
+2011-10-27 18:28:43 1 87.59.239.226 Login success, U:1
+2011-10-27 18:29:16 1 87.59.239.226 Device updated (6506)
+2011-10-27 18:30:08 1 87.59.239.226 Device updated (6505)
+2011-10-27 18:31:10 1 87.59.239.226 Device updated (746)
+2011-10-27 18:31:44 1 87.59.239.226 Device updated (6078)
+2011-10-27 18:33:21 1 87.59.239.226 Device updated (6413)
+2011-10-27 18:33:34 1 87.59.239.226 Useragent deleted from (6413): Mozilla/5.0 (Linux; U; Android 2.3.3; da-dk; HTC_DesireS_S510e Build/GRI40) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 Mobile Safari/533.1
+2011-10-27 18:33:37 1 87.59.239.226 Useragent deleted from (6413): Mozilla/5.0 (Linux; U; Android 2.3.3; en-dk; HTC_DesireHD_A9191 Build/GRI40) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 Mobile Safari/533.1
+2011-10-27 18:33:39 1 87.59.239.226 Useragent deleted from (6413): Mozilla/5.0 (Linux; U; Android 2.3.3; en-dk; HTC_DesireZ_A7272 Build/GRI40) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 Mobile Safari/533.1
+2011-10-27 18:33:42 1 87.59.239.226 Useragent deleted from (6413): Mozilla/5.0 (Linux; U; Android 2.2.1; en-dk; HTC_DesireZ_A7272 Build/FRG83D) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 Mobile Safari/533.1
+2011-10-27 18:33:44 1 87.59.239.226 Useragent deleted from (6413): Mozilla/5.0 (Linux; U; Android 2.3.3; da-dk; HTC_DesireHD_A9191 Build/GRI40) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 Mobile Safari/533.1
+2011-10-27 18:33:48 1 87.59.239.226 Useragent deleted from (6413): Mozilla/5.0 (Linux; U; Android 2.2; da-dk; HTC_DesireHD_A9191 Build/FRF91) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 Mobile Safari/533.1
+2011-10-27 18:33:51 1 87.59.239.226 Useragent deleted from (6413): Mozilla/5.0 (Linux; U; Android 2.2; en-dk; HTC_DesireHD_A9191 Build/FRF91) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 Mobile Safari/533.1
+2011-10-27 18:33:53 1 87.59.239.226 Useragent deleted from (6413): Mozilla/5.0 (Linux; U; Android 2.2; da-dk; HTC_DesireZ_A7272 Build/FRF91) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 Mobile Safari/533.1
+2011-10-27 18:34:03 1 87.59.239.226 Device updated (6413)
+2011-10-27 18:42:49 1 87.59.239.226 Device updated (6327)
+2011-10-27 18:47:52 1 87.59.239.226 Useragent deleted from (745): Mozilla/5.0 (Linux; U; Android Donut; en-us; HTC Click Build/Donut) AppleWebKit/528.5+ (KHTML, like Gecko) Version/3.1.2 Mobile Safari/525.20.1
+2011-10-27 18:47:57 1 87.59.239.226 Device updated (745)
+2011-10-27 18:48:52 1 87.59.239.226 Device updated (749)
+2011-10-27 18:52:28 1 87.59.239.226 Device updated (6330)
+2011-10-27 18:52:59 1 87.59.239.226 Useragent deleted from (6088): Mozilla/5.0 (Linux; U; Android 2.1; en-us; passion) AppleWebKit/525.10+ (KHTML, like Gecko) Version/3.0.4 Mobile Safari/523.12.2
+2011-10-27 18:53:00 1 87.59.239.226 Device updated (6088)
+2011-10-27 18:54:03 1 87.59.239.226 Device updated (6411)
+2011-10-27 18:54:31 1 87.59.239.226 Device updated (6454)
+2011-10-27 18:54:59 1 87.59.239.226 Useragent added to (749): Mozilla/5.0 (Linux; U; Android Donut; en-us; HTC Click Build/Donut) AppleWebKit/528.5+ (KHTML, like Gecko) Version/3.1.2 Mobile Safari/525.20.1
+2011-10-27 18:55:38 1 87.59.239.226 Useragent added to (6506): Mozilla/5.0 (Linux; U; Android 2.2; da-dk; HTC_DesireZ_A7272 Build/FRF91) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 Mobile Safari/533.1
+2011-10-27 18:56:18 1 87.59.239.226 Useragent added to (6506): Mozilla/5.0 (Linux; U; Android 2.2.1; en-dk; HTC_DesireZ_A7272 Build/FRG83D) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 Mobile Safari/533.1
+2011-10-27 18:56:33 1 87.59.239.226 Useragent added to (6506): Mozilla/5.0 (Linux; U; Android 2.3.3; en-dk; HTC_DesireZ_A7272 Build/GRI40) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 Mobile Safari/533.1
+2011-10-27 18:57:15 1 87.59.239.226 Useragent added to (6411): Mozilla/5.0 (Linux; U; Android 2.1-update1; en-dk; HTC_Wildfire_A3333 Build/ERE27) AppleWebKit/530.17 (KHTML, like Gecko) Version/4.0 Mobile Safari/530.17
+2011-10-27 18:57:43 1 87.59.239.226 Useragent added to (6506): Mozilla/5.0 (Linux; U; Android 2.2.1; da-dk; HTC_DesireZ_A7272 Build/FRG83D) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 Mobile Safari/533.1
+2011-10-27 18:58:23 1 87.59.239.226 Useragent added to (749): Mozilla/5.0 (Linux; U; Android 1.6; en-se; HTC_TATTOO_A3288 Build/DRC79) AppleWebKit/528.5+ (KHTML, like Gecko) Version/3.1.2 Mobile Safari/525.20.1
+2011-10-27 18:59:03 1 87.59.239.226 Useragent added to (749): Mozilla/5.0 (Linux; U; Android 1.6; en-dk; HTC_TATTOO_A3288 Build/DRC79) AppleWebKit/528.5+ (KHTML, like Gecko) Version/3.1.2 Mobile Safari/525.20.1
+2011-10-27 19:00:36 1 87.59.239.226 Useragent added to (6502): Mozilla/5.0 (Linux; U; Android 2.3.3; da-dk; HTC_IncredibleS_S710e Build/GRI40) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 Mobile Safari/533.1
+2011-10-27 19:01:13 1 87.59.239.226 Useragent added to (733): Mozilla/5.0 (Linux; U; Android 1.5; en-dk; HTC Magic Build/CUPCAKE) AppleWebKit/528.5+ (KHTML, like Gecko) Version/3.1.2 Mobile Safari/525.20.1
+2011-10-27 19:01:49 1 87.59.239.226 Useragent added to (6413): Mozilla/5.0 (Linux; U; Android 2.2; en-nl; HTC Desire 2.10.161.2 Build/FRF91) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 Mobile Safari/533.1
+2011-10-27 19:02:21 1 87.59.239.226 Useragent added to (748): Mozilla/5.0 (Linux; U; Android 2.1-update1; en-dk; HTC Hero Build/ERE27) AppleWebKit/530.17 (KHTML, like Gecko) Version/4.0 Mobile Safari/530.17
+2011-10-27 19:03:58 1 87.59.239.226 Useragent added to (6509): Mozilla/5.0 (Linux; U; Android 2.2; en-dk; HTC_DesireHD_A9191 Build/FRF91) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 Mobile Safari/533.1
+2011-10-27 19:04:11 1 87.59.239.226 Device updated (6509)
+2011-10-27 19:04:25 1 87.59.239.226 Useragent added to (6509): Mozilla/5.0 (Linux; U; Android 2.2; da-dk; HTC_DesireHD_A9191 Build/FRF91) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 Mobile Safari/533.1
+2011-10-27 19:04:32 1 87.59.239.226 Useragent added to (6502): Mozilla/5.0 (Linux; U; Android 2.3.3; da-dk; HTC_DesireHD_A9191 Build/GRI40) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 Mobile Safari/533.1
+2011-10-27 19:09:28 1 87.59.239.226 Useragent added to (6509): Mozilla/5.0 (Linux; U; Android 2.3.3; en-dk; HTC_DesireHD_A9191 Build/GRI40) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 Mobile Safari/533.1
+2011-10-27 19:10:07 1 87.59.239.226 Useragent added to (6509): Mozilla/5.0 (Linux; U; Android 2.2.1; en-dk; HTC_DesireHD_A9191 Build/FRG83D) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 Mobile Safari/533.1
+2011-10-27 19:10:37 1 87.59.239.226 Useragent added to (6509): Mozilla/5.0 (Linux; U; Android 2.2.1; da-de; HTC_DesireHD Build/FRG83D) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 Mobile Safari/533.1
+2011-10-27 19:11:10 1 87.59.239.226 Useragent added to (6509): Mozilla/5.0 (Linux; U; Android 2.2.1; da-dk; HTC_DesireHD_A9191 Build/FRG83D) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 Mobile Safari/533.1
+2011-10-27 19:11:55 1 87.59.239.226 Useragent added to (6502): Mozilla/5.0 (Linux; U; Android 2.3.3; en-dk; HTC_IncredibleS_S710e Build/GRI40) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 Mobile Safari/533.1
+2011-10-27 19:13:42 1 87.59.239.226 Useragent added to (6510): Mozilla/5.0 (Linux; U; Android 2.3.3; da-dk; HTC_DesireS_S510e Build/GRI40) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 Mobile Safari/533.1
+2011-10-27 19:15:26 1 87.59.239.226 Useragent deleted from (6502): Mozilla/5.0 (Linux; U; Android 2.3.3; da-dk; HTC_DesireHD_A9191 Build/GRI40) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 Mobile Safari/533.1
+2011-10-27 19:15:31 1 87.59.239.226 Device updated (6502)
+2011-10-27 19:15:46 1 87.59.239.226 Useragent added to (6509): Mozilla/5.0 (Linux; U; Android 2.3.3; da-dk; HTC_DesireHD_A9191 Build/GRI40) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 Mobile Safari/533.1
+2011-10-27 19:17:45 1 87.59.239.226 Useragent added to (6511): Mozilla/5.0 (Linux; U; Android 2.2; da-dk; HTC_Gratia_A6380 Build/FRF91) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 Mobile Safari/533.1
+2011-10-27 19:18:44 1 87.59.239.226 Device updated (6511)
+2011-10-27 19:20:56 1 87.59.239.226 Useragent added to (6330): Mozilla/5.0 (Linux; U; Android 2.1; en-us; passion) AppleWebKit/525.10+ (KHTML, like Gecko) Version/3.0.4 Mobile Safari/523.12.2
+2011-10-27 19:21:44 1 87.59.239.226 Useragent added to (751): Mozilla/5.0 (Linux; U; Android 1.5; ja-jp; HT-03A Build/CDB72) AppleWebKit/528.5+ (KHTML, like Gecko) Version/3.1.2 Mobile Safari/525.20.1
+2011-10-27 19:22:04 1 87.59.239.226 Useragent added to (6503): Mozilla/5.0 (Linux; U; Android 2.2; da-dk; Legend Build/FRF91) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 Mobile Safari/533.1
+2011-10-27 19:22:37 1 87.59.239.226 Useragent added to (6360): Mozilla/5.0 (iPhone; U; CPU iPhone OS 4_3_4 like Mac OS X; en-us) AppleWebKit/533.17.9 (KHTML, like Gecko) Mobile/8K2
+2011-10-27 19:23:38 1 87.59.239.226 Useragent added to (6413): Mozilla/5.0 (Linux; U; Android 2.3.3; en-us; Desire_A8181 Build/GRI40) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 Mobile Safari/533.1
+2011-10-27 19:25:49 1 87.59.239.226 Useragent added to (5670): Zookabot/2.2;++http://zookabot.com
+2011-10-27 19:26:00 1 87.59.239.226 Useragent added to (5670): Mozilla/5.0 (compatible; oBot/2.3.1; +http://filterdb.iss.net/crawler/)
+2011-10-27 19:26:48 1 87.59.239.226 Useragent added to (5670): DomainCrawler/2.0 (info@domaincrawler.com; http://www.domaincrawler.com/teisbruno.com
+2011-10-27 19:27:44 1 87.59.239.226 Useragent added to (6413): Mozilla/5.0 (Linux; U; Android 2.3.3; da-dk; Desire Build/GRI40) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 Mobile Safari/533.1
+2011-10-27 19:28:30 1 87.59.239.226 Useragent added to (5477): Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.5; da; rv:1.9.2.23) Gecko/20110920 Firefox/3.6.23 GTB7.1
+2011-10-27 19:28:39 1 87.59.239.226 Useragent added to (5491): Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.5; en-US; rv:1.9.0.15) Gecko/2009101600 Firefox/3.0.15
+2011-10-27 20:05:47 1 87.59.239.226 Useragent added to (6358): Mozilla/5.0 (iPhone; U; CPU iPhone OS 4_1 like Mac OS X; en-us) AppleWebKit/532.9 (KHTML, like Gecko) Mobile/8B117
+2011-10-27 20:06:42 1 87.59.239.226 Useragent added to (6360): Mozilla/5.0 (iPhone; U; CPU iPhone OS 4_3_3 like Mac OS X; id) AppleWebKit/533.17.9 (KHTML, like Gecko) Mobile/8J2
+2011-10-27 20:07:16 1 87.59.239.226 Useragent added to (6360): Mozilla/5.0 (iPhone; U; CPU iPhone OS 4_3_5 like Mac OS X; fr-fr) AppleWebKit/533.17.9 (KHTML, like Gecko) Mobile/8L1
+2011-10-27 20:07:39 1 87.59.239.226 Useragent added to (6360): Mozilla/5.0 (iPhone; CPU iPhone OS 5_0 like Mac OS X) AppleWebKit/534.46 (KHTML, like Gecko) Mobile/9A5313e
+2011-10-27 20:07:50 1 87.59.239.226 Useragent added to (6360): Mozilla/5.0 (iPhone; U; CPU iPhone OS 4_3 like Mac OS X; da-dk) AppleWebKit/533.17.9 (KHTML, like Gecko) Mobile/8F190
+2011-10-27 20:08:04 1 87.59.239.226 Useragent added to (6395): Mozilla/5.0 (iPod; U; CPU iPhone OS 4_3_5 like Mac OS X; da-dk) AppleWebKit/533.17.9 (KHTML, like Gecko) Mobile/8L1
+2011-10-27 20:08:13 1 87.59.239.226 Useragent added to (6360): Mozilla/5.0 (iPhone; U; CPU iPhone OS 4_3_4 like Mac OS X; da-dk) AppleWebKit/533.17.9 (KHTML, like Gecko) Version/5.0.2 Mobile/8K2 Safari/6533.18.5
+2011-10-27 20:11:11 1 87.59.239.226 Useragent added to (6413): Mozilla/5.0 (Linux; U; Android 2.2; nb-no; Desire_A8181 Build/FRF91) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 Mobile Safari/533.1
+2011-10-27 20:11:20 1 87.59.239.226 Useragent added to (6078): Mozilla/5.0 (Linux; U; Android 2.1-update1; en-dk; Desire_A8181 Build/ERE27) AppleWebKit/530.17 (KHTML, like Gecko) Version/4.0 Mobile Safari/530.17
+2011-10-27 20:11:27 1 87.59.239.226 Useragent added to (6413): Mozilla/5.0 (Linux; U; Android 2.2; en-nl; Desire_A8181 Build/FRF91) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 Mobile Safari/533.1
+2011-10-27 20:11:36 1 87.59.239.226 Useragent added to (6413): Mozilla/5.0 (Linux; U; Android 2.2; en-gb; Desire_A8181 Build/FRF91) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 Mobile Safari/533.1
+2011-10-27 20:12:06 1 87.59.239.226 Useragent added to (6429): Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; WOW64; Trident/5.0; MALC)
+2011-10-27 20:12:56 1 87.59.239.226 Useragent added to (5670): DomainCrawler/2.0 (info@domaincrawler.com; http://www.domaincrawler.com/coatpeople.com
+2011-10-27 20:13:17 1 87.59.239.226 Useragent added to (5670): Java/1.5.0_09
+2011-10-27 20:14:36 1 87.59.239.226 Unidentified useragent deleted: Mozilla/5.0 (000000000; 0; 00000 000 00 0 0000; 00; 0000000000) DDDDDDDDDDDDDD DDDDDDDDDDDDD
+2011-10-27 20:23:54 1 87.59.239.226 Useragent added to (6429): Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Trident/5.0; BOIE9;FRFR)
+2011-10-27 20:30:52 1 87.59.239.226 Device updated (6509)
+2011-10-27 20:31:20 1 87.59.239.226 Device updated (6509)

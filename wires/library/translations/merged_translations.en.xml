@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<page name="/projects/www/framework/library/translations/merged_translations.en.xml">
+</page>
+
+<?xml version="1.0" encoding="utf-8"?>
+<page name="test" lang="EN">
+	<translation id="edit">
+		<location></location>
+		<location></location>
+		<location></location>
+	</translation>
+</page>

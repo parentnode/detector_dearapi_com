@@ -1,0 +1,50 @@
+127.0.0.1 12-12-12 09:34:31 GUESS (space); REFFERER: ??; USERAGENT: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.7; rv:17.0) Gecko/20100101 Firefox/17.0; IDENTIFIED: Firefox 5 (rv:5.0.x), Mozilla
+127.0.0.1 12-12-12 09:34:48 GUESS (space); REFFERER: ??; USERAGENT: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.7; rv:17.0) Gecko/20100101 Firefox/17.0; IDENTIFIED: Firefox 5 (rv:5.0.x), Mozilla
+127.0.0.1 12-12-12 09:35:19 GUESS (space); REFFERER: ??; USERAGENT: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.7; rv:17.0) Gecko/20100101 Firefox/17.0; IDENTIFIED: Firefox 5 (rv:5.0.x), Mozilla
+127.0.0.1 12-12-12 09:35:52 GUESS (space); REFFERER: ??; USERAGENT: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.7; rv:17.0) Gecko/20100101 Firefox/17.0; IDENTIFIED: Firefox 5 (rv:5.0.x), Mozilla
+127.0.0.1 12-12-12 09:36:31 GUESS (space); REFFERER: ??; USERAGENT: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.7; rv:17.0) Gecko/20100101 Firefox/17.0; IDENTIFIED: Firefox 5 (rv:5.0.x), Mozilla
+127.0.0.1 12-12-12 09:38:40 GUESS (space); REFFERER: ??; USERAGENT: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.7; rv:17.0) Gecko/20100101 Firefox/17.0; IDENTIFIED: Firefox 5 (rv:5.0.x), Mozilla
+127.0.0.1 12-12-12 09:40:28 GUESS (space); REFFERER: ??; USERAGENT: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.7; rv:17.0) Gecko/20100101 Firefox/17.0; IDENTIFIED: Firefox 5 (rv:5.0.x), Mozilla
+127.0.0.1 13-02-11 15:42:40 GUESS (known parts); REFFERER: ??; USERAGENT: MSIE 10; IDENTIFIED: Internet Explorer 10, Microsoft
+127.0.0.1 13-02-11 15:46:45 GUESS (known parts); REFFERER: ??; USERAGENT: MSIE 10; IDENTIFIED: Internet Explorer 10, Microsoft
+127.0.0.1 13-02-11 16:39:17 GUESS (known parts); REFFERER: ??; USERAGENT: MSIE 10; IDENTIFIED: Internet Explorer 10, Microsoft
+127.0.0.1 13-02-11 16:39:18 GUESS (space); REFFERER: ??; USERAGENT: Mozilla/5.0 (iPhone; CPU iPhone OS 6_1 like Mac OS X) AppleWebKit/536.26 (KHTML, like Gecko) Mobile/10B143 [FBAN/FBIOS;FBAV/5.4.2;FBBV/114387;FBDV/iPhone5,2;FBMD/iPhone;FBSN/iPhone OS;FBSV/6.1;FBSS/2; FBCR/Telekom.de;FBID/phone;FBLC/de_DE]; IDENTIFIED: Chrome 11, Google
+127.0.0.1 13-02-11 16:39:19 GUESS (space); REFFERER: ??; USERAGENT: Mozilla/5.0 (68K; rv:1.0) Gecko/20081021 Firefox/1.0; IDENTIFIED: Chrome 11, Google
+127.0.0.1 13-02-11 16:39:20 GUESS (/); REFFERER: ??; USERAGENT: StatusNet/1.2.0-dev (Don't Play No Game That I Can't Win); IDENTIFIED: Chrome 11, Google
+127.0.0.1 13-02-11 16:39:25 GUESS (space); REFFERER: ??; USERAGENT: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.13) Gecko/20080311 Firefox/2.0.0.13'; IDENTIFIED: Firefox 2 (rv:1.8.1.x), Mozilla
+127.0.0.1 13-02-11 16:43:43 GUESS (known parts); REFFERER: ??; USERAGENT: MSIE 10; IDENTIFIED: Internet Explorer 10, Microsoft
+127.0.0.1 13-02-11 16:43:48 GUESS (space); REFFERER: ??; USERAGENT: Mozilla/5.0 (iPhone; CPU iPhone OS 6_1 like Mac OS X) AppleWebKit/536.26 (KHTML, like Gecko) Mobile/10B143 [FBAN/FBIOS;FBAV/5.4.2;FBBV/114387;FBDV/iPhone5,2;FBMD/iPhone;FBSN/iPhone OS;FBSV/6.1;FBSS/2; FBCR/Telekom.de;FBID/phone;FBLC/de_DE]; IDENTIFIED: Chrome 11, Google
+127.0.0.1 13-02-11 16:43:53 GUESS (space); REFFERER: ??; USERAGENT: Mozilla/5.0 (68K; rv:1.0) Gecko/20081021 Firefox/1.0; IDENTIFIED: Chrome 11, Google
+127.0.0.1 13-02-11 16:43:56 GUESS (/); REFFERER: ??; USERAGENT: StatusNet/1.2.0-dev (Don't Play No Game That I Can't Win); IDENTIFIED: Chrome 11, Google
+127.0.0.1 13-02-11 16:44:01 GUESS (space); REFFERER: ??; USERAGENT: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.13) Gecko/20080311 Firefox/2.0.0.13'; IDENTIFIED: Firefox 2 (rv:1.8.1.x), Mozilla
+127.0.0.1 13-02-11 16:44:53 GUESS (known parts); REFFERER: ??; USERAGENT: MSIE 10; IDENTIFIED: Internet Explorer 10, Microsoft
+127.0.0.1 13-02-11 16:44:57 GUESS (space); REFFERER: ??; USERAGENT: Mozilla/5.0 (iPhone; CPU iPhone OS 6_1 like Mac OS X) AppleWebKit/536.26 (KHTML, like Gecko) Mobile/10B143 [FBAN/FBIOS;FBAV/5.4.2;FBBV/114387;FBDV/iPhone5,2;FBMD/iPhone;FBSN/iPhone OS;FBSV/6.1;FBSS/2; FBCR/Telekom.de;FBID/phone;FBLC/de_DE]; IDENTIFIED: Chrome 11, Google
+127.0.0.1 13-02-11 16:45:01 GUESS (space); REFFERER: ??; USERAGENT: Mozilla/5.0 (68K; rv:1.0) Gecko/20081021 Firefox/1.0; IDENTIFIED: Chrome 11, Google
+127.0.0.1 13-02-11 16:45:02 GUESS (/); REFFERER: ??; USERAGENT: StatusNet/1.2.0-dev (Don't Play No Game That I Can't Win); IDENTIFIED: Chrome 11, Google
+127.0.0.1 13-02-11 16:45:07 GUESS (space); REFFERER: ??; USERAGENT: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.13) Gecko/20080311 Firefox/2.0.0.13'; IDENTIFIED: Firefox 2 (rv:1.8.1.x), Mozilla
+127.0.0.1 13-02-11 17:40:19 GUESS (space); REFFERER: ??; USERAGENT: Mozilla/4.0 (compatible; MSIE8.0; Windows NT 6.0) .NET CLR 2.0.50727);; IDENTIFIED: MotoQ, Motorola
+127.0.0.1 13-02-11 17:40:20 GUESS (space); REFFERER: ??; USERAGENT: Mozilla/5.0 (compatible; MSIE 9.0; Windows Phone OS 7.5; Trident/5.0; IEMobile/9.0; SAMSUNG; GT-I8350);; IDENTIFIED: Lumia 800, Nokia
+127.0.0.1 13-02-11 18:12:23 GUESS (space); REFFERER: ??; USERAGENT: Mozilla/5.0 (compatible; MSIE 9.0; Windows Phone OS 7.5; Trident/5.0; IEMobile/9.0; SAMSUNG; GT-I8350);; IDENTIFIED: Lumia 800, Nokia
+127.0.0.1 13-02-11 18:12:27 GUESS (space); REFFERER: ??; USERAGENT: Mozilla/4.0 (compatible; MSIE8.0; Windows NT 6.0) .NET CLR 2.0.50727);; IDENTIFIED: MotoQ, Motorola
+127.0.0.1 13-02-11 18:12:28 GUESS (space); REFFERER: ??; USERAGENT: Dalvik/1.6.0 (Linux; U; Android 4.0.3; LG-E610 Build/IML74K); IDENTIFIED: LT15 (Xperia Arc, SO-01C), Android 4.0+, SonyEricsson
+127.0.0.1 13-02-11 18:12:31 GUESS (space); REFFERER: ??; USERAGENT: Dalvik/1.6.0 (Linux; U; Android 4.0.3; HUAWEI MediaPad Build/HuaweiMediaPad); IDENTIFIED: LT15 (Xperia Arc, SO-01C), Android 4.0+, SonyEricsson
+127.0.0.1 13-02-11 18:12:32 GUESS (space); REFFERER: ??; USERAGENT: Dalvik/1.6.0 (Linux; U; Android 4.0.3; HTC Sensation Z710e Build/IML74K); IDENTIFIED: LT15 (Xperia Arc, SO-01C), Android 4.0+, SonyEricsson
+127.0.0.1 13-02-11 18:12:34 GUESS (space); REFFERER: ??; USERAGENT: Dalvik/1.6.0 (Linux; U; Android 4.0.3; HTC Sensation Z710a Build/IML74K); IDENTIFIED: LT15 (Xperia Arc, SO-01C), Android 4.0+, SonyEricsson
+127.0.0.1 13-02-11 18:12:38 GUESS (space); REFFERER: ??; USERAGENT: Dalvik/1.6.0 (Linux; U; Android 4.0.3; HTC Sensation XL with Beats Audio X315e Build/IML74K); IDENTIFIED: LT15 (Xperia Arc, SO-01C), Android 4.0+, SonyEricsson
+127.0.0.1 13-02-11 18:12:43 GUESS (space); REFFERER: ??; USERAGENT: Dalvik/1.6.0 (Linux; U; Android 4.0.3; HTC Sensation XE with Beats Audio Z715e Build/IML74K); IDENTIFIED: LT15 (Xperia Arc, SO-01C), Android 4.0+, SonyEricsson
+127.0.0.1 13-02-11 18:12:47 GUESS (space); REFFERER: ??; USERAGENT: Dalvik/1.6.0 (Linux; U; Android 4.0.3; HTC Sensation XE with Beats Audio Build/IML74K); IDENTIFIED: LT15 (Xperia Arc, SO-01C), Android 4.0+, SonyEricsson
+127.0.0.1 13-02-11 18:12:49 GUESS (space); REFFERER: ??; USERAGENT: Dalvik/1.6.0 (Linux; U; Android 4.0.3; HTC Sensation Build/IML74K); IDENTIFIED: LT15 (Xperia Arc, SO-01C), Android 4.0+, SonyEricsson
+127.0.0.1 13-02-11 18:12:52 GUESS (space); REFFERER: ??; USERAGENT: Dalvik/1.6.0 (Linux; U; Android 4.0.3; HTC One X Build/IML74K); IDENTIFIED: LT15 (Xperia Arc, SO-01C), Android 4.0+, SonyEricsson
+127.0.0.1 13-02-11 18:12:55 GUESS (space); REFFERER: ??; USERAGENT: Dalvik/1.6.0 (Linux; U; Android 4.0.3; HTC One V Build/IML74K); IDENTIFIED: LT15 (Xperia Arc, SO-01C), Android 4.0+, SonyEricsson
+127.0.0.1 13-02-11 18:12:59 GUESS (space); REFFERER: ??; USERAGENT: Dalvik/1.6.0 (Linux; U; Android 4.0.3; HTC One S Build/IML74K); IDENTIFIED: LT15 (Xperia Arc, SO-01C), Android 4.0+, SonyEricsson
+127.0.0.1 13-02-11 18:13:01 GUESS (space); REFFERER: ??; USERAGENT: Dalvik/1.6.0 (Linux; U; Android 4.0.3; HTC EVO 3D X515m Build/IML74K); IDENTIFIED: LT15 (Xperia Arc, SO-01C), Android 4.0+, SonyEricsson
+127.0.0.1 13-02-11 18:13:03 GUESS (space); REFFERER: ??; USERAGENT: Dalvik/1.6.0 (Linux; U; Android 4.0.3; HTC Desire C Build/IML74K); IDENTIFIED: LT15 (Xperia Arc, SO-01C), Android 4.0+, SonyEricsson
+127.0.0.1 13-02-11 18:13:05 GUESS (space); REFFERER: ??; USERAGENT: Dalvik/1.6.0 (Linux; U; Android 4.0.3; GT-P5110 Build/IML74K); IDENTIFIED: LT15 (Xperia Arc, SO-01C), Android 4.0+, SonyEricsson
+127.0.0.1 13-02-11 18:13:56 GUESS (space); REFFERER: ??; USERAGENT: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.13) Gecko/20080311 Firefox/2.0.0.13'; IDENTIFIED: Firefox 2 (rv:1.8.1.x), Mozilla
+127.0.0.1 13-02-11 18:14:01 GUESS (space); REFFERER: ??; USERAGENT: Mozilla/5.0 (Linux; U; Android 4.1.1; da-dk; GT-I9000 Build/JRO03H; CyanogenMod-TAJB//MKalter\\V7.1) AppleWebKit/534.30 (KHTML, like Gecko) Version/4.0 Mobile Safari/534.30; IDENTIFIED: Desire (Bravo, A8181), Android 4.0+, HTC
+127.0.0.1 13-02-11 18:14:10 GUESS (space); REFFERER: ??; USERAGENT: Mozilla/5.0 (68K; rv:1.0) Gecko/20081021 Firefox/1.0; IDENTIFIED: U9, Motorola
+127.0.0.1 13-02-11 18:14:12 GUESS (space); REFFERER: ??; USERAGENT: Mozilla/5.0 (iPhone; CPU iPhone OS 6_1 like Mac OS X) AppleWebKit/536.26 (KHTML, like Gecko) Mobile/10B143 [FBAN/FBIOS;FBAV/5.4.2;FBBV/114387;FBDV/iPhone5,2;FBMD/iPhone;FBSN/iPhone OS;FBSV/6.1;FBSS/2; FBCR/Telekom.de;FBID/phone;FBLC/de_DE]; IDENTIFIED: iPhone, Safari 6 (WebKit 536+), Apple
+127.0.0.1 13-02-11 18:14:12 GUESS (known parts); REFFERER: ??; USERAGENT: MSIE 10; IDENTIFIED: Internet Explorer 10, Microsoft
+127.0.0.1 13-02-11 18:14:14 GUESS (space); REFFERER: ??; USERAGENT: ZXing (Android); IDENTIFIED: Temp - ZXing (QR scanner for Android), Generic
+127.0.0.1 13-02-11 18:14:19 GUESS (space); REFFERER: ??; USERAGENT: ZTE-G movistar 731/WAP2.0 Profile/MIDP-2.0; IDENTIFIED: ZTE-G X760, ZTE
+127.0.0.1 13-02-11 18:14:22 GUESS (space); REFFERER: ??; USERAGENT: ZTE-F102 H3G/2.0 ACS-NF/3.4 QTV5.1 Profile/MIDP-2.1 Configuration/CLDC-1.1; IDENTIFIED: F102, ZTE

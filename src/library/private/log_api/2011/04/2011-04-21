@@ -1,0 +1,49 @@
+2011-04-21 00:16:06  81.7.189.54 2ac836ba3cfd20004c1da99751c0b964 UA unidentified: Mozilla/5.0 (compatible; Baiduspider/2.0; +http://www.baidu.com/search/spider.html)
+2011-04-21 00:16:06  81.7.189.54 2ac836ba3cfd20004c1da99751c0b964 UA guessed: (455)
+2011-04-21 00:23:59  81.7.189.54 bf6de475ecd8ee144c99916472525d00 UA identified: (5670) Baiduspider+(+http://www.baidu.com/search/spider.htm)
+2011-04-21 00:24:13  81.7.189.54 fc89dc724907bae64201035f647cfb9a UA identified: (5670) Baiduspider+(+http://www.baidu.com/search/spider.htm)
+2011-04-21 01:08:16  81.7.189.54 b27e75ef827e0b41c709bbbaed8d2416 UA unidentified: Mozilla/5.0 (compatible; Baiduspider/2.0; +http://www.baidu.com/search/spider.html)
+2011-04-21 01:08:16  81.7.189.54 b27e75ef827e0b41c709bbbaed8d2416 UA guessed: (455)
+2011-04-21 01:24:54  81.7.189.54 16b6a95aa0974518ff0185980c7b983f UA identified: (5487) Mozilla/5.0 (compatible; MSIE 7.0b; Windows NT 6.0)
+2011-04-21 01:26:05  81.7.189.54 9b5f373364de3a2cc27faf1c3274ed1d UA UNIQUE identified: (5489) Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.1; WOW64; Trident/4.0; BTRS28059; GTB6.6; SearchToolbar 1.2; SLCC2; .NET CLR 2.0.50727; .NET CLR 3.5.30729; .NET CLR 3.0.30729; Media Center PC 6.0; HPNTDF; .NET4.0C; AskTbBCPA/5.8.0.12304)
+2011-04-21 01:42:51  81.7.189.54 cca921f294c09fe40503e21831f9c3bd UA identified: (5670) Mozilla/5.0 (compatible; Yahoo! Slurp; http://help.yahoo.com/help/us/ysearch/slurp)
+2011-04-21 02:24:04  81.7.189.54 16e10c46c23c5ab078dd3d7c8fde096b UA identified: (5670) Baiduspider+(+http://www.baidu.com/search/spider.htm)
+2011-04-21 02:24:20  81.7.189.54 7d4a360eae16bc2a923ad657091e07a8 UA identified: (5670) Baiduspider+(+http://www.baidu.com/search/spider.htm)
+2011-04-21 02:25:12  81.7.189.54 3973ab3d8ede303ca03eee526771731d UA identified: (5670) Huaweisymantecspider (compatible; MSIE 8.0; DSE-support@huaweisymantec.com)
+2011-04-21 05:38:49  81.7.189.54 a90efe935c3419885cd90d6afa3eb70f UA identified: (5670) Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)
+2011-04-21 05:58:59  81.7.189.54 6b55a5832d9fe933005b1bae7a302645 UA identified: (5670) Baiduspider+(+http://www.baidu.com/search/spider.htm)
+2011-04-21 06:29:13  81.7.189.54 b470bdc9546ae0875b9ecaed096ef8f4 UA identified: (5670) Mozilla/5.0 (compatible; Yahoo! Slurp; http://help.yahoo.com/help/us/ysearch/slurp)
+2011-04-21 06:48:02  81.7.189.54 64ed55a53545cdf81b8b1c593a5671c8 UA identified: (5670) Mozilla/5.0 (compatible; bingbot/2.0; +http://www.bing.com/bingbot.htm)
+2011-04-21 07:12:10  81.7.189.54 c53e3722ec4f713a9a00c84c598bbf91 UA identified: (5670) Mozilla/5.0 (compatible; Yahoo! Slurp; http://help.yahoo.com/help/us/ysearch/slurp)
+2011-04-21 07:55:19  81.7.189.54 f9eb979ea7695edbee5fe86eaed87354 UA identified: (5498) Mozilla/4.0 (compatible; MSIE 5.01; Windows NT 5.0)
+2011-04-21 08:29:32  81.7.189.54 d11150113b1b384971a594b19fa5e660 UA unidentified: Mozilla/4.0 (compatible; MSIE 7.0; AOL 9.0; Windows NT 5.1; (R1 1.5); .NET CLR 1.1.4322)
+2011-04-21 08:29:32  81.7.189.54 788934e0b62be1b3598e6851f33beab8 UA UNIQUE identified: (5488) Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; SV1; SIMBAR={DD813EA3-6634-4f92-AD69-D7591D26B13E}; ImageShack Toolbar 3.0.3; ImageShack Toolbar 3.0.6; SpamBlockerUtility 4.8.4)
+2011-04-21 08:29:33  81.7.189.54 d11150113b1b384971a594b19fa5e660 UA guessed: (5487)
+2011-04-21 08:34:17  81.7.189.54 5633f194d29eafb2dbfdf1c61878ff08 UA identified: (6398) Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.11) Gecko/20071127 Firefox/2.0.0.11
+2011-04-21 09:26:18  81.7.189.54 4fa01c561d4b13bd5fd3deca2d421d74 UA identified: (5670) Baiduspider+(+http://www.baidu.com/search/spider.htm)
+2011-04-21 09:26:36  81.7.189.54 7366c56e3fb5e20a3c90862dc664b432 UA identified: (5670) Baiduspider+(+http://www.baidu.com/search/spider.htm)
+2011-04-21 09:36:37  81.7.189.54 a0543bb9a70efadb497b5db847380c6e UA identified: (5670) Mozilla/5.0 (compatible; Yahoo! Slurp; http://help.yahoo.com/help/us/ysearch/slurp)
+2011-04-21 11:53:14  81.7.189.54 9acda629b51773d3bcf08ca44f5def40 UA identified: (5670) page_test larbin2.6.3@unspecified.mail
+2011-04-21 12:25:17  81.7.189.54 d0648deb4d38a039f616b53dda54369a UA identified: (5670) page_test larbin2.6.3@unspecified.mail
+2011-04-21 12:27:22  81.7.189.54 1a9a2bd5d66770c778e0a55cceb36db0 UA identified: (5670) Mozilla/5.0 (compatible; YandexBot/3.0; MirrorDetector; +http://yandex.com/bots)
+2011-04-21 12:27:23  81.7.189.54 aad758b526e809ffeba9d6a245ca5740 UA identified: (5670) Mozilla/5.0 (compatible; YandexBot/3.0; MirrorDetector; +http://yandex.com/bots)
+2011-04-21 12:27:23  81.7.189.54 96df985bbc800800999010445121c3ec UA identified: (5670) Mozilla/5.0 (compatible; YandexBot/3.0; MirrorDetector; +http://yandex.com/bots)
+2011-04-21 12:27:23  81.7.189.54 4b3aabc2fda5f2b71aedefd6bc466608 UA identified: (5670) Mozilla/5.0 (compatible; YandexBot/3.0; MirrorDetector; +http://yandex.com/bots)
+2011-04-21 12:45:07  81.7.189.54 245a83c9d1fc6483c26fe745881d6ad6 UA UNIQUE identified: (5489) Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.0; Trident/4.0; GTB6; SLCC1; .NET CLR 2.0.50727; Media Center PC 5.0; Tablet PC 2.0; .NET CLR 3.5.30729; .NET CLR 3.0.30618)
+2011-04-21 14:38:33  81.7.189.54 fd29713b237b8e2bd78ee07eee58bc99 UA identified: (5670) page_test larbin2.6.3@unspecified.mail
+2011-04-21 14:45:33  81.7.189.54 7f48101d4485e3e43cb6185847c04537 UA identified: (5670) page_test larbin2.6.3@unspecified.mail
+2011-04-21 15:24:54  81.7.189.54 c5794ec31bc55dd2576a966b464856c2 UA identified: (5670) Baiduspider+(+http://www.baidu.com/search/spider.htm)
+2011-04-21 15:25:09  81.7.189.54 be92d5b77f06c2d11edd466ad3cdd828 UA identified: (5670) Baiduspider+(+http://www.baidu.com/search/spider.htm)
+2011-04-21 15:43:14  81.7.189.54 e4cc1ff334390939692a6aa0873f066a UA identified: (5670) Mozilla/5.0 (compatible; Yahoo! Slurp; http://help.yahoo.com/help/us/ysearch/slurp)
+2011-04-21 15:59:28  81.7.189.54 df2cba267370f4b5021dd61294b198c8 UA identified: (6436) Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US) AppleWebKit/525.13 (KHTML, like Gecko) Chrome/0.A.B.C Safari/525.13
+2011-04-21 18:37:01  81.7.189.54 cda0b8f14bdacc407715a6cbe923e9a0 UA identified: (5670) Baiduspider+(+http://www.baidu.com/search/spider.htm)
+2011-04-21 18:37:28  81.7.189.54 e354bc8cce4b5e5b4567d07ded5eb432 UA identified: (5670) Baiduspider+(+http://www.baidu.com/search/spider.htm)
+2011-04-21 18:51:15  81.7.189.54 d205f42b959dac5e5428f521382fcc78 UA unidentified: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:2.0) Gecko/20100101 Firefox/4.0
+2011-04-21 18:51:15  81.7.189.54 d205f42b959dac5e5428f521382fcc78 UA guessed: (6383)
+2011-04-21 19:19:10  81.7.189.54 f999e14471f759008bc03dd0052f514b UA identified: (5670) Python-urllib/2.4
+2011-04-21 19:49:14  81.7.189.54 9bc812436069a3581c3a0b5d628ca393 UA identified: (6413) Mozilla/5.0 (Linux; U; Android 2.2; da-dk; Desire_A8181 Build/FRF91) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 Mobile Safari/533.1
+2011-04-21 20:15:28  81.7.189.54 97501151d257b1827fb5e0ef41ca47a2 UA identified: (5670) Mozilla/5.0 (compatible; bingbot/2.0; +http://www.bing.com/bingbot.htm)
+2011-04-21 21:25:07  81.7.189.54 4d1b037eb9a65905c924796e1aaaf433 UA identified: (5670) Baiduspider+(+http://www.baidu.com/search/spider.htm)
+2011-04-21 21:25:24  81.7.189.54 68a545039b0d69a5c33211040caec513 UA identified: (5670) Baiduspider+(+http://www.baidu.com/search/spider.htm)
+2011-04-21 23:24:01  81.7.189.54 38a984ecad717cb4de1a8041f769aa97 UA identified: (5670) Baiduspider+(+http://www.baidu.com/search/spider.htm)
+2011-04-21 23:24:15  81.7.189.54 de3d1d6af1382fc0fc28fe5991451423 UA identified: (5670) Baiduspider+(+http://www.baidu.com/search/spider.htm)

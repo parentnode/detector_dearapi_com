@@ -1,0 +1,62 @@
+2011-05-17 00:48:25  81.7.189.54 dbe62b79d7f30840b2be60e67ccc359c UA identified: (5670) Mozilla/5.0 (compatible; Ask Jeeves/Teoma; +http://about.ask.com/en/docs/about/webmasters.shtml)
+2011-05-17 04:21:56  81.7.189.54 3762bf3828b0b60f3408927190786d1e UA identified: (5670) Baiduspider+(+http://www.baidu.com/search/spider.htm)
+2011-05-17 04:22:02  81.7.189.54 1d37825f125560c6043ac6149e5f7937 UA identified: (5670) Baiduspider+(+http://www.baidu.com/search/spider.htm)
+2011-05-17 05:13:23  81.7.189.54 24924f6f7cff8f3aac7967abb2a62aa4 UA identified: (5670) Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)
+2011-05-17 05:23:02  81.7.189.54 a422abcef3f1892d240d986a38b6ab96 UA identified: (5670) Baiduspider+(+http://www.baidu.com/search/spider.htm)
+2011-05-17 05:23:13  81.7.189.54 500c464be454a8ec5f479b2a775391f9 UA identified: (5670) Baiduspider+(+http://www.baidu.com/search/spider.htm)
+2011-05-17 05:47:04  81.7.189.54 ca0940bf15160dd1cafca10fc8c3b907 UA identified: (5670) Mozilla/5.0 (compatible; YandexBot/3.0; +http://yandex.com/bots)
+2011-05-17 07:25:54  81.7.189.54 a21f664fac28cd4e2e56d6b3a94f2e70 UA identified: (5670) Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)
+2011-05-17 09:38:18  81.7.189.54 e056dae853779a9339ce78df604a18c7 UA identified: (5670) Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)
+2011-05-17 10:10:55  81.7.189.54 6b2cdb8d14382f1cfd1236d3259bfb68 UA identified: (5670) Mozilla/5.0 (compatible; YandexBot/3.0; +http://yandex.com/bots)
+2011-05-17 11:10:16  81.7.189.54 48de7a8c9e38f065fd63b84edba7e4e4 UA unidentified: Mozilla/5.0 (compatible; Baiduspider/2.0; +http://www.baidu.com/search/spider.html)
+2011-05-17 11:10:16  81.7.189.54 48de7a8c9e38f065fd63b84edba7e4e4 UA guessed: (455)
+2011-05-17 11:17:33  81.7.189.54 041920c01c4dc3f00b0332ab12c03d32 UA identified: (5670) Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)
+2011-05-17 11:32:27  2.106.178.85 ba05eb3572a4b9bbd7fc162965827d9a UA unidentified: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:2.0.1) Gecko/20100101 Firefox/4.0.1
+2011-05-17 11:32:27  2.106.178.85 ba05eb3572a4b9bbd7fc162965827d9a UA guessed: (6383)
+2011-05-17 11:39:08  81.7.189.54 dc37fe361eca5584f5403277843ba3d5 UA identified: (5670) Mozilla/5.0 (compatible; YandexBot/3.0; +http://yandex.com/bots)
+2011-05-17 11:50:41  81.7.189.54 250fb327164a2f68743ec2256cf62a19 UA identified: (5670) Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)
+2011-05-17 11:51:15  81.7.189.54 37eb1adb182cac393f2f223797597632 UA identified: (6436) Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US) AppleWebKit/525.13 (KHTML, like Gecko) Chrome/0.A.B.C Safari/525.13
+2011-05-17 12:25:18  81.7.189.54 6cbc11e38cfc6f3f08688c08f811326f UA identified: (5670) Java/1.6.0_04
+2011-05-17 12:25:18  81.7.189.54 fd8b733dcb6876e88c677b8343db7917 UA identified: (5670) Java/1.6.0_04
+2011-05-17 12:25:19  81.7.189.54 bc7aaa771d0fd73ad05ac14e53477018 UA identified: (5670) Java/1.6.0_04
+2011-05-17 12:25:19  81.7.189.54 a08c2abac9432646436a556d49e677d7 UA identified: (5670) Java/1.6.0_04
+2011-05-17 12:25:19  81.7.189.54 f2b0aec9d8c36d05242f8b395c5473c1 UA identified: (5670) Java/1.6.0_04
+2011-05-17 12:25:19  81.7.189.54 d685280ee9afc7229e6df5a4feee8671 UA identified: (5670) Java/1.6.0_04
+2011-05-17 12:25:20  81.7.189.54 5eb91dc500ddf8b311be9a7216f5cdcf UA identified: (5670) Java/1.6.0_04
+2011-05-17 12:25:20  81.7.189.54 e44be97847fa97a593abea33039084d5 UA identified: (5670) Java/1.6.0_04
+2011-05-17 12:25:20  81.7.189.54 69bb0f37c6ef433b0123e7cfa2b8d02f UA identified: (5670) Java/1.6.0_04
+2011-05-17 12:25:20  81.7.189.54 b130f13fef921359663b59d4acc6f5ba UA identified: (5670) Java/1.6.0_04
+2011-05-17 12:25:20  81.7.189.54 240c8def4c5623230d949eb11529c7a2 UA identified: (5670) Java/1.6.0_04
+2011-05-17 12:25:20  81.7.189.54 a9feaf9be5e5e5f2c7359f5415ba84f0 UA identified: (5670) Java/1.6.0_04
+2011-05-17 12:25:21  81.7.189.54 42bdb17296152b03d195d5c55f05b256 UA identified: (5670) Java/1.6.0_04
+2011-05-17 12:25:21  81.7.189.54 d3f4d83c626597dd73e9e1ff8f3e7f95 UA identified: (5670) Java/1.6.0_04
+2011-05-17 12:25:21  81.7.189.54 5199ddcdc6288788b65034dff3d71684 UA identified: (5670) Java/1.6.0_04
+2011-05-17 12:25:21  81.7.189.54 28871b760f808b8c5d11670b3ddfbd59 UA identified: (5670) Java/1.6.0_04
+2011-05-17 12:25:21  81.7.189.54 cba3a5a2a0df458bd4c5069e8195b5d4 UA identified: (5670) Java/1.6.0_04
+2011-05-17 12:31:42  81.7.189.54 c4022a78ebd72d15a9d4f5498589a70d UA identified: (5498) Mozilla/4.0 (compatible; MSIE 5.01; Windows NT 5.0)
+2011-05-17 12:39:37  81.7.189.54 d345f2dd18a8f1cae766b720e830ba6c UA UNIQUE identified: (5489) Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 5.1; SV1; .NET CLR 2.0.50727)
+2011-05-17 12:40:49  81.7.189.54 727ace356a34c9eea8c97e4a94e2cb46 UA UNIQUE identified: (5489) Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 5.1; SV1; .NET CLR 2.0.50727)
+2011-05-17 13:07:22  81.7.189.54 0b177d2af9a4d8aaa6bf79f5be07d4b9 UA identified: (5670) Mozilla/5.0 (compatible; YandexBot/3.0; +http://yandex.com/bots)
+2011-05-17 13:47:55  81.7.189.54 60ab685e7e78b44bf89eb21a2a270657 UA identified: (5670) Mozilla/5.0 (compatible; YandexBot/3.0; MirrorDetector; +http://yandex.com/bots)
+2011-05-17 13:47:55  81.7.189.54 801530a559d0cf4efb51f37b8e5ce913 UA identified: (5670) Mozilla/5.0 (compatible; YandexBot/3.0; MirrorDetector; +http://yandex.com/bots)
+2011-05-17 13:47:56  81.7.189.54 0939f4284ca61728c79365dcbee17023 UA identified: (5670) Mozilla/5.0 (compatible; YandexBot/3.0; MirrorDetector; +http://yandex.com/bots)
+2011-05-17 13:47:56  81.7.189.54 073752c67903133480f471be411b8ed9 UA identified: (5670) Mozilla/5.0 (compatible; YandexBot/3.0; MirrorDetector; +http://yandex.com/bots)
+2011-05-17 13:58:21  81.7.189.54 7c6590a6fcd5b3f555de3c5f8c0b35c0 UA unidentified: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_6_2; fr-fr) AppleWebKit/531.9 (KHTML, like Gecko) Version/4.0.3 Safari/531.9
+2011-05-17 13:58:21  81.7.189.54 7c6590a6fcd5b3f555de3c5f8c0b35c0 UA guessed: (5483)
+2011-05-17 14:02:53  81.7.189.54 cb4c95d10b371b6848ab1def2a58c4ee UA identified: (5670) Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)
+2011-05-17 14:35:35  81.7.189.54 48e4f788e1eca2c5e9e67a490dd79c4e UA identified: (5670) Mozilla/5.0 (compatible; YandexBot/3.0; +http://yandex.com/bots)
+2011-05-17 14:39:38  81.7.189.54 4a4358207c0d640d4a9c7a9ce25603c4 UA UNIQUE identified: (5487) Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.1; .NET CLR 2.0.50727; .NET CLR 3.0.4506.2152; .NET CLR 3.5.30729; .NET4.0C; InfoPath.2; .NET CLR 1.1.4322; .NET4.0E)
+2011-05-17 15:03:35  81.7.189.54 df04186ea9e4f79c9b08e5c2e342e1c5 UA identified: (5670) Mozilla/5.0 (compatible; bingbot/2.0; +http://www.bing.com/bingbot.htm)
+2011-05-17 16:03:48  81.7.189.54 3601f3fe2b09af099e25211c3fb3756e UA identified: (5670) Mozilla/5.0 (compatible; YandexBot/3.0; +http://yandex.com/bots)
+2011-05-17 16:14:55  81.7.189.54 c5491eabb9398639968a2f8afc047bbc UA identified: (5670) Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)
+2011-05-17 16:22:23  2.106.178.85 2b49609d6d5c0dad82c519590e273d89 UA unidentified: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:2.0.1) Gecko/20100101 Firefox/4.0.1
+2011-05-17 16:22:24  2.106.178.85 2b49609d6d5c0dad82c519590e273d89 UA guessed: (6383)
+2011-05-17 17:32:01  81.7.189.54 be7cff642fcbf1659d8e83c460f344dc UA identified: (5670) Mozilla/5.0 (compatible; YandexBot/3.0; +http://yandex.com/bots)
+2011-05-17 18:27:23  81.7.189.54 63c9fe3f647646452a74613b1165b6b2 UA identified: (5670) Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)
+2011-05-17 19:00:14  81.7.189.54 8feace9232c95378dfa14db40b544e2d UA identified: (5670) Mozilla/5.0 (compatible; YandexBot/3.0; +http://yandex.com/bots)
+2011-05-17 21:07:09  81.7.189.54 bbb9f0e4671de9f43f7f32162dd62fd9 UA identified: (5488) Mozilla/4.0 (compatible; MSIE 6.0; Windows 98; Win 9x 4.90)
+2011-05-17 21:23:39  81.7.189.54 9975c62df6d50f750c9f52f84a4aa112 UA identified: (5670) Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)
+2011-05-17 21:48:24  81.7.189.54 36dc5d6140934f5170bb32ed1ed023a1 UA identified: (5670) msnbot/2.0b (+http://search.msn.com/msnbot.htm)._
+2011-05-17 22:18:43  81.7.189.54 6618836511be34358cd7a685bcd61531 UA identified: (5670) Baiduspider+(+http://www.baidu.com/search/spider.htm)
+2011-05-17 22:18:50  81.7.189.54 c86002f92d421eefb269c8daa84603b5 UA identified: (5670) Baiduspider+(+http://www.baidu.com/search/spider.htm)
+2011-05-17 23:13:43  81.7.189.54 817ea8aa9fea7856f1cb99f5f35c77ce UA identified: (5670) Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)

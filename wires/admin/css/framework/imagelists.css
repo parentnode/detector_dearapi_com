@@ -1,0 +1,36 @@
+ul.imagelist {
+	margin: 0 0 10px 0;
+	padding: 0;
+	list-style: none;
+	float: left;
+}
+ul.imagelist li {
+	float: left;
+	display: inline-block; /*virker ikke i Fx el sf, har ikke checket IE */
+	text-align: center;
+	padding: 0 0 20px;
+}
+ul.imagelist li div {
+	white-space: nowrap;
+	overflow: hidden;
+}
+#content .c300 ul.imagelist {width: 768px;}
+#content .c225 ul.imagelist {width: 576px;}
+#content .c200 ul.imagelist {width: 512px;}
+#content .c150 ul.imagelist {width: 384px;}
+#content .c100 ul.imagelist {width: 256px;}
+#content .c75 ul.imagelist {width: 192px;}
+
+#content .c300 ul.imagelist li,
+#content .c225 ul.imagelist li,
+#content .c150 ul.imagelist li,
+#content .c75 ul.imagelist li {
+	margin: 0 10px;
+	width: 172px;
+}
+
+#content .c200 ul.imagelist li,
+#content .c100 ul.imagelist li {
+	margin: 0 10px;
+	width: 236px;
+}

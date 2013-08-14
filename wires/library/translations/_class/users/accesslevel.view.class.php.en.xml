@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<page name="/class/users/accesslevel.view.class.php">
+	<element>
+		<original maxlen="0">View level</original>
+		<translation>View level</translation>
+	</element>
+	<element>
+		<original maxlen="0">Edit level</original>
+		<translation>Edit level</translation>
+	</element>
+	<element>
+		<original maxlen="0">New level</original>
+		<translation>New level</translation>
+	</element>
+	<element>
+		<original maxlen="0">Access levels</original>
+		<translation>Access levels</translation>
+	</element>
+	<element>
+		<original maxlen="0">Access Levels</original>
+		<translation>Access Levels</translation>
+	</element>
+	<element>
+		<original maxlen="0">Access points</original>
+		<translation>Access points</translation>
+	</element>
+	<element>
+		<original maxlen="0">Point</original>
+		<translation>Point</translation>
+	</element>
+	<element>
+		<original maxlen="0">Allowed/Actions</original>
+		<translation>Allowed/Actions</translation>
+	</element>
+	<element>
+		<original maxlen="0">Point actions</original>
+		<translation>Point actions</translation>
+	</element>
+	<element>
+		<original maxlen="0">No actions available</original>
+		<translation>No actions available</translation>
+	</element>
+	<element>
+		<original maxlen="0">Point actions</original>
+		<translation>Point actions</translation>
+	</element>
+</page>

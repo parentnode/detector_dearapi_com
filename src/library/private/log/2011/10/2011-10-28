@@ -1,0 +1,12 @@
+2011-10-28 07:54:35  2.108.223.220 Login - insufficient privileges: api_devices.users
+2011-10-28 07:54:37  2.108.223.220 Logoff api_devices.users
+2011-10-28 07:55:00 1 2.108.223.220 Login success, U:1
+2011-10-28 07:56:35 1 2.108.223.220 Device updated (748)
+2011-10-28 07:56:58 1 2.108.223.220 Useragent deleted from (746): Mozilla/5.0 (Linux; U; Android 1.5; en-us; A6277 Build/CUPCAKE) AppleWebKit/528.5+ (KHTML, like Gecko) Version/3.1.2 Mobile Safari/525.20.1
+2011-10-28 07:57:03 1 2.108.223.220 Device updated (746)
+2011-10-28 07:59:14 1 2.108.223.220 Useragent added to (748): Mozilla/5.0 (Linux; U; Android 1.5; en-us; A6277 Build/CUPCAKE) AppleWebKit/528.5+ (KHTML, like Gecko) Version/3.1.2 Mobile Safari/525.20.1
+2011-10-28 08:00:32 1 2.108.223.220 Useragent added to (6509): Mozilla/5.0 (Linux; U; Android 2.3.3; da-dk; Desire HD Build/GRI40) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 Mobile Safari/533.1
+2011-10-28 08:00:50 1 2.108.223.220 Device updated (6509)
+2011-10-28 09:33:52  62.242.41.21 Login - insufficient privileges: api_devices.users
+2011-10-28 09:33:52  62.242.41.21 Logoff api_devices.users
+2011-10-28 09:34:16 1 62.242.41.21 Login success, U:1

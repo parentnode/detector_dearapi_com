@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<page name="/templates/defaults/html.view_no_edit.php">
+	<element>
+		<original maxlen="0">Delete</original>
+		<translation>Delete</translation>
+	</element>
+	<element>
+		<original maxlen="0">Done</original>
+		<translation>Done</translation>
+	</element>
+</page>

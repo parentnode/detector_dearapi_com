@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<page name="/templates/users/menu.list.php">
+	<element>
+		<original maxlen="0">Save</original>
+		<translation>Save</translation>
+	</element>
+	<element>
+		<original maxlen="0">New</original>
+		<translation>New</translation>
+	</element>
+</page>

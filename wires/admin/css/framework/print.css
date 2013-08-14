@@ -1,0 +1,25 @@
+@media print {
+
+	* {
+		color: #000000 !important;
+	}
+
+	html {
+		width: 768px;
+	}
+	body {
+		width: 768px !important;
+	}
+	div#page {
+		width: 768px !important;
+	}
+	div#header,
+	div#nav,
+	div#footer,
+	button {
+		display: none;
+	}
+	.noPrint {
+		display: none !important;
+	}
+}

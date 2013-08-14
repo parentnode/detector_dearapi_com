@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<page name="/templates/defaults/html.delete.php">
+	<element>
+		<original maxlen="0">Delete</original>
+		<translation>Delete</translation>
+	</element>
+	<element>
+		<original maxlen="0">Are you sure you want to delete ###0###?</original>
+		<translation>Are you sure you want to delete ###0###?</translation>
+	</element>
+	<element>
+		<original maxlen="0">YES</original>
+		<translation>YES</translation>
+	</element>
+	<element>
+		<original maxlen="0">NO</original>
+		<translation>NO</translation>
+	</element>
+</page>

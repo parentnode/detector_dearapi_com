@@ -1,0 +1,217 @@
+/* basics.css */
+body {
+	background-color: #FAFAFA;
+	color: #0F0F0F;
+}
+
+div#page {
+	background-color: #F0F0F0;
+}
+div#nav {
+	background-color: #E3E3E3;
+}
+div#footer {
+	border-top: 1px solid #3D003D;
+	border-bottom: 1px solid #3D003D;
+	background-color: #D3D3D3;
+}
+
+/* header.css */
+div#header {
+	background-color: #D3D3D3;
+	border-top: 1px solid #3D003D;
+	border-bottom: 1px solid #3D003D;
+}
+div#header span.fleft {
+	border-right: 1px solid #000000;
+}
+div#header span.fright {
+	border-left: 1px solid #000000;
+}
+div#header span.over {
+	background-color: #3D003D;
+	color: #F0F0F0;
+}
+
+div#trail {
+	border-bottom: 1px solid #3D003D;
+}
+div#message {
+	border-bottom: 1px solid #3D003D;
+}
+
+/* content.css */
+
+/*
+div#content .cInner {
+	border-color: #000000 !important;
+}
+*/
+
+div#content h1 {
+	background-color: #666666;
+	color: #CCCCCC;
+}
+div#content h2 {
+	background-color: #CCCCCC;
+}
+div#content div.htmlView {
+	background-color: #FEFEFE;
+}
+div#content div.htmlView h1,
+div#content div.htmlView h2 {
+	background-color: transparent;
+	color: black;
+}
+div.separator {
+	background-color: #3D003D;
+}
+
+/* inputs.css */
+button {
+	background-color: green;
+	border: 1px solid #3D003D;
+ 	-moz-border-radius: 5px; -webkit-border-radius: 5px; 
+	color: #F3F3F3;
+}
+button.over {
+	background-color: #F3F3F3;
+	color: #3D003D;
+}
+button.disabled {
+	background-color: #cccccc;
+}
+button.delete {
+	background-color: red;
+}
+a {
+	color: #3D003D;
+}
+a:visited {
+	color: #3D003D;
+}
+
+.info {
+	background-color: white;
+	color: green;
+}
+.hint {
+	background-color: green;
+	color: white;
+}
+.question {
+	background-color: white;
+	color: red;
+}
+
+.error {
+	color: red;
+}
+button.delete {
+	background-image: none;
+}
+button.delete:hover {
+	background-color: red;
+	color: white;
+}
+.warning {
+	background-color: #F7941C;
+	color: white;
+}
+.notice {
+	background-color: #F3F3F3;
+	color: #3D003D;
+}
+.disable {
+	background-color: #F7941C;
+	color: white;
+}
+.enable {
+	background-color: green;
+	color: white;
+}
+
+.disabled {
+	color: #999999;
+}
+.paymentDue {
+	color: #FF0000;
+}
+.paid {
+	color: #009933;
+}
+
+/* menu.css */
+#nav a {
+	color: #333 !important;
+}
+#nav li.over a {
+	color: #a00 !important;
+}
+#nav li.separator {
+	border-bottom: 1px solid #0F0F0F;
+}
+
+
+/* lists.css */
+tr.tr0 {
+	background-color: #F3F3F3;
+}
+tr.tr1 {
+	background-color: #E3E3E3;
+}
+tr.over {
+	background-color: #D3D3D3;
+}
+th {
+	background-color: #B3AAB3;
+	color: #F3F3F3;
+}
+th.over {
+	background-color: #D3D3D3;
+	color: #3D003D;
+}
+td.indent_1, 
+td.indent_2,
+td.indent_3,
+td.indent_4,
+td.indent_5,
+td.indent_6,
+td.indent_7,
+td.indent_8 {
+	background-image: url(/img/framework/gx_angle.png);
+}
+tr.intover td {
+	background-color: #5FBB5F;
+}
+
+
+input.image {
+	height: 22px;
+}
+
+
+/* calendar */
+table.calendar th {
+	background-color: #3D003D;
+	color: #F3F3F3;	
+}
+table.calendar td {
+	border-bottom: 1px solid #CCCCCC;
+	border-right: 1px solid #CCCCCC;
+}
+.c300 table.calendar span {
+	color: #3D003D;
+}
+table.calendar td.deadline {
+	color: #FF0000;
+}
+table.calendar td.weekend {
+	background-color: #E3E3E3;
+}
+table.calendar td.over {
+	background-color: #D3D3D3;
+}
+table.calendar th.over {
+	background-color: #D3D3D3 !important;
+}

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<page name="/templates/defaults/popup.file_saved.php">
+	<element>
+		<original maxlen="0">Add another file</original>
+		<translation>Add another file</translation>
+	</element>
+	<element>
+		<original maxlen="0">Save</original>
+		<translation>Save</translation>
+	</element>
+	<element>
+		<original maxlen="0">Cancel</original>
+		<translation>Cancel</translation>
+	</element>
+</page>

@@ -1,0 +1,67 @@
+/* modifiers */
+
+/* text */
+.b {
+	font-weight: bold;
+}
+.n {
+	font-weight: normal;
+}
+.u {
+	text-decoration: underline;
+}
+
+/* cursor */
+.clickable {
+	cursor: pointer;
+}
+.dragable {
+	cursor: move;
+}
+.disabled {
+	cursor: default;
+}
+
+/* float */
+.fright {
+   float: right;
+}
+.fleft {
+   float: left;
+}
+
+/* alignment */
+.aright {
+   text-align: right;
+}
+.aleft {
+   text-align: left;
+}
+.acenter {
+   text-align: center;
+}
+
+/* display */
+.hidden {
+	display: none;
+}
+
+.delete {
+	background-image: url(/img/framework/gx_trash.png);
+	background-position: center right;
+	background-repeat: no-repeat;
+}
+
+.section {
+	padding-bottom: 20px;
+}
+
+.section .cInner {
+	margin-bottom: -20px;
+}
+.section .expandable {
+/*	margin-bottom: -20px;*/
+}
+.section .expandable.open {
+	margin-bottom: 0;
+}

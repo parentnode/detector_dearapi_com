@@ -1,0 +1,8 @@
+2012-02-26 22:09:04  85.59.161.117 Login - insufficient privileges: api_devices.users
+2012-02-26 22:09:04  85.59.161.117 Logoff api_devices.users
+2012-02-26 22:09:09 1 85.59.161.117 Login success, U:1
+2012-02-26 22:12:03 1 85.59.161.117 Useragent added to (6560): Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; WOW64; Trident/5.0; BOIE9;DADK; chromeframe/17.0.963.56)
+2012-02-26 22:13:00 1 85.59.161.117 Useragent added to (6560): Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 5.1; Trident/4.0; GTB7.2; chromeframe/17.0.963.56; .NET CLR 1.1.4322; .NET CLR 2.0.50727; .NET CLR 3.0.4506.2152; .NET CLR 3.5.30729; .NET4.0C)
+2012-02-26 22:13:16 1 85.59.161.117 Useragent added to (6560): Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.0; Trident/5.0; chromeframe/17.0.963.56)
+2012-02-26 22:18:44 1 85.59.161.117 Useragent added to (1): GertBot/1
+2012-02-26 22:19:00 1 85.59.161.117 Useragent deleted from (1): GertBot/1

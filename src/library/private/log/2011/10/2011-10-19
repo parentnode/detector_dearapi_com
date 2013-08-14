@@ -1,0 +1,49 @@
+2011-10-19 21:20:31  87.59.239.226 Login - insufficient privileges: api_devices.users
+2011-10-19 21:20:31  87.59.239.226 Logoff api_devices.users
+2011-10-19 21:29:45 1 87.59.239.226 Login success, U:1
+2011-10-19 21:29:57 1 87.59.239.226 Useragent added to (5477): Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.5; fr; rv:1.9.2.6) Gecko/20100625 Firefox/3.6.6
+2011-10-19 21:30:14 1 87.59.239.226 Useragent added to (5670): Mozilla/5.0 (compatible; RexyoBot/2.1.24; +http://www.rexyo.com)
+2011-10-19 21:30:25 1 87.59.239.226 Useragent added to (6429): Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.0; Trident/5.0; BOIE9;NBNO)
+2011-10-19 21:30:38 1 87.59.239.226 Useragent added to (5477): Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.1.6) Gecko/20091201 Firefox/3.5.6 GTB6
+2011-10-19 21:30:50 1 87.59.239.226 Useragent added to (6360): Mozilla/5.0 (iPhone; U; CPU iPhone OS 4_2_10 like Mac OS X; en-us) AppleWebKit/533.17.9 (KHTML, like Gecko) Version/5.0.2 Mobile/8E600 Safari/6533.18.5
+2011-10-19 21:30:59 1 87.59.239.226 Useragent added to (5477): Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; da; rv:1.9.2.23) Gecko/20110920 Firefox/3.6.23
+2011-10-19 21:31:20 1 87.59.239.226 Useragent added to (6497): Mozilla/5.0 (Windows NT 6.0; rv:7.0.1) Gecko/20100101 Firefox/7.0.1
+2011-10-19 21:31:44 1 87.59.239.226 Useragent added to (6356): Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_6_7; fr-fr) AppleWebKit/533.20.25 (KHTML, like Gecko) Version/5.0.4 Safari/533.20.27
+2011-10-19 21:31:51 1 87.59.239.226 Useragent added to (6497): Mozilla/5.0 (Windows NT 5.1; rv:7.0.1) Gecko/20100101 Firefox/7.0.1
+2011-10-19 21:32:02 1 87.59.239.226 Useragent added to (6360): Mozilla/5.0 (iPhone; U; CPU iPhone OS 4_2_1 like Mac OS X; en-us) AppleWebKit/534.24 (KHTML, like Gecko) Version/5.0.2 Mobile/8C148 Safari/534.24
+2011-10-19 21:32:29 1 87.59.239.226 Useragent added to (6360): Mozilla/5.0 (iPhone; CPU iPhone OS 5_0 like Mac OS X) AppleWebKit/534.46 (KHTML, like Gecko) Version/5.1 Mobile/9A5313e Safari/7534.48.3
+2011-10-19 21:33:42 1 87.59.239.226 Useragent added to (5488): Mozilla/4.0 (compatible; MSIE 6.0; Windows 98; Internet Customer)
+2011-10-19 21:34:11 1 87.59.239.226 Useragent added to (6351): Mozilla/5.0 (iPad; CPU OS 5_0 like Mac OS X) AppleWebKit/534.46 (KHTML, like Gecko) Version/5.1 Mobile/9A334 Safari/7534.48.3
+2011-10-19 21:34:25 1 87.59.239.226 Useragent added to (6360): Mozilla/5.0 (iPhone; U; CPU iPhone OS 4_3_1 like Mac OS X; da-dk) AppleWebKit/533.17.9 (KHTML, like Gecko) Mobile/8G4
+2011-10-19 21:34:47 1 87.59.239.226 Useragent added to (6472): Mozilla/5.0 (Windows NT 6.1) AppleWebKit/535.1 (KHTML, like Gecko) Chrome/14.0.835.202 Safari/535.1
+2011-10-19 21:35:35 1 87.59.239.226 Useragent added to (6472): Mozilla/5.0 (Macintosh; Intel Mac OS X 10_5_8) AppleWebKit/535.1 (KHTML, like Gecko) Chrome/14.0.835.202 Safari/535.1
+2011-10-19 21:35:35 1 87.59.239.226 Useragent added to (6472): Mozilla/5.0 (Macintosh; Intel Mac OS X 10_6_8) AppleWebKit/535.1 (KHTML, like Gecko) Chrome/14.0.835.202 Safari/535.1
+2011-10-19 21:35:36 1 87.59.239.226 Useragent added to (6472): Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7_1) AppleWebKit/535.1 (KHTML, like Gecko) Chrome/14.0.835.202 Safari/535.1
+2011-10-19 21:35:36 1 87.59.239.226 Useragent added to (6472): Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7_2) AppleWebKit/535.1 (KHTML, like Gecko) Chrome/14.0.835.202 Safari/535.1
+2011-10-19 21:35:36 1 87.59.239.226 Useragent added to (6472): Mozilla/5.0 (Windows NT 5.1) AppleWebKit/535.1 (KHTML, like Gecko) Chrome/14.0.835.187 Safari/535.1
+2011-10-19 21:35:36 1 87.59.239.226 Useragent added to (6472): Mozilla/5.0 (Windows NT 5.1) AppleWebKit/535.1 (KHTML, like Gecko) Chrome/14.0.835.202 Safari/535.1
+2011-10-19 21:35:36 1 87.59.239.226 Useragent added to (6472): Mozilla/5.0 (Windows NT 6.0) AppleWebKit/535.1 (KHTML, like Gecko) Chrome/14.0.835.187 Safari/535.1
+2011-10-19 21:35:36 1 87.59.239.226 Useragent added to (6472): Mozilla/5.0 (Windows NT 6.0) AppleWebKit/535.1 (KHTML, like Gecko) Chrome/14.0.835.202 Safari/535.1
+2011-10-19 21:35:36 1 87.59.239.226 Useragent added to (6472): Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/535.1 (KHTML, like Gecko) Chrome/14.0.835.202 Safari/535.1
+2011-10-19 21:35:49 1 87.59.239.226 Useragent added to (6470): Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/534.51 (KHTML, like Gecko; Google Web Preview) Chrome/12.0.742 Safari/534.51
+2011-10-19 21:35:54 1 87.59.239.226 Useragent added to (6470): Mozilla/5.0 (Windows NT 6.1) AppleWebKit/534.30 (KHTML, like Gecko) Chrome/12.0.742.112 Safari/534.30
+2011-10-19 21:36:07 1 87.59.239.226 Useragent added to (6500): Mozilla/5.0 (Macintosh; Intel Mac OS X 10_6_8) AppleWebKit/535.2 (KHTML, like Gecko) Chrome/15.0.874.83 Safari/535.2
+2011-10-19 21:36:16 1 87.59.239.226 Useragent added to (6471): Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7_1) AppleWebKit/535.1 (KHTML, like Gecko) Chrome/13.0.782.215 Safari/535.1
+2011-10-19 21:36:25 1 87.59.239.226 Useragent added to (6351): Mozilla/5.0 (iPad; U; CPU OS 4_3_3 like Mac OS X; en-us) AppleWebKit/533.17.9 (KHTML, like Gecko) Mobile/8J2 Safari/ Sleipnir/1.3.2m
+2011-10-19 21:36:51 1 87.59.239.226 Useragent deleted from (6351): Mozilla/5.0 (iPad; U; CPU OS 4_3_3 like Mac OS X; en-us) AppleWebKit/533.17.9 (KHTML, like Gecko) Mobile/8J2 Safari/ Sleipnir/1.3.2m
+2011-10-19 21:37:19 1 87.59.239.226 Useragent added to (6429): Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; WOW64; Trident/5.0; NP06)
+2011-10-19 21:37:28 1 87.59.239.226 Useragent added to (6495): Mozilla/5.0 (Macintosh; Intel Mac OS X 10.5; rv:6.0.2) Gecko/20100101 Firefox/6.0.2
+2011-10-19 21:37:54 1 87.59.239.226 Useragent added to (6356): Mozilla/5.0 (Macintosh; Intel Mac OS X 10_6_8) AppleWebKit/534.51.22 (KHTML, like Gecko) Version/5.1.1 Safari/534.51.22
+2011-10-19 21:38:24 1 87.59.239.226 Useragent added to (6360): Mozilla/5.0 (iPhone; U; CPU iPhone OS 4_3 like Mac OS X; en-us) AppleWebKit/533.17.9 (KHTML, like Gecko) Mobile/8F190
+2011-10-19 21:38:40 1 87.59.239.226 Useragent added to (6360): Mozilla/5.0 (iPhone; CPU iPhone OS 5_0 like Mac OS X) AppleWebKit/534.46 (KHTML, like Gecko) Version/5.1 Mobile/9A334 Safari/7534.48.3
+2011-10-19 21:38:52 1 87.59.239.226 Useragent added to (6356): Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7_2) AppleWebKit/534.51.22 (KHTML, like Gecko) Version/5.1.1 Safari/534.51.22
+2011-10-19 21:39:06 1 87.59.239.226 Useragent added to (6497): Mozilla/5.0 (Windows NT 6.1; WOW64; rv:7.0.1) Gecko/20100101 Firefox/7.0.1
+2011-10-19 21:39:30 1 87.59.239.226 Useragent added to (6360): Mozilla/5.0 (iPhone; CPU iPhone OS 5_0 like Mac OS X) AppleWebKit/534.46 (KHTML, like Gecko) Mobile/9A334
+2011-10-19 21:40:49 1 87.59.239.226 Useragent added to (6497): Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:7.0.1) Gecko/20100101 Firefox/7.0.1
+2011-10-19 21:41:05 1 87.59.239.226 Useragent added to (6497): Mozilla/5.0 (Macintosh; Intel Mac OS X 10.7; rv:7.0.1) Gecko/20100101 Firefox/7.0.1
+2011-10-19 21:42:12 1 87.59.239.226 Useragent added to (5477): Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.5; en-US; rv:1.9.2.23) Gecko/20110920 Firefox/3.6.23
+2011-10-19 21:42:19 1 87.59.239.226 Useragent added to (5477): Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.5; en-US; rv:1.9.1.1) Gecko/20090715 Firefox/3.5.1
+2011-10-19 21:42:33 1 87.59.239.226 Useragent added to (6495): Mozilla/5.0 (Windows NT 6.0; WOW64; rv:6.0.2) Gecko/20100101 Firefox/6.0.2
+2011-10-19 21:42:59 1 87.59.239.226 Useragent added to (5477): Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.5; da; rv:1.9.2.23) Gecko/20110920 Firefox/3.6.23
+2011-10-19 21:43:08 1 87.59.239.226 Useragent added to (5477): Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.2.4) Gecko/20100611 Firefox/3.6.4
+2011-10-19 21:43:15 1 87.59.239.226 Useragent added to (5477): Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.5; da; rv:1.9.0.12) Gecko/2009070609 Firefox/3.0.12

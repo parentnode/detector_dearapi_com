@@ -1,0 +1,407 @@
+2011-12-28 00:13:33  81.7.189.54 cf009c7367706eca52c95735502719bd UA identified: (5670) Mozilla/5.0 (compatible; Baiduspider/2.0; +http://www.baidu.com/search/spider.html)
+2011-12-28 00:40:16  81.7.189.37 55e30a593144bff9e276f94159d37d46 UA identified: (5670) msnbot/2.0b (+http://search.msn.com/msnbot.htm)._
+2011-12-28 00:40:19  81.7.189.37 d37ce932ce90708cb85d77c38a5985ba UA identified: (5670) msnbot/2.0b (+http://search.msn.com/msnbot.htm)._
+2011-12-28 00:40:21  81.7.189.37 884f0649e476da881aa3bd796546603c UA identified: (5670) msnbot/2.0b (+http://search.msn.com/msnbot.htm)._
+2011-12-28 00:40:26  81.7.189.37 bdb891a24d11b718a225eaa772270881 UA identified: (5670) msnbot/2.0b (+http://search.msn.com/msnbot.htm)._
+2011-12-28 00:40:28  81.7.189.37 8692f387519806695be53771c42f1d15 UA identified: (5670) msnbot/2.0b (+http://search.msn.com/msnbot.htm)._
+2011-12-28 00:40:30  81.7.189.37 c8fc8dc2e78804d4e9e1eb8518ec8ddf UA identified: (5670) msnbot/2.0b (+http://search.msn.com/msnbot.htm)._
+2011-12-28 00:40:31  81.7.189.37 0f678f5fa6e32393466fae9ece6eb1fc UA identified: (5670) msnbot/2.0b (+http://search.msn.com/msnbot.htm)._
+2011-12-28 00:40:33  81.7.189.37 151f4e79c213dc3437fcf96cb5b78221 UA identified: (5670) msnbot/2.0b (+http://search.msn.com/msnbot.htm)._
+2011-12-28 00:40:34  81.7.189.37 343c40e69f97321437c7071405458fb0 UA identified: (5670) msnbot/2.0b (+http://search.msn.com/msnbot.htm)._
+2011-12-28 00:40:36  81.7.189.37 b9adebf7f252f37a6485a8d9eb42121d UA identified: (5670) msnbot/2.0b (+http://search.msn.com/msnbot.htm)._
+2011-12-28 00:40:38  81.7.189.37 c4ed69b22801a019d3b1b78dfd144476 UA identified: (5670) msnbot/2.0b (+http://search.msn.com/msnbot.htm)._
+2011-12-28 00:40:39  81.7.189.37 64be88b4b514eed3398fbf4fcdaf23ab UA identified: (5670) msnbot/2.0b (+http://search.msn.com/msnbot.htm)._
+2011-12-28 00:40:41  81.7.189.37 c6d90a5130d6136e6b13ecbfc24420f3 UA identified: (5670) msnbot/2.0b (+http://search.msn.com/msnbot.htm)._
+2011-12-28 00:40:42  81.7.189.37 8a2c7876d952196256107844427fe6c4 UA identified: (5670) msnbot/2.0b (+http://search.msn.com/msnbot.htm)._
+2011-12-28 00:40:44  81.7.189.37 0bddaaf28477e1bc1863f7f351d8a7d0 UA identified: (5670) msnbot/2.0b (+http://search.msn.com/msnbot.htm)._
+2011-12-28 00:54:13  81.7.189.37 9003f529d32ea2b795adc94f3ec827d8 UA identified: (5670) Mozilla/5.0 (compatible; Ezooms/1.0; ezooms.bot@gmail.com)
+2011-12-28 00:58:06  81.7.189.37 6a1c3f99bc0a4d2f7445a81f470fca63 UA identified: (5670) Mozilla/5.0 (compatible; bingbot/2.0; +http://www.bing.com/bingbot.htm)
+2011-12-28 01:11:27  81.7.189.37 a2af977068a5db15a38059e0183f5b74 UA unidentified: think.dk
+2011-12-28 01:11:34  81.7.189.37 9c1c1a9064c0abda8fd9dd5bd28ad43a UA unidentified: Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 6.0; Trident/5.0; SLCC1; .NET CLR 2.0.50727; .NET CLR 3.5.30729; .NET CLR 3.0.30729; .NET4.0C; .NET4.0E)
+2011-12-28 01:11:37  81.7.189.37 9c1c1a9064c0abda8fd9dd5bd28ad43a UA guessed: (5487)
+2011-12-28 01:12:24  81.7.189.37 f17db126509a773610cd881b4577352e UA unidentified: Mozilla/0.6 Beta (Windows)
+2011-12-28 01:12:26  81.7.189.37 f17db126509a773610cd881b4577352e UA guessed: (24)
+2011-12-28 01:15:04  81.7.189.37 6d8d1f20f65587992134ea13c78b3b2d UA identified: (5670) Mozilla/5.0 (compatible; MJ12bot/v1.4.1; http://www.majestic12.co.uk/bot.php?+)
+2011-12-28 01:15:09  81.7.189.37 2748c53fc24d56ddd7df4181346f0250 UA identified: (5670) Mozilla/5.0 (compatible; bingbot/2.0; +http://www.bing.com/bingbot.htm)
+2011-12-28 01:18:32  77.66.17.247 b59887a7881e89bb31c7b3934c8b9505 UA identified: (5670) Mozilla/5.0 (compatible; YandexBot/3.0; +http://yandex.com/bots)
+2011-12-28 01:23:55  81.7.189.37 21dd8e45f4015923029d5c9379fd36de UA identified: (5670) Mozilla/5.0 (compatible; bingbot/2.0; +http://www.bing.com/bingbot.htm)
+2011-12-28 01:32:23  81.7.189.54 b405a7ccf7b591394623bacd987b9987 UA identified: (5670) Mozilla/5.0 (compatible; Baiduspider/2.0; +http://www.baidu.com/search/spider.html)
+2011-12-28 01:32:59  81.7.189.54 68779ff3faa02270f1bd4fc614d181ad UA identified: (5670) Mozilla/5.0 (compatible; Baiduspider/2.0; +http://www.baidu.com/search/spider.html)
+2011-12-28 01:36:10  81.7.189.37 80025cd8c94c9a133894c9a761394651 UA unidentified: Mozilla/5.0 (Windows; U; Windows NT 5.1; it; rv:1.9.0.16) Gecko/2010021013 Firefox/3.0.16 Flock/2.5.6
+2011-12-28 01:36:13  81.7.189.37 80025cd8c94c9a133894c9a761394651 UA guessed: (6398)
+2011-12-28 01:39:55  81.7.189.54 8186d7abeec27b1ed82e3bc1b19beb44 UA identified: (5670) Sosospider+(+http://help.soso.com/webspider.htm)
+2011-12-28 01:49:40  77.66.17.246 b8e6909309f96a985fdaf5970ea809b7 UA identified: (5670) Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)
+2011-12-28 01:52:30  81.7.189.37 97eaa38b26158cbf0c9cbea8ec944f36 UA identified: (5670) Mozilla/5.0 (compatible; Baiduspider/2.0; +http://www.baidu.com/search/spider.html)
+2011-12-28 02:00:39  81.7.189.37 7ee917f6703211f1fb6f1d0a5f989b02 UA identified: (5670) Mozilla/5.0 (compatible; bingbot/2.0; +http://www.bing.com/bingbot.htm)
+2011-12-28 02:14:13  81.7.189.54 bc6323bd798051851efff4a98efcbc34 UA identified: (5670) Mozilla/5.0 (compatible; Baiduspider/2.0; +http://www.baidu.com/search/spider.html)
+2011-12-28 02:32:48  81.7.189.54 82b229046af9a2887d936d28fc1af848 UA identified: (5670) Mozilla/5.0 (compatible; Baiduspider/2.0; +http://www.baidu.com/search/spider.html)
+2011-12-28 02:33:18  81.7.189.37 5c77eab378b0a8372151a15ab00e6928 UA identified: (6495) Mozilla/5.0 (Windows NT 5.1; rv:6.0.2) Gecko/20100101 Firefox/6.0.2
+2011-12-28 02:33:18  81.7.189.37 aa19c5ced2e00fe1aa4399b6c63124f0 UA identified: (6495) Mozilla/5.0 (Windows NT 5.1; rv:6.0.2) Gecko/20100101 Firefox/6.0.2
+2011-12-28 02:33:25  81.7.189.54 a6f168c2d7531c339e9170fc7d117168 UA identified: (5670) Mozilla/5.0 (compatible; Baiduspider/2.0; +http://www.baidu.com/search/spider.html)
+2011-12-28 02:36:34  81.7.189.54 c60f6f399b317da8bc6501f31b205fd6 UA unidentified: Opera/9.80 (Android; Opera Mini/6.5.27049/26.1305; U; en) Presto/2.8.119 Version/10.54
+2011-12-28 02:36:38  81.7.189.54 c60f6f399b317da8bc6501f31b205fd6 UA guessed: (6439)
+2011-12-28 02:40:46  81.7.189.54 f791597f9b08dda98f064b36cc295ba8 UA identified: (5670) Mozilla/5.0 (compatible; bingbot/2.0; +http://www.bing.com/bingbot.htm)
+2011-12-28 02:59:42  81.7.189.37 67f5d116602c6206f4351d25c81f8175 UA identified: (5670) Mozilla/5.0 (compatible; bingbot/2.0; +http://www.bing.com/bingbot.htm)
+2011-12-28 03:01:25  77.66.17.247 36155f58abeae959f4a7a00e60e7d0b7 UA identified: (6473) Mozilla/5.0 (Windows NT 6.1; WOW64; rv:5.0) Gecko/20100101 Firefox/5.0
+2011-12-28 03:26:49  81.7.189.37 8839eae82208da034a4c4df2071c4151 UA unidentified: Mozilla/5.0 (compatible; ApptusBot/2.0; +http://www.eniro.se)
+2011-12-28 03:26:53  81.7.189.37 8839eae82208da034a4c4df2071c4151 UA guessed: (455)
+2011-12-28 03:26:54  81.7.189.37 fb3983cd85ccc97b6c0b7d3ba3226766 UA unidentified: Mozilla/5.0 (compatible; ApptusBot/2.0; +http://www.eniro.se)
+2011-12-28 03:26:56  81.7.189.37 fb3983cd85ccc97b6c0b7d3ba3226766 UA guessed: (455)
+2011-12-28 03:26:57  81.7.189.37 fe4d0ba303cb0b7fbe40cf821a3da3d8 UA unidentified: Mozilla/5.0 (compatible; ApptusBot/2.0; +http://www.eniro.se)
+2011-12-28 03:27:00  81.7.189.37 fe4d0ba303cb0b7fbe40cf821a3da3d8 UA guessed: (455)
+2011-12-28 03:27:01  81.7.189.37 3704977aa244e0d95b1c3dab5fbe00a6 UA unidentified: Mozilla/5.0 (compatible; ApptusBot/2.0; +http://www.eniro.se)
+2011-12-28 03:27:03  81.7.189.37 3704977aa244e0d95b1c3dab5fbe00a6 UA guessed: (455)
+2011-12-28 03:27:04  81.7.189.37 22f8ecdb2a19d04e8bf608f58ff608d7 UA unidentified: Mozilla/5.0 (compatible; ApptusBot/2.0; +http://www.eniro.se)
+2011-12-28 03:27:06  81.7.189.37 22f8ecdb2a19d04e8bf608f58ff608d7 UA guessed: (455)
+2011-12-28 03:27:07  81.7.189.37 70735cf11287e61e1c8d39ba40233155 UA unidentified: Mozilla/5.0 (compatible; ApptusBot/2.0; +http://www.eniro.se)
+2011-12-28 03:27:10  81.7.189.37 70735cf11287e61e1c8d39ba40233155 UA guessed: (455)
+2011-12-28 03:27:11  81.7.189.37 c2db979a8816e9560fae35e0a443ef26 UA unidentified: Mozilla/5.0 (compatible; ApptusBot/2.0; +http://www.eniro.se)
+2011-12-28 03:27:13  81.7.189.37 c2db979a8816e9560fae35e0a443ef26 UA guessed: (455)
+2011-12-28 03:27:14  81.7.189.37 a4a58b702a5c97433be86da0ebe89204 UA unidentified: Mozilla/5.0 (compatible; ApptusBot/2.0; +http://www.eniro.se)
+2011-12-28 03:27:17  81.7.189.37 a4a58b702a5c97433be86da0ebe89204 UA guessed: (455)
+2011-12-28 03:27:18  81.7.189.37 5c41f0d700d83f7b78a29fcd9bbc6625 UA unidentified: Mozilla/5.0 (compatible; ApptusBot/2.0; +http://www.eniro.se)
+2011-12-28 03:27:20  81.7.189.37 5c41f0d700d83f7b78a29fcd9bbc6625 UA guessed: (455)
+2011-12-28 03:27:21  81.7.189.37 732b1bd6a25161bfb07631e153af951c UA unidentified: Mozilla/5.0 (compatible; ApptusBot/2.0; +http://www.eniro.se)
+2011-12-28 03:27:24  81.7.189.37 732b1bd6a25161bfb07631e153af951c UA guessed: (455)
+2011-12-28 03:27:25  81.7.189.37 a00a06d04e16bfbcf0f6f2f5efa80bd5 UA unidentified: Mozilla/5.0 (compatible; ApptusBot/2.0; +http://www.eniro.se)
+2011-12-28 03:27:27  81.7.189.37 a00a06d04e16bfbcf0f6f2f5efa80bd5 UA guessed: (455)
+2011-12-28 03:27:28  81.7.189.37 d207e3bbb263ccfbc5293519018e9ab6 UA unidentified: Mozilla/5.0 (compatible; ApptusBot/2.0; +http://www.eniro.se)
+2011-12-28 03:27:31  81.7.189.37 d207e3bbb263ccfbc5293519018e9ab6 UA guessed: (455)
+2011-12-28 03:27:32  81.7.189.37 18810c97f6d5b55dbdfd2aebbd8ef21b UA unidentified: Mozilla/5.0 (compatible; ApptusBot/2.0; +http://www.eniro.se)
+2011-12-28 03:27:34  81.7.189.37 18810c97f6d5b55dbdfd2aebbd8ef21b UA guessed: (455)
+2011-12-28 03:27:36  81.7.189.37 8c9e2a1ff010874c28c6a55745f78691 UA unidentified: Mozilla/5.0 (compatible; ApptusBot/2.0; +http://www.eniro.se)
+2011-12-28 03:27:38  81.7.189.37 8c9e2a1ff010874c28c6a55745f78691 UA guessed: (455)
+2011-12-28 03:27:39  81.7.189.37 06ef0e0c370f9388cdbb0bf844f89783 UA unidentified: Mozilla/5.0 (compatible; ApptusBot/2.0; +http://www.eniro.se)
+2011-12-28 03:27:42  81.7.189.37 06ef0e0c370f9388cdbb0bf844f89783 UA guessed: (455)
+2011-12-28 03:27:43  81.7.189.37 de6ccd37f41e9643441fe47211838916 UA unidentified: Mozilla/5.0 (compatible; ApptusBot/2.0; +http://www.eniro.se)
+2011-12-28 03:27:45  81.7.189.37 de6ccd37f41e9643441fe47211838916 UA guessed: (455)
+2011-12-28 03:27:47  81.7.189.37 10ddec591784de74ef167f470f2f88f0 UA unidentified: Mozilla/5.0 (compatible; ApptusBot/2.0; +http://www.eniro.se)
+2011-12-28 03:27:49  81.7.189.37 10ddec591784de74ef167f470f2f88f0 UA guessed: (455)
+2011-12-28 03:27:50  81.7.189.37 35441d446a2bf92146f541b475ca233b UA unidentified: Mozilla/5.0 (compatible; ApptusBot/2.0; +http://www.eniro.se)
+2011-12-28 03:27:53  81.7.189.37 35441d446a2bf92146f541b475ca233b UA guessed: (455)
+2011-12-28 03:27:54  81.7.189.37 2f8a0977f1ef91338a9f4ab39f33829f UA unidentified: Mozilla/5.0 (compatible; ApptusBot/2.0; +http://www.eniro.se)
+2011-12-28 03:27:56  81.7.189.37 2f8a0977f1ef91338a9f4ab39f33829f UA guessed: (455)
+2011-12-28 03:27:58  81.7.189.37 8e5dd520f6ca6f73db43d7d51dc59f47 UA unidentified: Mozilla/5.0 (compatible; ApptusBot/2.0; +http://www.eniro.se)
+2011-12-28 03:28:00  81.7.189.37 8e5dd520f6ca6f73db43d7d51dc59f47 UA guessed: (455)
+2011-12-28 03:28:01  81.7.189.37 1d18d2988e57067341b9e5bb29d0c341 UA unidentified: Mozilla/5.0 (compatible; ApptusBot/2.0; +http://www.eniro.se)
+2011-12-28 03:28:04  81.7.189.37 1d18d2988e57067341b9e5bb29d0c341 UA guessed: (455)
+2011-12-28 03:28:05  81.7.189.37 8a025285526553d486f9106a68764400 UA unidentified: Mozilla/5.0 (compatible; ApptusBot/2.0; +http://www.eniro.se)
+2011-12-28 03:28:07  81.7.189.37 8a025285526553d486f9106a68764400 UA guessed: (455)
+2011-12-28 03:28:09  81.7.189.37 35c3f12958af1d8e78fc2328f37c2bba UA unidentified: Mozilla/5.0 (compatible; ApptusBot/2.0; +http://www.eniro.se)
+2011-12-28 03:28:11  81.7.189.37 35c3f12958af1d8e78fc2328f37c2bba UA guessed: (455)
+2011-12-28 03:28:12  81.7.189.37 5ee331132110ac2e02d8cab637f7402c UA unidentified: Mozilla/5.0 (compatible; ApptusBot/2.0; +http://www.eniro.se)
+2011-12-28 03:28:15  81.7.189.37 5ee331132110ac2e02d8cab637f7402c UA guessed: (455)
+2011-12-28 03:28:16  81.7.189.37 62cdffe2fa45440a5260a08e81d31e0c UA unidentified: Mozilla/5.0 (compatible; ApptusBot/2.0; +http://www.eniro.se)
+2011-12-28 03:28:18  81.7.189.37 62cdffe2fa45440a5260a08e81d31e0c UA guessed: (455)
+2011-12-28 03:28:19  81.7.189.37 20a3e697f1ed233bdf59d6f70d01f7ce UA unidentified: Mozilla/5.0 (compatible; ApptusBot/2.0; +http://www.eniro.se)
+2011-12-28 03:28:22  81.7.189.37 20a3e697f1ed233bdf59d6f70d01f7ce UA guessed: (455)
+2011-12-28 03:28:23  81.7.189.37 cd09c42b6a41b2fa6812a57f25b461f2 UA unidentified: Mozilla/5.0 (compatible; ApptusBot/2.0; +http://www.eniro.se)
+2011-12-28 03:28:25  81.7.189.37 cd09c42b6a41b2fa6812a57f25b461f2 UA guessed: (455)
+2011-12-28 03:28:27  81.7.189.37 9995431654d14251afa0634f3cd42f47 UA unidentified: Mozilla/5.0 (compatible; ApptusBot/2.0; +http://www.eniro.se)
+2011-12-28 03:28:29  81.7.189.37 9995431654d14251afa0634f3cd42f47 UA guessed: (455)
+2011-12-28 03:53:51  81.7.189.37 d08219530a174790306298140a26e51f UA identified: (5670) Sosospider+(+http://help.soso.com/webspider.htm)
+2011-12-28 04:00:57  81.7.189.54 6bcccc8647eded7bc0b8940cc8618908 UA identified: (6360) Mozilla/5.0 (iPhone; CPU iPhone OS 5_0_1 like Mac OS X) AppleWebKit/534.46 (KHTML, like Gecko) Mobile/9A405
+2011-12-28 04:13:46  81.7.189.54 7e9ba831b34d2aee8973e34095991e5c UA identified: (5670) Mozilla/5.0 (compatible; Baiduspider/2.0; +http://www.baidu.com/search/spider.html)
+2011-12-28 04:19:51  81.7.189.37 ab250da05f4e21098b63d1ca3d45f93e UA identified: (5670) Mozilla/5.0 (compatible; Baiduspider/2.0; +http://www.baidu.com/search/spider.html)
+2011-12-28 04:21:42  81.7.189.54 182b31297c23fd6963cb514381898642 UA identified: (5670) Mozilla/5.0 (compatible; Baiduspider/2.0; +http://www.baidu.com/search/spider.html)
+2011-12-28 04:21:52  81.7.189.54 09c3ae31b793d24f0737d2d583f19393 UA identified: (5670) Mozilla/5.0 (compatible; Baiduspider/2.0; +http://www.baidu.com/search/spider.html)
+2011-12-28 04:30:10  77.66.17.246 3f18be4a3893cf324cc76c7a657b1c79 UA identified: (5670) Mozilla/5.0 (compatible; Exabot/3.0; +http://www.exabot.com/go/robot)
+2011-12-28 04:36:58  81.7.189.54 381bb85bcdac2153c4fafea588c4834c UA identified: (5670) Mozilla/5.0 (compatible; Baiduspider/2.0; +http://www.baidu.com/search/spider.html)
+2011-12-28 04:43:18  81.7.189.54 0f1fef44752ce51b4901b89985ee842f UA identified: (5670) Mozilla/5.0 (compatible; Baiduspider/2.0; +http://www.baidu.com/search/spider.html)
+2011-12-28 05:16:31  77.66.17.247 2e1b540892a3e52ccf51e0ac7b05cfdc UA unidentified: Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.0) LinkCheck by Siteimprove.com
+2011-12-28 05:16:37  77.66.17.247 2e1b540892a3e52ccf51e0ac7b05cfdc UA guessed: (5487)
+2011-12-28 05:28:08  81.7.189.54 2ae498888a51a9e86352aa0773d364a1 UA identified: (5498) Mozilla/4.0 (compatible; MSIE 5.01; Windows NT 5.0)
+2011-12-28 05:28:14  81.7.189.54 322fd1bb14e09dc6eaa40b12d166c47e UA identified: (5670) Mozilla/5.0 (compatible; Baiduspider/2.0; +http://www.baidu.com/search/spider.html)
+2011-12-28 05:28:29  81.7.189.54 88b903ba4f27340cee5cd1d0ffd7cfc4 UA identified: (5670) Mozilla/5.0 (compatible; Baiduspider/2.0; +http://www.baidu.com/search/spider.html)
+2011-12-28 05:33:48  81.7.189.54 441cb642eaa6598e1cad2bfb9bbc62c8 UA identified: (5670) Mozilla/5.0 (compatible; YandexBot/3.0; +http://yandex.com/bots)
+2011-12-28 05:33:49  81.7.189.54 847b0a6e95fbcddb1a7735e44edb07d3 UA identified: (5670) Mozilla/5.0 (compatible; YandexBot/3.0; +http://yandex.com/bots)
+2011-12-28 05:34:29  81.7.189.37 55424d3f7570666244ca3c7212a9fbb0 UA identified: (5670) Mozilla/5.0 (compatible; Baiduspider/2.0; +http://www.baidu.com/search/spider.html)
+2011-12-28 05:53:17  81.7.189.37 984d420d1f7c8ce5aef9648cb69c50d7 UA identified: (5670) Mozilla/5.0 (compatible; Baiduspider/2.0; +http://www.baidu.com/search/spider.html)
+2011-12-28 06:14:12  81.7.189.54 37e7dfad5b199d919f23f9c351c7f049 UA identified: (5670) Mozilla/5.0 (compatible; Baiduspider/2.0; +http://www.baidu.com/search/spider.html)
+2011-12-28 06:24:52  81.7.189.54 fa6d522da0bb59caf69f4445708e3808 UA identified: (5670) Mozilla/5.0 (compatible; Baiduspider/2.0; +http://www.baidu.com/search/spider.html)
+2011-12-28 06:25:10  81.7.189.54 419d49ebe7b6d4ac1a4cb3aea07c8fb0 UA identified: (5670) Mozilla/5.0 (compatible; Baiduspider/2.0; +http://www.baidu.com/search/spider.html)
+2011-12-28 06:49:21  81.7.189.54 ba8de630243a3ad2e9e6fff262e6b186 UA identified: (6413) Mozilla/5.0 (Linux; U; Android 2.2.2; da-dk; Desire_A8181 Build/FRG83G) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 Mobile Safari/533.1
+2011-12-28 07:01:04  81.7.189.37 099de3f99ec6b6d60b756cf15d095828 UA unidentified: Mozilla/5.0 (compatible; Konqueror/3.5; Linux) KHTML/3.5.9 (like Gecko) (Kubuntu)
+2011-12-28 07:01:08  81.7.189.37 099de3f99ec6b6d60b756cf15d095828 UA guessed: (6418)
+2011-12-28 07:16:55  81.7.189.54 8682f93828cee896be434b4ea19c65b9 UA identified: (5670) Mozilla/5.0 (compatible; bingbot/2.0; +http://www.bing.com/bingbot.htm)
+2011-12-28 07:18:11  81.7.189.37 cdf22453b04d06417742423323350d33 UA identified: (5489) Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 5.1; Trident/4.0; .NET CLR 1.1.4322; .NET CLR 2.0.50727; .NET CLR 3.0.4506.2152; .NET CLR 3.5.30729)
+2011-12-28 07:23:50  81.7.189.54 490c7e19387db5c0dcd0e2946efa2ba5 UA identified: (6360) Mozilla/5.0 (iPhone; CPU iPhone OS 5_0_1 like Mac OS X) AppleWebKit/534.46 (KHTML, like Gecko) Version/5.1 Mobile/9A405 Safari/7534.48.3
+2011-12-28 07:26:43  81.7.189.54 b8e44e5480650795e3b4b70062b72cd7 UA identified: (5487) Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.1; InfoPath.1; .NET CLR 2.0.50727; .NET CLR 1.1.4322; MS-RTC LM 8; .NET CLR 3.0.4506.2152; .NET CLR 3.5.30729)
+2011-12-28 07:26:43  81.7.189.54 36836ebde404c880243cdaad584e7a91 UA unidentified: Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 5.1; Trident/4.0; F-6.0SP2-20041109; InfoPath.1; .NET CLR 1.1.4322; .NET CLR 2.0.50727; .NET CLR 3.0.04506.30; .NET CLR 3.0.4506.2152; .NET CLR 3.5.30729; MS-RTC LM 8)
+2011-12-28 07:26:47  81.7.189.54 36836ebde404c880243cdaad584e7a91 UA guessed: (5489)
+2011-12-28 07:26:52  81.7.189.54 2e1c1cc6fafd5557ffc505de1223f4ec UA identified: (5670) Mozilla/5.0 (compatible; Baiduspider/2.0; +http://www.baidu.com/search/spider.html)
+2011-12-28 07:27:16  81.7.189.54 ab21162dbd1f0ecaf1a383ac7c5012dc UA identified: (5670) Mozilla/5.0 (compatible; Baiduspider/2.0; +http://www.baidu.com/search/spider.html)
+2011-12-28 07:31:19  81.7.189.54 5282108344058b044e2002c4143dca1c UA unidentified: Mozilla/6.0 (compatible)
+2011-12-28 07:31:22  81.7.189.54 5282108344058b044e2002c4143dca1c UA guessed: (5487)
+2011-12-28 07:31:36  81.7.189.54 3191d6736eb7fe9d01ac25aababbfaa9 UA unidentified: Mozilla/6.0 (compatible)
+2011-12-28 07:31:37  81.7.189.54 7e88648b340c167ae5387341527e6366 UA unidentified: Mozilla/6.0 (compatible)
+2011-12-28 07:31:37  81.7.189.54 8a2daadcc51c16c9f5877c825f4ead1c UA unidentified: Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.1)
+2011-12-28 07:31:39  81.7.189.54 7e88648b340c167ae5387341527e6366 UA guessed: (5487)
+2011-12-28 07:31:39  81.7.189.54 8a2daadcc51c16c9f5877c825f4ead1c UA guessed: (5487)
+2011-12-28 07:31:39  81.7.189.54 3191d6736eb7fe9d01ac25aababbfaa9 UA guessed: (5487)
+2011-12-28 07:31:52  81.7.189.54 e6e45e065354bbc8d67cd27da804e098 UA unidentified: Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.1)
+2011-12-28 07:31:53  81.7.189.54 2b7ec8191bc487152d7285099cb76fd9 UA identified: (6462) Mozilla/5.0 (compatible)
+2011-12-28 07:31:53  81.7.189.54 eae8fbe32c69ecb991f41394f94d8a23 UA unidentified: Mozilla/6.0 (compatible)
+2011-12-28 07:31:55  81.7.189.54 e6e45e065354bbc8d67cd27da804e098 UA guessed: (5487)
+2011-12-28 07:31:55  81.7.189.54 eae8fbe32c69ecb991f41394f94d8a23 UA guessed: (5487)
+2011-12-28 07:49:59  81.7.189.37 b74ade530f9469f71d86ee3f7dee4e16 UA identified: (5670) Mozilla/5.0 (compatible; YandexBot/3.0; +http://yandex.com/bots)
+2011-12-28 08:11:12  81.7.189.37 483e1bea53ff7e5d8983cc3285c75116 UA identified: (5670) Java/1.6.0_07
+2011-12-28 08:11:12  81.7.189.37 7e1d7c7d9f52cf09982decbfe19b2d72 UA identified: (5670) Java/1.6.0_07
+2011-12-28 08:11:12  81.7.189.37 32fd731d7d640868bef45d718dc2bb45 UA identified: (5670) Java/1.6.0_07
+2011-12-28 08:11:12  81.7.189.37 0f3e07e8250ad2173de5b393546107a8 UA identified: (5670) Java/1.6.0_07
+2011-12-28 08:11:12  81.7.189.37 4def5bc3e3332b267057997e4f0036a4 UA identified: (5670) Java/1.6.0_07
+2011-12-28 08:11:12  81.7.189.37 9ff3789772a044c6c49c3391ee911247 UA identified: (5670) Java/1.6.0_07
+2011-12-28 08:11:13  81.7.189.37 1b510c5b37eac8bf45273f0dd73b955a UA identified: (5670) Java/1.6.0_07
+2011-12-28 08:11:13  81.7.189.37 b5a3aca237a6dcb53974b31175fb6431 UA identified: (5670) Java/1.6.0_07
+2011-12-28 08:11:13  81.7.189.37 4b40d22c06f045c11fa282e8cd4ad8eb UA identified: (5670) Java/1.6.0_07
+2011-12-28 08:11:13  81.7.189.37 80c94128315a1c6438c0e408e5e91679 UA identified: (5670) Java/1.6.0_07
+2011-12-28 08:11:13  81.7.189.37 9549955ead3a77657d9cb2a01405d4f6 UA identified: (5670) Java/1.6.0_07
+2011-12-28 08:11:13  81.7.189.37 555ca3fce3305185d9861c54f6cc92fa UA identified: (5670) Java/1.6.0_07
+2011-12-28 08:11:48  81.7.189.54 93034d13655adefaee14c89acfc13124 UA identified: (6360) Mozilla/5.0 (iPhone; CPU iPhone OS 5_0_1 like Mac OS X) AppleWebKit/534.46 (KHTML, like Gecko) Mobile/9A405
+2011-12-28 08:12:35  81.7.189.54 f8117b3922e2a532022ecb546b131db6 UA identified: (5670) Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)
+2011-12-28 08:13:37  81.7.189.54 60eb71a857e1b6dada68e10ceedf5031 UA identified: (5670) Mozilla/5.0 (compatible; Baiduspider/2.0; +http://www.baidu.com/search/spider.html)
+2011-12-28 08:24:26  81.7.189.54 61bb3dfb8126d4763463cc37330fe6de UA identified: (5670) Mozilla/5.0 (compatible; Baiduspider/2.0; +http://www.baidu.com/search/spider.html)
+2011-12-28 08:24:42  81.7.189.54 4def232cbea11a3bac150811bdb06dab UA identified: (5670) Mozilla/5.0 (compatible; Baiduspider/2.0; +http://www.baidu.com/search/spider.html)
+2011-12-28 08:29:52  81.7.189.37 700e3dd347e36010fdf4d03970063cb4 UA identified: (5488) Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)
+2011-12-28 08:33:36  81.7.189.37 eeba1ef49cf6dc2928db24df15489580 UA identified: (5670) Mozilla/5.0 (compatible; Baiduspider/2.0; +http://www.baidu.com/search/spider.html)
+2011-12-28 08:42:10  81.7.189.37 9ad1f722cd5ace81cb32bf88eb6de07a UA identified: (6429) Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Trident/5.0)
+2011-12-28 08:43:53  81.7.189.54 56bc1eb0248d082d1becb162c05621e5 UA identified: (6502) Mozilla/5.0 (Linux; U; Android 2.3.3; da-dk; HTC_IncredibleS_S710e Build/GRI40) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 Mobile Safari/533.1
+2011-12-28 08:44:11  81.7.189.54 328a40b5320919883992c20d4284d5a5 UA UNIQUE identified: (5489) Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.1; Trident/4.0; GTB7.2; SLCC2; .NET CLR 2.0.50727; .NET CLR 3.5.30729; .NET CLR 3.0.30729; Media Center PC 6.0; .NET4.0C)
+2011-12-28 08:45:35  81.7.189.54 d42df3ad5436a5a382a1aecc2a9a1d04 UA identified: (5670) Gigabot/3.0 (http://www.gigablast.com/spider.html)
+2011-12-28 08:45:40  81.7.189.54 24583139d3dcaa26113074a0ed8a5fe2 UA identified: (6360) Mozilla/5.0 (iPhone; CPU iPhone OS 5_0_1 like Mac OS X) AppleWebKit/534.46 (KHTML, like Gecko) Mobile/9A405
+2011-12-28 08:47:23  81.7.189.37 614911f63b416ccffd9242fabe56fdcd UA UNIQUE identified: (5489) Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 5.1; Trident/4.0; .NET CLR 1.1.4322; .NET CLR 2.0.50727; .NET CLR 3.0.4506.2152; .NET CLR 3.5.30729; .NET4.0C; .NET4.0E; MS-RTC LM 8; InfoPath.3)
+2011-12-28 08:47:23  81.7.189.37 f413c49db30d5fa104e91b90bbfdd21a UA identified: (5487) Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.1; InfoPath.1; .NET CLR 2.0.50727; .NET CLR 1.1.4322; MS-RTC LM 8; .NET CLR 3.0.4506.2152; .NET CLR 3.5.30729)
+2011-12-28 08:47:51  81.7.189.37 5305f757e84116f744ad620be4b56095 UA identified: (5487) Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.1; InfoPath.1; .NET CLR 2.0.50727; .NET CLR 1.1.4322; MS-RTC LM 8; .NET CLR 3.0.4506.2152; .NET CLR 3.5.30729)
+2011-12-28 08:48:02  81.7.189.37 0d9b342946d228533942818b5f794bf9 UA identified: (5487) Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.1; InfoPath.1; .NET CLR 2.0.50727; .NET CLR 1.1.4322; MS-RTC LM 8; .NET CLR 3.0.4506.2152; .NET CLR 3.5.30729)
+2011-12-28 08:48:39  81.7.189.37 b7a629afcaa3c65a04a90e704aed3f8d UA identified: (5487) Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.1; InfoPath.1; .NET CLR 2.0.50727; .NET CLR 1.1.4322; MS-RTC LM 8; .NET CLR 3.0.4506.2152; .NET CLR 3.5.30729)
+2011-12-28 08:53:32  81.7.189.37 f6d554ce4674ba63da0d901c3e1f73e2 UA UNIQUE identified: (5487) Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.0) LinkCheck by Siteimprove.com
+2011-12-28 09:33:17  81.7.189.54 a41750fe3d3f1eb0f6d4b43d94a87058 UA identified: (5670) Mozilla/5.0 (compatible; Baiduspider/2.0; +http://www.baidu.com/search/spider.html)
+2011-12-28 09:33:53  81.7.189.54 0a7c8f09687b44c12ebd9ceeb41acb35 UA identified: (5670) Mozilla/5.0 (compatible; Baiduspider/2.0; +http://www.baidu.com/search/spider.html)
+2011-12-28 09:34:15  81.7.189.37 77f66b69736772c59c245a6ac1f0cbc5 UA identified: (5670) Mozilla/5.0 (compatible; Baiduspider/2.0; +http://www.baidu.com/search/spider.html)
+2011-12-28 09:34:54  81.7.189.37 d78c5dac8b7cc0fdc6a36c8dd0d012cd UA identified: (5670) Mozilla/5.0 (compatible; Baiduspider/2.0; +http://www.baidu.com/search/spider.html)
+2011-12-28 09:46:00  77.66.17.246 540ebdf6c874c3aece32f4d79310574c UA identified: (6356) Mozilla/5.0 (Macintosh; Intel Mac OS X 10_6_8) AppleWebKit/534.52.7 (KHTML, like Gecko) Version/5.1.2 Safari/534.52.7
+2011-12-28 09:48:54  81.7.189.37 b53a582502e0df5ea96255517f523080 UA identified: (5670) msnbot/2.0b (+http://search.msn.com/msnbot.htm)._
+2011-12-28 09:53:16  81.7.189.54 4039a5a42813d0ad2ceba2590d784eac UA identified: (6360) Mozilla/5.0 (iPhone; CPU iPhone OS 5_0_1 like Mac OS X) AppleWebKit/534.46 (KHTML, like Gecko) Version/5.1 Mobile/9A405 Safari/7534.48.3
+2011-12-28 09:53:40  81.7.189.54 9500d159096fac73eeea87731278154f UA identified: (6360) Mozilla/5.0 (iPhone; CPU iPhone OS 5_0_1 like Mac OS X) AppleWebKit/534.46 (KHTML, like Gecko) Version/5.1 Mobile/9A405 Safari/7534.48.3
+2011-12-28 09:56:41  81.7.189.54 4a5374aa06b36d3421a444771b3c3337 UA identified: (5670) Mozilla/5.0 (compatible; bingbot/2.0; +http://www.bing.com/bingbot.htm)
+2011-12-28 10:02:41  81.7.189.54 eac4cc9d1d2b91fb43a0d2adebe03045 UA identified: (5670) Mozilla/5.0 (compatible; bingbot/2.0; +http://www.bing.com/bingbot.htm)
+2011-12-28 10:08:46  81.7.189.54 7a534c137d4ca855d82c87a5a36960e3 UA identified: (6360) Mozilla/5.0 (iPhone; CPU iPhone OS 5_0_1 like Mac OS X) AppleWebKit/534.46 (KHTML, like Gecko) Mobile/9A405
+2011-12-28 10:13:05  81.7.189.54 ba88b27b53eab60b462f53c4fb0697c7 UA identified: (6360) Mozilla/5.0 (iPhone; CPU iPhone OS 5_0_1 like Mac OS X) AppleWebKit/534.46 (KHTML, like Gecko) Mobile/9A405
+2011-12-28 10:13:43  81.7.189.54 0498512930b0b4ed8d43e6d2aaf45a6e UA identified: (5670) Mozilla/5.0 (compatible; Baiduspider/2.0; +http://www.baidu.com/search/spider.html)
+2011-12-28 10:16:23  81.7.189.37 c2ef8d353f00add2197333844193be6c UA UNIQUE identified: (5489) Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.0; Trident/4.0; SLCC1; .NET CLR 2.0.50727; .NET CLR 3.5.30729; .NET4.0C; .NET CLR 3.0.30729)
+2011-12-28 10:19:42  81.7.189.54 34c278405bec3f44889d821f94125260 UA identified: (6395) Mozilla/5.0 (iPod; U; CPU iPhone OS 4_3_5 like Mac OS X; da-dk) AppleWebKit/533.17.9 (KHTML, like Gecko) Mobile/8L1
+2011-12-28 10:21:17  81.7.189.54 2c491cba9824a6e780622e22138ebf18 UA identified: (6360) Mozilla/5.0 (iPhone; CPU iPhone OS 5_0_1 like Mac OS X) AppleWebKit/534.46 (KHTML, like Gecko) Mobile/9A405
+2011-12-28 10:25:11  81.7.189.54 12d92a4933ea0fe7a389b31346e56a75 UA unidentified: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7_2) AppleWebKit/534.52.7 (KHTML, like Gecko) Version/5.1.2 Safari/534.52.7
+2011-12-28 10:25:14  81.7.189.54 12d92a4933ea0fe7a389b31346e56a75 UA guessed: (6356)
+2011-12-28 10:26:12  81.7.189.54 d14deb7a901026a1b90f1410e44d16a8 UA identified: (5477) Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.5; da; rv:1.9.2.17) Gecko/20110420 Firefox/3.6.17
+2011-12-28 10:26:37  81.7.189.54 0628db74ae39cedde8db67f9ad4c8263 UA identified: (6360) Mozilla/5.0 (iPhone; CPU iPhone OS 5_0_1 like Mac OS X) AppleWebKit/534.46 (KHTML, like Gecko) Version/5.1 Mobile/9A405 Safari/7534.48.3
+2011-12-28 10:28:46  81.7.189.37 28cd4cce180b09b2ae9a18ff950cb651 UA identified: (5670) Mozilla/5.0 (compatible; YandexBot/3.0; +http://yandex.com/bots)
+2011-12-28 10:30:20  81.7.189.37 52637da8d7869a688167989318b8b9fc UA identified: (5670) Mozilla/5.0 (compatible; bingbot/2.0; +http://www.bing.com/bingbot.htm)
+2011-12-28 10:33:48  81.7.189.54 00e009cb186e643a4df0d2ddc24e3e64 UA identified: (6501) Mozilla/5.0 (Macintosh; Intel Mac OS X 10_6_8) AppleWebKit/535.7 (KHTML, like Gecko) Chrome/16.0.912.63 Safari/535.7
+2011-12-28 10:33:50  81.7.189.54 3c952dce490c306caa67ee29911214a3 UA identified: (5670) Mozilla/5.0 (compatible; Baiduspider/2.0; +http://www.baidu.com/search/spider.html)
+2011-12-28 10:34:23  81.7.189.54 15148087afc6310773f41c4a49650a2d UA identified: (5670) Mozilla/5.0 (compatible; Baiduspider/2.0; +http://www.baidu.com/search/spider.html)
+2011-12-28 10:34:26  81.7.189.54 ea7e02d42e56589e159a870478ae33a1 UA identified: (5670) Mozilla/5.0 (compatible; Baiduspider/2.0; +http://www.baidu.com/search/spider.html)
+2011-12-28 10:39:32  81.7.189.37 756e701b152f036fb7df009663be4fa3 UA identified: (6498) Mozilla/5.0 (Windows NT 5.1; rv:8.0.1) Gecko/20100101 Firefox/8.0.1
+2011-12-28 10:41:04  81.7.189.54 632d5a326b2b3e9803cd25633fc0c590 UA identified: (6360) Mozilla/5.0 (iPhone; CPU iPhone OS 5_0_1 like Mac OS X) AppleWebKit/534.46 (KHTML, like Gecko) Mobile/9A405
+2011-12-28 10:43:19  81.7.189.54 18816842838cff15058ee2b285bd3093 UA identified: (6360) Mozilla/5.0 (iPhone; CPU iPhone OS 5_0_1 like Mac OS X) AppleWebKit/534.46 (KHTML, like Gecko) Version/5.1 Mobile/9A405 Safari/7534.48.3
+2011-12-28 10:47:05  81.7.189.54 174a308685214d0d29fb3cde8a1dd0d8 UA identified: (5670) Mozilla/5.0 (compatible; Baiduspider/2.0; +http://www.baidu.com/search/spider.html)
+2011-12-28 10:47:11  81.7.189.54 e166e24341058d47db47a065f9350f7e UA UNIQUE identified: (5487) Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.2;  SV1;  .NET CLR 1.1.4322;  .NET CLR 2.0.40607;  .NET CLR 3.0.04506.648)
+2011-12-28 10:54:58  77.66.17.246 122bf6fa6760bef938cd4d0b421bab1c UA UNIQUE identified: (5487) Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.1; .NET CLR 1.1.4322; .NET CLR 2.0.50727; .NET CLR 3.0.4506.2152; .NET CLR 3.5.30729; .NET4.0C; .NET4.0E; InfoPath.2)
+2011-12-28 10:55:37  77.66.17.246 893c031296e2581541489f1590b2db25 UA UNIQUE identified: (5487) Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.1;  SLCC1;  .NET CLR 1.1.4322;  .NET CLR 2.0.40607;  .NET CLR 3.0.04506.648)
+2011-12-28 10:56:39  81.7.189.54 6462d3382480c2a4714c2bfd7f7ef2e5 UA identified: (6528) Mozilla/5.0 (Linux; U; Android 2.3.5; en-us; GT-I9100 Build/GINGERBREAD) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 Mobile Safari/533.1
+2011-12-28 11:00:17  81.7.189.54 61869d59a9093d6396ae203a6d4ed114 UA identified: (6360) Mozilla/5.0 (iPhone; CPU iPhone OS 5_0_1 like Mac OS X) AppleWebKit/534.46 (KHTML, like Gecko) Mobile/9A405
+2011-12-28 11:02:29  81.7.189.37 a880bc9feb137669ffad1a89ff6919b0 UA identified: (5670) Sosospider+(+http://help.soso.com/webspider.htm)
+2011-12-28 11:11:37  81.7.189.54 7e3baf5fbd1bba8a49f032a07396b6b3 UA identified: (6360) Mozilla/5.0 (iPhone; CPU iPhone OS 5_0_1 like Mac OS X) AppleWebKit/534.46 (KHTML, like Gecko) Mobile/9A405
+2011-12-28 11:11:57  81.7.189.54 c031a98fe02ec64252bdb5df5139433f UA identified: (6501) Mozilla/5.0 (Macintosh; Intel Mac OS X 10_6_8) AppleWebKit/535.7 (KHTML, like Gecko) Chrome/16.0.912.63 Safari/535.7
+2011-12-28 11:12:21  77.66.17.247 8130b33b5bd6740381cf73b4e2565968 UA identified: (6356) Mozilla/5.0 (Macintosh; Intel Mac OS X 10_5_8) AppleWebKit/534.50.2 (KHTML, like Gecko) Version/5.0.6 Safari/533.22.3
+2011-12-28 11:15:33  81.7.189.37 7d65889a969625d944754865bbb1e704 UA identified: (5488) Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)
+2011-12-28 11:17:00  81.7.189.37 b7eaa81178bf133e4a5c34d46a8f29f4 UA identified: (5670) Mozilla/5.0 (compatible; YandexBot/3.0; +http://yandex.com/bots)
+2011-12-28 11:23:43  81.7.189.54 23b88b906f18f4995c770bb53a46fbb8 UA unidentified: Mozilla/5.0 (compatible; MSIE 9.0; Windows Phone OS 7.5; Trident/5.0; IEMobile/9.0; HTC; 7 Mozart T8698)
+2011-12-28 11:23:47  81.7.189.54 23b88b906f18f4995c770bb53a46fbb8 UA guessed: (6429)
+2011-12-28 11:27:12  81.7.189.37 76f7b0aef6b7b978a3e496d0a6f80650 UA unidentified: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:9.0) Gecko/20100101 Firefox/9.0
+2011-12-28 11:27:15  81.7.189.37 76f7b0aef6b7b978a3e496d0a6f80650 UA guessed: (6473)
+2011-12-28 11:32:47  81.7.189.37 811b1921390e64771ff69184898b31b8 UA identified: (5488) Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)
+2011-12-28 11:33:31  81.7.189.37 e0ef62aa03bda418ad437e601db5321f UA identified: (1626) SAMSUNG-SGH-E250/1.0 Profile/MIDP-2.0 Configuration/CLDC-1.1 UP.Browser/6.2.3.3.c.1.101 (GUI) MMP/2.0 (compatible; Googlebot-Mobile/2.1; +http://www.google.com/bot.html)
+2011-12-28 11:42:35  81.7.189.54 f3a1a98ed6a55b9aabd3e69c3c85f1da UA identified: (6360) Mozilla/5.0 (iPhone; CPU iPhone OS 5_0_1 like Mac OS X) AppleWebKit/534.46 (KHTML, like Gecko) Mobile/9A405
+2011-12-28 11:45:29  81.7.189.54 fcd5c7ddfe95505e9f831d234c6103ad UA identified: (6360) Mozilla/5.0 (iPhone; CPU iPhone OS 5_0_1 like Mac OS X) AppleWebKit/534.46 (KHTML, like Gecko) Mobile/9A405
+2011-12-28 11:56:14  81.7.189.37 48bd3650723d82936d053122a0248cd7 UA UNIQUE identified: (5488) Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; SV1; FunWebProducts; SIMBAR={731C04B8-4220-11DC-82A2-001109821E58}; .NET CLR 1.1.4322)
+2011-12-28 11:56:40  81.7.189.54 55c0921d96453ef97007bc49c9b9caf5 UA identified: (6360) Mozilla/5.0 (iPhone; CPU iPhone OS 5_0_1 like Mac OS X) AppleWebKit/534.46 (KHTML, like Gecko) Mobile/9A405
+2011-12-28 12:01:26  81.7.189.54 258eafcc505eb1f4c994a59d987e4b0d UA identified: (6509) Mozilla/5.0 (Linux; U; Android 2.3.5; da-dk; HTC_DesireHD_A9191 Build/GRJ90) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 Mobile Safari/533.1
+2011-12-28 12:01:37  81.7.189.54 0b104ff636c07456807e93420ecbf819 UA identified: (6360) Mozilla/5.0 (iPhone; CPU iPhone OS 5_0_1 like Mac OS X) AppleWebKit/534.46 (KHTML, like Gecko) Version/5.1 Mobile/9A405 Safari/7534.48.3
+2011-12-28 12:01:41  81.7.189.54 b67f4b113e429aa4215038ed0353b7e7 UA identified: (6498) Mozilla/5.0 (Macintosh; Intel Mac OS X 10.7; rv:8.0.1) Gecko/20100101 Firefox/8.0.1
+2011-12-28 12:03:23  81.7.189.54 09b2a12c4d20bf40528273da2a24cd5e UA identified: (6360) Mozilla/5.0 (iPhone; U; CPU iPhone OS 4_2_1 like Mac OS X; da-dk) AppleWebKit/533.17.9 (KHTML, like Gecko) Mobile/8C148
+2011-12-28 12:10:45  2.106.197.91 dee87725022665760b0b0297da92ddc3 UA identified: (5487) Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.1)
+2011-12-28 12:13:40  81.7.189.54 45cf726632e5f75fb25c85de1cccdf1f UA identified: (5670) Mozilla/5.0 (compatible; Baiduspider/2.0; +http://www.baidu.com/search/spider.html)
+2011-12-28 12:17:09  81.7.189.54 185348a258fc7d76b5682b574b3f7356 UA identified: (5670) Mozilla/5.0 (compatible; bingbot/2.0; +http://www.bing.com/bingbot.htm)
+2011-12-28 12:18:36  2.106.197.91 5b47a2e6e022c55cb20da450e87beb43 UA identified: (5489) Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 5.1; Trident/4.0)
+2011-12-28 12:18:37  81.7.189.54 4895580d6c7729ddeee8c455a9808000 UA identified: (5670) Mozilla/5.0 (compatible; JikeSpider; +http://shoulu.jike.com/spider.html)
+2011-12-28 12:20:01  81.7.189.54 fa02e222eb762f970b15331a74b70685 UA unidentified: Mozilla/5.0 (Linux; U; Android 2.3.5; da-dk; HTC Desire S Build/GRJ90) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 Mobile Safari/533.1
+2011-12-28 12:20:04  81.7.189.54 fa02e222eb762f970b15331a74b70685 UA guessed: (6510)
+2011-12-28 12:24:06  81.7.189.54 2d0b7a1c8ccd6897e1f60f850ab5e490 UA identified: (5670) Mozilla/5.0 (compatible; Baiduspider/2.0; +http://www.baidu.com/search/spider.html)
+2011-12-28 12:25:07  81.7.189.54 5d4a734135d6d941f83aead5e1e908ce UA identified: (6509) Mozilla/5.0 (Linux; U; Android 2.3.5; da-dk; HTC_DesireHD_A9191 Build/GRJ90) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 Mobile Safari/533.1
+2011-12-28 12:28:02  81.7.189.54 f7ac0069b1109a87de30cc372dd61e09 UA identified: (6505) Mozilla/5.0 (Linux; U; Android 2.2.1; da-dk; HTC_Wildfire_A3333 Build/FRG83D) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 Mobile Safari/533.1
+2011-12-28 12:29:22  81.7.189.54 4c4957f01e22f959447abfaa22962cdc UA identified: (6360) Mozilla/5.0 (iPhone; CPU iPhone OS 5_0_1 like Mac OS X) AppleWebKit/534.46 (KHTML, like Gecko) Mobile/9A405
+2011-12-28 12:33:13  81.7.189.54 c8f73cb1a7f3832b94a92cdf005b9798 UA identified: (6360) Mozilla/5.0 (iPhone; CPU iPhone OS 5_0_1 like Mac OS X) AppleWebKit/534.46 (KHTML, like Gecko) Mobile/9A405
+2011-12-28 12:35:31  81.7.189.54 be253413ed4ad3e1eb78118167633fcb UA identified: (6360) Mozilla/5.0 (iPhone; CPU iPhone OS 5_0_1 like Mac OS X) AppleWebKit/534.46 (KHTML, like Gecko) Version/5.1 Mobile/9A405 Safari/7534.48.3
+2011-12-28 12:35:33  81.7.189.54 4e182d4a9f8e9d77aa456ace0fac4fda UA identified: (6360) Mozilla/5.0 (iPhone; CPU iPhone OS 5_0_1 like Mac OS X) AppleWebKit/534.46 (KHTML, like Gecko) Mobile/9A405
+2011-12-28 12:38:31  81.7.189.37 5c54c1910d6d1bb95bb5eb0f38b7971c UA identified: (5670) msnbot/2.0b (+http://search.msn.com/msnbot.htm)._
+2011-12-28 12:43:14  81.7.189.54 17a9ab81fca616fc99b9477d4ef45818 UA identified: (6360) Mozilla/5.0 (iPhone; U; CPU iPhone OS 4_3_1 like Mac OS X; da-dk) AppleWebKit/533.17.9 (KHTML, like Gecko) Mobile/8G4
+2011-12-28 12:45:24  81.7.189.54 9b06b9229c974c08cb2fbd315e1a93d2 UA identified: (6360) Mozilla/5.0 (iPhone; U; CPU iPhone OS 4_3_3 like Mac OS X; da-dk) AppleWebKit/533.17.9 (KHTML, like Gecko) Mobile/8J2
+2011-12-28 12:59:22  2.106.197.91 379b1698dab845f4024e9984e3863da8 UA identified: (5489) Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 5.1; Trident/4.0)
+2011-12-28 13:07:11  77.66.17.246 e972f3ecabb4b76515db1b80e3efba7d UA UNIQUE identified: (5489) Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 5.1; Trident/4.0; .NET4.0C; .NET CLR 1.1.4322; .NET CLR 2.0.50727; .NET CLR 3.0.4506.2152; .NET CLR 3.5.30729; .NET4.0E)
+2011-12-28 13:08:20  81.7.189.37 4c58cd8e9016d2af09d65450b0302e39 UA identified: (5489) Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 5.1; Trident/4.0)
+2011-12-28 13:08:40  81.7.189.37 b4754cb1023cc07d572b1fcd3d46e03f UA identified: (5488) Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)
+2011-12-28 13:13:59  81.7.189.37 039b1ff50978fd56507f1a18db9395af UA UNIQUE identified: (5489) Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.1; WOW64; Trident/4.0; SLCC2; .NET CLR 2.0.50727; .NET CLR 3.5.30729; .NET CLR 3.0.30729; Media Center PC 6.0)
+2011-12-28 13:18:38  77.66.17.247 c3778a036c338d1bd27e33c11ae25326 UA identified: (6356) Mozilla/5.0 (Macintosh; Intel Mac OS X 10_6_8) AppleWebKit/534.52.7 (KHTML, like Gecko) Version/5.1.2 Safari/534.52.7
+2011-12-28 13:19:48  81.7.189.37 2e06f550ea07378e6308114ee6e95370 UA identified: (5488) Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)
+2011-12-28 13:21:12  81.7.189.54 a52259c0b87722b5bd8f9df11eceef19 UA identified: (6528) Mozilla/5.0 (Linux; U; Android 2.3.3; da-dk; GT-I9100 Build/GINGERBREAD) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 Mobile Safari/533.1
+2011-12-28 13:24:00  81.7.189.54 e4e2b529ad19886ead6e2d7006b6d14e UA identified: (6360) Mozilla/5.0 (iPhone; U; CPU iPhone OS 4_3_3 like Mac OS X; da-dk) AppleWebKit/533.17.9 (KHTML, like Gecko) Mobile/8J2
+2011-12-28 13:24:12  81.7.189.54 83b229bb760d833acd8ba5b2e5f16a5e UA identified: (6360) Mozilla/5.0 (iPhone; CPU iPhone OS 5_0_1 like Mac OS X) AppleWebKit/534.46 (KHTML, like Gecko) Version/5.1 Mobile/9A405 Safari/7534.48.3
+2011-12-28 13:24:16  81.7.189.54 b2cce34070cd182f620396d6f57a8ef9 UA identified: (6360) Mozilla/5.0 (iPhone; CPU iPhone OS 5_0_1 like Mac OS X) AppleWebKit/534.46 (KHTML, like Gecko) Mobile/9A405
+2011-12-28 13:26:59  2.106.197.91 bfc7be1c69fec186f278258299409057 UA identified: (6429) Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.0; Trident/5.0)
+2011-12-28 13:28:28  81.7.189.54 0c353c7c225afac04ab38867ab620c4e UA UNIQUE identified: (5487) Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.1; .NET CLR 1.1.4322; .NET CLR 2.0.50727; .NET CLR 3.0.4506.2152; .NET CLR 3.5.30729)
+2011-12-28 13:29:05  81.7.189.54 effbc1e55e4bfa95f09511792e4092f8 UA identified: (5670) Mozilla/5.0 (compatible; Baiduspider/2.0; +http://www.baidu.com/search/spider.html)
+2011-12-28 13:29:35  81.7.189.54 b96c4191cf36ba23f364b681bea9a247 UA identified: (5670) Mozilla/5.0 (compatible; Baiduspider/2.0; +http://www.baidu.com/search/spider.html)
+2011-12-28 13:30:28  2.106.197.91 6a0d017fade8f692a7d9dd4169c5f229 UA identified: (6429) Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.0; Trident/5.0)
+2011-12-28 13:32:40  81.7.189.54 23f4869ed1ae0821f6e646df2316f9fa UA identified: (5488) Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)
+2011-12-28 13:33:24  81.7.189.54 d32ffc59388ce881b8e0ff7329183ec4 UA identified: (6360) Mozilla/5.0 (iPhone; U; CPU iPhone OS 4_3_5 like Mac OS X; en-us) AppleWebKit/533.17.9 (KHTML, like Gecko) Version/5.0.2 Mobile/8L1 Safari/6533.18.5
+2011-12-28 13:33:43  81.7.189.54 4fd5644eae12e542618923a2ee27d8c6 UA identified: (5488) Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)
+2011-12-28 13:35:23  81.7.189.54 ea865aac6224c39d1de9bec197f8153e UA identified: (5488) Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)
+2011-12-28 13:37:32  81.7.189.54 5a7aaa1068c54f7d9f25618fb566cd07 UA identified: (5488) Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)
+2011-12-28 13:47:56  2.106.197.91 cc49e6d9806347280eda068a2da829c7 UA identified: (5489) Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 5.1; Trident/4.0)
+2011-12-28 13:59:12  81.7.189.37 d7335c9ac5b8e9dd50148f21228ba45a UA identified: (5670) Mozilla/5.0 (compatible; bingbot/2.0; +http://www.bing.com/bingbot.htm)
+2011-12-28 14:03:36  81.7.189.54 988399cf6029a67e432fe61c0c96bef3 UA identified: (6360) Mozilla/5.0 (iPhone; CPU iPhone OS 5_0_1 like Mac OS X) AppleWebKit/534.46 (KHTML, like Gecko) Version/5.1 Mobile/9A405 Safari/7534.48.3
+2011-12-28 14:03:37  81.7.189.54 8e89af674c8197bcceb7abfa4d8d8317 UA identified: (5670) Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)
+2011-12-28 14:09:50  81.7.189.54 ebaf1cca8f4e262c2144223815eb348a UA identified: (6495) Mozilla/5.0 (X11; Linux i686; rv:6.0) Gecko/20100101 Firefox/6.0
+2011-12-28 14:13:57  81.7.189.54 452a1b9a562a96783a5cfb4fce244d36 UA identified: (5670) Mozilla/5.0 (compatible; Baiduspider/2.0; +http://www.baidu.com/search/spider.html)
+2011-12-28 14:30:26  2.106.197.91 50525830f3ce7a2ca58d13c7841e2830 UA identified: (6501) Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7_2) AppleWebKit/535.7 (KHTML, like Gecko) Chrome/16.0.912.63 Safari/535.7
+2011-12-28 14:37:22  176.22.181.233 e8e7a4c5e0add56acdf78f2d9c3b096a UA identified: (6498) Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:8.0.1) Gecko/20100101 Firefox/8.0.1
+2011-12-28 14:53:47  81.7.189.37 6e14c2967f77db580c96f5584e1c4b15 UA identified: (5489) Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 5.1; Trident/4.0; .NET CLR 2.0.50727; .NET CLR 3.0.4506.2152; .NET CLR 3.5.30729)
+2011-12-28 14:59:40  81.7.189.54 baf7eb13b655b7b59f20a851320de69d UA identified: (6356) Mozilla/5.0 (Macintosh; Intel Mac OS X 10_6_8) AppleWebKit/534.52.7 (KHTML, like Gecko) Version/5.1.2 Safari/534.52.7
+2011-12-28 15:03:45  81.7.189.54 38155b1cb01b3ed99df4489273583463 UA identified: (6360) Mozilla/5.0 (iPhone; CPU iPhone OS 5_0_1 like Mac OS X) AppleWebKit/534.46 (KHTML, like Gecko) Version/5.1 Mobile/9A405 Safari/7534.48.3
+2011-12-28 15:07:54  81.7.189.37 34015f0d421e523b944ca78d4896954e UA identified: (5670) Mozilla/5.0 (compatible; YandexBot/3.0; +http://yandex.com/bots)
+2011-12-28 15:09:18  81.7.189.54 9fac8693ca26358c9c1fbfc8c8abd507 UA UNIQUE identified: (5489) Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 5.1; Trident/4.0; GTB7.2)
+2011-12-28 15:09:47  77.66.17.247 0b079443d3ac8bbd561b57e25a254eed UA identified: (5670) Mozilla/5.0 (compatible; OpenindexDeepSpider/Nutch-1.5-dev; +http://openindex.io/spider.html; systemsATopenindexDOTio)
+2011-12-28 15:10:48  81.7.189.37 1de8ad55371da8f7c0dd88369274d5d5 UA identified: (6470) Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/534.51 (KHTML, like Gecko; Google Web Preview) Chrome/12.0.742 Safari/534.51
+2011-12-28 15:12:14  81.7.189.37 a66c84abf58ed9f3e513030005e731cf UA UNIQUE identified: (5489) Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 5.1; Trident/4.0; GTB7.2; .NET CLR 1.1.4322; .NET CLR 2.0.50727; .NET CLR 3.0.4506.2152; .NET CLR 3.5.30729; InfoPath.1)
+2011-12-28 15:14:24  81.7.189.54 5c0d1444dbeaeef9e927d6a9848852f8 UA identified: (6360) Mozilla/5.0 (iPhone; CPU iPhone OS 5_0_1 like Mac OS X) AppleWebKit/534.46 (KHTML, like Gecko) Mobile/9A405
+2011-12-28 15:14:52  81.7.189.54 dae44eeca2844859d42c57a39cbf7aa3 UA identified: (6360) Mozilla/5.0 (iPhone; CPU iPhone OS 5_0_1 like Mac OS X) AppleWebKit/534.46 (KHTML, like Gecko) Version/5.1 Mobile/9A405 Safari/7534.48.3
+2011-12-28 15:20:50  81.7.189.54 5dfefb32b5301e6634d532d786c5dfd6 UA identified: (6360) Mozilla/5.0 (iPhone; CPU iPhone OS 5_0 like Mac OS X) AppleWebKit/534.46 (KHTML, like Gecko) Version/5.1 Mobile/9A334 Safari/7534.48.3
+2011-12-28 15:22:27  81.7.189.54 a064ce179348d1719013b72fbaaedeea UA identified: (6501) Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7_2) AppleWebKit/535.7 (KHTML, like Gecko) Chrome/16.0.912.63 Safari/535.7
+2011-12-28 15:36:38  81.7.189.54 050b3d9a16fb94d747d2780dbedfea26 UA identified: (5670) Mozilla/5.0 (compatible; Baiduspider/2.0; +http://www.baidu.com/search/spider.html)
+2011-12-28 15:36:57  81.7.189.37 d9853a76c6b9c42915fa48795f46bd76 UA identified: (5670) Mozilla/5.0 (compatible; Baiduspider/2.0; +http://www.baidu.com/search/spider.html)
+2011-12-28 15:37:21  81.7.189.54 4e4b896eeea3ca2a146043be2fa3beab UA identified: (5670) Mozilla/5.0 (compatible; Baiduspider/2.0; +http://www.baidu.com/search/spider.html)
+2011-12-28 15:37:41  81.7.189.37 f3789279b51bccfb0cacc3c1dc9b9e60 UA identified: (5670) Mozilla/5.0 (compatible; Baiduspider/2.0; +http://www.baidu.com/search/spider.html)
+2011-12-28 15:38:46  62.242.41.24 ae2b0a5bc5f6ebac8a99355ff5bc26bc UA identified: (6495) Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:6.0) Gecko/20100101 Firefox/6.0
+2011-12-28 15:41:32  81.7.189.54 1120eb50e7f1bcaf45d038b47adcb6d3 UA identified: (6360) Mozilla/5.0 (iPhone; CPU iPhone OS 5_0_1 like Mac OS X) AppleWebKit/534.46 (KHTML, like Gecko) Version/5.1 Mobile/9A405 Safari/7534.48.3
+2011-12-28 15:53:37  81.7.189.37 ea75c3e81135888b9f2346bccd2154eb UA identified: (5670) Mozilla/5.0 (compatible; bingbot/2.0; +http://www.bing.com/bingbot.htm)
+2011-12-28 15:56:09  81.7.189.37 d38460d7e60405c8bf821ba993bca56b UA unidentified: Opera/9.64 (Windows NT 5.1; U; en) Presto/2.1.1
+2011-12-28 15:56:15  81.7.189.37 d38460d7e60405c8bf821ba993bca56b UA guessed: (5737)
+2011-12-28 16:00:55  176.22.181.233 2298be32b3eca91991b1d0fd962ef89a UA identified: (6498) Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:8.0.1) Gecko/20100101 Firefox/8.0.1
+2011-12-28 16:05:33  81.7.189.54 6561e9e8ab8a5e39ac94e5af8a56177a UA identified: (5489) Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 5.1; Trident/4.0; GTB6.5; .NET CLR 1.1.4322; .NET CLR 2.0.50727; .NET CLR 3.0.4506.2152; .NET CLR 3.5.30729)
+2011-12-28 16:09:25  81.7.189.54 d2887603db8e1802d9df53673dd1fa2d UA identified: (6360) Mozilla/5.0 (iPhone; CPU iPhone OS 5_0_1 like Mac OS X) AppleWebKit/534.46 (KHTML, like Gecko) Mobile/9A405
+2011-12-28 16:11:05  81.7.189.54 0336a47a5bb959f42c394a1bd65d4462 UA identified: (5670) Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)
+2011-12-28 16:11:25  81.7.189.54 e58f3576d75e1618c66d982d0c9f96e4 UA identified: (5670) Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)
+2011-12-28 16:13:49  81.7.189.54 efcef78351e8e4bb8552961ef506476e UA identified: (6360) Mozilla/5.0 (iPhone; U; CPU iPhone OS 4_3_5 like Mac OS X; da-dk) AppleWebKit/533.17.9 (KHTML, like Gecko) Version/5.0.2 Mobile/8L1 Safari/6533.18.5
+2011-12-28 16:17:23  81.7.189.54 bb5e7377353e06a6560e3dd0b5e6066a UA identified: (6360) Mozilla/5.0 (iPhone; CPU iPhone OS 5_0 like Mac OS X) AppleWebKit/534.46 (KHTML, like Gecko) Version/5.1 Mobile/9A334 Safari/7534.48.3
+2011-12-28 16:17:44  81.7.189.37 7187b00db2d16b5a7fa631cbef0f1c1d UA identified: (5670) Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)
+2011-12-28 16:19:45  81.7.189.54 6031f341e57fe2d7f1f188a2f7d49e73 UA identified: (6508) Mozilla/5.0 (Linux; U; Android 2.3.3; da-dk; HTC_WildfireS_A510e Build/GRI40) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 Mobile Safari/533.1
+2011-12-28 16:28:41  81.7.189.54 9f6275f92694a7790f775f127b1b37c1 UA identified: (5670) Mozilla/5.0 (compatible; Baiduspider/2.0; +http://www.baidu.com/search/spider.html)
+2011-12-28 16:30:06  81.7.189.37 f0c336b834e9574e1eefe72334873153 UA identified: (5488) Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)
+2011-12-28 16:32:35  81.7.189.54 f0b24982e347ff52e2efee336378c131 UA identified: (5670) Mozilla/5.0 (compatible; Baiduspider/2.0; +http://www.baidu.com/search/spider.html)
+2011-12-28 16:32:46  81.7.189.54 7b2afee3acf2c0fd45a98bb2cd22b0e6 UA identified: (5670) Mozilla/5.0 (compatible; Baiduspider/2.0; +http://www.baidu.com/search/spider.html)
+2011-12-28 16:36:32  81.7.189.54 5fc6cc0d5b66f32299adb4fc55d5690a UA identified: (6501) Mozilla/5.0 (Windows NT 5.1) AppleWebKit/535.7 (KHTML, like Gecko) Chrome/16.0.912.63 Safari/535.7
+2011-12-28 16:51:36  81.7.189.54 99761a404047ee6d721b87377ca48f51 UA identified: (6360) Mozilla/5.0 (iPhone; U; CPU iPhone OS 4_3_5 like Mac OS X; da-dk) AppleWebKit/533.17.9 (KHTML, like Gecko) Mobile/8L1
+2011-12-28 16:52:31  81.7.189.37 d56ea45ebf54ae23a76d241e4bd4fe6f UA identified: (5670) Mozilla/5.0 (compatible; Baiduspider/2.0; +http://www.baidu.com/search/spider.html)
+2011-12-28 16:53:44  81.7.189.54 93ca7da664a1ae80c22f0aad59d92887 UA identified: (5670) Mozilla/5.0 (compatible; bingbot/2.0; +http://www.bing.com/bingbot.htm)
+2011-12-28 17:17:42  81.7.189.37 4f812628023cb082b887f3e11d5e2fca UA identified: (5488) Mozilla/4.0 (compatible; MSIE 6.0; Windows 98; Win 9x4.90)
+2011-12-28 17:18:51  81.7.189.54 4b6dea8f5fd06f68919970af5d9fb03e UA identified: (6429) Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; WOW64; Trident/5.0)
+2011-12-28 17:21:04  81.7.189.54 30bb8bff1656b8244ccc745dd651455e UA identified: (6501) Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7_2) AppleWebKit/535.7 (KHTML, like Gecko) Chrome/16.0.912.63 Safari/535.7
+2011-12-28 17:22:14  77.66.17.246 2af88b241fad41a551bf675dc015b47b UA identified: (6429) Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; WOW64; Trident/5.0)
+2011-12-28 17:22:32  81.7.189.54 b45a7112ad116902831490dc97273459 UA unidentified: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_5_8; nb-no) AppleWebKit/531.21.8 (KHTML, like Gecko) Gecko/20091102 Firefox/3.5.5
+2011-12-28 17:22:37  81.7.189.54 b45a7112ad116902831490dc97273459 UA guessed: (5483)
+2011-12-28 17:24:03  81.7.189.54 2e4a33e08e0e69f1aee83e9354aaf3f8 UA identified: (6360) Mozilla/5.0 (iPhone; CPU iPhone OS 5_0_1 like Mac OS X) AppleWebKit/534.46 (KHTML, like Gecko) Mobile/9A405
+2011-12-28 17:29:50  81.7.189.54 d15adfd1893273f03e8da1247f5b86c7 UA identified: (5670) Sosospider+(+http://help.soso.com/webspider.htm)
+2011-12-28 17:32:56  81.7.189.54 a45d4bea3e2e8eff217126d9835044cf UA identified: (6502) Mozilla/5.0 (Linux; U; Android 2.3.3; da-dk; HTC_IncredibleS_S710e Build/GRI40) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 Mobile Safari/533.1
+2011-12-28 17:45:15  81.7.189.37 c9da545b59c898da8d1c38f1c83c5dd1 UA identified: (5670) Sosospider+(+http://help.soso.com/webspider.htm)
+2011-12-28 17:46:25  81.7.189.37 54f55fc431731d5c8972269672234e08 UA identified: (5670) AdsBot-Google (+http://www.google.com/adsbot.html)
+2011-12-28 17:46:45  81.7.189.37 832683a1b8e4c1ce5c020fcb7f5677d0 UA identified: (5670) Ankiro Site Crawl (crawl@ankiro.com; http://www.ankiro.com)
+2011-12-28 18:14:43  81.7.189.54 a6da9a2ce59296787707a4d0200b6164 UA identified: (5670) Mozilla/5.0 (compatible; Baiduspider/2.0; +http://www.baidu.com/search/spider.html)
+2011-12-28 18:25:10  81.7.189.37 e042573606d1f3303cce8c28bf8a2d6c UA identified: (5670) Mozilla/5.0 (compatible; YandexBot/3.0; +http://yandex.com/bots)
+2011-12-28 18:35:04  81.7.189.54 fc1188a7f21681d288b2383097a5e97b UA unidentified: Mozilla/5.0 (iPhone; U; CPU iPhone OS 4_3_3 like Mac OS X; de-de) AppleWebKit/533.17.9 (KHTML, like Gecko) Version/5.0.2 Mobile/8J2 Safari/6533.18.5
+2011-12-28 18:35:08  81.7.189.54 fc1188a7f21681d288b2383097a5e97b UA guessed: (6360)
+2011-12-28 18:39:30  77.66.17.247 8999e68230b43beb5d731c4d420164f8 UA identified: (6501) Mozilla/5.0 (Windows NT 5.1) AppleWebKit/535.7 (KHTML, like Gecko) Chrome/16.0.912.63 Safari/535.7
+2011-12-28 18:40:51  81.7.189.37 216eb208718fd723afc086e44c5739ea UA identified: (5670) Mozilla/5.0 (compatible; Baiduspider/2.0; +http://www.baidu.com/search/spider.html)
+2011-12-28 18:46:48  81.7.189.54 836609af268c708dc2d5a51affa69c4d UA identified: (5477) Mozilla/5.0 (Windows; U; Windows NT 6.1; de; rv:1.9.2.3) Gecko/20100401 Firefox/3.6.3
+2011-12-28 18:50:17  81.7.189.54 f0b210824eaacd417e60d3106ce76542 UA identified: (5670) Mozilla/5.0 (compatible; YandexBot/3.0; +http://yandex.com/bots)
+2011-12-28 19:05:51  81.7.189.54 8edb0300d26f23dd51996c3753ff6b72 UA identified: (6395) Mozilla/5.0 (iPod; U; CPU iPhone OS 4_3_5 like Mac OS X; da-dk) AppleWebKit/533.17.9 (KHTML, like Gecko) Mobile/8L1
+2011-12-28 19:06:59  81.7.189.54 5e7c7a7b07494b90ea3cc740a3839544 UA UNIQUE identified: (5487) Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.1; .NET CLR 1.1.4322; MSN 6.1; MSNbDELL; MSNmen-us; MSNc00; MSNc00)
+2011-12-28 19:25:02  81.7.189.54 d82000d8577597567bbcd9adc26cef25 UA identified: (5670) Mozilla/5.0 (compatible; YandexBot/3.0; +http://yandex.com/bots)
+2011-12-28 19:25:02  81.7.189.54 a9c417e86b5638396f12e2f1404bd813 UA identified: (5670) Mozilla/5.0 (compatible; YandexBot/3.0; +http://yandex.com/bots)
+2011-12-28 19:25:03  81.7.189.54 5665febcb03fa845bba59f0ab5823ccc UA identified: (5670) Mozilla/5.0 (compatible; YandexBot/3.0; +http://yandex.com/bots)
+2011-12-28 19:25:03  81.7.189.54 ed349ce34080f80d5e0d916dcad6b4d8 UA identified: (5670) Mozilla/5.0 (compatible; YandexBot/3.0; +http://yandex.com/bots)
+2011-12-28 19:33:34  81.7.189.54 f06d06ccbc4463ac0f4c6b97fffee1ce UA identified: (6429) Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; WOW64; Trident/5.0)
+2011-12-28 19:46:33  77.66.17.247 e59a771676f91729c09a144767f5f2d4 UA identified: (6429) Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Trident/5.0)
+2011-12-28 19:55:07  81.7.189.37 dbab13f6c1f38cd5eabfe2960f68048e UA identified: (5670) Mozilla/5.0 (compatible; YandexBot/3.0; +http://yandex.com/bots)
+2011-12-28 19:55:09  81.7.189.54 5e7ddc1fe479fc40362145666e086fd4 UA identified: (5670) Mozilla/5.0 (compatible; Baiduspider/2.0; +http://www.baidu.com/search/spider.html)
+2011-12-28 19:58:31  81.7.189.54 99a3a886fb9d3398900574c433c354c3 UA identified: (6356) Mozilla/5.0 (Macintosh; Intel Mac OS X 10_6_8) AppleWebKit/534.52.7 (KHTML, like Gecko) Version/5.1.2 Safari/534.52.7
+2011-12-28 20:10:08  81.7.189.37 b9c969a3563fde0c567b658e368c5047 UA identified: (5670) Mozilla/5.0 (compatible; bingbot/2.0; +http://www.bing.com/bingbot.htm)
+2011-12-28 20:35:54  81.7.189.54 3f91b348bc359cdeec6b4df6d63058e9 UA identified: (5670) Mozilla/5.0 (compatible; YandexBot/3.0; +http://yandex.com/bots)
+2011-12-28 20:35:54  81.7.189.54 c79c93cd58ea9b7d532572174014cff8 UA identified: (5670) Mozilla/5.0 (compatible; YandexBot/3.0; +http://yandex.com/bots)
+2011-12-28 20:35:55  81.7.189.54 8f31a265d05c89934b5394518b1e1df2 UA identified: (5670) Mozilla/5.0 (compatible; YandexBot/3.0; +http://yandex.com/bots)
+2011-12-28 20:35:55  81.7.189.54 70932b8e8afc26b4870dea5067111dfd UA identified: (5670) Mozilla/5.0 (compatible; YandexBot/3.0; +http://yandex.com/bots)
+2011-12-28 20:37:46  81.7.189.54 ed45f39ab8dbe35291e1e9ef3f3e32d5 UA identified: (5670) Mozilla/5.0 (compatible; bingbot/2.0; +http://www.bing.com/bingbot.htm)
+2011-12-28 20:49:42  81.7.189.37 188cc13b6566dc73f7e865f867f99161 UA identified: (5670) Mozilla/5.0 (compatible; Baiduspider/2.0; +http://www.baidu.com/search/spider.html)
+2011-12-28 20:51:29  81.7.189.54 cfc8aec3ffe40c790239b2feedd3b885 UA UNIQUE identified: (5489) Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 5.1; Trident/4.0; GTB7.2; .NET CLR 2.0.50727; .NET CLR 3.0.4506.2152; .NET CLR 3.5.30729; .NET4.0C; .NET4.0E)
+2011-12-28 20:54:31  81.7.189.54 8632a1541564c02e79fabe586bbe5237 UA identified: (6528) Mozilla/5.0 (Linux; U; Android 2.3.5; da-dk; GT-I9100 Build/GINGERBREAD) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 Mobile Safari/533.1
+2011-12-28 21:02:56  81.7.189.37 e115aef4ab8ba2294cddf4a032f65f9f UA identified: (5670) Mozilla/5.0 (compatible; YandexBot/3.0; +http://yandex.com/bots)
+2011-12-28 21:02:56  81.7.189.37 e6e85d4b54f42d6526a497c213e37aa1 UA identified: (5670) Mozilla/5.0 (compatible; YandexBot/3.0; +http://yandex.com/bots)
+2011-12-28 21:02:57  81.7.189.37 0ee8ac6328ff3b97a7d1e1bbe266b84a UA identified: (5670) Mozilla/5.0 (compatible; YandexBot/3.0; +http://yandex.com/bots)
+2011-12-28 21:02:57  81.7.189.37 cfe31e14236348a6190295d40382ebc4 UA identified: (5670) Mozilla/5.0 (compatible; YandexBot/3.0; +http://yandex.com/bots)
+2011-12-28 21:14:14  81.7.189.54 f7cb885977d5f03114af03e7f79d816e UA identified: (5670) Mozilla/5.0 (compatible; bingbot/2.0; +http://www.bing.com/bingbot.htm)
+2011-12-28 21:29:09  81.7.189.54 9507372faaeabcfc133d74515cc2661b UA identified: (5670) Mozilla/5.0 (compatible; Baiduspider/2.0; +http://www.baidu.com/search/spider.html)
+2011-12-28 21:29:24  81.7.189.54 b36780a7e9031e67b371a84bafd4fdd6 UA identified: (5670) Mozilla/5.0 (compatible; Baiduspider/2.0; +http://www.baidu.com/search/spider.html)
+2011-12-28 21:31:02  81.7.189.37 fbe41f2663ad06d6f7df9cfb2fdc2f42 UA identified: (5670) Mozilla/5.0 (compatible; Exabot/3.0; +http://www.exabot.com/go/robot)
+2011-12-28 21:37:28  81.7.189.54 a9887011c610852d1e5f665be4052c99 UA unidentified: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7_2) AppleWebKit/534.52.7 (KHTML, like Gecko) Version/5.1.2 Safari/534.52.7
+2011-12-28 21:37:32  81.7.189.54 a9887011c610852d1e5f665be4052c99 UA guessed: (6356)
+2011-12-28 21:38:24  81.7.189.54 38dfa1dd0802c801d86feae247e104c6 UA identified: (6360) Mozilla/5.0 (iPhone; CPU iPhone OS 5_0_1 like Mac OS X) AppleWebKit/534.46 (KHTML, like Gecko) Mobile/9A405
+2011-12-28 21:59:57  81.7.189.37 0fd86fb2db05f7be079b88086801de05 UA identified: (5670) Mozilla/5.0 (compatible; MJ12bot/v1.4.1; http://www.majestic12.co.uk/bot.php?+)
+2011-12-28 22:05:50  81.7.189.54 43e8b146680ec1f62cc118dbc4ca02bd UA UNIQUE identified: (5477) Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; da; rv:1.9.2.25) Gecko/20111212 Firefox/3.6.25
+2011-12-28 22:07:46  81.7.189.37 ebef173e04d9388591d45ad27f968177 UA identified: (5670) Mozilla/5.0 (compatible; YandexBot/3.0; +http://yandex.com/bots)
+2011-12-28 22:07:46  81.7.189.37 19450c3f5c0d955f5dd6883ee88abe72 UA identified: (5670) Mozilla/5.0 (compatible; YandexBot/3.0; +http://yandex.com/bots)
+2011-12-28 22:07:47  81.7.189.37 402f08484484fb2de9040b51802ddf72 UA identified: (5670) Mozilla/5.0 (compatible; YandexBot/3.0; +http://yandex.com/bots)
+2011-12-28 22:07:47  81.7.189.37 b95035ccf4656837d638fb36715abb14 UA identified: (5670) Mozilla/5.0 (compatible; YandexBot/3.0; +http://yandex.com/bots)
+2011-12-28 22:13:16  81.7.189.54 0733b32eddd3efecd6d0b53658a41099 UA identified: (5670) cmsworldmap.com
+2011-12-28 22:14:50  81.7.189.37 068b00c83c4c3e424b65a5d22002d505 UA identified: (5670) Mozilla/5.0 (compatible; YandexBot/3.0; +http://yandex.com/bots)
+2011-12-28 22:14:50  81.7.189.37 be05566b940d5c33ce00b76b9396e6a3 UA identified: (5670) Mozilla/5.0 (compatible; YandexBot/3.0; +http://yandex.com/bots)
+2011-12-28 22:15:19  81.7.189.54 2021e2ae4cbcbc499b9956563c65a167 UA identified: (6523) Mozilla/5.0 (Linux; U; Android 2.3.4; da-dk; SonyEricssonLT18i Build/4.0.2.A.0.42) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 Mobile Safari/533.1
+2011-12-28 22:20:45  77.66.17.246 371916d471582f0e2bd06b4f30514e9b UA unidentified: SemrushBot/0.9
+2011-12-28 22:23:37  81.7.189.37 1726bc614a1fd0fbbd36d31a34accada UA identified: (5670) Mozilla/5.0 (compatible; bingbot/2.0; +http://www.bing.com/bingbot.htm)
+2011-12-28 22:25:30  81.7.189.54 f94a2084eeafff317f0a5cad6f8d7206 UA identified: (5670) Mozilla/5.0 (compatible; Baiduspider/2.0; +http://www.baidu.com/search/spider.html)
+2011-12-28 22:25:48  81.7.189.54 c4de4df188276c274fb04cac09d66fec UA identified: (5670) Mozilla/5.0 (compatible; Baiduspider/2.0; +http://www.baidu.com/search/spider.html)
+2011-12-28 22:26:03  2.106.197.91 38a184cd84ae8841b2779833cb3b2387 UA identified: (5489) Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 5.1; Trident/4.0)
+2011-12-28 22:46:50  81.7.189.54 9370a8dad12ad19d7f2eabb64a9e6b9b UA UNIQUE identified: (5477) Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; da; rv:1.9.2.25) Gecko/20111212 Firefox/3.6.25
+2011-12-28 23:02:57  81.7.189.54 2332e796c37d190141577c033b5f42c7 UA identified: (6360) Mozilla/5.0 (iPhone; CPU iPhone OS 5_0 like Mac OS X) AppleWebKit/534.46 (KHTML, like Gecko) Mobile/9A334
+2011-12-28 23:10:40  81.7.189.37 c8e98ea53a50b3b08035567640a63a99 UA identified: (5670) Mozilla/5.0 (compatible; AhrefsBot/1.0; +http://ahrefs.com/robot/)
+2011-12-28 23:10:41  81.7.189.37 e22afd7b163306f64d71f8c7cf0663cc UA identified: (5670) Mozilla/5.0 (compatible; AhrefsBot/1.0; +http://ahrefs.com/robot/)
+2011-12-28 23:10:43  81.7.189.37 08080ea9272f887e5c125ba763e8a4a9 UA identified: (5670) Mozilla/5.0 (compatible; AhrefsBot/1.0; +http://ahrefs.com/robot/)
+2011-12-28 23:10:44  81.7.189.37 2b633d8444fb6f86f2486f430b42556a UA identified: (5670) Mozilla/5.0 (compatible; AhrefsBot/1.0; +http://ahrefs.com/robot/)
+2011-12-28 23:10:45  81.7.189.37 6df6a16b9fee0fa524fafeaae536503d UA identified: (5670) Mozilla/5.0 (compatible; AhrefsBot/1.0; +http://ahrefs.com/robot/)
+2011-12-28 23:10:47  81.7.189.37 ab749fbff967cff481484c1636e57648 UA identified: (5670) Mozilla/5.0 (compatible; AhrefsBot/1.0; +http://ahrefs.com/robot/)
+2011-12-28 23:10:48  81.7.189.37 0ef790341fa7eb93e7169559f6fa6ef5 UA identified: (5670) Mozilla/5.0 (compatible; AhrefsBot/1.0; +http://ahrefs.com/robot/)
+2011-12-28 23:10:49  81.7.189.37 8f357dba7825c8874fc3d1752267c745 UA identified: (5670) Mozilla/5.0 (compatible; AhrefsBot/1.0; +http://ahrefs.com/robot/)
+2011-12-28 23:10:52  81.7.189.37 c071c91a7f7f7d99b3480a321b75b355 UA identified: (5670) Mozilla/5.0 (compatible; AhrefsBot/1.0; +http://ahrefs.com/robot/)
+2011-12-28 23:10:53  81.7.189.37 160b4ae2441a14e043b38bc1cfe7a008 UA identified: (5670) Mozilla/5.0 (compatible; AhrefsBot/1.0; +http://ahrefs.com/robot/)
+2011-12-28 23:10:55  81.7.189.37 799250f504b9d707b6f8746b5e46c2ed UA identified: (5670) Mozilla/5.0 (compatible; AhrefsBot/1.0; +http://ahrefs.com/robot/)
+2011-12-28 23:10:56  81.7.189.37 c063ed05004dbcc668fd6ff072e4cefa UA identified: (5670) Mozilla/5.0 (compatible; AhrefsBot/1.0; +http://ahrefs.com/robot/)
+2011-12-28 23:11:01  81.7.189.37 a434791f36699d9b521bfb343f305e95 UA identified: (5670) Mozilla/5.0 (compatible; AhrefsBot/1.0; +http://ahrefs.com/robot/)
+2011-12-28 23:11:02  81.7.189.37 e28952b79bc1592a75e3bcfdd634b303 UA identified: (5670) Mozilla/5.0 (compatible; AhrefsBot/1.0; +http://ahrefs.com/robot/)
+2011-12-28 23:11:03  81.7.189.37 ee3feb5c23f01a167521474cc2762a9f UA identified: (5670) Mozilla/5.0 (compatible; AhrefsBot/1.0; +http://ahrefs.com/robot/)
+2011-12-28 23:33:48  81.7.189.54 1482911a767c53b033f7a7408df212f0 UA identified: (5670) Mozilla/5.0 (compatible; Baiduspider/2.0; +http://www.baidu.com/search/spider.html)
+2011-12-28 23:34:26  81.7.189.54 6e5f41d27f84b157a18cf4590497bb0b UA identified: (5670) Mozilla/5.0 (compatible; Baiduspider/2.0; +http://www.baidu.com/search/spider.html)
+2011-12-28 23:34:37  81.7.189.37 2f161c89a047c49eac93dbc1992e1483 UA identified: (5670) Mozilla/5.0 (compatible; Baiduspider/2.0; +http://www.baidu.com/search/spider.html)
+2011-12-28 23:35:17  81.7.189.37 6437f4125da3c9214237ae64da89e2b5 UA identified: (5670) Mozilla/5.0 (compatible; Baiduspider/2.0; +http://www.baidu.com/search/spider.html)
+2011-12-28 23:39:30  81.7.189.37 5eb8f34ed792eefc50acb489b65b9b95 UA identified: (5670) Mozilla/5.0 (compatible; OpenindexDeepSpider/Nutch-1.5-dev; +http://openindex.io/spider.html; systemsATopenindexDOTio)
+2011-12-28 23:44:33  81.7.189.37 f8c6f3f020f49b7a158a6e58d6affaec UA identified: (5670) Mozilla/5.0 (compatible; OpenindexDeepSpider/Nutch-1.5-dev; +http://openindex.io/spider.html; systemsATopenindexDOTio)
+2011-12-28 23:59:12  81.7.189.37 65649269deff0b45ed384398c40623b4 UA UNIQUE identified: (5489) Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 5.1; Trident/4.0; .NET CLR 2.0.50727; .NET CLR 3.0.4506.2152; .NET CLR 3.5.30729; .NET CLR 1.1.4322; .NET4.0C; .NET4.0E)
+2011-12-28 23:59:59  81.7.189.54 5810cbb12512a49fc71e8f0f3d7d02dc UA identified: (6356) Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_6_6; fr-fr) AppleWebKit/533.19.4 (KHTML, like Gecko) Version/5.0.3 Safari/533.19.4

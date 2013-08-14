@@ -1,0 +1,473 @@
+2012-03-25 15:44:34  188.179.204.177 Login - insufficient privileges: api_devices.users
+2012-03-25 15:44:34  188.179.204.177 Logoff api_devices.users
+2012-03-25 15:44:40 1 188.179.204.177 Login success, U:1
+2012-03-25 15:51:26 1 188.179.204.177 Device updated (6609)
+2012-03-25 15:51:53 1 188.179.204.177 Device updated (6609)
+2012-03-25 15:51:53 1 188.179.204.177 Useragent added to (6609): Jasmine, Mobile Browser
+2012-03-25 15:54:16 1 188.179.204.177 Device updated (2402)
+2012-03-25 15:54:30 1 188.179.204.177 Device updated (2444)
+2012-03-25 15:54:36 1 188.179.204.177 Device updated (2384)
+2012-03-25 15:54:42 1 188.179.204.177 Device updated (2349)
+2012-03-25 15:55:18 1 188.179.204.177 Device updated (5716)
+2012-03-25 15:56:16 1 188.179.204.177 Useragent added to (2350): SAMSUNG-GT-S5230/S5230XBJF3 SHP/VPP/R5 Jasmine/0.8 Nextreaming SMM-MMS/1.2.0 profile/MIDP-2.1 configuration/CLDC-1.1
+2012-03-25 15:57:18 1 188.179.204.177 Useragent added to (2350): SAMSUNG-GT-S5230C/1.0 SHP/R5 Release/02.01.2009 Browser/NetFront3.5 SMM-MMS/1.2.0 profile/MIDP-2.0 configuration/CLDC-1.1
+2012-03-25 15:57:31 1 188.179.204.177 Useragent added to (2350): SAMSUNG-GT-S5230/S5230XBIG2 SHP/VPP/R5 Jasmine/0.8 Nextreaming SMM-MMS/1.2.0 profile/MIDP-2.1 configuration/CLDC-1.1
+2012-03-25 15:57:38 1 188.179.204.177 Useragent added to (2350): SAMSUNG-GT-S5230/S5230XXIG4 SHP/VPP/R5 Jasmine/0.8 Nextreaming SMM-MMS/1.2.0 profile/MIDP-2.1 configuration/CLDC-1.1
+2012-03-25 15:59:47 1 188.179.204.177 Device updated (6609)
+2012-03-25 16:00:44 1 188.179.204.177 Useragent added to (6560): Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7_3) AppleWebKit/535.11 (KHTML, like Gecko) Chrome/17.0.963.83 Safari/535.11
+2012-03-25 16:01:10 1 188.179.204.177 Useragent added to (6610): Mozilla/5.0 (Windows NT 5.1; rv:12.0) Gecko/20100101 Firefox/12.0
+2012-03-25 16:01:23 1 188.179.204.177 Device updated (6610)
+2012-03-25 16:02:24 1 188.179.204.177 Device updated (6610)
+2012-03-25 16:02:39 1 188.179.204.177 Useragent added to (6524): Mozilla/5.0 (Linux; U; Android 2.3.4; da-dk; SonyEricssonR800i Build/4.0.2.A.0.69) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 Mobile Safari/533.1
+2012-03-25 16:03:08 1 188.179.204.177 Useragent added to (6504): Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_6_3; HTC_Sensation_Z710e; en-cs) AppleWebKit/533.16 (KHTML, like Gecko) Version/5.0 Safari/533.16
+2012-03-25 16:03:28 1 188.179.204.177 Useragent added to (6560): Mozilla/5.0 (Windows NT 6.1) AppleWebKit/535.11 (KHTML, like Gecko) Chrome/17.0.963.83 Safari/535.11
+2012-03-25 16:04:13 1 188.179.204.177 Useragent added to (6599): Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.1; Trident/4.0; GTB7.3; chromeframe/17.0.963.83; .NET CLR 2.0.50727; .NET CLR 1.1.4322; .NET CLR 3.0.4506.2152; .NET CLR 3.5.30729; InfoPath.2)
+2012-03-25 16:04:22 1 188.179.204.177 Useragent added to (6560): Mozilla/5.0 (Windows NT 6.0) AppleWebKit/535.11 (KHTML, like Gecko) Chrome/17.0.963.83 Safari/535.11
+2012-03-25 16:04:30 1 188.179.204.177 Useragent added to (6599): Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 5.1; Trident/4.0; chromeframe/17.0.963.83; .NET CLR 1.1.4322; .NET CLR 2.0.50727; .NET CLR 3.0.4506.2152; .NET CLR 3.5.30729; .NET4.0C)
+2012-03-25 16:04:35 1 188.179.204.177 Useragent added to (6560): Mozilla/5.0 (Windows NT 6.0; WOW64) AppleWebKit/535.11 (KHTML, like Gecko) Chrome/17.0.963.79 Safari/535.11
+2012-03-25 16:04:53 1 188.179.204.177 Useragent added to (6560): Mozilla/5.0 (Macintosh; Intel Mac OS X 10_5_6) AppleWebKit/535.11 (KHTML, like Gecko) Chrome/17.0.963.79 Safari/535.11
+2012-03-25 16:05:01 1 188.179.204.177 Useragent added to (6599): Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 5.1; Trident/4.0; chromeframe/17.0.963.79; .NET CLR 1.0.3705; .NET CLR 1.1.4322; .NET CLR 2.0.50727; .NET CLR 3.0.4506.2152; .NET CLR 3.5.30729; InfoPath.2)
+2012-03-25 16:05:20 1 188.179.204.177 Useragent added to (6564): Mozilla/5.0 (Android; Linux armv7l; rv:10.0.3) Gecko/20120302 Firefox/10.0.3 Fennec/10.0.3
+2012-03-25 16:05:26 1 188.179.204.177 Useragent added to (6563): Mozilla/5.0 (Macintosh; Intel Mac OS X 10.7; rv:11.0) Gecko/20100101 Firefox/11.0
+2012-03-25 16:05:33 1 188.179.204.177 Useragent added to (6499): Mozilla/5.0 (X11; Linux i686; rv:9.0) Gecko/20100101 Firefox/9.0
+2012-03-25 16:06:09 1 188.179.204.177 Useragent added to (6351): Mozilla/5.0 (iPad; U; CPU OS 4_3_3 like Mac OS X; ja-jp) AppleWebKit/533.17.9 (KHTML, like Gecko) Version/5.0.2 Mobile/8J2 Safari/6533.18.5
+2012-03-25 16:06:23 1 188.179.204.177 Useragent added to (6351): Mozilla/5.0 (iPad; CPU OS 5_1 like Mac OS X) AppleWebKit/534.46 (KHTML, like Gecko) Mobile/9B176
+2012-03-25 16:06:43 1 188.179.204.177 Useragent added to (6395): Mozilla/5.0 (iPod; CPU iPhone OS 5_1 like Mac OS X) AppleWebKit/534.46 (KHTML, like Gecko) Mobile/9B176
+2012-03-25 16:07:03 1 188.179.204.177 Useragent added to (6418): Mozilla/5.0 (compatible; Konqueror/3.5; Linux) KHTML/3.5.5 (like Gecko) (Debian)
+2012-03-25 16:07:25 1 188.179.204.177 Useragent added to (6410): Mozilla/5.0 (compatible; Konqueror/4.5; Linux) KHTML/4.5.4 (like Gecko)
+2012-03-25 16:07:34 1 188.179.204.177 Useragent added to (6410): Mozilla/5.0 (compatible; Konqueror/4.4; Linux) KHTML/4.4.2 (like Gecko) Kubuntu
+2012-03-25 16:07:41 1 188.179.204.177 Useragent added to (6410): Mozilla/5.0 (compatible; Konqueror/4.6; Linux) KHTML/4.6.5 (like Gecko)
+2012-03-25 16:07:45 1 188.179.204.177 Useragent added to (6410): Mozilla/5.0 (compatible; Konqueror/4.3; Linux) KHTML/4.3.2 (like Gecko)
+2012-03-25 16:09:03 1 188.179.204.177 Useragent added to (6410): Mozilla/5.0 (X11; Linux x86_64) KHTML/4.7.2 (like Gecko) Konqueror/4.7
+2012-03-25 16:09:29 1 188.179.204.177 Useragent added to (5487): Mozilla/4.0 (compatible; MSIE 7.0; AOL 9.0; Windows NT 5.1; .NET CLR 1.1.4322; Windows-Media-Player/10.00.00.3990)
+2012-03-25 16:10:09 1 188.179.204.177 Useragent added to (5488): Mozilla/4.0 (compatible; MSIE 6.0; AOL 9.0; Windows NT 5.1; SV1; FunWebProducts; Media Center PC 3.0; .NET CLR 1.0.3705; .NET CLR 1.1.4322)
+2012-03-25 16:10:16 1 188.179.204.177 Useragent added to (5488): Mozilla/4.0 (compatible; MSIE 6.0; AOL 9.0; Windows NT 5.1; SV1; FunWebProducts; HbTools 4.8.2)
+2012-03-25 16:10:24 1 188.179.204.177 Useragent added to (5488): Mozilla/4.0 (compatible; MSIE 6.0; Windows NT)
+2012-03-25 16:11:23 1 188.179.204.177 Useragent added to (6502): Mozilla/5.0 (Linux; U; Android 2.3.5; da-se; HTC_IncredibleS_S710e Build/GRJ90) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 Mobile Safari/533.1
+2012-03-25 16:11:32 1 188.179.204.177 Useragent added to (6506): Mozilla/5.0 (Linux; U; Android 2.3.3; sv-se; HTC_DesireZ_A7272 Build/GRI40) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 Mobile Safari/533.1
+2012-03-25 16:11:44 1 188.179.204.177 Useragent added to (6413): Mozilla/5.0 (Linux; U; Android 2.3.7; da-dk; HTC Desire Build/GWK74) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 Mobile Safari/533.1
+2012-03-25 16:12:15 1 188.179.204.177 Useragent added to (6512): Mozilla/5.0 (Linux; U; Android 2.3.5; da-dk; HTC_ChaCha_A810e Build/GRJ90) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 Mobile Safari/533.1
+2012-03-25 16:19:48 1 188.179.204.177 Device updated (1193)
+2012-03-25 16:20:04 1 188.179.204.177 Device updated (1193)
+2012-03-25 17:13:14  188.179.204.177 Login - insufficient privileges: api_devices.users
+2012-03-25 17:13:14  188.179.204.177 Logoff api_devices.users
+2012-03-25 17:13:23 1 188.179.204.177 Login success, U:1
+2012-03-25 17:15:44 1 188.179.204.177 Useragent deleted from (6103): Nokia2730c-1b/2.0 (07.70) Profile/MIDP-2.1 Configuration/CLDC-1.1
+2012-03-25 17:29:21 1 188.179.204.177 Device updated (6316)
+2012-03-25 17:30:29 1 188.179.204.177 Useragent added to (6316): Nokia2730c-1b/2.0 (07.70) Profile/MIDP-2.1 Configuration/CLDC-1.1
+2012-03-25 17:30:40 1 188.179.204.177 Useragent added to (6316): Nokia2730c-1/2.0 (07.70) Profile/MIDP-2.1 Configuration/CLDC-1.1
+2012-03-25 17:32:05 1 188.179.204.177 Device updated (6316)
+2012-03-25 17:51:50 1 188.179.204.177 Device updated (1185)
+2012-03-25 18:43:50  188.179.204.177 Login - insufficient privileges: api_devices.users
+2012-03-25 18:43:50  188.179.204.177 Logoff api_devices.users
+2012-03-25 18:43:58 1 188.179.204.177 Login success, U:1
+2012-03-25 18:47:26 1 188.179.204.177 Device updated (6316)
+2012-03-25 18:48:28 1 188.179.204.177 Device updated (1116)
+2012-03-25 18:48:54 1 188.179.204.177 Device updated (6054)
+2012-03-25 18:49:08 1 188.179.204.177 Device updated (1133)
+2012-03-25 18:50:20 1 188.179.204.177 Device updated (6072)
+2012-03-25 18:52:49 1 188.179.204.177 Device updated (1707)
+2012-03-25 18:52:57 1 188.179.204.177 Device updated (1600)
+2012-03-25 18:53:03 1 188.179.204.177 Device updated (1927)
+2012-03-25 18:53:09 1 188.179.204.177 Device updated (1603)
+2012-03-25 18:53:14 1 188.179.204.177 Device updated (1604)
+2012-03-25 18:53:20 1 188.179.204.177 Device updated (1805)
+2012-03-25 18:53:26 1 188.179.204.177 Device updated (2254)
+2012-03-25 18:53:32 1 188.179.204.177 Device updated (1807)
+2012-03-25 18:53:36 1 188.179.204.177 Device updated (1891)
+2012-03-25 18:53:42 1 188.179.204.177 Device updated (1892)
+2012-03-25 18:53:48 1 188.179.204.177 Device updated (1918)
+2012-03-25 18:53:54 1 188.179.204.177 Device updated (1917)
+2012-03-25 18:53:59 1 188.179.204.177 Device updated (1916)
+2012-03-25 18:54:04 1 188.179.204.177 Device updated (1919)
+2012-03-25 18:54:17 1 188.179.204.177 Device updated (1706)
+2012-03-25 18:54:23 1 188.179.204.177 Device updated (1866)
+2012-03-25 18:54:28 1 188.179.204.177 Device updated (1894)
+2012-03-25 18:54:34 1 188.179.204.177 Device updated (1926)
+2012-03-25 18:54:45 1 188.179.204.177 Device updated (1806)
+2012-03-25 18:54:51 1 188.179.204.177 Device updated (1928)
+2012-03-25 18:56:20 1 188.179.204.177 Device updated (1713)
+2012-03-25 18:56:27 1 188.179.204.177 Device updated (2166)
+2012-03-25 18:56:49 1 188.179.204.177 Device updated (2036)
+2012-03-25 18:56:57 1 188.179.204.177 Device updated (1599)
+2012-03-25 18:57:02 1 188.179.204.177 Device updated (2041)
+2012-03-25 18:57:08 1 188.179.204.177 Device updated (2010)
+2012-03-25 18:57:13 1 188.179.204.177 Device updated (1669)
+2012-03-25 18:57:22 1 188.179.204.177 Device updated (1920)
+2012-03-25 18:57:27 1 188.179.204.177 Device updated (2033)
+2012-03-25 18:57:32 1 188.179.204.177 Device updated (1608)
+2012-03-25 18:57:38 1 188.179.204.177 Device updated (1921)
+2012-03-25 18:57:43 1 188.179.204.177 Device updated (1701)
+2012-03-25 18:57:48 1 188.179.204.177 Device updated (1702)
+2012-03-25 18:57:54 1 188.179.204.177 Device updated (1712)
+2012-03-25 18:57:59 1 188.179.204.177 Device updated (2192)
+2012-03-25 18:58:18 1 188.179.204.177 Device updated (1594)
+2012-03-25 19:04:44 1 188.179.204.177 Device updated (6611)
+2012-03-25 19:05:08 1 188.179.204.177 Device updated (6612)
+2012-03-25 19:57:33  188.179.204.177 Login - insufficient privileges: api_devices.users
+2012-03-25 19:57:33  188.179.204.177 Logoff api_devices.users
+2012-03-25 19:57:43 1 188.179.204.177 Login success, U:1
+2012-03-25 19:58:16 1 188.179.204.177 Device updated (1203)
+2012-03-25 19:59:14 1 188.179.204.177 Device updated (1203)
+2012-03-25 20:01:30 1 188.179.204.177 Useragent added to (1203): Mozilla/5.0 (SymbianOS/9.3; Series60/3.2 NokiaC5-00/062.001; Profile/MIDP-2.1 Configuration/CLDC-1.1 ) AppleWebKit/525 (KHTML, like Gecko) Version/3.0 BrowserNG/7.2.6.2 3gpp-gba
+2012-03-25 20:02:04 1 188.179.204.177 Useragent added to (6613): Mozilla/5.0 (SymbianOS/9.3; Series60/3.2 NokiaC5-00/071.005; Profile/MIDP-2.1 Configuration/CLDC-1.1 ) AppleWebKit/533.4 (KHTML, like Gecko) NokiaBrowser/7.3.1.26 Mobile Safari/533.4 3gpp-gba
+2012-03-25 20:02:30 1 188.179.204.177 Device updated (6613)
+2012-03-25 20:04:26 1 188.179.204.177 Device updated (6613)
+2012-03-25 20:04:45 1 188.179.204.177 Useragent added to (1203): Mozilla/5.0 (SymbianOS/9.3; Series60/3.2 NokiaC5-00/061.005; Profile/MIDP-2.1 Configuration/CLDC-1.1 ) AppleWebKit/525 (KHTML, like Gecko) Version/3.0 BrowserNG/7.2.6.2 3gpp-gba
+2012-03-25 20:05:04 1 188.179.204.177 Device updated (1203)
+2012-03-25 20:08:34 1 188.179.204.177 Useragent added to (1203): Mozilla/5.0 (SymbianOS/9.3; Series60/3.2 NokiaC5-00/032.010; Profile/MIDP-2.1 Configuration/CLDC-1.1 ) AppleWebKit/525 (KHTML, like Gecko) Version/3.0 BrowserNG/7.2.5.2
+2012-03-25 20:08:47 1 188.179.204.177 Useragent added to (1203): Mozilla/5.0 (SymbianOS/9.3; Series60/3.2 NokiaC5-00/031.022; Profile/MIDP-2.1 Configuration/CLDC-1.1 ) AppleWebKit/525 (KHTML, like Gecko) Version/3.0 BrowserNG/7.2.3.1
+2012-03-25 20:12:53 1 188.179.204.177 Device updated (6313)
+2012-03-25 20:13:22 1 188.179.204.177 Useragent added to (6313): Mozilla/5.0 (SymbianOS/9.3; Series60/3.2 NokiaE72-1/054.005; Profile/MIDP-2.1 Configuration/CLDC-1.1 ) AppleWebKit/525 (KHTML, like Gecko) Version/3.0 BrowserNG/7.2.6.2 3gpp-gba
+2012-03-25 20:13:33 1 188.179.204.177 Useragent added to (6313): Mozilla/5.0 (SymbianOS/9.3; Series60/3.2 NokiaE72-1/071.004; Profile/MIDP-2.1 Configuration/CLDC-1.1 ) AppleWebKit/533.4 (KHTML, like Gecko) NokiaBrowser/7.3.1.26 Mobile Safari/533.4 3gpp-gba
+2012-03-25 20:13:44 1 188.179.204.177 Useragent added to (6313): Mozilla/5.0 (SymbianOS/9.3; Series60/3.2 NokiaE72-1/051.018; Profile/MIDP-2.1 Configuration/CLDC-1.1 ) AppleWebKit/525 (KHTML, like Gecko) Version/3.0 BrowserNG/7.2.6.2 3gpp-gba
+2012-03-25 20:13:53 1 188.179.204.177 Useragent added to (6313): Mozilla/5.0 (SymbianOS/9.3; Series60/3.2 NokiaE72-1/031.023; Profile/MIDP-2.1 Configuration/CLDC-1.1 ) AppleWebKit/525 (KHTML, like Gecko) Version/3.0 BrowserNG/7.2.3.1
+2012-03-25 20:14:06 1 188.179.204.177 Useragent added to (6313): Mozilla/5.0 (SymbianOS/9.3; Series60/3.2 NokiaE72-1/022.007; Profile/MIDP-2.1 Configuration/CLDC-1.1 ) AppleWebKit/525 (KHTML, like Gecko) Version/3.0 BrowserNG/7.1.19974
+2012-03-25 20:22:21 1 188.179.204.177 Device updated (1151)
+2012-03-25 20:24:41 1 188.179.204.177 Useragent deleted from (1062): Mozilla/5.0 (SymbianOS/9.1; U; en-us) AppleWebKit/413 (KHTML, like Gecko) Safari/413 es70
+2012-03-25 20:24:46 1 188.179.204.177 Useragent deleted from (1062): NokiaE70
+2012-03-25 20:24:53 1 188.179.204.177 Device updated (1062)
+2012-03-25 20:25:28 1 188.179.204.177 Device updated (1062)
+2012-03-25 20:26:38 1 188.179.204.177 Device updated (6614)
+2012-03-25 20:26:58 1 188.179.204.177 Device updated (1062)
+2012-03-25 20:27:45 1 188.179.204.177 Useragent deleted from (1149): NokiaE71x/ATT.03.11.1 Mozilla/5.0 SymbianOS/9.3; U; [en]; Series60/3.2; Profile/MIDP-2.1 Configuration/CLDC-1.1 AppleWebKit/413 (KHTML, like Gecko) Sa
+2012-03-25 20:27:47 1 188.179.204.177 Useragent deleted from (1149): Mozilla/5.0 (SymbianOS/9.3 U; Series60/3.2 NokiaE71x Profile/MIDP-2.1 Configuration/CLDC-1.1 ) AppleWebKit/413 (KHTML, like Gecko) Safari/413
+2012-03-25 20:27:48 1 188.179.204.177 Useragent deleted from (1149): NokiaE71x/ATT.03.11.1 Mozilla/5.0 SymbianOS/9.3; U; [en]; Series60/3.2; Profile/MIDP-2.1 Configuration/CLDC-1.1 AppleWebKit/413 (KHTML, like Gecko) Safari/413
+2012-03-25 20:28:04 1 188.179.204.177 Useragent deleted from (6324): Mozilla/5.0 (SymbianOS/9.2; U; Series60/3.1 NokiaE71-3/110.07.127; Profile/MIDP-2.0 Configuration/CLDC-1.1 ) AppleWebKit/413 (KHTML, like Gecko) Safari/413
+2012-03-25 20:28:15 1 188.179.204.177 Useragent deleted from (5638): Mozilla/5.0 (SymbianOS/9.2; U; Series60/3.1 NokiaE71-2/100.07.76; Profile/MIDP-2.0 Configuration/CLDC-1.1 ) AppleWebKit/413 (KHTML, like Gecko) Safari/413
+2012-03-25 20:28:17 1 188.179.204.177 Useragent deleted from (5638): Mozilla/5.0 (SymbianOS/9.2; U; Series60/3.1 NokiaE71-2/110.07.127; Profile/MIDP-2.0 Configuration/CLDC-1.1 ) AppleWebKit/413 (KHTML, like Gecko) Safari/413
+2012-03-25 20:29:12 1 188.179.204.177 Device updated (6274)
+2012-03-25 20:29:26 1 188.179.204.177 Device updated (6274)
+2012-03-25 20:30:04 1 188.179.204.177 Device updated (6274)
+2012-03-25 20:30:30 1 188.179.204.177 Useragent added to (6274): Mozilla/5.0 (SymbianOS/9.2; U; Series60/3.1 NokiaE71-2/110.07.127; Profile/MIDP-2.0 Configuration/CLDC-1.1 ) AppleWebKit/413 (KHTML, like Gecko) Safari/413
+2012-03-25 20:30:40 1 188.179.204.177 Useragent added to (6274): Mozilla/5.0 (SymbianOS/9.2; U; Series60/3.1 NokiaE71-2/100.07.76; Profile/MIDP-2.0 Configuration/CLDC-1.1 ) AppleWebKit/413 (KHTML, like Gecko) Safari/413
+2012-03-25 20:30:48 1 188.179.204.177 Useragent added to (6274): Mozilla/5.0 (SymbianOS/9.2; U; Series60/3.1 NokiaE71-3/110.07.127; Profile/MIDP-2.0 Configuration/CLDC-1.1 ) AppleWebKit/413 (KHTML, like Gecko) Safari/413
+2012-03-25 20:31:04 1 188.179.204.177 Unidentified useragent deleted: NokiaE71x/ATT.03.11.1 Mozilla/5.0 SymbianOS/9.3; U; [en]; Series60/3.2; Profile/MIDP-2.1 Configuration/CLDC-1.1 AppleWebKit/413 (KHTML, like Gecko) Safari/413
+2012-03-25 20:31:16 1 188.179.204.177 Unidentified useragent deleted: Mozilla/5.0 (SymbianOS/9.3 U; Series60/3.2 NokiaE71x Profile/MIDP-2.1 Configuration/CLDC-1.1 ) AppleWebKit/413 (KHTML, like Gecko) Safari/413
+2012-03-25 20:31:21 1 188.179.204.177 Unidentified useragent deleted: NokiaE70
+2012-03-25 20:31:27 1 188.179.204.177 Unidentified useragent deleted: NokiaE71x/ATT.03.11.1 Mozilla/5.0 SymbianOS/9.3; U; [en]; Series60/3.2; Profile/MIDP-2.1 Configuration/CLDC-1.1 AppleWebKit/413 (KHTML, like Gecko) Sa
+2012-03-25 20:31:44 1 188.179.204.177 Unidentified useragent deleted: Mozilla/5.0 (SymbianOS/9.1; U; en-us) AppleWebKit/413 (KHTML, like Gecko) Safari/413 es70
+2012-03-25 20:32:04 1 188.179.204.177 Useragent added to (6274): Mozilla/5.0 (SymbianOS/9.2; U; Series60/3.1 NokiaE71-1/510.21.009; Profile/MIDP-2.0 Configuration/CLDC-1.1 ) AppleWebKit/413 (KHTML, like Gecko) Safari/413
+2012-03-25 20:32:25 1 188.179.204.177 Useragent added to (1151): Mozilla/5.0 (SymbianOS/9.3; Series60/3.2 NokiaE75-1/202.12.01; Profile/MIDP-2.1 Configuration/CLDC-1.1 ) AppleWebKit/525 (KHTML, like Gecko) Version/3.0 BrowserNG/7.1.19424
+2012-03-25 20:32:32 1 188.179.204.177 Useragent added to (6274): Mozilla/5.0 (SymbianOS/9.2; U; Series60/3.1 NokiaE71-1/410.21.010; Profile/MIDP-2.0 Configuration/CLDC-1.1 ) AppleWebKit/413 (KHTML, like Gecko) Safari/413
+2012-03-25 20:32:40 1 188.179.204.177 Useragent added to (6274): Mozilla/5.0 (SymbianOS/9.2; U; Series60/3.1 NokiaE71-1/501.21.001; Profile/MIDP-2.0 Configuration/CLDC-1.1 ) AppleWebKit/413 (KHTML, like Gecko) Safari/413
+2012-03-25 20:32:56 1 188.179.204.177 Useragent added to (1151): Mozilla/5.0 (SymbianOS/9.3; Series60/3.2 NokiaE75-1/211.12.01; Profile/MIDP-2.1 Configuration/CLDC-1.1 ) AppleWebKit/525 (KHTML, like Gecko) Version/3.0 BrowserNG/7.1.1
+2012-03-25 20:41:33 1 188.179.204.177 Device updated (1172)
+2012-03-25 20:41:49 1 188.179.204.177 Device updated (1172)
+2012-03-25 20:46:42 1 188.179.204.177 Device updated (1187)
+2012-03-25 20:47:24 1 188.179.204.177 Useragent added to (6615): Mozilla/5.0 (SymbianOS/9.4; Series60/5.0 NokiaX6-00/40.0.002; Profile/MIDP-2.1 Configuration/CLDC-1.1 ) AppleWebKit/533.4 (KHTML, like Gecko) NokiaBrowser/7.3.1.33 Mobile Safari/533.4 3gpp-gba
+2012-03-25 20:47:42 1 188.179.204.177 Device updated (6615)
+2012-03-25 20:47:51 1 188.179.204.177 Useragent added to (1187): Mozilla/5.0 (SymbianOS/9.4; Series60/5.0 NokiaX6-00/30.0.003; Profile/MIDP-2.1 Configuration/CLDC-1.1 ) AppleWebKit/525 (KHTML, like Gecko) Version/3.0 BrowserNG/7.2.6.6 3gpp-gba
+2012-03-25 20:48:03 1 188.179.204.177 Device updated (1187)
+2012-03-25 20:52:17 1 188.179.204.177 Device updated (3357)
+2012-03-25 20:53:12 1 188.179.204.177 Useragent added to (3357): SonyEricssonC905/R1DA Browser/NetFront/3.4 Profile/MIDP-2.1 Configuration/CLDC-1.1 JavaPlatform/JP-8.4.1
+2012-03-25 20:53:17 1 188.179.204.177 Useragent added to (3357): SonyEricssonC905/R1EA Browser/NetFront/3.4 Profile/MIDP-2.1 Configuration/CLDC-1.1 JavaPlatform/JP-8.4.2
+2012-03-25 20:53:38 1 188.179.204.177 Device updated (3415)
+2012-03-25 20:55:29 1 188.179.204.177 Device updated (3415)
+2012-03-25 20:57:59 1 188.179.204.177 Device updated (3339)
+2012-03-25 20:59:03 1 188.179.204.177 Device updated (3392)
+2012-03-25 20:59:19 1 188.179.204.177 Useragent added to (3415): SonyEricssonC901/R1GA Browser/NetFront/3.4 Profile/MIDP-2.1 Configuration/CLDC-1.1 JavaPlatform/JP-8.4.4
+2012-03-25 21:02:00 1 188.179.204.177 Useragent deleted from (1063): Mozilla/5.0 (SymbianOS/9.2; U; Series60/3.1 NokiaE90-1/210.34.75; Profile/MIDP-2.0 Configuration/CLDC-1.1 ) AppleWebKit/413 (KHTML, like Gecko) Safari
+2012-03-25 21:02:03 1 188.179.204.177 Useragent deleted from (1063): Mozilla/5.0 (SymbianOS/9.2; U; Series60/3.1 NokiaE90-1/08.24.0.3; Profile/MIDP-2.0 Configuration/CLDC-1.1 ) AppleWebKit/413 (KHTML, like Gecko) Safari
+2012-03-25 21:02:06 1 188.179.204.177 Useragent deleted from (1063): Mozilla/5.0 (SymbianOS/9.2; U; Series60/3.1 NokiaE90-1/07.24.0.3; Profile/MIDP-2.0 Configuration/CLDC-1.1 ) AppleWebKit/413 (KHTML, like Gecko) Safari
+2012-03-25 21:02:08 1 188.179.204.177 Useragent deleted from (1063): Mozilla/5.0 (SymbianOS/9.2; U; Series60/3.1 NokiaE90-1/07.22.4.0; Profile/MIDP-2.0 Configuration/CLDC-1.1 ) AppleWebKit/413 (KHTML, like Gecko) Safari
+2012-03-25 21:02:10 1 188.179.204.177 Useragent deleted from (1063): Mozilla/5.0 (SymbianOS/9.2; U; Series60/3.1 NokiaE-90-1/07.02.4.1; Profile/MIDP-2.0 Configuration/CLDC-1.1 ) AppleWebKit/413 (KHTML, like Gecko) Safar
+2012-03-25 21:03:29 1 188.179.204.177 Device updated (1063)
+2012-03-25 21:03:40 1 188.179.204.177 Useragent deleted from (1063): NokiaE90
+2012-03-25 21:03:54 1 188.179.204.177 Device updated (1063)
+2012-03-25 21:04:07 1 188.179.204.177 Device updated (1063)
+2012-03-25 21:04:31 1 188.179.204.177 Useragent deleted from (5607): Mozilla/5.0 (SymbianOS/9.2; U; Series60/3.1 NokiaE90-1/07.40.1.2; Profile/MIDP-2.0 Configuration/CLDC-1.1 ) AppleWebKit/413 (KHTML, like Gecko) Safari/413
+2012-03-25 21:04:37 1 188.179.204.177 Useragent deleted from (5607): Mozilla/5.0 (SymbianOS/9.2; U; Series60/3.1 NokiaE90-1/200.34.73 Profile/MIDP-2.0 Configuration/CLDC-1.1 ) AppleWebKit/413 (KHTML, like Gecko) Safari/413
+2012-03-25 21:04:38 1 188.179.204.177 Useragent deleted from (5607): Mozilla/5.0 (SymbianOS/9.2; U; Series60/3.1 NokiaE90-1/07.38.0.2; Profile/MIDP-2.0 Configuration/CLDC-1.1 ) AppleWebKit/413 (KHTML,like Gecko) Safari/413
+2012-03-25 21:04:40 1 188.179.204.177 Useragent deleted from (5607): Mozilla/5.0 (SymbianOS/9.2; U; Series60/3.1 NokiaE90-1/300.34.84 Profile/MIDP-2.0 Configuration/CLDC-1.1 ) AppleWebKit/413 (KHTML, like Gecko) Safari/413
+2012-03-25 21:04:41 1 188.179.204.177 Useragent deleted from (5607): Mozilla/5.0 (SymbianOS/9.2; U; Series60/3.1 NokiaE90-1/210.34.75 Profile/MIDP-2.0 Configuration/CLDC-1.1 ) AppleWebKit/413 (KHTML, like Gecko) Safari/413
+2012-03-25 21:04:42 1 188.179.204.177 Useragent deleted from (5607): Mozilla/5.0 (SymbianOS/9.2; U; Series60/3.1 NokiaE90-1/400.34.93 Profile/MIDP-2.0 Configuration/CLDC-1.1 ) AppleWebKit/413 (KHTML, like Gecko) Safari/413
+2012-03-25 21:04:43 1 188.179.204.177 Useragent deleted from (5607): Mozilla/5.0 (SymbianOS/9.2; U; Series60/3.1 NokiaE90-1/07.38.0.2; Profile/MIDP-2.0 Configuration/CLDC-1.1 ) AppleWebKit/413 (KHTML, like Gecko) Safari/413
+2012-03-25 21:05:08 1 188.179.204.177 Useragent deleted from (5947): Mozilla/5.0 (SymbianOS/9.2; U; Series60/3.1 NokiaE66-2/102.07.81; Profile/MIDP-2.0 Configuration/CLDC-1.1 ) AppleWebKit/413 (KHTML, like Gecko) Safari/413
+2012-03-25 21:06:14 1 188.179.204.177 Device updated (6271)
+2012-03-25 21:06:35 1 188.179.204.177 Device updated (6271)
+2012-03-25 21:07:29 1 188.179.204.177 Device updated (6292)
+2012-03-25 21:07:58 1 188.179.204.177 Device updated (6292)
+2012-03-25 21:08:09 1 188.179.204.177 Device updated (6292)
+2012-03-25 21:08:22 1 188.179.204.177 Useragent deleted from (6073): Mozilla/5.0 (SymbianOS/9.2; U; Series60/3.1 NokiaE63-3/200.21.012; Profile/MIDP-2.0 Configuration/CLDC-1.1 ) AppleWebKit/413 (KHTML, like Gecko) Safari/413
+2012-03-25 21:09:45 1 188.179.204.177 Device updated (1060)
+2012-03-25 21:10:05 1 188.179.204.177 Useragent deleted from (1059): NokiaE61i
+2012-03-25 21:10:07 1 188.179.204.177 Useragent deleted from (1059): NokiaE61i-1/3.0 (1.00.0633.15.00) SymbianOS/9.1 Series60/3.0 Profile/MIDP-2.0 Configuration/CLDC-1.1
+2012-03-25 21:10:08 1 188.179.204.177 Useragent deleted from (1059): Mozilla/5.0 (SymbianOS/9.1; U; en-us) AppleWebKit/413 (KHTML, like Gecko) Safari/413 es61i
+2012-03-25 21:10:09 1 188.179.204.177 Useragent deleted from (1059): NokiaE61i-1/3.0 (1.0633.22.05) SymbianOS/9.1 Series60/3.0 Profile/MIDP-2.0 Configuration/CLDC-1.1
+2012-03-25 21:10:10 1 188.179.204.177 Useragent deleted from (1059): NokiaE61i-1/3.0 (1.0633.22.06) SymbianOS/9.1 Series60/3.0 Profile/MIDP-2.0 Configuration/CLDC-1.1
+2012-03-25 21:10:12 1 188.179.204.177 Useragent deleted from (1059): NokiaE61i Orange/1.0 Series60/3.0 Nokia E61i/1.0633.22.11 Profile/MIDP-2.0 Configuration/CLDC-1.1
+2012-03-25 21:10:13 1 188.179.204.177 Useragent deleted from (1059): NokiaE61i-1/3.0 (2.0633.65.01) SymbianOS/9.1 Series60/3.0 Profile/MIDP-2.0 Configuration/CLDC-1.1
+2012-03-25 21:12:04 1 188.179.204.177 Device updated (6131)
+2012-03-25 21:12:15 1 188.179.204.177 Device updated (6131)
+2012-03-25 21:12:27 1 188.179.204.177 Device updated (6131)
+2012-03-25 21:12:39 1 188.179.204.177 Useragent deleted from (6131): Mozilla/4.0 (compatible; MSIE 6.0; Symbian OS; Nokia E61/0610.04.04; 9730) Opera 8.65 [en]
+2012-03-25 21:12:43 1 188.179.204.177 Useragent deleted from (6131): Mozilla/4.0 (compatible; MSIE 6.0; Symbian OS; Nokia E61/0633.09.04; 9730) Opera 8.65 [en]
+2012-03-25 21:13:02 1 188.179.204.177 Device updated (6131)
+2012-03-25 21:13:14 1 188.179.204.177 Device updated (6131)
+2012-03-25 21:14:27 1 188.179.204.177 Device updated (1057)
+2012-03-25 21:14:57 1 188.179.204.177 Device updated (1057)
+2012-03-25 21:15:10 1 188.179.204.177 Device updated (1057)
+2012-03-25 21:15:56 1 188.179.204.177 Device updated (1061)
+2012-03-25 21:16:39 1 188.179.204.177 Device updated (1061)
+2012-03-25 21:17:14 1 188.179.204.177 Device updated (1061)
+2012-03-25 21:17:57 1 188.179.204.177 Useragent added to (6131): NokiaE61i-1/3.0 (2.0633.65.01) SymbianOS/9.1 Series60/3.0 Profile/MIDP-2.0 Configuration/CLDC-1.1
+2012-03-25 21:18:05 1 188.179.204.177 Useragent added to (6131): NokiaE61i Orange/1.0 Series60/3.0 Nokia E61i/1.0633.22.11 Profile/MIDP-2.0 Configuration/CLDC-1.1
+2012-03-25 21:18:11 1 188.179.204.177 Useragent added to (6131): NokiaE61i-1/3.0 (1.0633.22.06) SymbianOS/9.1 Series60/3.0 Profile/MIDP-2.0 Configuration/CLDC-1.1
+2012-03-25 21:18:16 1 188.179.204.177 Useragent added to (6131): NokiaE61i-1/3.0 (1.0633.22.05) SymbianOS/9.1 Series60/3.0 Profile/MIDP-2.0 Configuration/CLDC-1.1
+2012-03-25 21:18:25 1 188.179.204.177 Useragent added to (6131): NokiaE61i-1/3.0 (1.00.0633.15.00) SymbianOS/9.1 Series60/3.0 Profile/MIDP-2.0 Configuration/CLDC-1.1
+2012-03-25 21:18:32 1 188.179.204.177 Unidentified useragent deleted: NokiaE61i
+2012-03-25 21:18:51 1 188.179.204.177 Useragent added to (6292): Mozilla/5.0 (SymbianOS/9.2; U; Series60/3.1 NokiaE63-3/200.21.012; Profile/MIDP-2.0 Configuration/CLDC-1.1 ) AppleWebKit/413 (KHTML, like Gecko) Safari/413
+2012-03-25 21:19:00 1 188.179.204.177 Useragent added to (6271): Mozilla/5.0 (SymbianOS/9.2; U; Series60/3.1 NokiaE66-2/102.07.81; Profile/MIDP-2.0 Configuration/CLDC-1.1 ) AppleWebKit/413 (KHTML, like Gecko) Safari/413
+2012-03-25 21:19:10 1 188.179.204.177 Useragent added to (1063): Mozilla/5.0 (SymbianOS/9.2; U; Series60/3.1 NokiaE90-1/07.38.0.2; Profile/MIDP-2.0 Configuration/CLDC-1.1 ) AppleWebKit/413 (KHTML, like Gecko) Safari/413
+2012-03-25 21:19:18 1 188.179.204.177 Useragent added to (1063): Mozilla/5.0 (SymbianOS/9.2; U; Series60/3.1 NokiaE90-1/400.34.93 Profile/MIDP-2.0 Configuration/CLDC-1.1 ) AppleWebKit/413 (KHTML, like Gecko) Safari/413
+2012-03-25 21:19:24 1 188.179.204.177 Useragent added to (1063): Mozilla/5.0 (SymbianOS/9.2; U; Series60/3.1 NokiaE90-1/210.34.75 Profile/MIDP-2.0 Configuration/CLDC-1.1 ) AppleWebKit/413 (KHTML, like Gecko) Safari/413
+2012-03-25 21:19:31 1 188.179.204.177 Useragent added to (1063): Mozilla/5.0 (SymbianOS/9.2; U; Series60/3.1 NokiaE90-1/300.34.84 Profile/MIDP-2.0 Configuration/CLDC-1.1 ) AppleWebKit/413 (KHTML, like Gecko) Safari/413
+2012-03-25 21:19:36 1 188.179.204.177 Useragent added to (1063): Mozilla/5.0 (SymbianOS/9.2; U; Series60/3.1 NokiaE90-1/07.38.0.2; Profile/MIDP-2.0 Configuration/CLDC-1.1 ) AppleWebKit/413 (KHTML,like Gecko) Safari/413
+2012-03-25 21:19:42 1 188.179.204.177 Useragent added to (1063): Mozilla/5.0 (SymbianOS/9.2; U; Series60/3.1 NokiaE90-1/200.34.73 Profile/MIDP-2.0 Configuration/CLDC-1.1 ) AppleWebKit/413 (KHTML, like Gecko) Safari/413
+2012-03-25 21:19:49 1 188.179.204.177 Useragent added to (1063): Mozilla/5.0 (SymbianOS/9.2; U; Series60/3.1 NokiaE90-1/07.40.1.2; Profile/MIDP-2.0 Configuration/CLDC-1.1 ) AppleWebKit/413 (KHTML, like Gecko) Safari/413
+2012-03-25 21:19:55 1 188.179.204.177 Useragent added to (1063): Mozilla/5.0 (SymbianOS/9.2; U; Series60/3.1 NokiaE-90-1/07.02.4.1; Profile/MIDP-2.0 Configuration/CLDC-1.1 ) AppleWebKit/413 (KHTML, like Gecko) Safar
+2012-03-25 21:20:01 1 188.179.204.177 Useragent added to (1063): Mozilla/5.0 (SymbianOS/9.2; U; Series60/3.1 NokiaE90-1/07.22.4.0; Profile/MIDP-2.0 Configuration/CLDC-1.1 ) AppleWebKit/413 (KHTML, like Gecko) Safari
+2012-03-25 21:20:05 1 188.179.204.177 Useragent added to (1063): Mozilla/5.0 (SymbianOS/9.2; U; Series60/3.1 NokiaE90-1/07.24.0.3; Profile/MIDP-2.0 Configuration/CLDC-1.1 ) AppleWebKit/413 (KHTML, like Gecko) Safari
+2012-03-25 21:20:10 1 188.179.204.177 Useragent added to (1063): Mozilla/5.0 (SymbianOS/9.2; U; Series60/3.1 NokiaE90-1/08.24.0.3; Profile/MIDP-2.0 Configuration/CLDC-1.1 ) AppleWebKit/413 (KHTML, like Gecko) Safari
+2012-03-25 21:20:19 1 188.179.204.177 Unidentified useragent deleted: Mozilla/5.0 (SymbianOS/9.2; U; Series60/3.1 NokiaE90-1/210.34.75; Profile/MIDP-2.0 Configuration/CLDC-1.1 ) AppleWebKit/413 (KHTML, like Gecko) Safari
+2012-03-25 21:20:25 1 188.179.204.177 Unidentified useragent deleted: NokiaE90
+2012-03-25 21:20:35 1 188.179.204.177 Useragent added to (6271): Mozilla/5.0 (SymbianOS/9.2; U; Series60/3.1 NokiaE66-1/410.21.010; Profile/MIDP-2.0 Configuration/CLDC-1.1 ) AppleWebKit/413 (KHTML, like Gecko) Safari/413
+2012-03-25 21:20:43 1 188.179.204.177 Useragent added to (6271): Mozilla/5.0 (SymbianOS/9.2; U; Series60/3.1 NokiaE66-1/500.21.009; Profile/MIDP-2.0 Configuration/CLDC-1.1 ) AppleWebKit/413 (KHTML, like Gecko) Safari/413
+2012-03-25 21:20:51 1 188.179.204.177 Useragent added to (6271): Mozilla/5.0 (SymbianOS/9.2; U; Series60/3.1 NokiaE66-1/400.21.013; Profile/MIDP-2.0 Configuration/CLDC-1.1 ) AppleWebKit/413 (KHTML, like Gecko) Safari/413
+2012-03-25 21:21:12 1 188.179.204.177 Useragent deleted from (1063): Mozilla/5.0 (SymbianOS/9.2; U; Series60/3.1 NokiaE90-1/08.24.0.3; Profile/MIDP-2.0 Configuration/CLDC-1.1 ) AppleWebKit/413 (KHTML, like Gecko) Safari
+2012-03-25 21:21:14 1 188.179.204.177 Useragent deleted from (1063): Mozilla/5.0 (SymbianOS/9.2; U; Series60/3.1 NokiaE90-1/07.24.0.3; Profile/MIDP-2.0 Configuration/CLDC-1.1 ) AppleWebKit/413 (KHTML, like Gecko) Safari
+2012-03-25 21:21:17 1 188.179.204.177 Useragent deleted from (1063): Mozilla/5.0 (SymbianOS/9.2; U; Series60/3.1 NokiaE90-1/07.22.4.0; Profile/MIDP-2.0 Configuration/CLDC-1.1 ) AppleWebKit/413 (KHTML, like Gecko) Safari
+2012-03-25 21:21:20 1 188.179.204.177 Useragent deleted from (1063): Mozilla/5.0 (SymbianOS/9.2; U; Series60/3.1 NokiaE-90-1/07.02.4.1; Profile/MIDP-2.0 Configuration/CLDC-1.1 ) AppleWebKit/413 (KHTML, like Gecko) Safar
+2012-03-25 21:21:31 1 188.179.204.177 Unidentified useragent deleted: Mozilla/5.0 (SymbianOS/9.2; U; Series60/3.1 NokiaE-90-1/07.02.4.1; Profile/MIDP-2.0 Configuration/CLDC-1.1 ) AppleWebKit/413 (KHTML, like Gecko) Safar
+2012-03-25 21:21:35 1 188.179.204.177 Unidentified useragent deleted: Mozilla/5.0 (SymbianOS/9.2; U; Series60/3.1 NokiaE90-1/07.22.4.0; Profile/MIDP-2.0 Configuration/CLDC-1.1 ) AppleWebKit/413 (KHTML, like Gecko) Safari
+2012-03-25 21:21:39 1 188.179.204.177 Unidentified useragent deleted: Mozilla/5.0 (SymbianOS/9.2; U; Series60/3.1 NokiaE90-1/07.24.0.3; Profile/MIDP-2.0 Configuration/CLDC-1.1 ) AppleWebKit/413 (KHTML, like Gecko) Safari
+2012-03-25 21:21:45 1 188.179.204.177 Unidentified useragent deleted: Mozilla/5.0 (SymbianOS/9.2; U; Series60/3.1 NokiaE90-1/08.24.0.3; Profile/MIDP-2.0 Configuration/CLDC-1.1 ) AppleWebKit/413 (KHTML, like Gecko) Safari
+2012-03-25 21:22:36 1 188.179.204.177 Useragent deleted from (1191): Nokia6303classic/2.0 (06.40) Profile/MIDP-2.1 Configuration/CLDC-1.1 Mozilla/5.0 AppleWebKit/420+ (KHTML, like Gecko) Safari/420+
+2012-03-25 21:23:52 1 188.179.204.177 Device updated (1177)
+2012-03-25 21:24:06 1 188.179.204.177 Device updated (1177)
+2012-03-25 21:24:50 1 188.179.204.177 Useragent added to (1177): Nokia6303classic/2.0 (06.40) Profile/MIDP-2.1 Configuration/CLDC-1.1 Mozilla/5.0 AppleWebKit/420+ (KHTML, like Gecko) Safari/420+
+2012-03-25 21:25:24 1 188.179.204.177 Useragent added to (1177): Nokia6303iclassic/5.0 (07.10) Profile/MIDP-2.1 Configuration/CLDC-1.1 Mozilla/5.0 AppleWebKit/420+ (KHTML, like Gecko) Safari/420+
+2012-03-25 21:25:31 1 188.179.204.177 Useragent added to (1177): Nokia6303classic/2.0 (10.10) Profile/MIDP-2.1 Configuration/CLDC-1.1 Mozilla/5.0 AppleWebKit/420+ (KHTML, like Gecko) Safari/420+
+2012-03-25 21:25:49 1 188.179.204.177 Device updated (1177)
+2012-03-25 21:28:07 1 188.179.204.177 Useragent added to (6131): Mozilla/4.0 (compatible; MSIE 6.0; Symbian OS; Nokia E61/0633.09.04; 9730) Opera 8.65 [en]
+2012-03-25 21:28:15 1 188.179.204.177 Useragent added to (6131): Mozilla/4.0 (compatible; MSIE 6.0; Symbian OS; Nokia E61/0610.04.04; 9730) Opera 8.65 [en]
+2012-03-25 21:28:29 1 188.179.204.177 Useragent added to (6560): Mozilla/5.0 (Windows NT 6.0; WOW64) AppleWebKit/535.11 (KHTML, like Gecko) Chrome/17.0.963.83 Safari/535.11
+2012-03-25 21:28:35 1 188.179.204.177 Unidentified useragent deleted: Mozilla/5.0 (SymbianOS/9.1; U; en-us) AppleWebKit/413 (KHTML, like Gecko) Safari/413 es61i
+2012-03-25 21:36:11 1 188.179.204.177 Device updated (956)
+2012-03-25 21:36:15 1 188.179.204.177 Useragent deleted from (956): Nokia6600/*
+2012-03-25 21:37:51 1 188.179.204.177 Device updated (956)
+2012-03-25 21:38:23 1 188.179.204.177 Device updated (956)
+2012-03-25 21:39:11 1 188.179.204.177 Device updated (1133)
+2012-03-25 21:39:24 1 188.179.204.177 Device updated (1133)
+2012-03-25 21:40:16 1 188.179.204.177 Device updated (1140)
+2012-03-25 21:40:27 1 188.179.204.177 Device updated (1140)
+2012-03-25 21:40:39 1 188.179.204.177 Device updated (1140)
+2012-03-25 21:41:46 1 188.179.204.177 Useragent deleted from (1178): Nokia6600i-1c/2.0 (36.14) Profile/MIDP-2.1 Configuration/CLDC-1.1
+2012-03-25 21:42:12 1 188.179.204.177 Useragent added to (1133): Nokia6600f/2.0 (05.23) Profile/MIDP-2.1 Configuration/CLDC-1.1
+2012-03-25 21:42:45 1 188.179.204.177 Useragent added to (1140): Nokia6600i-1c/2.0 (36.14) Profile/MIDP-2.1 Configuration/CLDC-1.1
+2012-03-25 21:43:01 1 188.179.204.177 Unidentified useragent deleted: Nokia6600/*
+2012-03-25 21:46:28 1 188.179.204.177 Device updated (6321)
+2012-03-25 21:46:37 1 188.179.204.177 Device updated (6321)
+2012-03-25 21:48:19 1 188.179.204.177 Device updated (6321)
+2012-03-25 21:49:18 1 188.179.204.177 Device updated (6321)
+2012-03-25 21:49:57 1 188.179.204.177 Useragent added to (6321): NokiaX3-00/5.0 (04.11) Profile/MIDP-2.1 Configuration/CLDC-1.1 Mozilla/5.0 AppleWebKit/420+ (KHTML, like Gecko) Safari/420+
+2012-03-25 21:50:34 1 188.179.204.177 Useragent added to (6616): NokiaX3-02/5.0 (05.60) Profile/MIDP-2.1 Configuration/CLDC-1.1 Mozilla/5.0 AppleWebKit/420+ (KHTML, like Gecko) Safari/420+
+2012-03-25 21:52:18 1 188.179.204.177 Device updated (6616)
+2012-03-25 21:57:16 1 188.179.204.177 Device updated (6038)
+2012-03-25 21:57:29 1 188.179.204.177 Device updated (6038)
+2012-03-25 21:57:52 1 188.179.204.177 Device updated (6038)
+2012-03-25 21:59:07 1 188.179.204.177 Useragent added to (6525): Mozilla/5.0 (Linux; U; Android 2.3.4; da-dk; LT15i Build/4.0.2.A.0.62) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 Mobile Safari/533.1
+2012-03-25 21:59:21 1 188.179.204.177 Useragent added to (6356): Mozilla/5.0 (Windows NT 6.0) AppleWebKit/534.54.16 (KHTML, like Gecko) Version/5.1.4 Safari/534.54.16
+2012-03-25 21:59:37 1 188.179.204.177 Useragent added to (6358): Mozilla/5.0 (iPhone; U; CPU iPhone OS 4_1 like Mac OS X; pt-br) AppleWebKit/532.9 (KHTML, like Gecko) Mobile/8B117
+2012-03-25 22:00:23 1 188.179.204.177 Useragent added to (6360): Mozilla/5.0 (iPhone; U; CPU iPhone OS 4_3_3 like Mac OS X; tr-tr) AppleWebKit/533.17.9 (KHTML, like Gecko) Mobile/8J2
+2012-03-25 22:01:30 1 188.179.204.177 Useragent added to (3430): SonyEricssonJ10i2/R7CA Browser/NetFront/3.5 Profile/MIDP-2.1 Configuration/CLDC-1.1 JavaPlatform/JP-8.5.2
+2012-03-25 22:02:06 1 188.179.204.177 Useragent added to (3430): SonyEricssonJ10i/R7CA Browser/NetFront/3.5 Profile/MIDP-2.1 Configuration/CLDC-1.1 JavaPlatform/JP-8.5.2
+2012-03-25 22:02:21 1 188.179.204.177 Useragent added to (3420): SonyEricssonJ105i/R1HA Browser/NetFront/3.4 Profile/MIDP-2.1 Configuration/CLDC-1.1 JavaPlatform/JP-8.4.5
+2012-03-25 22:02:48 1 188.179.204.177 Device updated (3420)
+2012-03-25 22:03:13 1 188.179.204.177 Useragent added to (6523): Mozilla/5.0 (Linux; U; Android 2.3.4; da-dk; SonyEricssonLT18i Build/4.0.2.A.0.69) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 Mobile Safari/533.1
+2012-03-25 22:03:29 1 188.179.204.177 Useragent added to (6525): Mozilla/5.0 (Linux; U; Android 2.3.2; da-dk; SonyEricssonLT15i Build/3.0.A.2.181) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 Mobile Safari/533.1
+2012-03-25 22:09:28 1 188.179.204.177 Device updated (3420)
+2012-03-25 22:09:35 1 188.179.204.177 Device updated (3420)
+2012-03-25 22:11:57 1 188.179.204.177 Device updated (3430)
+2012-03-25 22:31:24 1 188.179.204.177 Useragent added to (6617): NokiaC2-01/5.0 (10.50) Profile/MIDP-2.1 Configuration/CLDC-1.1 Mozilla/5.0 AppleWebKit/420+ (KHTML, like Gecko) Safari/420+
+2012-03-25 22:32:13 1 188.179.204.177 Device updated (6617)
+2012-03-25 22:33:27 1 188.179.204.177 Device updated (6617)
+2012-03-25 22:33:58 1 188.179.204.177 Device updated (6618)
+2012-03-25 22:34:40 1 188.179.204.177 Device updated (6618)
+2012-03-25 22:35:07 1 188.179.204.177 Device updated (6619)
+2012-03-25 22:36:43 1 188.179.204.177 Device updated (6619)
+2012-03-25 22:39:52 1 188.179.204.177 Device updated (6620)
+2012-03-25 22:40:22 1 188.179.204.177 Device updated (6620)
+2012-03-25 22:41:08 1 188.179.204.177 Device updated (6621)
+2012-03-25 22:42:39 1 188.179.204.177 Useragent added to (6620): NokiaC3-00/5.0 (03.35) Profile/MIDP-2.1 Configuration/CLDC-1.1 Mozilla/5.0 AppleWebKit/420+ (KHTML, like Gecko) Safari/420+
+2012-03-25 22:44:38 1 188.179.204.177 Device updated (6613)
+2012-03-25 22:44:47 1 188.179.204.177 Device updated (1203)
+2012-03-25 22:49:20 1 188.179.204.177 Device updated (6268)
+2012-03-25 22:49:28 1 188.179.204.177 Device updated (6268)
+2012-03-25 22:51:07 1 188.179.204.177 Device updated (1175)
+2012-03-25 22:51:43 1 188.179.204.177 Useragent added to (1175): Mozilla/5.0 (SymbianOS/9.3; Series60/3.2 NokiaN86-1/21.006;; Profile/MIDP-2.1 Configuration/CLDC-1.1 ) AppleWebKit/525 (KHTML, like Gecko) Version/3.0 BrowserNG/7.1.19424
+2012-03-25 22:51:51 1 188.179.204.177 Useragent added to (1175): Mozilla/5.0 (SymbianOS/9.3; Series60/3.2 NokiaN86-1/30.009;; Profile/MIDP-2.1 Configuration/CLDC-1.1 ) AppleWebKit/525 (KHTML, like Gecko) Version/3.0 BrowserNG/7.1.19424
+2012-03-25 22:53:11 1 188.179.204.177 Useragent deleted from (5956): Mozilla/5.0 (SymbianOS/9.3; U; Series60/3.2 NokiaN96-3/1.00; Profile/MIDP-2.1 Configuration/CLDC-1.1;) AppleWebKit/413 (KHTML, like Gecko) Safari/413
+2012-03-25 22:56:12 1 188.179.204.177 Useragent added to (6284): Mozilla/5.0 (SymbianOS/9.3; U; Series60/3.2 NokiaN96-3/1.00; Profile/MIDP-2.1 Configuration/CLDC-1.1;) AppleWebKit/413 (KHTML, like Gecko) Safari/413
+2012-03-25 22:56:43 1 188.179.204.177 Useragent deleted from (6284): NokiaNokia N96
+2012-03-25 22:57:03 1 188.179.204.177 Device updated (6284)
+2012-03-25 22:57:32 1 188.179.204.177 Unidentified useragent deleted: NokiaNokia N96
+2012-03-25 22:58:29 1 188.179.204.177 Useragent deleted from (1079): Mozilla/5.0 (SymbianOS/9.2 U; Series60/3.1 NokiaN95_8GB/10.0.007; Profile/MIDP-2.0 Configuration/CLDC-1.1 ) AppleWebKit/413 (KHTML, like Gecko) Safari/413
+2012-03-25 22:58:31 1 188.179.204.177 Useragent deleted from (1079): Mozilla/5.0 (SymbianOS/9.2; U; Series60/3.1 NokiaN95_8GB/15.0.015; Profile/MIDP-2.0 Configuration/CLDC-1.1 ) AppleWebKit/413 (KHTML, like Gecko) Safari/413
+2012-03-25 22:58:33 1 188.179.204.177 Useragent deleted from (1079): Mozilla/5.0 (SymbianOS/9.2; U; Series60/3.1 NokiaN95_8GB/11.0.026; Profile/MIDP-2.0 Configuration/CLDC-1.1 ) AppleWebKit/413 (KHTML, like Gecko) Safari/413
+2012-03-25 22:58:34 1 188.179.204.177 Useragent deleted from (1079): Mozilla/5.0 (SymbianOS/9.2; Series60/3.1 NokiaN95_8GB/20.0.016; Profile/MIDP-2.0 Configuration/CLDC-1.1 U; ) AppleWebKit/413 (KHTML, like Gecko) Safari/413
+2012-03-25 22:58:35 1 188.179.204.177 Useragent deleted from (1079): Mozilla/5.0 (SymbianOS/9.2; U; Series60/3.1 NokiaN95_8GB/31.0.015; Profile/MIDP-2.0 Configuration/CLDC-1.1 ) AppleWebKit/413 (KHTML, like Gecko) Safari/413
+2012-03-25 22:58:37 1 188.179.204.177 Useragent deleted from (1079): Mozilla/5.0 (SymbianOS/9.2; U; Series60/3.1 NokiaN95_8GB/30.0.018 Profile/MIDP-2.0 Configuration/CLDC-1.1 ) AppleWebKit/413 (KHTML, like Gecko) Safari/413
+2012-03-25 22:58:38 1 188.179.204.177 Useragent deleted from (1079): Mozilla/5.0 (SymbianOS/9.2; U; Series60/3.1 NokiaN95_8GB/40.0.002; Profile/MIDP-2.0 Configuration/CLDC-1.1 ) AppleWebKit/413 (KHTML, like Gecko) Safari/413
+2012-03-25 22:58:39 1 188.179.204.177 Useragent deleted from (1079): Mozilla/5.0 (SymbianOS/9.2 U; Series60/3.1 NokiaN95_8GB/10.0.007; Profile/MIDP-2.0 Configuration/CLDC-1.1 ) AppleWebKit/413 (KHTML, like Gecko) Safari
+2012-03-25 22:58:41 1 188.179.204.177 Useragent deleted from (1079): Mozilla/5.0 (SymbianOS/9.2; U; Series60/3.1 NokiaN95_8GB/15.0.015; Profile/MIDP-2.0 Configuration/CLDC-1.1 ) AppleWebKit/413 (KHTML, like Gecko) Safar
+2012-03-25 22:58:42 1 188.179.204.177 Useragent deleted from (1079): Mozilla/5.0 (SymbianOS/9.2; U; Series60/3.1 NokiaN95_8GB/11.0.026; Profile/MIDP-2.0 Configuration/CLDC-1.1 ) AppleWebKit/413 (KHTML, like Gecko) Safar
+2012-03-25 22:58:43 1 188.179.204.177 Useragent deleted from (1079): Mozilla/5.0 (SymbianOS/9.2; Series60/3.1 NokiaN95_8GB/20.0.016; Profile/MIDP-2.0 Configuration/CLDC-1.1 U; ) AppleWebKit/413 (KHTML, like Gecko) Safar
+2012-03-25 22:58:44 1 188.179.204.177 Useragent deleted from (1079): Mozilla/5.0 (SymbianOS/9.2; U; Series60/3.1 NokiaN95_8GB/31.0.015; Profile/MIDP-2.0 Configuration/CLDC-1.1 ) AppleWebKit/413 (KHTML, like Gecko) Safar
+2012-03-25 22:58:45 1 188.179.204.177 Useragent deleted from (1079): Mozilla/5.0 (SymbianOS/9.2; U; Series60/3.1 NokiaN95_8GB/30.0.018 Profile/MIDP-2.0 Configuration/CLDC-1.1 ) AppleWebKit/413 (KHTML, like Gecko) Safari
+2012-03-25 22:58:46 1 188.179.204.177 Useragent deleted from (1079): Mozilla/5.0 (SymbianOS/9.2; U; Series60/3.1 NokiaN95_8GB/40.0.002; Profile/MIDP-2.0 Configuration/CLDC-1.1 ) AppleWebKit/413 (KHTML, like Gecko) Safar
+2012-03-25 22:58:48 1 188.179.204.177 Useragent deleted from (1079): Mozilla/5.0 (SymbianOS/9.2; U; Series60/3.1 NokiaN95_8GB/20.0.016; Profile/MIDP-2.0 Configuration/CLDC-1.1 ) AppleWebKit/413 (KHTML, like Gecko) Safari/413
+2012-03-25 22:58:49 1 188.179.204.177 Useragent deleted from (1079): Mozilla/5.0 (SymbianOS/9.2; U; Series60/3.1 NokiaN95_8GB-3/20.2.005 Profile/MIDP-2.0 Configuration/CLDC-1.1 ) AppleWebKit/413 (KHTML, like Gecko) Safari/413
+2012-03-25 22:58:50 1 188.179.204.177 Useragent deleted from (1079): Mozilla/5.0 (SymbianOS/9.2; U; Series60/3.1 NokiaN95_8GB/30.0.018; Profile/MIDP-2.0 Configuration/CLDC-1.1 ) AppleWebKit/413 (KHTML, like Gecko) Safari/413
+2012-03-25 22:58:51 1 188.179.204.177 Useragent deleted from (1079): Mozilla/5.0 (SymbianOS/9.2; U; Series60/3.1 NokiaN95_8GB-3/1.2.011 Profile/MIDP-2.0 Configuration/CLDC-1.1 ) AppleWebKit/413 (KHTML, like Gecko) Safari/413
+2012-03-25 22:58:52 1 188.179.204.177 Useragent deleted from (1079): Mozilla/5.0 (SymbianOS/9.2; U; Series60/3.1 NokiaN95_8GB-3/31.2.008 Profile/MIDP-2.0 Configuration/CLDC-1.1 ) AppleWebKit/413 (KHTML, like Gecko) Safari/413
+2012-03-25 22:59:18 1 188.179.204.177 Device updated (6133)
+2012-03-25 22:59:49 1 188.179.204.177 Device updated (6133)
+2012-03-25 22:59:58 1 188.179.204.177 Device updated (6133)
+2012-03-25 23:00:07 1 188.179.204.177 Useragent deleted from (6133): NokiaN95
+2012-03-25 23:00:11 1 188.179.204.177 Useragent deleted from (6133): Nokia-N95
+2012-03-25 23:01:41 1 188.179.204.177 Device updated (1073)
+2012-03-25 23:02:06 1 188.179.204.177 Unidentified useragent deleted: Nokia-N95
+2012-03-25 23:02:10 1 188.179.204.177 Unidentified useragent deleted: NokiaN95
+2012-03-25 23:03:39 1 188.179.204.177 Useragent added to (6133): Mozilla/5.0 (SymbianOS/9.2; U; Series60/3.1 NokiaN95_8GB-3/31.2.008 Profile/MIDP-2.0 Configuration/CLDC-1.1 ) AppleWebKit/413 (KHTML, like Gecko) Safari/413
+2012-03-25 23:03:48 1 188.179.204.177 Useragent added to (6133): Mozilla/5.0 (SymbianOS/9.2; U; Series60/3.1 NokiaN95_8GB-3/1.2.011 Profile/MIDP-2.0 Configuration/CLDC-1.1 ) AppleWebKit/413 (KHTML, like Gecko) Safari/413
+2012-03-25 23:03:53 1 188.179.204.177 Useragent added to (6133): Mozilla/5.0 (SymbianOS/9.2; U; Series60/3.1 NokiaN95_8GB/30.0.018; Profile/MIDP-2.0 Configuration/CLDC-1.1 ) AppleWebKit/413 (KHTML, like Gecko) Safari/413
+2012-03-25 23:03:58 1 188.179.204.177 Useragent added to (6133): Mozilla/5.0 (SymbianOS/9.2; U; Series60/3.1 NokiaN95_8GB-3/20.2.005 Profile/MIDP-2.0 Configuration/CLDC-1.1 ) AppleWebKit/413 (KHTML, like Gecko) Safari/413
+2012-03-25 23:04:04 1 188.179.204.177 Useragent added to (6133): Mozilla/5.0 (SymbianOS/9.2; U; Series60/3.1 NokiaN95_8GB/20.0.016; Profile/MIDP-2.0 Configuration/CLDC-1.1 ) AppleWebKit/413 (KHTML, like Gecko) Safari/413
+2012-03-25 23:04:12 1 188.179.204.177 Unidentified useragent deleted: Mozilla/5.0 (SymbianOS/9.2; U; Series60/3.1 NokiaN95_8GB/40.0.002; Profile/MIDP-2.0 Configuration/CLDC-1.1 ) AppleWebKit/413 (KHTML, like Gecko) Safar
+2012-03-25 23:04:19 1 188.179.204.177 Unidentified useragent deleted: Mozilla/5.0 (SymbianOS/9.2; U; Series60/3.1 NokiaN95_8GB/30.0.018 Profile/MIDP-2.0 Configuration/CLDC-1.1 ) AppleWebKit/413 (KHTML, like Gecko) Safari
+2012-03-25 23:04:24 1 188.179.204.177 Unidentified useragent deleted: Mozilla/5.0 (SymbianOS/9.2; U; Series60/3.1 NokiaN95_8GB/31.0.015; Profile/MIDP-2.0 Configuration/CLDC-1.1 ) AppleWebKit/413 (KHTML, like Gecko) Safar
+2012-03-25 23:04:30 1 188.179.204.177 Unidentified useragent deleted: Mozilla/5.0 (SymbianOS/9.2; Series60/3.1 NokiaN95_8GB/20.0.016; Profile/MIDP-2.0 Configuration/CLDC-1.1 U; ) AppleWebKit/413 (KHTML, like Gecko) Safar
+2012-03-25 23:04:34 1 188.179.204.177 Unidentified useragent deleted: Mozilla/5.0 (SymbianOS/9.2; U; Series60/3.1 NokiaN95_8GB/11.0.026; Profile/MIDP-2.0 Configuration/CLDC-1.1 ) AppleWebKit/413 (KHTML, like Gecko) Safar
+2012-03-25 23:04:40 1 188.179.204.177 Unidentified useragent deleted: Mozilla/5.0 (SymbianOS/9.2; U; Series60/3.1 NokiaN95_8GB/15.0.015; Profile/MIDP-2.0 Configuration/CLDC-1.1 ) AppleWebKit/413 (KHTML, like Gecko) Safar
+2012-03-25 23:04:46 1 188.179.204.177 Unidentified useragent deleted: Mozilla/5.0 (SymbianOS/9.2 U; Series60/3.1 NokiaN95_8GB/10.0.007; Profile/MIDP-2.0 Configuration/CLDC-1.1 ) AppleWebKit/413 (KHTML, like Gecko) Safari
+2012-03-25 23:04:51 1 188.179.204.177 Useragent added to (6133): Mozilla/5.0 (SymbianOS/9.2; U; Series60/3.1 NokiaN95_8GB/40.0.002; Profile/MIDP-2.0 Configuration/CLDC-1.1 ) AppleWebKit/413 (KHTML, like Gecko) Safari/413
+2012-03-25 23:04:57 1 188.179.204.177 Useragent added to (6133): Mozilla/5.0 (SymbianOS/9.2; U; Series60/3.1 NokiaN95_8GB/30.0.018 Profile/MIDP-2.0 Configuration/CLDC-1.1 ) AppleWebKit/413 (KHTML, like Gecko) Safari/413
+2012-03-25 23:05:04 1 188.179.204.177 Useragent added to (6133): Mozilla/5.0 (SymbianOS/9.2; U; Series60/3.1 NokiaN95_8GB/31.0.015; Profile/MIDP-2.0 Configuration/CLDC-1.1 ) AppleWebKit/413 (KHTML, like Gecko) Safari/413
+2012-03-25 23:05:17 1 188.179.204.177 Useragent added to (2127): Mozilla/5.0 (SymbianOS/9.2; Series60/3.1 NokiaN95_8GB/20.0.016; Profile/MIDP-2.0 Configuration/CLDC-1.1 U; ) AppleWebKit/413 (KHTML, like Gecko) Safari/413
+2012-03-25 23:06:45 1 188.179.204.177 Useragent deleted from (2127): Mozilla/5.0 (SymbianOS/9.2; Series60/3.1 NokiaN95_8GB/20.0.016; Profile/MIDP-2.0 Configuration/CLDC-1.1 U; ) AppleWebKit/413 (KHTML, like Gecko) Safari/413
+2012-03-25 23:07:02 1 188.179.204.177 Useragent deleted from (2127): Mozilla/5.0 (SymbianOS/9.2; U; Series60/3.1 Samsung/SGH-i458B/ Profile/MIDP-2.0 Configuration/CLDC-1.1 ) AppleWebKit/413 (KHTML, like Gecko) Safari/413
+2012-03-25 23:07:11 1 188.179.204.177 Useragent deleted from (2127): Mozilla/5.0 (SymbianOS/9.2; U; Series60/3.1 Samsung/SGH-G810/XEHA3 Profile/MIDP-2.1 Configuration/CLDC-1.1 ) AppleWebKit/413 (KHTML, like Gecko) Safar
+2012-03-25 23:07:16 1 188.179.204.177 Useragent deleted from (2127): Mozilla/5.0 (SymbianOS/9.2; U; Series60/3.1 Samsung/SGH-i458B/ Profile/MIDP-2.0 Configuration/CLDC-1.1 ) AppleWebKit/413 (KHTML, like Gecko) Safari/41
+2012-03-25 23:07:19 1 188.179.204.177 Useragent deleted from (2127): Mozilla/5.0 (SymbianOS/9.2; Series60/3.1 Samsung/SGH-G810/XEHA3 Profile/MIDP-2.0 Configuration/CLDC-1.1 U; ) AppleWebKit/413 (KHTML, like Gecko) Safar
+2012-03-25 23:07:23 1 188.179.204.177 Useragent deleted from (2127): Mozilla/5.0 (SymbianOS/9.2; U; Series60/3.1 Samsung/SGH-G810/XEHA3 Profile/MIDP-2.0 Configuration/CLDC-1.1 ) AppleWebKit/413 (KHTML, like Gecko) Safar
+2012-03-25 23:07:51 1 188.179.204.177 Useragent added to (6133): Mozilla/5.0 (SymbianOS/9.2; Series60/3.1 NokiaN95_8GB/20.0.016; Profile/MIDP-2.0 Configuration/CLDC-1.1 U; ) AppleWebKit/413 (KHTML, like Gecko) Safari/413
+2012-03-25 23:08:04 1 188.179.204.177 Useragent added to (6133): Mozilla/5.0 (SymbianOS/9.2; U; Series60/3.1 NokiaN95_8GB/11.0.026; Profile/MIDP-2.0 Configuration/CLDC-1.1 ) AppleWebKit/413 (KHTML, like Gecko) Safari/413
+2012-03-25 23:08:11 1 188.179.204.177 Useragent added to (6133): Mozilla/5.0 (SymbianOS/9.2; U; Series60/3.1 NokiaN95_8GB/15.0.015; Profile/MIDP-2.0 Configuration/CLDC-1.1 ) AppleWebKit/413 (KHTML, like Gecko) Safari/413
+2012-03-25 23:08:29 1 188.179.204.177 Useragent added to (6133): Mozilla/5.0 (SymbianOS/9.2 U; Series60/3.1 NokiaN95_8GB/10.0.007; Profile/MIDP-2.0 Configuration/CLDC-1.1 ) AppleWebKit/413 (KHTML, like Gecko) Safari/413
+2012-03-25 23:09:37 1 188.179.204.177 Useragent added to (6622): Mozilla/5.0 (SymbianOS/9.4; Series60/5.0 NokiaC5-03/11.0.024; Profile/MIDP-2.1 Configuration/CLDC-1.1 ) AppleWebKit/525 (KHTML, like Gecko) Version/3.0 BrowserNG/7.2.6.9 3gpp-gba
+2012-03-25 23:09:54 1 188.179.204.177 Device updated (6622)
+2012-03-25 23:10:47 1 188.179.204.177 Device updated (6622)
+2012-03-25 23:11:18 1 188.179.204.177 Device updated (6622)
+2012-03-25 23:13:41 1 188.179.204.177 Useragent added to (6623): Mozilla/5.0 (Symbian/3; Series60/5.3 NokiaE7-00/111.030.0609; Profile/MIDP-2.1 Configuration/CLDC-1.1 ) AppleWebKit/533.4 (KHTML, like Gecko) NokiaBrowser/7.4.2.6 Mobile Safari/533.4 3gpp-gba
+2012-03-25 23:14:04 1 188.179.204.177 Device updated (6623)
+2012-03-25 23:14:40 1 188.179.204.177 Device updated (6623)
+2012-03-25 23:15:21 1 188.179.204.177 Useragent added to (6623): Mozilla/5.0 (Symbian/3; Series60/5.2 NokiaE7-00/022.014; Profile/MIDP-2.1 Configuration/CLDC-1.1 ) AppleWebKit/533.4 (KHTML, like Gecko) NokiaBrowser/7.3.1.37 Mobile Safari/533.4 3gpp-gba
+2012-03-25 23:16:55 1 188.179.204.177 Useragent added to (6624): Mozilla/5.0 (Symbian/3; Series60/5.2 NokiaE6-00/025.007; Profile/MIDP-2.1 Configuration/CLDC-1.1 ) AppleWebKit/533.4 (KHTML, like Gecko) NokiaBrowser/7.3.1.37 Mobile Safari/533.4 3gpp-gba
+2012-03-25 23:17:11 1 188.179.204.177 Device updated (6624)
+2012-03-25 23:17:34 1 188.179.204.177 Device updated (6624)
+2012-03-25 23:17:46 1 188.179.204.177 Useragent added to (6624): Mozilla/5.0 (Symbian/3; Series60/5.2 NokiaE6-00/022.014; Profile/MIDP-2.1 Configuration/CLDC-1.1 ) AppleWebKit/533.4 (KHTML, like Gecko) NokiaBrowser/7.3.1.37 Mobile Safari/533.4 3gpp-gba
+2012-03-25 23:20:10 1 188.179.204.177 Useragent added to (6625): Mozilla/5.0 (Symbian/3; Series60/5.3 NokiaX7-00/111.030.0609; Profile/MIDP-2.1 Configuration/CLDC-1.1 ) AppleWebKit/533.4 (KHTML, like Gecko) NokiaBrowser/7.4.2.6 Mobile Safari/533.4 3gpp-gba
+2012-03-25 23:20:43 1 188.179.204.177 Device updated (6625)
+2012-03-25 23:21:06 1 188.179.204.177 Device updated (6625)
+2012-03-25 23:21:49 1 188.179.204.177 Useragent added to (6626): Mozilla/5.0 (Symbian/3; Series60/5.3 NokiaC7-00/111.030.0609; Profile/MIDP-2.1 Configuration/CLDC-1.1 ) AppleWebKit/533.4 (KHTML, like Gecko) NokiaBrowser/7.4.2.6 Mobile Safari/533.4 3gpp-gba
+2012-03-25 23:22:21 1 188.179.204.177 Device updated (6626)
+2012-03-25 23:22:37 1 188.179.204.177 Device updated (6626)
+2012-03-25 23:23:25 1 188.179.204.177 Device updated (6626)
+2012-03-25 23:23:49 1 188.179.204.177 Useragent added to (6626): Mozilla/5.0 (Symbian/3; Series60/5.2 NokiaC7-00/014.002; Profile/MIDP-2.1 Configuration/CLDC-1.1 ) AppleWebKit/525 (KHTML, like Gecko) Version/3.0 BrowserNG/7.2.8.10 3gpp-gba
+2012-03-25 23:24:06 1 188.179.204.177 Useragent added to (6627): Mozilla/5.0 (Symbian/3; Series60/5.2 NokiaC7-00/012.003; Profile/MIDP-2.1 Configuration/CLDC-1.1 ) AppleWebKit/525 (KHTML, like Gecko) Version/3.0 BrowserNG/7.2.7.3 3gpp-gba
+2012-03-25 23:24:28 1 188.179.204.177 Device updated (6627)
+2012-03-25 23:24:40 1 188.179.204.177 Useragent added to (6626): Mozilla/5.0 (Symbian/3; Series60/5.2 NokiaC7-00/022.014; Profile/MIDP-2.1 Configuration/CLDC-1.1 ) AppleWebKit/533.4 (KHTML, like Gecko) NokiaBrowser/7.3.1.37 Mobile Safari/533.4 3gpp-gba
+2012-03-25 23:24:46 1 188.179.204.177 Useragent deleted from (6626): Mozilla/5.0 (Symbian/3; Series60/5.2 NokiaC7-00/014.002; Profile/MIDP-2.1 Configuration/CLDC-1.1 ) AppleWebKit/525 (KHTML, like Gecko) Version/3.0 BrowserNG/7.2.8.10 3gpp-gba
+2012-03-25 23:25:14 1 188.179.204.177 Useragent added to (6626): Mozilla/5.0 (Symbian/3; Series60/5.2 NokiaC7-00/025.007; Profile/MIDP-2.1 Configuration/CLDC-1.1 ) AppleWebKit/533.4 (KHTML, like Gecko) NokiaBrowser/7.3.1.37 Mobile Safari/533.4 3gpp-gba
+2012-03-25 23:25:28 1 188.179.204.177 Useragent added to (6627): Mozilla/5.0 (Symbian/3; Series60/5.2 NokiaC7-00/014.002; Profile/MIDP-2.1 Configuration/CLDC-1.1 ) AppleWebKit/525 (KHTML, like Gecko) Version/3.0 BrowserNG/7.2.8.10 3gpp-gba
+2012-03-25 23:25:39 1 188.179.204.177 Useragent added to (6627): Mozilla/5.0 (Symbian/3; Series60/5.2 NokiaC7-00/012.004; Profile/MIDP-2.1 Configuration/CLDC-1.1 ) AppleWebKit/525 (KHTML, like Gecko) Version/3.0 BrowserNG/7.2.7.3 3gpp-gba
+2012-03-25 23:26:36 1 188.179.204.177 Device updated (6627)
+2012-03-25 23:26:48 1 188.179.204.177 Device updated (6626)
+2012-03-25 23:28:27 1 188.179.204.177 Useragent added to (6628): Mozilla/5.0 (SymbianOS/9.4; Series60/5.0 NokiaC6-00/20.0.042; Profile/MIDP-2.1 Configuration/CLDC-1.1) AppleWebKit/525 (KHTML, like Gecko) BrowserNG/7.2.6.9 3gpp-gba
+2012-03-25 23:28:50 1 188.179.204.177 Device updated (6628)
+2012-03-25 23:29:12 1 188.179.204.177 Useragent added to (6629): Mozilla/5.0 (SymbianOS/9.4; Series60/5.0 NokiaC6-00/40.0.021; Profile/MIDP-2.1 Configuration/CLDC-1.1) AppleWebKit/533.4 (KHTML, like Gecko) NokiaBrowser/7.3.1.25 3gpp-gba
+2012-03-25 23:29:36 1 188.179.204.177 Device updated (6629)
+2012-03-25 23:29:48 1 188.179.204.177 Useragent added to (6628): Mozilla/5.0 (SymbianOS/9.4; Series60/5.0 NokiaC6-00/20.0.041; Profile/MIDP-2.1 Configuration/CLDC-1.1) AppleWebKit/525 (KHTML, like Gecko) BrowserNG/7.2.6.9 3gpp-gba
+2012-03-25 23:29:55 1 188.179.204.177 Useragent added to (6628): Mozilla/5.0 (SymbianOS/9.4; Series60/5.0 NokiaC6-00/11.0.029; Profile/MIDP-2.1 Configuration/CLDC-1.1) AppleWebKit/525 (KHTML, like Gecko) BrowserNG/7.2.6.9 3gpp-gba
+2012-03-25 23:30:02 1 188.179.204.177 Useragent added to (6628): Mozilla/5.0 (SymbianOS/9.4; Series60/5.0 NokiaC6-00/10.0.021; Profile/MIDP-2.1 Configuration/CLDC-1.1) AppleWebKit/525 (KHTML, like Gecko) BrowserNG/7.2.6 3gpp-gba
+2012-03-25 23:30:33 1 188.179.204.177 Useragent added to (6465): Nokia7230/5.0 (05.71) Profile/MIDP-2.1 Configuration/CLDC-1.1 Mozilla/5.0 AppleWebKit/420+ (KHTML, like Gecko) Safari/420+
+2012-03-25 23:31:53 1 188.179.204.177 Device updated (6465)
+2012-03-25 23:33:26 1 188.179.204.177 Useragent deleted from (1064): NokiaN70
+2012-03-25 23:33:30 1 188.179.204.177 Useragent deleted from (1064): Nokia N70
+2012-03-25 23:33:34 1 188.179.204.177 Useragent deleted from (1064): Nokia-N70
+2012-03-25 23:33:38 1 188.179.204.177 Useragent deleted from (1064): NokiaN70-1/5.0638.3.0.1/SNXXXXXXXXXXXXXXX Series60/2.8 Profile/MIDP-2.0 Configuration/CLDC-1.1
+2012-03-25 23:33:43 1 188.179.204.177 Useragent deleted from (1064): NokiaN70-1
+2012-03-25 23:33:46 1 188.179.204.177 Useragent deleted from (1064): NokiaN70-1/
+2012-03-25 23:33:49 1 188.179.204.177 Useragent deleted from (1064): NokiaN70-1/2.0529.0.1/SNXXXXXXXXXXXXXXX Series60/2.8 Profile/MIDP-2.0 Configuration/CLDC-1.1
+2012-03-25 23:34:42 1 188.179.204.177 Device updated (1064)
+2012-03-25 23:35:18 1 188.179.204.177 Device updated (1064)
+2012-03-25 23:35:30 1 188.179.204.177 Device updated (1064)
+2012-03-25 23:35:51 1 188.179.204.177 Device updated (1064)
+2012-03-25 23:36:44 1 188.179.204.177 Unidentified useragent deleted: NokiaN70-1/2.0529.0.1/SNXXXXXXXXXXXXXXX Series60/2.8 Profile/MIDP-2.0 Configuration/CLDC-1.1
+2012-03-25 23:36:47 1 188.179.204.177 Unidentified useragent deleted: NokiaN70-1/
+2012-03-25 23:36:50 1 188.179.204.177 Unidentified useragent deleted: NokiaN70-1
+2012-03-25 23:36:54 1 188.179.204.177 Unidentified useragent deleted: NokiaN70-1/5.0638.3.0.1/SNXXXXXXXXXXXXXXX Series60/2.8 Profile/MIDP-2.0 Configuration/CLDC-1.1
+2012-03-25 23:36:57 1 188.179.204.177 Unidentified useragent deleted: Nokia-N70
+2012-03-25 23:37:00 1 188.179.204.177 Unidentified useragent deleted: Nokia N70
+2012-03-25 23:37:04 1 188.179.204.177 Unidentified useragent deleted: NokiaN70
+2012-03-25 23:37:25 1 188.179.204.177 Useragent added to (1064): NokiaN70-1/5.0705.3.0.1/SN355521019825849 Series60/2.8 Profile/MIDP-2.0 Configuration/CLDC-1.1
+2012-03-25 23:37:35 1 188.179.204.177 Useragent added to (1064): NokiaN70-1/5.0705.3.0.1/SN357093003794405 Series60/2.8 Profile/MIDP-2.0 Configuration/CLDC-1.1
+2012-03-25 23:37:40 1 188.179.204.177 Useragent added to (1064): NokiaN70-1/5.0705.3.0.1/SN353946014372319 Series60/2.8 Profile/MIDP-2.0 Configuration/CLDC-1.1
+2012-03-25 23:37:48 1 188.179.204.177 Useragent added to (1064): NokiaN70-1/5.0705.3.0.1/SN358637012329923 Series60/2.8 Profile/MIDP-2.0 Configuration/CLDC-1.1
+2012-03-25 23:37:52 1 188.179.204.177 Useragent added to (1064): NokiaN70-1/5.0705.3.0.1/SN356963018433630 Series60/2.8 Profile/MIDP-2.0 Configuration/CLDC-1.1
+2012-03-25 23:37:56 1 188.179.204.177 Useragent added to (1064): NokiaN70-1/5.0705.3.0.1/SN359566017119659 Series60/2.8 Profile/MIDP-2.0 Configuration/CLDC-1.1
+2012-03-25 23:38:00 1 188.179.204.177 Useragent added to (1064): NokiaN70-1/5.0705.3.0.1/SN359380005859643 Series60/2.8 Profile/MIDP-2.0 Configuration/CLDC-1.1
+2012-03-25 23:38:14 1 188.179.204.177 Useragent added to (1066): NokiaN72/5.0706.4.0.1/SN354841022919590 Series60/2.8 Profile/MIDP-2.0 Configuration/CLDC-1.1
+2012-03-25 23:38:31 1 188.179.204.177 Device updated (1066)
+2012-03-25 23:39:10 1 188.179.204.177 Device updated (1066)
+2012-03-25 23:39:19 1 188.179.204.177 Device updated (1066)
+2012-03-25 23:39:26 1 188.179.204.177 Useragent added to (1066): NokiaN72/5.0706.4.0.1 Series60/2.8 Profile/MIDP-2.0 Configuration/CLDC-1.1
+2012-03-25 23:40:59 1 188.179.204.177 Device updated (6272)
+2012-03-25 23:41:13 1 188.179.204.177 Device updated (6272)
+2012-03-25 23:41:32 1 188.179.204.177 Device updated (6272)
+2012-03-25 23:41:42 1 188.179.204.177 Useragent deleted from (5955): NokiaN78/SymbianOS/9.3 Series60/3.2 Release/11.043; Mozilla/5.0 Profile/MIDP-2.1 Configuration/CLDC-1.1 AppleWebKit/413 (KHTML,like Gecko) Safari/413
+2012-03-25 23:42:02 1 188.179.204.177 Useragent added to (6272): NokiaN78/SymbianOS/9.3 Series60/3.2 Release/11.043; Mozilla/5.0 Profile/MIDP-2.1 Configuration/CLDC-1.1 AppleWebKit/413 (KHTML,like Gecko) Safari/413
+2012-03-25 23:42:17 1 188.179.204.177 Useragent added to (6133): Mozilla/5.0 (SymbianOS/9.2; U; Series60/3.1 NokiaN95_8GB/35.0.001; Profile/MIDP-2.0 Configuration/CLDC-1.1 ) AppleWebKit/413 (KHTML, like Gecko) Safari/413
+2012-03-25 23:43:28 1 188.179.204.177 Useragent deleted from (943): Nokia6300
+2012-03-25 23:43:31 1 188.179.204.177 Useragent deleted from (943): Nokia-6300
+2012-03-25 23:43:39 1 188.179.204.177 Device updated (943)
+2012-03-25 23:44:19 1 188.179.204.177 Device updated (943)
+2012-03-25 23:44:41 1 188.179.204.177 Device updated (943)
+2012-03-25 23:44:55 1 188.179.204.177 Useragent deleted from (1116): Nokia6300i/2.0 (03.41) Profile/MIDP-2.1 Configuration/CLDC-1.1
+2012-03-25 23:45:23 1 188.179.204.177 Useragent added to (943): Nokia6300i/2.0 (03.41) Profile/MIDP-2.1 Configuration/CLDC-1.1
+2012-03-25 23:45:30 1 188.179.204.177 Unidentified useragent deleted: Nokia-6300
+2012-03-25 23:45:34 1 188.179.204.177 Unidentified useragent deleted: Nokia6300
+2012-03-25 23:45:46 1 188.179.204.177 Useragent added to (943): Nokia6300/2.0 (07.21) Profile/MIDP-2.0 Configuration/CLDC-1.1
+2012-03-25 23:48:21 1 188.179.204.177 Useragent added to (6630): Mozilla/5.0 (Symbian/3; Series60/5.2 Nokia500/010.032; Profile/MIDP-2.1 Configuration/CLDC-1.1 ) AppleWebKit/533.4 (KHTML, like Gecko) NokiaBrowser/7.3.1.37 Mobile Safari/533.4 3gpp-gba
+2012-03-25 23:48:55 1 188.179.204.177 Device updated (6630)
+2012-03-25 23:49:33 1 188.179.204.177 Useragent added to (6631): Mozilla/5.0 (Symbian/3; Series60/5.3 Nokia700/111.030.0609; Profile/MIDP-2.1 Configuration/CLDC-1.1 ) AppleWebKit/533.4 (KHTML, like Gecko) NokiaBrowser/7.4.2.6 Mobile Safari/533.4 3gpp-gba
+2012-03-25 23:50:09 1 188.179.204.177 Device updated (6631)
+2012-03-25 23:50:20 1 188.179.204.177 Useragent added to (6631): Mozilla/5.0 (Symbian/3; Series60/5.3 Nokia700/111.020.0308; Profile/MIDP-2.1 Configuration/CLDC-1.1 ) AppleWebKit/533.4 (KHTML, like Gecko) NokiaBrowser/7.4.1.14 Mobile Safari/533.4 3gpp-gba
+2012-03-25 23:52:40 1 188.179.204.177 Useragent added to (6632): Mozilla/5.0 (MeeGo; NokiaN9) AppleWebKit/534.13 (KHTML, like Gecko) NokiaBrowser/8.5.0 Mobile Safari/534.13
+2012-03-25 23:53:25 1 188.179.204.177 Device updated (6632)
+2012-03-25 23:53:34 1 188.179.204.177 Device updated (6632)
+2012-03-25 23:54:21 1 188.179.204.177 Device updated (1193)
+2012-03-25 23:56:18 1 188.179.204.177 Unidentified useragent deleted: Mozilla/5.0 (SymbianOS/9.2; U; Series60/3.1 Samsung/SGH-G810/XEHA3 Profile/MIDP-2.0 Configuration/CLDC-1.1 ) AppleWebKit/413 (KHTML, like Gecko) Safar
+2012-03-25 23:56:26 1 188.179.204.177 Unidentified useragent deleted: Mozilla/5.0 (SymbianOS/9.2; Series60/3.1 Samsung/SGH-G810/XEHA3 Profile/MIDP-2.0 Configuration/CLDC-1.1 U; ) AppleWebKit/413 (KHTML, like Gecko) Safar
+2012-03-25 23:56:32 1 188.179.204.177 Unidentified useragent deleted: Mozilla/5.0 (SymbianOS/9.2; U; Series60/3.1 Samsung/SGH-i458B/ Profile/MIDP-2.0 Configuration/CLDC-1.1 ) AppleWebKit/413 (KHTML, like Gecko) Safari/41
+2012-03-25 23:56:36 1 188.179.204.177 Unidentified useragent deleted: Mozilla/5.0 (SymbianOS/9.2; U; Series60/3.1 Samsung/SGH-G810/XEHA3 Profile/MIDP-2.1 Configuration/CLDC-1.1 ) AppleWebKit/413 (KHTML, like Gecko) Safar
+2012-03-25 23:57:06 1 188.179.204.177 Useragent added to (5670): lb-spider/Mozilla/5.0 Gecko/20100101 Firefox/10.0.2 (lb-spider; http://www.linkbutler.de/spider; spider@linkbutler.de)
+2012-03-25 23:57:16 1 188.179.204.177 Useragent added to (5670): ShowyouBot (http://showyou.com/crawler)
+2012-03-25 23:57:22 1 188.179.204.177 Useragent added to (5670): Mozilla/5.0 (compatible; SWEBot/1.0; +http://swebot-crawler.net)
+2012-03-25 23:57:38 1 188.179.204.177 Useragent added to (5670): Mozilla/5.0 (iPhone; U; CPU iPhone OS 5_0_1 like Mac OS X) (compatible; Yeti-Mobile/0.1; +http://help.naver.com/robots/)
+2012-03-25 23:57:51 1 188.179.204.177 Useragent added to (5670): GoScraper
+2012-03-25 23:58:02 1 188.179.204.177 Useragent added to (5670): Sogou Mobile Spider1.0 for iPhone Android and Mozilla/5.0
+2012-03-25 23:58:27 1 188.179.204.177 Useragent added to (5590): W3C_Validator/1.3
+2012-03-25 23:58:43 1 188.179.204.177 Useragent added to (5670): Acoon v4.10.1 (www.acoon.de)

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<page name="/templates/users/task_summary.list.php">
+	<element>
+		<original maxlen="0">Task Summary</original>
+		<translation>Task Summary</translation>
+	</element>
+</page>

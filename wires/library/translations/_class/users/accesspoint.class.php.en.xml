@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<page name="/class/users/accesspoint.class.php">
+	<element>
+		<original maxlen="0">Name</original>
+		<translation>Name</translation>
+	</element>
+	<element>
+		<original maxlen="0">Item updated</original>
+		<translation>Item updated</translation>
+	</element>
+	<element>
+		<original maxlen="0">Please complete missing information</original>
+		<translation>Please complete missing information</translation>
+	</element>
+</page>

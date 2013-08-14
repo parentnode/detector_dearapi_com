@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<page name="/templates/shell.header.php">
+	<element>
+		<original maxlen="0">Log Off</original>
+		<translation>Log Off</translation>
+	</element>
+	<element>
+		<original maxlen="0">Language</original>
+		<translation>Language</translation>
+	</element>
+	<element>
+		<original maxlen="0">Loading</original>
+		<translation>Loading</translation>
+	</element>
+</page>

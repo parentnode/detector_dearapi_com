@@ -1,0 +1,15 @@
+2012-08-21 09:05:02  127.0.0.1 Login - insufficient privileges: api_devices.users
+2012-08-21 09:05:03  127.0.0.1 Logoff api_devices.users
+2012-08-21 09:05:11 1 127.0.0.1 Login success, U:1
+2012-08-21 09:13:39 1 127.0.0.1 Useragent added to (6751): Array
+2012-08-21 09:33:55 1 127.0.0.1 Login - insufficient privileges: api_devices.users
+2012-08-21 09:35:15  127.0.0.1 Login - insufficient privileges: api_devices.users
+2012-08-21 09:35:16  127.0.0.1 Logoff api_devices.users
+2012-08-21 09:35:22 1 127.0.0.1 Login success, U:1
+2012-08-21 09:35:37 1 127.0.0.1 Login - insufficient privileges: api_devices.users
+2012-08-21 09:35:42  127.0.0.1 Login - insufficient privileges: api_devices.users
+2012-08-21 09:38:20  127.0.0.1 Login - insufficient privileges: api_devices.users
+2012-08-21 09:40:43  127.0.0.1 Login - insufficient privileges: api_devices.users
+2012-08-21 09:40:45  127.0.0.1 Login - insufficient privileges: api_devices.users
+2012-08-21 09:40:45  127.0.0.1 Logoff api_devices.users
+2012-08-21 09:40:51 1 127.0.0.1 Login success, U:1

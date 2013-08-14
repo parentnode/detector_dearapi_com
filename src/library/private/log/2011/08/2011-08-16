@@ -1,0 +1,8 @@
+2011-08-16 06:54:28  176.20.3.179 Login - insufficient privileges: api_devices.users
+2011-08-16 06:54:36  176.20.3.179 Logoff api_devices.users
+2011-08-16 06:54:56 1 176.20.3.179 Login success, U:1
+2011-08-16 06:55:46 1 176.20.3.179 Useragent added to (6360): Mozilla/5.0 (iPhone; U; CPU iPhone OS 4_3_5 like Mac OS X; da-dk) AppleWebKit/533.17.9 (KHTML, like Gecko) Version/5.0.2 Mobile/8L1 Safari/6533.18.5
+2011-08-16 06:55:52 1 176.20.3.179 Useragent added to (6471): Mozilla/5.0 (Macintosh; Intel Mac OS X 10_6_8) AppleWebKit/535.1 (KHTML, like Gecko) Chrome/13.0.782.107 Safari/535.1
+2011-08-16 06:55:59 1 176.20.3.179 Useragent added to (6471): Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7_0) AppleWebKit/535.1 (KHTML, like Gecko) Chrome/13.0.782.112 Safari/535.1
+2011-08-16 12:46:40  176.20.3.179 Login - insufficient privileges: api_devices.users
+2011-08-16 12:46:41  176.20.3.179 Logoff api_devices.users

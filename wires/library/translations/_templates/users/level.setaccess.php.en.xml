@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<page name="/templates/users/level.setaccess.php">
+	<element>
+		<original maxlen="0">Change Access</original>
+		<translation>Change Access</translation>
+	</element>
+	<element>
+		<original maxlen="0">Access level</original>
+		<translation>Access level</translation>
+	</element>
+	<element>
+		<original maxlen="0">Access point</original>
+		<translation>Access point</translation>
+	</element>
+	<element>
+		<original maxlen="0">Save</original>
+		<translation>Save</translation>
+	</element>
+	<element>
+		<original maxlen="0">Back</original>
+		<translation>Back</translation>
+	</element>
+</page>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<page name="/class/countries/language.view.class.php">
+	<element>
+		<original maxlen="0">Language</original>
+		<translation>Language</translation>
+	</element>
+	<element>
+		<original maxlen="0">Edit</original>
+		<translation>Edit</translation>
+	</element>
+	<element>
+		<original maxlen="0">New language</original>
+		<translation>New language</translation>
+	</element>
+	<element>
+		<original maxlen="0">Languages</original>
+		<translation>Languages</translation>
+	</element>
+	<element>
+		<original maxlen="0">Language name</original>
+		<translation>Sprog navn</translation>
+	</element>
+	<element>
+		<original maxlen="0">search</original>
+		<translation>search</translation>
+	</element>
+</page>

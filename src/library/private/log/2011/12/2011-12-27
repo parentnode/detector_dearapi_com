@@ -1,0 +1,67 @@
+2011-12-27 11:32:08  83.91.63.142 Login - insufficient privileges: api_devices.users
+2011-12-27 11:32:08  83.91.63.142 Logoff api_devices.users
+2011-12-27 11:32:12 1 83.91.63.142 Login success, U:1
+2011-12-27 11:32:26 1 83.91.63.142 Useragent added to (6504): Mozilla/5.0 (Linux; U; Android 2.3.4; en-dk; HTC_Sensation_Z710e Build/GRJ22) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 Mobile Safari/533.1
+2011-12-27 11:33:41 1 83.91.63.142 Useragent added to (5488): Mozilla/4.0 (compatible; MSIE 6.0; Windows 98; Win 9x 4.90; Q312461)
+2011-12-27 11:33:51 1 83.91.63.142 Useragent added to (5498): Mozilla/4.0 (compatible; MSIE 5.0; Windows NT 4.0)
+2011-12-27 11:34:42 1 83.91.63.142 Useragent added to (5730): Lynx/2.8.8dev.9 libwww-FM/2.14 SSL-MM/1.4.1 GNUTLS/2.10.5
+2011-12-27 11:34:54 1 83.91.63.142 Useragent added to (5670): Mozilla/5.0 (compatible; JikeSpider; +http://shoulu.jike.com/spider.html)
+2011-12-27 11:35:02 1 83.91.63.142 Useragent added to (5670): Sogou web spider/4.0(+http://www.sogou.com/docs/help/webmasters.htm#07)
+2011-12-27 11:35:10 1 83.91.63.142 Useragent added to (6497): Mozilla/5.0 (Windows NT 6.1; rv:7.0) Gecko/20100101 Firefox/7.0
+2011-12-27 11:35:42 1 83.91.63.142 Useragent added to (6529): Mozilla/5.0 (Linux; U; Android 2.3.3; ko-kr; GT-I9000 Build/GINGERBREAD) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 Mobile Safari/533.1
+2011-12-27 11:36:04 1 83.91.63.142 Useragent added to (6501): Mozilla/5.0 (Macintosh; Intel Mac OS X 10_5_5) AppleWebKit/535.7 (KHTML, like Gecko) Chrome/16.0.912.63 Safari/535.7
+2011-12-27 11:36:31 1 83.91.63.142 Useragent added to (5477): Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.2) Gecko/20100115 Firefox/3.6 (FlipboardProxy/1.1; +http://flipboard.com/browserproxy)
+2011-12-27 11:36:39 1 83.91.63.142 Useragent added to (5477): Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.2.25) Gecko/20111212 Firefox/3.6.25
+2011-12-27 11:36:49 1 83.91.63.142 Useragent added to (5670): Mozilla/5.0 (compatible; MJ12bot/v1.4.1; http://www.majestic12.co.uk/bot.php?+)
+2011-12-27 11:37:00 1 83.91.63.142 Useragent added to (6413): Mozilla/5.0 (Linux; U; Android 2.3.3; da-dk; Desire_A8181 Build/GRI40) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 Mobile Safari/533.1
+2011-12-27 11:37:27 1 83.91.63.142 Useragent added to (6501): Mozilla/5.0 (Macintosh; Intel Mac OS X 10_6_8) AppleWebKit/535.7 (KHTML, like Gecko) Chrome/16.0.912.63 Safari/535.7
+2011-12-27 11:38:46 1 83.91.63.142 Useragent added to (6500): Mozilla/5.0 (X11; Linux i686) AppleWebKit/535.2 (KHTML, like Gecko) Chrome/15.0.874.106 Safari/535.2
+2011-12-27 11:39:12 1 83.91.63.142 Useragent added to (6529): Mozilla/5.0 (Linux; U; Android 2.3.3; lt-lt; GT-I9000 Build/GINGERBREAD) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 Mobile Safari/533.1
+2011-12-27 11:39:27 1 83.91.63.142 Useragent added to (6501): Mozilla/5.0 (Windows NT 6.0) AppleWebKit/535.7 (KHTML, like Gecko) Chrome/16.0.912.63 Safari/535.7
+2011-12-27 11:39:42 1 83.91.63.142 Useragent added to (6508): Mozilla/5.0 (Linux; U; Android 2.3.5; en-dk; HTC_WildfireS_A510e Build/GRJ90) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 Mobile Safari/533.1
+2011-12-27 11:40:00 1 83.91.63.142 Useragent added to (6356): Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/534.52.7 (KHTML, like Gecko) Version/5.1.2 Safari/534.52.7
+2011-12-27 11:40:20 1 83.91.63.142 Useragent added to (6539): Mozilla/5.0 (Linux; U; Android 2.3.7; da-dk; Optimus 2X Build/GRJ22; CyanogenMod-7; LG-P990 Build/GRJ22) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 Mobile Safari/533.1
+2011-12-27 11:40:37 1 83.91.63.142 Useragent added to (6510): Mozilla/5.0 (Linux; U; Android 2.3.5; en-dk; HTC Desire S Build/GRJ90) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 Mobile Safari/533.1
+2011-12-27 11:40:47 1 83.91.63.142 Useragent added to (5477): Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; da; rv:1.9.2.24) Gecko/20111103 Firefox/3.6.24
+2011-12-27 11:41:07 1 83.91.63.142 Useragent added to (5670): yacybot (freeworld/global; amd64 Linux 3.1.0-1.2-desktop; java 1.6.0_22; Europe/en) http://yacy.net/bot.html
+2011-12-27 11:41:29 1 83.91.63.142 Useragent added to (5670): HTMLParser/2.0
+2011-12-27 11:41:45 1 83.91.63.142 Useragent added to (6413): Mozilla/5.0 (Linux; U; Android 2.2.2; da-dk; Desire_A8181 Build/FRG83G) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 Mobile Safari/533.1
+2011-12-27 11:41:55 1 83.91.63.142 Useragent added to (5477): Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.5; fr; rv:1.9.2.24) Gecko/20111103 Firefox/3.6.24
+2011-12-27 11:48:07 1 83.91.63.142 Useragent added to (6501): Mozilla/5.0 (Windows NT 5.1) AppleWebKit/535.7 (KHTML, like Gecko) Chrome/16.0.912.63 Safari/535.7
+2011-12-27 11:48:20 1 83.91.63.142 Useragent added to (5670): Mozilla/5.0 (compatible; Lipperhey Site Explorer; http://www.lipperhey.com/)
+2011-12-27 11:48:33 1 83.91.63.142 Useragent added to (6501): Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/535.7 (KHTML, like Gecko) Chrome/16.0.912.63 Safari/535.7
+2011-12-27 11:48:42 1 83.91.63.142 Useragent added to (6501): Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7_2) AppleWebKit/535.7 (KHTML, like Gecko) Chrome/16.0.912.63 Safari/535.7
+2011-12-27 11:49:06 1 83.91.63.142 Useragent added to (5477): Mozilla/5.0 (Macintosh; U; PPC Mac OS X 10.4; en-US; rv:1.9.1.6) Gecko/20091201 Firefox/3.5.6
+2011-12-27 11:49:14 1 83.91.63.142 Useragent added to (6501): Mozilla/5.0 (Windows NT 6.1) AppleWebKit/535.7 (KHTML, like Gecko) Chrome/16.0.912.63 Safari/535.7
+2011-12-27 11:49:29 1 83.91.63.142 Useragent added to (6360): Mozilla/5.0 (iPhone; U; CPU iPhone OS 4_3 like Mac OS X; en-gb) AppleWebKit/533.17.9 (KHTML, like Gecko) Mobile/8F190
+2011-12-27 11:49:46 1 83.91.63.142 Useragent added to (6529): Mozilla/5.0 (Linux; U; Android 2.3.3; ru-ru; GT-I9000 Build/GINGERBREAD) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 Mobile Safari/533.1
+2011-12-27 11:50:01 1 83.91.63.142 Useragent added to (6519): Mozilla/5.0 (Linux; U; Android 2.3.4; da-dk; SonyEricssonSK17i Build/4.0.2.A.0.58) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 Mobile Safari/533.1
+2011-12-27 11:50:16 1 83.91.63.142 Useragent added to (6509): Mozilla/5.0 (Linux; U; Android 2.3.7; en-us; Desire HD Build/GRI40; CyanogenMod-7) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 Mobile Safari/533.1
+2011-12-27 11:50:28 1 83.91.63.142 Useragent added to (6528): Mozilla/5.0 (Linux; U; Android 2.3.5; ru-ru; GT-I9100 Build/GINGERBREAD) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 Mobile Safari/533.1
+2011-12-27 11:50:52 1 83.91.63.142 Useragent added to (5477): Mozilla/5.0 (X11; U; Linux i686; et; rv:1.9.2.22) Gecko/20110905 Ubuntu/10.04 (lucid) Firefox/3.6.22
+2011-12-27 11:51:10 1 83.91.63.142 Useragent added to (6517): Mozilla/5.0 (Linux; U; Android 2.1-update1; zh-cn; SonyEricssonU20i Build/2.1.1.A.0.6) AppleWebKit/530.17 (KHTML, like Gecko) Version/4.0 Mobile Safari/530.17
+2011-12-27 11:51:43 1 83.91.63.142 Useragent added to (6502): Mozilla/5.0 (Linux; U; Android 2.3.5; da-dk; HTC_IncredibleS_S710e Build/GRJ90) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 Mobile Safari/533.1
+2011-12-27 11:52:50 1 83.91.63.142 Useragent added to (6515): Mozilla/5.0 (Linux; U; Android 2.3.4; da-dk; HTC EVO 3D X515m Build/GRJ22) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 Mobile Safari/533.1
+2011-12-27 11:53:08 1 83.91.63.142 Device updated (6515)
+2011-12-27 11:53:50 1 83.91.63.142 Useragent added to (6505): Mozilla/5.0 (Linux; U; Android 2.3.3; en-us; HTC Wildfire Build/GRI40) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 Mobile Safari/533.1
+2011-12-27 11:54:12 1 83.91.63.142 Useragent added to (6470): Mozilla/5.0 (Windows NT 6.0) AppleWebKit/534.30 (KHTML, like Gecko) Chrome/12.0.742.91 Safari/534.30
+2011-12-27 11:54:25 1 83.91.63.142 Unidentified useragent deleted: Mozilla/5.0%20(Macintosh;%20Intel%20Mac%20OS%20X%2010.6;%20rv:6.0)%20Gecko/20100101%20Firefox/6.0
+2011-12-27 11:55:00 1 83.91.63.142 Useragent added to (6498): Mozilla/5.0 (Windows NT 6.0; WOW64; rv:8.0) Gecko/20100101 Firefox/8.0
+2011-12-27 11:55:28 1 83.91.63.142 Useragent added to (6360): Mozilla/5.0 (iPhone; U; CPU iPhone OS 4_3_5 like Mac OS X; tr-tr) AppleWebKit/533.17.9 (KHTML, like Gecko) Mobile/8L1
+2011-12-27 11:57:05 1 83.91.63.142 Useragent added to (6525): Mozilla/5.0 (Linux; U; Android 2.3.4; zh-cn; SonyEricssonLT15i Build/4.0.2.A.0.42) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 Mobile Safari/533.1
+2011-12-27 12:21:41 1 83.91.63.142 Device updated (6269)
+2011-12-27 12:22:34 1 83.91.63.142 Device updated (6325)
+2011-12-27 12:24:06 1 83.91.63.142 Device updated (4018)
+2011-12-27 12:24:49 1 83.91.63.142 Device updated (4018)
+2011-12-27 12:25:32 1 83.91.63.142 Device updated (2132)
+2011-12-27 12:25:52 1 83.91.63.142 Device updated (2132)
+2011-12-27 12:26:04 1 83.91.63.142 Device updated (2132)
+2011-12-27 12:26:42 1 83.91.63.142 Device updated (5491)
+2011-12-27 13:05:26 1 83.91.63.142 Device updated (6393)
+2011-12-27 13:05:38 1 83.91.63.142 Device updated (6394)
+2011-12-27 13:05:47 1 83.91.63.142 Device updated (6415)
+2011-12-27 14:11:46 1 83.91.63.142 Useragent added to (6528): Mozilla/5.0 (Linux; U; Android 2.3.5; nl-nl; GT-I9100 Build/GINGERBREAD) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 Mobile Safari/533.1
+2011-12-27 14:11:52 1 83.91.63.142 Useragent added to (6525): Mozilla/5.0 (Linux; U; Android 2.3.4; da-dk; SonyEricssonLT15i Build/4.0.2.A.0.58) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 Mobile Safari/533.1
+2011-12-27 17:17:22  83.91.63.142 Login - insufficient privileges: api_devices.users
+2011-12-27 17:17:22  83.91.63.142 Logoff api_devices.users
+2011-12-27 22:51:30 1 87.59.236.37 Login success, U:1
