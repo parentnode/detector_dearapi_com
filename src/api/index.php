@@ -10,6 +10,7 @@ if(isset($read_access) && $read_access) {
 	return;
 }
 
+
 include_once($_SERVER["PAGE_PATH"]."/page.class.php");
 
 include_once("class/devices/device.core.class.php");

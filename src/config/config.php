@@ -12,7 +12,7 @@ error_reporting(E_ALL);
 */
 define("SITE_UID", "DVCS");
 define("SITE_NAME", "devices");
-define("SITE_DB", "api_devices");
+define("SITE_DB", "devices");
 define("SITE_URL", "devices.dearapi.com");
 
 define("DEFAULT_LANGUAGE_ISO", "DA"); // Regional language Danish

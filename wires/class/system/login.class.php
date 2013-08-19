@@ -68,26 +68,47 @@ class Login extends Translation {
 	* @param String $username Username
 	* @param String $password Password
 	*/
-	function doLogin($user_id, $nickname, $location=false) {
+	function doLogin($username, $password, $location=false) {
+//	function doLogin($user_id, $nickname, $location=false) {
 
-		if($this->sql("SELECT id, access_level_id FROM ".UT_USE." WHERE user_id = '$user_id'")) {
-			$this->user_id = $this->getQueryResult(0, "id");
-			$this->nickname = $nickname;
-			$this->access_level_id = $this->getQueryResult(0, "access_level_id");
+		if($this->sql("SELECT id, nickname FROM ".UT_USE." WHERE status > 0 AND (email = '$username' OR mobile = '$username') AND password = '".sha1($password)."'")) {
+	
+			if($this->getQueryCount() == 1) {
+				$this->user_id = $this->getQueryResult(0, "id");
+				$this->nickname = $this->getQueryResult(0, "nickname");
+				Page::addLog("Login success, U:$username ". UT_USE);
 
-			Page::addLog("Login success, U:".$this->user_id);
+				$this->translater = new Translation(LOCAL_PATH."/templates/menu.summary.php");
+				//$this->compileMenu();
 
-			$this->translater = new Translation(LOCAL_PATH."/templates/menu.summary.php");
-			//$this->compileMenu();
-
-			$forward = Session::getLoginForward();
-			$location = $forward ? $forward : ($location ? $location : "/front/index.php");
-			header("Location: $location");
-			exit();
+				$forward = Session::getLoginForward();
+				$location = $forward ? $forward : ($location ? $location : "/index.php");
+				header("Location: $location");
+				exit();
+			}
 		}
 		else {
-			Page::addLog("Login failure, U:$user_id ". UT_USE);
+			Page::addLog("Login failure, U:$username ". UT_USE);
 		}
+
+		// if($this->sql("SELECT id, access_level_id FROM ".UT_USE." WHERE user_id = '$user_id'")) {
+		// 	$this->user_id = $this->getQueryResult(0, "id");
+		// 	$this->nickname = $nickname;
+		// 	$this->access_level_id = $this->getQueryResult(0, "access_level_id");
+		// 
+		// 	Page::addLog("Login success, U:".$this->user_id);
+		// 
+		// 	$this->translater = new Translation(LOCAL_PATH."/templates/menu.summary.php");
+		// 	//$this->compileMenu();
+		// 
+		// 	$forward = Session::getLoginForward();
+		// 	$location = $forward ? $forward : ($location ? $location : "/front/index.php");
+		// 	header("Location: $location");
+		// 	exit();
+		// }
+		// else {
+		// 	Page::addLog("Login failure, U:$user_id ". UT_USE);
+		// }
 	}
 
 	/**

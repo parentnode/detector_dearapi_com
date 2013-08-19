@@ -29,45 +29,48 @@ class Page extends PageCore {
 			global $username;
 			global $password;
 
-//			http_post_fields('http://api.users.local/login', array('username' => $username, 'password' => $password));
-//			print_r(http_parse_message($response));
+			Session::setLogin(new Login());
+			Session::getLogin()->doLogin($username, $password, defined('ADMIN_FRONT') ? ADMIN_FRONT :"/front/index.php");
 
-
-			$request = new HttpRequest('http://wiresusers.dearapi.com/login', HttpRequest::METH_POST);
-//			$request = new HttpRequest('http://users.wires.dk/login', HttpRequest::METH_POST);
-			$request->addPostFields(array('username' => $username, 'password' => $password));
-
-			try {
-
-//				print "#.#".$request->send()->getBody()."#:#";
-				$response = new DOMDocument('1.0', 'UTF-8');
-//				print $request->send()->getBody();
-				$response->loadXML($request->send()->getBody());
-
-				if($response->schemaValidate(FRAMEWORK_PATH."/library/translations/login.xsd")) {
-
-					// $user_id = $response->getElementById("user_id");
-					// $nickname = $response->getElementById("nickname");
-
-					// getElementById doesn't work (works on my 5.3 on mac)
-					// use this workaround instead
-					$xpath = new DOMXPath($response);
-					$user_id = $xpath->query("//*[@id='user_id']")->item(0);
-					$nickname = $xpath->query("//*[@id='nickname']")->item(0);
-
-					if($user_id && $nickname) {
-
-						// print $user_id->nodeValue;
-
-						Session::setLogin(new Login());
-						Session::getLogin()->doLogin($user_id->nodeValue, $nickname->nodeValue, defined('ADMIN_FRONT') ? ADMIN_FRONT :"/front/index.php");
-					}
-				}
-			}
-			catch (HttpException $e) {
-
-//				return false;
-			}
+// //			http_post_fields('http://api.users.local/login', array('username' => $username, 'password' => $password));
+// //			print_r(http_parse_message($response));
+// 
+// 
+// 			$request = new HttpRequest('http://wiresusers.dearapi.com/login', HttpRequest::METH_POST);
+// //			$request = new HttpRequest('http://users.wires.dk/login', HttpRequest::METH_POST);
+// 			$request->addPostFields(array('username' => $username, 'password' => $password));
+// 
+// 			try {
+// 
+// //				print "#.#".$request->send()->getBody()."#:#";
+// 				$response = new DOMDocument('1.0', 'UTF-8');
+// //				print $request->send()->getBody();
+// 				$response->loadXML($request->send()->getBody());
+// 
+// 				if($response->schemaValidate(FRAMEWORK_PATH."/library/translations/login.xsd")) {
+// 
+// 					// $user_id = $response->getElementById("user_id");
+// 					// $nickname = $response->getElementById("nickname");
+// 
+// 					// getElementById doesn't work (works on my 5.3 on mac)
+// 					// use this workaround instead
+// 					$xpath = new DOMXPath($response);
+// 					$user_id = $xpath->query("//*[@id='user_id']")->item(0);
+// 					$nickname = $xpath->query("//*[@id='nickname']")->item(0);
+// 
+// 					if($user_id && $nickname) {
+// 
+// 						// print $user_id->nodeValue;
+// 
+// 						Session::setLogin(new Login());
+// 						Session::getLogin()->doLogin($user_id->nodeValue, $nickname->nodeValue, defined('ADMIN_FRONT') ? ADMIN_FRONT :"/front/index.php");
+// 					}
+// 				}
+// 			}
+// 			catch (HttpException $e) {
+// 
+// //				return false;
+// 			}
 		}
 		else if($this->getStatus() == "logoff") {
 
