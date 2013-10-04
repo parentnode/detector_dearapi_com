@@ -57,3 +57,5 @@ document.write('<script type="text/javascript" src="<?= $js_path ?>/<?= $file ?>
 <? else: ?>
 document.write('<script type="text/javascript" src="<?= $path ? $path : "" ?>/js/<?= $file ?>.js"></script>');
 <? endif; ?>
+
+document.cookie = "segment=$device["segment"]";
