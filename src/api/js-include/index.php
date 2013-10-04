@@ -16,8 +16,14 @@ include_once("class/devices/device.core.class.php");
 $ua = getVar("ua");
 
 // include _include in path - for development
-$test = getVar("test");
+$dev = getVar("dev");
+
+// general path
 $path = getVar("path");
+
+// specific paths
+$css_path = getVar("css_path");
+$js_path = getVar("js_path");
 
 $deviceClass = new DeviceCore();
 $identification = $deviceClass->identifyDevice($ua ? $ua : $_SERVER["HTTP_USER_AGENT"]);
@@ -35,6 +41,19 @@ else {
 #<script type="text/javascript" src="http://devices.dearapi.com/js-include/"></script>
 #<script type="text/javascript" src="http://devices.dearapi.com/js-include/?test=true"></script>
 
+// what file to include?
+$file = ($dev ? "lib/" : "")."seg_".$device["segment"].($dev ? "_include" : "");
+
 ?>
-document.write('<link type="text/css" rel="stylesheet" media="all" href="<?= $path ? $path : "" ?>/css/<?= ($test ? "lib/" : "") ?>seg_<?= $device["segment"] ?><?= ($test ? "_include" : "") ?>.css" />');
-document.write('<script type="text/javascript" src="<?= $path ? $path : "" ?>/js/<?= ($test ? "lib/" : "") ?>seg_<?= $device["segment"] ?><?= ($test ? "_include" : "") ?>.js"></script>');
+
+<? if($css_path): ?>
+document.write('<link type="text/css" rel="stylesheet" media="all" href="<?= $css_path ?>/<?= $file ?>.css" />');
+<? else: ?>
+document.write('<link type="text/css" rel="stylesheet" media="all" href="<?= $path ? $path : "" ?>/css/<?= $file ?>.css" />');
+<? endif; ?>
+
+<? if($js_path): ?>
+document.write('<script type="text/javascript" src="<?= $js_path ?>/<?= $file ?>.js"></script>');
+<? else: ?>
+document.write('<script type="text/javascript" src="<?= $path ? $path : "" ?>/js/<?= $file ?>.js"></script>');
+<? endif; ?>
