@@ -1,27 +1,35 @@
 <?php
-
 /**
 * This file contains definitions
 *
 * @package Config
 */
+header("Content-type: text/html; charset=UTF-8");
 error_reporting(E_ALL);
 
 /**
-* Site name
+* Required site information
 */
 define("SITE_UID", "DVCS");
-define("SITE_NAME", "devices");
-define("SITE_DB", "devices");
+define("SITE_NAME", "devices.dearapi.com");
 define("SITE_URL", "devices.dearapi.com");
+define("SITE_EMAIL", "martin@whattheframework.org");
 
-define("DEFAULT_LANGUAGE_ISO", "DA"); // Regional language Danish
-define("DEFAULT_COUNTRY_ISO", "DK"); // Regional country Denmark
-define("ADMIN_FRONT", "/devices/devices.php");
+/**
+* Optional constants
+*/
+define("DEFAULT_PAGE_DESCRIPTION", "");
+define("DEFAULT_LANGUAGE_ISO", "EN");
+define("DEFAULT_COUNTRY_ISO", "DK");
 
-include_once($_SERVER["FRAMEWORK_PATH"]."/config/file_paths.php");
-include_once("config/databases.php");
-include_once("config/connect.php");
 
+// Enable items model
+define("SITE_ITEMS", true);
+
+
+// Enable notifications (send collection email after N notifications)
+define("SITE_COLLECT_NOTIFICATIONS", 50);
+//define("SHOP_ORDER_NOTIFIES", "martin@think.dk");
+define("SHOP_ORDER_NOTIFIES", "martin@whattheframework.org");
 
 ?>
