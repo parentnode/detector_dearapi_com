@@ -1,3 +1,6 @@
 [submodule "submodules/jes"]
 	path = submodules/jes
 	url = https://github.com/hvadhedderde/jes.git
+[submodule "submodules/wtf-js-merger"]
+	path = submodules/wtf-js-merger
+	url = https://github.com/hvadhedderde/wtf-js-merger.git
