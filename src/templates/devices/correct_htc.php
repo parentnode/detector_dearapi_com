@@ -11,8 +11,8 @@
 		print $useragent["useragent"]."<br>";
 
 		if(!preg_match("/Desire S|Desire_S|DesireS/", $useragent["useragent"]) && $useragent["useragent"] && $useragent["useragent"] != '"') {
-			print "INSERT INTO ".$device->db_unidentified." VALUES(DEFAULT, ".$useragent["useragent"].", '', '".SITE_UID."', CURRENT_TIMESTAMP)<br>";
-			$query->sql("INSERT INTO ".$device->db_unidentified." VALUES(DEFAULT, ".$useragent["useragent"].", '', ".SITE_UID.", CURRENT_TIMESTAMP)");
+			print "INSERT INTO ".$device->db_unidentified." VALUES(DEFAULT, '".$useragent["useragent"]."', '', '".SITE_UID."', CURRENT_TIMESTAMP)<br>";
+			print $query->sql("INSERT INTO ".$device->db_unidentified." VALUES(DEFAULT, '".$useragent["useragent"]."', '', '".SITE_UID."', CURRENT_TIMESTAMP)");
 			print "DELETE FROM ".$device->db_useragents." WHERE id = ".$useragent["id"]."<br>";
 			$query->sql("DELETE FROM ".$device->db_useragents." WHERE id = ".$useragent["id"]);
 
