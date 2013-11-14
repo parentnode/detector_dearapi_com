@@ -10,3 +10,6 @@
 [submodule "submodules/janitor"]
 	path = submodules/janitor
 	url = https://github.com/parentnode/janitor.git
+[submodule "submodules/dearcss"]
+	path = submodules/dearcss
+	url = https://github.com/hvadhedderde/dearcss.git
