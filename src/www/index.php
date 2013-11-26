@@ -12,10 +12,10 @@ $action = $page->actions();
 $page->bodyClass("devices");
 
 // list
-if($action && $action[0] == "correct_htc") {
+if($action && $action[0] == "restructure") {
 
 	$page->header();
-	$page->template("devices/correct_htc.php");
+	$page->template("devices/restructure.php");
 	$page->footer();
 
 }

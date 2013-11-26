@@ -2,24 +2,25 @@
 $action = $this->actions();
 
 $IC = new Item();
-$all_items = $IC->getItems(array("itemtype" => "product", "order" => "status DESC"));
+$itemtype = "device";
+$all_items = $IC->getItems(array("itemtype" => $itemtype, "order" => "status DESC"));
 
 ?>
-<div class="scene i:defaultList defaultList productsList">
-	<h1>Products</h1>
+<div class="scene i:defaultList defaultList <?= $itemtype ?>List">
+	<h1>Devices</h1>
 
 	<ul class="actions">
-		<li class="new"><a href="/admin/products/new" class="button primary">New product</a></li>
+		<li class="new"><a href="/admin/<?= $itemtype ?>/new" class="button primary">New <?= $itemtype ?></a></li>
 	</ul>
 
 	<div class="all_items">
 <?		if($all_items): ?>
-		<ul class="items i:productListImages taggable">
+		<ul class="items taggable">
 <?			foreach($all_items as $item): 
 				$item = $IC->getCompleteItem($item["id"]);
 				$image = $item["images"] ? $item["images"][0]["variant"] : "";
 				 ?>
-			<li class="item item_id:<?= $item["id"] ?> variant:<?= $image ?> format:<?= $item["images"][0]["format"] ?>">
+			<li class="item item_id:<?= $item["id"] ?>">
 				<h3><?= $item["name"] ?></h3>
 
 <?				if($item["tags"]): ?>
@@ -32,16 +33,8 @@ $all_items = $IC->getItems(array("itemtype" => "product", "order" => "status DES
 				</ul>
 <?				endif; ?>
 
-<?				if($item["prices"]): ?>
-				<ul class="prices">
-<?					foreach($item["prices"] as $price): ?>
-					<li><?= formatPrice($price["price"], $price["currency"]) ?></li>
-<?					endforeach; ?>
-				</ul>
-<?				endif; ?>
-
 				<ul class="actions">
-					<li class="edit"><a href="/admin/products/edit/<?= $item["id"] ?>" class="button">Edit</a></li>
+					<li class="edit"><a href="/admin/<?= $itemtype ?>/edit/<?= $item["id"] ?>" class="button">Edit</a></li>
 					<li class="delete">
 						<form action="/admin/cms/delete/<?= $item["id"] ?>" class="i:formDefaultDelete" method="post" enctype="multipart/form-data">
 							<input type="submit" value="Delete" class="button delete" />
@@ -57,7 +50,7 @@ $all_items = $IC->getItems(array("itemtype" => "product", "order" => "status DES
 <?			endforeach; ?>
 		</ul>
 <?		else: ?>
-		<p>No products.</p>
+		<p>No devices.</p>
 <?		endif; ?>
 	</div>
 

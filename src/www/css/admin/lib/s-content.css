@@ -1,0 +1,26 @@
+#content .scene {}
+
+/* NEWS LIST */
+#content .newsList ul.items > li {min-height: 100px; background-repeat: no-repeat; background-position: left top; background-color: transparent; padding-left: 160px;}
+
+/* NEWS LIST */
+#content .audioList ul.items > li {padding-left: 80px;}
+#content .audioList ul.items > li .audio {position: absolute; top: 16px; left: 30px; width: 50px; height: 50px; background: transparent url(/css/dearcss/src/img/bg_bn_play_medium.png) no-repeat 0px 0px;}
+#content .audioList ul.items > li.playing .audio {background-position: 0px -100px;}
+
+/* PERSON LIST */
+#content .personList ul.items > li {min-height: 100px; background-repeat: no-repeat; background-position: left top; background-color: transparent; padding-left: 100px;}
+
+/* VIDEO LIST */
+#content .videoList ul.items > li {min-height: 100px; background-repeat: no-repeat; background-position: left top; background-color: transparent; padding-left: 177px;}
+
+
+/* NAVIGATION */
+body.news #navigation .news a,
+body.audio #navigation .audio a,
+body.video #navigation .video a,
+body.person #navigation .person a,
+body.text #navigation .text a,
+body.tags #navigation .tags a {padding-left: 35px; color: #ffffff;}
+
+

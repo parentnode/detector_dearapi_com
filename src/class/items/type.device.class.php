@@ -15,14 +15,14 @@ class TypeDevice extends Model {
 		// itemtype database
 		$this->db = SITE_DB.".devices";
 		$this->db_useragents = SITE_DB.".device_useragents";
-		$this->db_unidentified = SITE_DB.".devices_unidentified";
+		$this->db_unidentified = SITE_DB.".unidentified_useragents";
 
 		// Name
 		$this->addToModel("published_at", array(
 			"type" => "datetime",
-			"label" => "Publish date (yyyy-mm-dd hh:mm:ss)",
-			"hint_message" => "Date to publish product on site. Until this date product will remain hidden on site. Leave empty for instnt publication", 
-			"error_message" => "Date must be of format (yyyy-mm-dd hh:mm:ss)"
+			"label" => "Released (yyyy-mm)",
+			"hint_message" => "Date device was first release to the market", 
+			"error_message" => "Date must be of format (yyyy-mm)"
 		));
 
 		// Name
@@ -31,25 +31,22 @@ class TypeDevice extends Model {
 			"label" => "Name",
 			"required" => true,
 			"unique" => $this->db,
-			"hint_message" => "Name of the product - Format: Miele - AX11.", 
+			"hint_message" => "Name of the device", 
 			"error_message" => "Name must to be unique."
 		));
 
 		// Description
 		$this->addToModel("description", array(
 			"type" => "text",
-			"label" => "Description",
-			"hint_message" => "Write a meaningful description of the product. Remember product descriptions are very important for Google - Make sure to use varied language and include all relevant keywords in your description."
+			"label" => "Description/AKA",
+			"hint_message" => "Devices may have many names, especially when released under Network operator subbrands like O2, Orange, Vodafone or T-Mobile. Add these names here. You can also add any interesting details about the device."
 		));
 
-		// Files
-		$this->addToModel("files", array(
-			"type" => "files",
-			"label" => "Drag images here to add",
-			"allowed_formats" => "png,jpg",
-			"allowed_proportions" => "1/1",
-			"hint_message" => "Add product images here. Use png or jpg in 1/1 proportion.",
-			"error_message" => "Image does not fit requirements."
+		// Description
+		$this->addToModel("useragent", array(
+			"type" => "text",
+			"label" => "Useragent",
+			"hint_message" => "Device useragent. Only add actual useragents."
 		));
 
 		// Tags
@@ -59,18 +56,6 @@ class TypeDevice extends Model {
 			"hint_message" => "Start typing to get suggestions. A correct tag has this format: context:value.",
 			"error_message" => "Must be correct Tag format."
 		));
-
-		// Prices
-		// hadcoded for DKK, 25%
-		$this->addToModel("prices", array(
-			"type" => "prices",
-			"label" => "Price in DKK, excl. VAT",
-			"currency" => "DKK",
-			"vatrate" => 1,
-			"hint_message" => "Price excl. VAT. If you do not state a price, product appear without a buy button.",
-			"error_message" => "Must be a number."
-		));
-
 
 		parent::__construct();
 	}
@@ -82,22 +67,20 @@ class TypeDevice extends Model {
 	*/
 	function get($item_id) {
 		$query = new Query();
-		$query_images = new Query();
 
 		if($query->sql("SELECT * FROM ".$this->db." WHERE item_id = $item_id")) {
 			$item = $query->result(0);
 			unset($item["id"]);
 
-			$item["images"] = false;
+			$item["useragents"] = false;
 
 			// get slides
-			if($query_images->sql("SELECT * FROM ".$this->db_images." WHERE item_id = $item_id ORDER BY position DESC, id DESC")) {
+			if($query->sql("SELECT * FROM ".$this->db_useragents." WHERE item_id = $item_id")) {
 
-				$images = $query_images->results();
-				foreach($images as $i => $image) {
-					$item["images"][$i]["id"] = $image["id"];
-					$item["images"][$i]["variant"] = $image["variant"];
-					$item["images"][$i]["format"] = $image["format"];
+				$useragents = $query->results();
+				foreach($useragents as $i => $useragent) {
+					$item["useragents"][$i]["id"] = $useragent["id"];
+					$item["useragents"][$i]["useragent"] = $useragent["useragent"];
 				}
 			}
 
@@ -119,7 +102,7 @@ class TypeDevice extends Model {
 		$IC = new Item();
 
 		$query->checkDbExistance($this->db);
-		$query->checkDbExistance($this->db_images);
+		$query->checkDbExistance($this->db_useragents);
 
 		$uploads = $IC->upload($item_id, array("proportion" => 1/1, "filegroup" => "image", "auto_add_variant" => true));
 		if($uploads) {

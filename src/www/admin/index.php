@@ -12,7 +12,7 @@ $action = $page->actions();
 
 <div class="scene front">
 
-	<h1>P1 Beboer - Shop admin</h1>
+	<h1>Devices Admin</h1>
 
 </div>
 
