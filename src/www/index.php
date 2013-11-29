@@ -15,7 +15,7 @@ $page->bodyClass("devices");
 if($action && $action[0] == "restructure") {
 
 	$page->header();
-	$page->template("devices/restructure.php");
+	$page->template("restructure.php");
 	$page->footer();
 
 }

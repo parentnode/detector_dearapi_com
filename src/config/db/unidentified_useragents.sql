@@ -1,4 +1,4 @@
-CREATE TABLE `SITE_DB`.`devices_unidentified` (
+CREATE TABLE `SITE_DB`.`unidentified_useragents` (
   `id` int(11) NOT NULL auto_increment,
 
   `useragent` text NOT NULL,

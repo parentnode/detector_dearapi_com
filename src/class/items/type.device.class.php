@@ -4,7 +4,6 @@
 * This file contains presentation maintenance functionality
 */
 
-
 class TypeDevice extends Model {
 
 	/**
@@ -13,7 +12,7 @@ class TypeDevice extends Model {
 	function __construct() {
 
 		// itemtype database
-		$this->db = SITE_DB.".devices";
+		$this->db = SITE_DB.".item_device";
 		$this->db_useragents = SITE_DB.".device_useragents";
 		$this->db_unidentified = SITE_DB.".unidentified_useragents";
 
@@ -53,8 +52,8 @@ class TypeDevice extends Model {
 		$this->addToModel("tags", array(
 			"type" => "tags",
 			"label" => "Tag",
-			"hint_message" => "Start typing to get suggestions. A correct tag has this format: context:value.",
-			"error_message" => "Must be correct Tag format."
+			"hint_message" => "Start typing to filter options.",
+			"error_message" => "Must be correct Tag format. A correct tag has this format: context:value."
 		));
 
 		parent::__construct();
@@ -91,76 +90,59 @@ class TypeDevice extends Model {
 		}
 	}
 
+	// custom loopback function
 
 
-	// CMS SECTION
+	// add useragent - 3 parameters exactly
+	// /device/#item_id#/addUseragent
+	function addUseragent($action) {
 
-	// update item type - based on posted values
-	function update($item_id) {
+		if(count($action) == 3) {
 
-		$query = new Query();
-		$IC = new Item();
+			$useragent = getPost("useragent");
+			$query = new Query();
 
-		$query->checkDbExistance($this->db);
-		$query->checkDbExistance($this->db_useragents);
+			if($query->sql("INSERT INTO ".$this->db_useragents." VALUES(DEFAULT, ".$action[1].", '".$useragent."')")) {
 
-		$uploads = $IC->upload($item_id, array("proportion" => 1/1, "filegroup" => "image", "auto_add_variant" => true));
-		if($uploads) {
-			foreach($uploads as $upload) {
-				$query->sql("INSERT INTO ".$this->db_images." VALUES(DEFAULT, $item_id, '".$upload["name"]."', '".$upload["format"]."', '".$upload["variant"]."', 0)");
-			}
-		}
-
-
-		$entities = $this->data_entities;
-		$names = array();
-		$values = array();
-
-		foreach($entities as $name => $entity) {
-			if($entity["value"] != false && $name != "published_at" && $name != "status" && $name != "tags" && $name != "prices") {
-				$names[] = $name;
-				$values[] = $name."='".$entity["value"]."'";
-			}
-		}
-
-		if($this->validateList($names, $item_id)) {
-			if($values) {
-				$sql = "UPDATE ".$this->db." SET ".implode(",", $values)." WHERE item_id = ".$item_id;
-//					print $sql;
-			}
-
-			if(!$values || $query->sql($sql)) {
+				message()->addMessage("Useragent added");
 				return true;
 			}
 		}
 
+		message()->addMessage("Useragent could not be added", array("type" => "error"));
 		return false;
 	}
 
 
-	// custom loopback function
-
-	// delete product image - 4 parameters exactly
-	// /product/#item_id#/deleteImage/#image_id#
-	function deleteImage($action) {
+	// delete device useragent - 4 parameters exactly
+	// /device/#item_id#/deleteUseragent/#useragent_id#
+	function deleteUseragent($action) {
 
 		if(count($action) == 4) {
 
 			$query = new Query();
 
-//			print "DELETE FROM ".$this->db_images." WHERE item_id = ".$action[0]." AND variant = '".$action[2]."'";
+			if($query->sql("DELETE FROM ".$this->db_useragents." WHERE item_id = ".$action[1]." AND id = '".$action[3]."'")) {
 
-			if($query->sql("DELETE FROM ".$this->db_images." WHERE item_id = ".$action[1]." AND variant = '".$action[3]."'")) {
-				FileSystem::removeDirRecursively(PUBLIC_FILE_PATH."/".$action[1]."/".$action[3]);
-				FileSystem::removeDirRecursively(PRIVATE_FILE_PATH."/".$action[1]."/".$action[3]);
-
-				message()->addMessage("Image deleted");
+				message()->addMessage("Useragent deleted");
 				return true;
 			}
 		}
 
-		message()->addMessage("Image could not be deleted", array("type" => "error"));
+		message()->addMessage("Useragent could not be deleted", array("type" => "error"));
 		return false;
+	}
+
+
+	function unidentifiedUseragents() {
+
+		$query = new Query();
+
+		$sql = "SELECT id, useragent FROM ".$this->db_unidentified." GROUP BY useragent";
+		print $sql."<br>";
+		if($query->sql($sql)) {
+			return $query->results();
+		}
 	}
 
 }

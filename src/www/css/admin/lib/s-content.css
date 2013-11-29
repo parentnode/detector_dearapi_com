@@ -1,26 +1,70 @@
 #content .scene {}
 
 /* NEWS LIST */
-#content .newsList ul.items > li {min-height: 100px; background-repeat: no-repeat; background-position: left top; background-color: transparent; padding-left: 160px;}
+#content .deviceList form.options {padding: 16px 0 0; border-bottom: 1px solid #dedede;}
 
-/* NEWS LIST */
-#content .audioList ul.items > li {padding-left: 80px;}
-#content .audioList ul.items > li .audio {position: absolute; top: 16px; left: 30px; width: 50px; height: 50px; background: transparent url(/css/dearcss/src/img/bg_bn_play_medium.png) no-repeat 0px 0px;}
-#content .audioList ul.items > li.playing .audio {background-position: 0px -100px;}
+#content .deviceList form.options fieldset {display: inline-block; vertical-align: top;}
+#content .deviceList form.options fieldset .field {padding-right: 12px;}
 
-/* PERSON LIST */
-#content .personList ul.items > li {min-height: 100px; background-repeat: no-repeat; background-position: left top; background-color: transparent; padding-left: 100px;}
+#content .deviceList form.options .actions {display: inline-block; vertical-align: top; padding-left: 0;}
+#content .deviceList form.options .actions li {padding-left: 0;}
+#content .deviceList form.options .actions li input {margin-top: 4px;}
 
-/* VIDEO LIST */
-#content .videoList ul.items > li {min-height: 100px; background-repeat: no-repeat; background-position: left top; background-color: transparent; padding-left: 177px;}
+
+#content .scene.deviceEdit > div.item {padding: 10px 0 20px; border-bottom: 1px solid #dedede;}
+
+
+#content .scene.deviceEdit > div.tags {padding: 10px 0 20px; border-bottom: 1px solid #dedede;}
+#content .scene.deviceEdit > div.tags fieldset {display: inline-block; vertical-align: top;}
+#content .scene.deviceEdit > div.tags .field {padding-right: 12px;}
+#content .scene.deviceEdit > div.tags .field input[type=text] {width: 262px;}
+
+#content .scene.deviceEdit > div.tags .actions {display: inline-block; padding: 0;}
+#content .scene.deviceEdit > div.tags .actions li {padding-left: 0;}
+#content .scene.deviceEdit > div.tags .actions li input {margin-top: 4px;}
+#content .scene.deviceEdit > div.tags .actions {display: inline-block; vertical-align: top; padding-left: 0;}
+
+#content .scene.deviceEdit > div.tags ul.tags {padding: 0px 125px 0px 25px;}
+#content .scene.deviceEdit > div.tags ul.tags li {width: auto; display: inline-block; vertical-align: top; margin: 3px; border-radius: 13px; background-color: #313942; padding: 7px 10px; color: #ffffff; font-size: 0;}
+#content .scene.deviceEdit > div.tags ul.tags li.add {font-size: 12px; padding: 7px; cursor: pointer; width: 10px; text-align: center;}
+#content .scene.deviceEdit > div.tags ul.tags li.add:hover {background-color: #64ad8e;}
+#content .scene.deviceEdit > div.tags ul.tags li span {font-size: 12px;}
+#content .scene.deviceEdit > div.tags ul.tags li span.context {text-transform: uppercase;}
+#content .scene.deviceEdit > div.tags ul.tags li span.context:after {content: ":";}
+#content .scene.deviceEdit > div.tags ul.tags li span.value {}
+
+/* TAGGABLE */
+/* ADD TAGS ACTIVE */
+#content .scene.deviceEdit div.tags.addTags ul.tags li {cursor: pointer;}
+#content .scene.deviceEdit div.tags.addTags ul.tags li:hover,
+#content .scene.deviceEdit div.tags.addTags ul.tags li.add:hover {background-color: #df0000;}
+#content .scene.deviceEdit div.tags.addTags ul.tags li.add {padding: 6px 7px 8px;}
+#content .scene.deviceEdit div.tags.addTags ul.taglist {padding: 0 125px 0 25px;}
+
+
+
+#content .scene.deviceEdit div.useragents {padding: 10px 0 20px; border-bottom: 1px solid #dedede;}
+
+#content .scene.deviceEdit div.useragents .field textarea {height: 75px;}
+#content .scene.deviceEdit div.useragents .actions {text-align: left;}
+#content .scene.deviceEdit div.useragents .actions li {padding: 0 5px 10px;}
+
+#content .scene.deviceEdit div.useragents ul.useragents {padding: 10px 0;}
+#content .scene.deviceEdit div.useragents ul.useragents li {padding: 3px 30px; font-size: 11px; position: relative; display: block;}
+#content .scene.deviceEdit div.useragents ul.useragents li:hover {background-color: #cccccc;}
+#content .scene.deviceEdit div.useragents ul.useragents li .delete {position: absolute; right: 30px; top: -3px; height: 24px; width: 24px;
+
+	cursor: pointer; border-radius: 12px;
+	background: #fd0000 url(/css/dearcss/src/img/bg_icons.png) no-repeat 5px -45px;
+	display: none;
+}
+#content .scene.deviceEdit div.useragents ul.useragents li:hover .delete {display: block;}
 
 
 /* NAVIGATION */
-body.news #navigation .news a,
-body.audio #navigation .audio a,
-body.video #navigation .video a,
-body.person #navigation .person a,
-body.text #navigation .text a,
+body.device #navigation .device a,
+body.logs #navigation .logs a,
+body.unidentified #navigation .unidentified a,
 body.tags #navigation .tags a {padding-left: 35px; color: #ffffff;}
 
 
