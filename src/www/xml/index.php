@@ -15,12 +15,10 @@ $ua = stringOr(getVar("ua"), $_SERVER["HTTP_USER_AGENT"]);
 $Identify = new Identify();
 $device = $Identify->identifyDevice($ua);
 
+header("Content-type: text/xml; charset=UTF-8");
+print '<?xml version="1.0" encoding="UTF-8"?>';
 ?>
-<!DOCTYPE html>
-<html>
-<body>
-<div id="device">
-	<span id="segment" class="proporty"><?= $device["segment"] ?></span>
-</div>
-</body>
-</html>
+<device>
+    <segment><?= $device["segment"] ?></segment>
+</device>
+

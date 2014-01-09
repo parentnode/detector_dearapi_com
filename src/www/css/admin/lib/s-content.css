@@ -1,19 +1,42 @@
 #content .scene {}
 
-/* NEWS LIST */
+/* DEVICE LIST - EXTENDED SEARCH */
 #content .deviceList form.options {padding: 16px 0 0; border-bottom: 1px solid #dedede;}
 
 #content .deviceList form.options fieldset {display: inline-block; vertical-align: top;}
-#content .deviceList form.options fieldset .field {padding-right: 12px;}
+#content .deviceList form.options fieldset .field {padding-right: 12px; padding-bottom: 5px;}
+#content .deviceList form.options fieldset .field .help {display: none;}
 
 #content .deviceList form.options .actions {display: inline-block; vertical-align: top; padding-left: 0;}
 #content .deviceList form.options .actions li {padding-left: 0;}
 #content .deviceList form.options .actions li input {margin-top: 4px;}
 
+#content .deviceList form.options div.tags {padding: 0 30px;}
+#content .deviceList form.options div.tags .field {padding-left: 0;}
+#content .deviceList form.options div.tags ul.tags,
+#content .deviceList form.options div.tags ul.taglist {padding: 0px 0 20px;}
 
-#content .scene.deviceEdit > div.item {padding: 10px 0 20px; border-bottom: 1px solid #dedede;}
+
+#content .deviceList form.options div.tags li {width: auto; display: inline-block; vertical-align: top; margin: 3px; border-radius: 13px; background-color: #313942; padding: 7px 10px; color: #ffffff; font-size: 0;}
+#content .deviceList form.options div.tags li.add {font-size: 12px; padding: 7px; cursor: pointer; width: 10px; text-align: center;}
+#content .deviceList form.options div.tags li.add:hover {background-color: #64ad8e;}
+
+#content .deviceList form.options div.tags li span {font-size: 12px;}
+#content .deviceList form.options div.tags li span.context {text-transform: uppercase;}
+#content .deviceList form.options div.tags li span.context:after {content: ":";}
+#content .deviceList form.options div.tags li span.value {}
+
+#content .deviceList form.options div.tags ul.taglist li {background-color: #dedede;}
+
+#content .deviceList form.options div.tags.addTags li {cursor: pointer;}
+#content .deviceList form.options div.tags.addTags ul.tags li:hover {background-color: #df0000;}
+#content .deviceList form.options div.tags.addTags ul.taglist li:hover {background-color: #64ad8e;}
 
 
+
+/* DEVICE EDIT */
+
+/*
 #content .scene.deviceEdit > div.tags {padding: 10px 0 20px; border-bottom: 1px solid #dedede;}
 #content .scene.deviceEdit > div.tags fieldset {display: inline-block; vertical-align: top;}
 #content .scene.deviceEdit > div.tags .field {padding-right: 12px;}
@@ -24,6 +47,7 @@
 #content .scene.deviceEdit > div.tags .actions li input {margin-top: 4px;}
 #content .scene.deviceEdit > div.tags .actions {display: inline-block; vertical-align: top; padding-left: 0;}
 
+
 #content .scene.deviceEdit > div.tags ul.tags {padding: 0px 125px 0px 25px;}
 #content .scene.deviceEdit > div.tags ul.tags li {width: auto; display: inline-block; vertical-align: top; margin: 3px; border-radius: 13px; background-color: #313942; padding: 7px 10px; color: #ffffff; font-size: 0;}
 #content .scene.deviceEdit > div.tags ul.tags li.add {font-size: 12px; padding: 7px; cursor: pointer; width: 10px; text-align: center;}
@@ -32,15 +56,17 @@
 #content .scene.deviceEdit > div.tags ul.tags li span.context {text-transform: uppercase;}
 #content .scene.deviceEdit > div.tags ul.tags li span.context:after {content: ":";}
 #content .scene.deviceEdit > div.tags ul.tags li span.value {}
+*/
 
 /* TAGGABLE */
 /* ADD TAGS ACTIVE */
+/*
 #content .scene.deviceEdit div.tags.addTags ul.tags li {cursor: pointer;}
 #content .scene.deviceEdit div.tags.addTags ul.tags li:hover,
 #content .scene.deviceEdit div.tags.addTags ul.tags li.add:hover {background-color: #df0000;}
 #content .scene.deviceEdit div.tags.addTags ul.tags li.add {padding: 6px 7px 8px;}
 #content .scene.deviceEdit div.tags.addTags ul.taglist {padding: 0 125px 0 25px;}
-
+*/
 
 
 #content .scene.deviceEdit div.useragents {padding: 10px 0 20px; border-bottom: 1px solid #dedede;}
@@ -53,12 +79,81 @@
 #content .scene.deviceEdit div.useragents ul.useragents li {padding: 3px 30px; font-size: 11px; position: relative; display: block;}
 #content .scene.deviceEdit div.useragents ul.useragents li:hover {background-color: #cccccc;}
 #content .scene.deviceEdit div.useragents ul.useragents li .delete {position: absolute; right: 30px; top: -3px; height: 24px; width: 24px;
-
 	cursor: pointer; border-radius: 12px;
 	background: #fd0000 url(/css/dearcss/src/img/bg_icons.png) no-repeat 5px -45px;
 	display: none;
 }
 #content .scene.deviceEdit div.useragents ul.useragents li:hover .delete {display: block;}
+
+
+/* UNIDENTIFIED LIST - EXTREME DATA SETS, CUSTOM NEEDS */
+#content .scene.unidentifiedList h1 {border-bottom: 1px solid #dedede; padding-bottom: 74px;}
+
+#content .scene.unidentifiedList form.options {padding: 16px 0 6px; border-bottom: 1px solid #dedede;}
+
+#content .scene.unidentifiedList form.options fieldset {display: inline-block; vertical-align: top;}
+#content .scene.unidentifiedList form.options fieldset .field {padding-right: 12px; padding-bottom: 5px;}
+#content .scene.unidentifiedList form.options fieldset .field .help {display: none;}
+#content .scene.unidentifiedList form.options .actions {display: inline-block; vertical-align: top; padding-left: 0;}
+#content .scene.unidentifiedList form.options .actions li {padding-left: 0;}
+#content .scene.unidentifiedList form.options .actions li input {margin-top: 4px;}
+
+
+#content .scene.unidentifiedList .stats {padding: 5px 30px; border-bottom: 1px solid #dedede;}
+#content .scene.unidentifiedList .stats p {padding: 0;}
+#content .scene.unidentifiedList .items > li {padding: 10px 125px 10px 30px;}
+#content .scene.unidentifiedList .items > li > input {position: absolute; top: 10px; left: 30px;}
+#content .scene.unidentifiedList .items > li h3 {font-size: 13px; padding: 0 0 0 25px;}
+
+#content .scene.unidentifiedList .items > li.all {padding-left: 55px;}
+#content .scene.unidentifiedList .items > li.all > input {position: absolute; top: 8px; left: 30px;}
+
+
+#content .scene.unidentifiedList .items > li ul.info {padding: 2px 25px;}
+#content .scene.unidentifiedList .items > li ul.info li {padding: 0;}
+#content .scene.unidentifiedList .items > li ul.info li.identified_at:after {content: ",\00a0";}
+#content .scene.unidentifiedList .items > li ul.info li.identified_as:before {content: ",\00a0";}
+#content .scene.unidentifiedList .items > li ul.info li.visits:after {content: "\00a0visits";}
+
+#content .scene.unidentifiedList .items > li ul.info li.comment {}
+
+
+.addToDevice {position: fixed; z-index: 12; top: 0px; right: 0; width: 200px; height: 100%; background: #ffffff; border: 1px solid #dedede; border-top: none; border-right: none; padding: 0 20px 0 10px;}
+.addToDevice h2 {text-align: left; padding: 20px 0 10px;}
+
+.addToDevice div.counter {border-bottom: 1px solid #dedede; padding: 0 0 5px;}
+.addToDevice span.count {padding: 0 0 5px 5px; }
+
+.addToDevice li {display: block; padding: 3px 0; border-top: 1px solid #dedede;}
+
+.addToDevice li div.info {color: #7d848c; padding: 3px 0 3px 10px;}
+
+.addToDevice div.search {padding: 10px 0; border-bottom: 1px solid #dedede;}
+
+.addToDevice div.search input {height: 14px; display: block; width: 194px;}
+.addToDevice div.search input.default {color: #aaaaaa;}
+
+.addToDevice div.search .results li {padding-left: 10px; cursor: pointer;}
+.addToDevice div.search .results li:first-child {border: none; padding-top: 10px;}
+.addToDevice div.search .results li h3 {font-size: 12px; padding: 2px 0;}
+.addToDevice div.search .results li ul {display: none;}
+
+.addToDevice ul.options li {cursor: pointer; font-size: 12px; border-top: none; border-bottom: 1px solid #dedede; color: #313942;}
+
+
+.addToDevice li div.selected,
+.addToDevice li div.addtoclone,
+.addToDevice li div.matching {font-size: 11px; margin: 3px 0; border-radius: 10px; height: 11px; padding: 5px 10px; background: #64AD8E; text-align: center; color: #ffffff; cursor: pointer;}
+
+.addToDevice li div.selected.confirm,
+.addToDevice li div.addtoclone.confirm,
+.addToDevice li div.matching.confirm {background-color: #df0000;}
+
+
+.addToDevice .search li div.selected,
+.addToDevice .search li div.addtoclone,
+.addToDevice .search li div.matching {margin-left: -10px;}
+
 
 
 /* NAVIGATION */

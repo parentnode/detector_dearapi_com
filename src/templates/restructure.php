@@ -208,8 +208,8 @@ function fase_2() {
 	
 			// INSERT UA, PUT SITE_ID IN COMMENT
 			// ADD USERAGENT
-			$sql = "INSERT INTO devices_dearapi_com.devices_unidentified VALUES(DEFAULT, '".$ua["useragent"]."', '".$ua["site_id"]."', '', '".$ua["timestamp"]."')";
-	//					print $sql."<br>";
+			$sql = "INSERT INTO devices_dearapi_com.unidentified_useragents VALUES(DEFAULT, '".$ua["useragent"]."', '".$ua["site_id"]."', '', '".$ua["timestamp"]."')";
+//					print $sql."<br>";
 			$query->sql($sql);
 	
 	
@@ -222,8 +222,8 @@ function fase_2() {
 
 
 // execute
-fase_1();
-//fase_2();
+//fase_1();
+fase_2();
 
 ?>
 	

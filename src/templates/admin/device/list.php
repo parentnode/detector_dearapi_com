@@ -2,44 +2,26 @@
 $action = $this->actions();
 
 $tags = getPost("tags");
+$search = getPost("search");
 $search_string = getPost("search_string");
+
 
 $IC = new Item();
 $itemtype = "device";
+$model = $IC->typeObject($itemtype);
 
-// $tags, and possibly search_string
-if($tags) {
-	$all_items = $IC->getItems(array("itemtype" => $itemtype, "tags" => $tags, "order" => "status DESC"));
-}
-// search_string but no tags
-else if($search_string) {
-	$all_items = $IC->getItems(array("itemtype" => $itemtype, "order" => "status DESC"));
-}
-// no tags, no search string - show last
-else {
-	$all_items = $IC->getItems(array("itemtype" => $itemtype, "order" => "status DESC", "limit" => 50));
-}
 
-function searchFilter($item, $string) {
+if($search) {
+	$all_items = $model->searchDevices(array("search_string" => $search_string, "tags" => $tags));
 	
-	if(preg_match("/".$string."/i", $item["name"])) {
-		return true;
-	}
-
-	if(preg_match("/".$string."/i", $item["description"])) {
-		return true;
-	}
-
-	foreach($item["useragents"] as $ua) {
-		if(preg_match("/".$string."/i", $ua["useragent"])) {
-			return true;
-		}
-	}
 }
-
+else {
+	$all_items = $IC->getItems(array("itemtype" => $itemtype, "order" => "modified_at DESC", "limit" => 50));
+	
+}
 
 ?>
-<div class="scene i:defaultList defaultList <?= $itemtype ?>List">
+<div class="scene defaultList <?= $itemtype ?>List">
 	<h1>Devices</h1>
 
 	<ul class="actions">
@@ -47,35 +29,27 @@ function searchFilter($item, $string) {
 	</ul>
 
 	<form class="options labelstyle:inject i:searchDevice" action="/admin/<?= $itemtype ?>/list" method="post" novalidate="novalidate">
+		<?= $model->input("search", array("type" => "hidden", "value" => "true")) ?>
 		<fieldset>
-			<div class="field string">
-				<label>Global search (regular expression)</label>
-				<input type="text" name="search_string" class="default" value="<?= $search_string ?>" />
-			</div>
+			<?= $model->input("search_string", array("type" => "string", "label" => "Global search (regular expression)", "value" => $search_string)) ?>
 		</fieldset>
 		<ul class="actions">
 			<li><input type="submit" value="Search" class="button" /></li>
 		</ul>
 	</form>
 
-	<div class="all_items">
+	<div class="all_items i:defaultList taggable filters">
 <?		if($all_items): ?>
-		<ul class="items taggable searchable">
+		<ul class="items">
 <?			foreach($all_items as $item): 
-				$item = $IC->getCompleteItem($item["id"]);
-
-				// search result?
-				if(!$search_string || searchFilter($item, $search_string)) {
-				 ?>
+				$item = $IC->getCompleteItem($item["id"]); ?>
 			<li class="item item_id:<?= $item["id"] ?>">
 				<h3><?= $item["name"] ?></h3>
 
 <?				if($item["tags"]): ?>
 				<ul class="tags">
 <?					foreach($item["tags"] as $tag): ?>
-<?//						if($tag["context"] == "category"): ?>
-					<li><span class="context"><?= $tag["context"] ?></span>:<span class="value"><?= $tag["value"] ?></span></li>
-<?//						endif; ?>
+					<li class="<?= $tag["context"] ?>"><span class="context"><?= $tag["context"] ?></span>:<span class="value"><?= $tag["value"] ?></span></li>
 <?					endforeach; ?>
 				</ul>
 <?				endif; ?>
@@ -94,11 +68,7 @@ function searchFilter($item, $string) {
 					</li>
 				</ul>
 			 </li>
-<?				
-				}
-
-
-			endforeach; ?>
+<?			endforeach; ?>
 		</ul>
 <?		else: ?>
 		<p>No devices.</p>

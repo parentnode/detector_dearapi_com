@@ -22,8 +22,8 @@ $model = $IC->typeObject($itemtype);
 		</fieldset>
 
 		<ul class="actions">
-			<li class="cancel"><a href="/admin/<?= $itemtype ?>/list" class="button">Back</a></li>
-			<li class="save"><input type="submit" value="Save" class="button primary" /></li>
+			<li class="cancel"><a href="/admin/<?= $itemtype ?>/list" class="button key:esc">Back</a></li>
+			<li class="save"><input type="submit" value="Save" class="button primary key:s" /></li>
 		</ul>
 
 	</form>

@@ -9,6 +9,9 @@ include_once($_SERVER["FRAMEWORK_PATH"]."/config/init.php");
 // include the output class for output method support
 include_once("class/system/output.class.php");
 
+// include device identifier class
+include_once("class/identify.class.php");
+
 $action = $page->actions();
 
 $IC = new Item();

@@ -25,6 +25,11 @@ $path = getVar("path");
 $css_path = getVar("css_path");
 $js_path = getVar("js_path");
 
+// specific params
+$css_param = getVar("css_param");
+$js_param = getVar("js_param");
+
+
 $deviceClass = new DeviceCore();
 $identification = $deviceClass->identifyDevice($ua ? $ua : $_SERVER["HTTP_USER_AGENT"]);
 if($identification && isset($identification["device_id"])) {
@@ -47,15 +52,15 @@ $file = ($dev ? "lib/" : "")."seg_".$device["segment"].($dev ? "_include" : "");
 ?>
 
 <? if($css_path): ?>
-document.write('<link type="text/css" rel="stylesheet" media="all" href="<?= $css_path ?>/<?= $file ?>.css" />');
+document.write('<link type="text/css" rel="stylesheet" media="all" href="<?= $css_path ?>/<?= $file ?>.css<?= $css_param ? "?$css_param" : "" ?>" />');
 <? else: ?>
-document.write('<link type="text/css" rel="stylesheet" media="all" href="<?= $path ? $path : "" ?>/css/<?= $file ?>.css" />');
+document.write('<link type="text/css" rel="stylesheet" media="all" href="<?= $path ? $path : "" ?>/css/<?= $file ?>.css<?= $css_param ? "?$css_param" : "" ?>" />');
 <? endif; ?>
 
 <? if($js_path): ?>
-document.write('<script type="text/javascript" src="<?= $js_path ?>/<?= $file ?>.js"></script>');
+document.write('<script type="text/javascript" src="<?= $js_path ?>/<?= $file ?>.js<?= $js_param ? "?$js_param" : "" ?>"></script>');
 <? else: ?>
-document.write('<script type="text/javascript" src="<?= $path ? $path : "" ?>/js/<?= $file ?>.js"></script>');
+document.write('<script type="text/javascript" src="<?= $path ? $path : "" ?>/js/<?= $file ?>.js<?= $js_param ? "?$js_param" : "" ?>"></script>');
 <? endif; ?>
 
 document.cookie = "segment=<?= $device["segment"] ?>";
