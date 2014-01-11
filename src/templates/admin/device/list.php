@@ -5,6 +5,12 @@ $tags = getPost("tags");
 $search = getPost("search");
 $search_string = getPost("search_string");
 
+if(!$search && Session::value("device_search")) {
+	$search_string = Session::value("device_search");
+	$tags = Session::value("device_search_tags");
+	$search = 1;
+}
+
 
 $IC = new Item();
 $itemtype = "device";
@@ -13,6 +19,8 @@ $model = $IC->typeObject($itemtype);
 
 if($search) {
 	$all_items = $model->searchDevices(array("search_string" => $search_string, "tags" => $tags));
+	Session::value("device_search", $search_string);
+	Session::value("device_search_tags", $tags);
 	
 }
 else {
@@ -36,6 +44,19 @@ else {
 		<ul class="actions">
 			<li><input type="submit" value="Search" class="button" /></li>
 		</ul>
+<? 		if($tags): ?>
+		<div class="tags">
+			<ul class="tags">
+				<? print_r($tags) ?>
+<? 			$tags = explode(";", $tags);
+			foreach($tags as $tag):
+				list($context, $value) = explode(":", $tag);
+				 ?>
+				<li class="tag"><span class="context"><?= $context ?></span><span class="value"><?= $value ?></span></li>
+<?			endforeach; ?>
+			</ul>
+		</div>
+<?		endif; ?>
 	</form>
 
 	<div class="all_items i:defaultList taggable filters">

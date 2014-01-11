@@ -35,7 +35,12 @@ Util.Objects["searchDevice"] = new function() {
 			u.request(this, this.action, {"params":params, "method":"post"})
 		}
 
-		form._tags = u.ae(form, "div", {"class":"tags"});
+		u.bug("fisk")
+		form._tags = u.qs("div.tags", form);
+		u.bug("fusk")
+		if(!form._tags) {
+			form._tags = u.ae(form, "div", {"class":"tags"});
+		}
 		form._tags._form = form;
 
 		// tags list for existing tags
