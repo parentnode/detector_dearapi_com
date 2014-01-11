@@ -1,2 +1,3 @@
 src/library/*
 .DS_Store
+src/config/connect_*.php
