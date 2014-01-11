@@ -5,10 +5,15 @@ $tags = getPost("tags");
 $search = getPost("search");
 $search_string = getPost("search_string");
 
-if(!$search && Session::value("device_search")) {
-	$search_string = Session::value("device_search");
-	$tags = Session::value("device_search_tags");
-	$search = 1;
+if(!$search) {
+	if(Session::value("device_search")) {
+		$search_string = Session::value("device_search");
+		$search = 1;
+	}
+	if(Session::value("device_search_tags")) {
+		$tags = Session::value("device_search_tags");
+		$search = 1;
+	}
 }
 
 
@@ -17,7 +22,7 @@ $itemtype = "device";
 $model = $IC->typeObject($itemtype);
 
 
-if($search) {
+if($search && ($search_string || $tags)) {
 	$all_items = $model->searchDevices(array("search_string" => $search_string, "tags" => $tags));
 	Session::value("device_search", $search_string);
 	Session::value("device_search_tags", $tags);
@@ -25,7 +30,9 @@ if($search) {
 }
 else {
 	$all_items = $IC->getItems(array("itemtype" => $itemtype, "order" => "modified_at DESC", "limit" => 50));
-	
+
+	Session::reset("device_search");
+	Session::reset("device_search_tags");
 }
 
 ?>
