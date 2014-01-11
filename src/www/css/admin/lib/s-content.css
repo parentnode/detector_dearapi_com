@@ -109,6 +109,10 @@
 #content .scene.unidentifiedList .items > li.all > input {position: absolute; top: 8px; left: 30px;}
 
 
+#content .scene.unidentifiedList .items > li input.button.delete.confirm {color: #ffffff; background-color: #df0000;}
+#content .scene.unidentifiedList .items > li input.button.delete.confirm:hover {}
+
+
 #content .scene.unidentifiedList .items > li ul.info {padding: 2px 25px;}
 #content .scene.unidentifiedList .items > li ul.info li {padding: 0;}
 #content .scene.unidentifiedList .items > li ul.info li.identified_at:after {content: ",\00a0";}

@@ -377,30 +377,87 @@ Util.Objects["unidentifiedList"] = new function() {
 			u.e.click(node);
 			node.clicked = function() {
 
-				this.response = function(response) {
-					if(response.cms_status == "success") {
+				if(!this._ul) {
+					this.response = function(response) {
+						if(response.cms_status == "success") {
 
-						var ul = u.ae(this, "ul", {"class":"info"});
-						u.ae(ul, "li", {"class":"visits", "html":response.cms_object.length})
-						u.ae(ul, "li", {"class":"identified_as", "html":response.cms_object[0].identified_as_device})
+							// add delete button
+							var action = u.ae(this, "ul", {"class":"actions"});
+							var li = u.ae(action, "li", {"class":"delete"});
+							this._delete = u.ae(li, "input", {"class":"button delete", "type":"button", "value":"delete"})
 
-						var i, node;
-						for(i = 0; node = response.cms_object[i]; i++) {
-							var ul = u.ae(this, "ul", {"class":"info"});
-							u.ae(ul, "li", {"class":"identified_at", "html":node.identified_at})
-							u.ae(ul, "li", {"class":"comment", "html":node.comment})
-						}
-					}
-					else {
-						if(typeof(page.notify) == "function") {
-							page.notify(response.cms_message);
+							this._delete.node = this;
+							u.e.click(this._delete);
+							this._delete.restore = function(event) {
+								this.value = "Delete";
+								u.rc(this, "confirm");
+							}
+			
+							this._delete.clicked = function(event) {
+								u.e.kill(event);
+
+								// first click
+								if(!u.hc(this, "confirm")) {
+									u.ac(this, "confirm");
+									this.value = "Confirm";
+									this.t_confirm = u.t.setTimer(this, this.restore, 3000);
+								}
+								// confirm click
+								else {
+									u.t.resetTimer(this.t_confirm);
+	
+									u.bug("node.ua_id:" + this.node.ua_id);
+
+									this.response = function(response) {
+										if(response.cms_status == "success") {
+
+											this.node.parentNode.removeChild(this.node);
+
+//											location.reload();
+				//							location.href = this.actions["cancel"].url;
+										}
+										page.notify(response.cms_message);
+										// else {
+										// 	alert(response.cms_message[0]);
+										// }
+									}
+									u.request(this, "/admin/device/deleteUnidentified/"+this.node.ua_id);
+								}
+							}
+
+
+
+							// add useragent details
+							this._ul = u.ae(this, "ul", {"class":"info"});
+							u.ae(this._ul, "li", {"class":"visits", "html":response.cms_object.length})
+							u.ae(this._ul, "li", {"class":"identified_as", "html":response.cms_object[0].identified_as_device})
+
+							var i, node;
+							for(i = 0; node = response.cms_object[i]; i++) {
+								var ul = u.ae(this, "ul", {"class":"info"});
+								u.ae(ul, "li", {"class":"identified_at", "html":node.identified_at})
+								u.ae(ul, "li", {"class":"comment", "html":node.comment})
+							}
 						}
 						else {
-							alert(response.cms_message[0]);
+							if(typeof(page.notify) == "function") {
+								page.notify(response.cms_message);
+							}
+							else {
+								alert(response.cms_message[0]);
+							}
 						}
 					}
+					u.request(this, "/admin/device/unidentifiedUseragentDetails/"+this.ua_id);
 				}
-				u.request(this, "/admin/device/unidentifiedUseragentDetails/"+this.ua_id);
+				else {
+					var uls = u.qsa("ul", this);
+					var i, ul;
+					for(i = 0; ul = uls[i]; i++) {
+						this.removeChild(ul);
+					}
+					this._ul = false;
+				}
 			}
 		}
 
@@ -472,7 +529,7 @@ Util.Objects["unidentifiedList"] = new function() {
 					// add advanced options menu
 					// add all SELECTED
 					// add SELECTED to CLONE
-					if(!this._selected) {
+					if(!this._info) {
 
 						var i;
 						var info_string = "";
@@ -489,56 +546,25 @@ Util.Objects["unidentifiedList"] = new function() {
 						info_string += ", " + this.details["description"];
 						this._info = u.ae(this, "div", {"class":"info", "html":info_string});
 
-						this._selected = u.ae(this, "div", {"class":"selected", "html":"Add all SELECTED"});
-						this._selected.option = this;
-						this._matching = u.ae(this, "div", {"class":"matching", "html":"Add all MATCHING"});
-						this._matching.option = this;
-						this._addtoclone = u.ae(this, "div", {"class":"addtoclone", "html":"Add SELECTED to CLONE"});
-						this._addtoclone.option = this;
+						if(this.device_id != "unknown") {
+							this._selected = u.ae(this, "div", {"class":"selected", "html":"Add all SELECTED"});
+							this._selected.option = this;
+							this._matching = u.ae(this, "div", {"class":"matching", "html":"Add all MATCHING"});
+							this._matching.option = this;
+							this._addtoclone = u.ae(this, "div", {"class":"addtoclone", "html":"Add SELECTED to CLONE"});
+							this._addtoclone.option = this;
 
 
-						// ADD SELECTED handler
-						u.e.click(this._selected);
-						this._selected.clicked = function() {
+							// ADD SELECTED handler
+							u.e.click(this._selected);
+							this._selected.clicked = function() {
 
-							if(this.t_execute) {
+								if(this.t_execute) {
 							
-								var inputs = u.qsa("li:not(.all) input:checked", this.option.div.list);
+									var inputs = u.qsa("li:not(.all) input:checked", this.option.div.list);
 
-								// selected items in list?
-								for(i = 0; input = inputs[i]; i++) {
-
-									input.node.response = function(response) {
-
-										// and remove node
-										this.parentNode.removeChild(this);
-										this.div.toggleAddToOption();
-									}
-									u.request(input.node, "/admin/device/addUnidentifiedToDevice/"+this.option.device_id+"/"+input.node.ua_id);
-
-								}
-							}
-							else {
-								this.t_execute = u.t.setTimer(this, this.not_confirmed, 1500);
-
-								this._content = this.innerHTML;	
-								this.innerHTML = "Sure?";
-								u.ac(this, "confirm");
-							}
-						}
-
-
-						// ADD MATCHING handler
-						u.e.click(this._matching);
-						this._matching.clicked = function() {
-
-							if(this.t_execute) {
-
-								var inputs = u.qsa("li:not(.all) input:checked", this.option.div.list);
-
-								// selected items in list?
-								for(i = 0; input = inputs[i]; i++) {
-									if(input.node._identified.id == this.option.device_id) {
+									// selected items in list?
+									for(i = 0; input = inputs[i]; i++) {
 
 										input.node.response = function(response) {
 
@@ -547,82 +573,130 @@ Util.Objects["unidentifiedList"] = new function() {
 											this.div.toggleAddToOption();
 										}
 										u.request(input.node, "/admin/device/addUnidentifiedToDevice/"+this.option.device_id+"/"+input.node.ua_id);
+
 									}
 								}
+								else {
+									this.t_execute = u.t.setTimer(this, this.not_confirmed, 1500);
+
+									this._content = this.innerHTML;	
+									this.innerHTML = "Sure?";
+									u.ac(this, "confirm");
+								}
 							}
-							else {
-								this.t_execute = u.t.setTimer(this, this.not_confirmed, 1500);
-
-								this._content = this.innerHTML;	
-								this.innerHTML = "Sure?";
-								u.ac(this, "confirm");
-							}
-						}
 
 
-						// ADD SELECTED TO CLONE handler
-						u.e.click(this._addtoclone);
-						this._addtoclone.clicked = function() {
+							// ADD MATCHING handler
+							u.e.click(this._matching);
+							this._matching.clicked = function() {
 
-							// confirm mechanism in action
-							if(this.t_execute) {
+								if(this.t_execute) {
 
-								// clone device response
-								this.response = function(response) {
-									if(response.cms_status == "success" && response.cms_object.id) {
+									var inputs = u.qsa("li:not(.all) input:checked", this.option.div.list);
 
-										var inputs = u.qsa("li:not(.all) input:checked", this.option.div.list);
-										var i, input;
-										// selected items in list?
-										for(i = 0; input = inputs[i]; i++) {
-											// add response
+									// selected items in list?
+									for(i = 0; input = inputs[i]; i++) {
+										if(input.node._identified.id == this.option.device_id) {
+
 											input.node.response = function(response) {
-												// remove node from list
+
+												// and remove node
 												this.parentNode.removeChild(this);
 												this.div.toggleAddToOption();
 											}
-											// add useragent to device
-											u.request(input.node, "/admin/device/addUnidentifiedToDevice/"+response.cms_object.id+"/"+input.node.ua_id);
+											u.request(input.node, "/admin/device/addUnidentifiedToDevice/"+this.option.device_id+"/"+input.node.ua_id);
 										}
-
-									}
-									else {
-										page.notify(response.cms_message);
 									}
 								}
-								// clone device
-								u.request(this, "/admin/device/cloneDevice/"+this.option.device_id);
+								else {
+									this.t_execute = u.t.setTimer(this, this.not_confirmed, 1500);
 
+									this._content = this.innerHTML;	
+									this.innerHTML = "Sure?";
+									u.ac(this, "confirm");
+								}
 							}
-							// activate confirm mechanism
-							else {
-								this.t_execute = u.t.setTimer(this, this.not_confirmed, 1500);
 
-								this._content = this.innerHTML;	
-								this.innerHTML = "Sure?";
-								u.ac(this, "confirm");
+
+							// ADD SELECTED TO CLONE handler
+							u.e.click(this._addtoclone);
+							this._addtoclone.clicked = function() {
+
+								// confirm mechanism in action
+								if(this.t_execute) {
+
+									// clone device response
+									this.response = function(response) {
+										if(response.cms_status == "success" && response.cms_object.id) {
+
+											var inputs = u.qsa("li:not(.all) input:checked", this.option.div.list);
+											var i, input;
+											// selected items in list?
+											for(i = 0; input = inputs[i]; i++) {
+												// add response
+												input.node.response = function(response) {
+													// remove node from list
+													this.parentNode.removeChild(this);
+													this.div.toggleAddToOption();
+												}
+												// add useragent to device
+												u.request(input.node, "/admin/device/addUnidentifiedToDevice/"+response.cms_object.id+"/"+input.node.ua_id);
+											}
+
+										}
+										else {
+											page.notify(response.cms_message);
+										}
+									}
+									// clone device
+									u.request(this, "/admin/device/cloneDevice/"+this.option.device_id);
+
+								}
+								// activate confirm mechanism
+								else {
+									this.t_execute = u.t.setTimer(this, this.not_confirmed, 1500);
+
+									this._content = this.innerHTML;	
+									this.innerHTML = "Sure?";
+									u.ac(this, "confirm");
+								}
+							}
+
+
+							// confirm timeout handler
+							this._matching.not_confirmed = this._addtoclone.not_confirmed = this._selected.not_confirmed = function() {
+								u.rc(this, "confirm");
+								this.innerHTML = this._content;
+								this.t_execute = false;
 							}
 						}
-
-
-						// confirm timeout handler
-						this._matching.not_confirmed = this._addtoclone.not_confirmed = this._selected.not_confirmed = function() {
-							u.rc(this, "confirm");
-							this.innerHTML = this._content;
-							this.t_execute = false;
+						else {
+							this._error = u.ae(this, "div", {"class":"info", "html":"identification did not return a valid device id"});
 						}
+
 					}
 					// remove advanced menu
 					else {
-						this._info.parentNode.removeChild(this._info);
-						this._selected.parentNode.removeChild(this._selected);
-						this._matching.parentNode.removeChild(this._matching);
-						this._addtoclone.parentNode.removeChild(this._addtoclone);
-
-						this._info = false;
-						this._selected = false;
-						this._matching = false;
-						this._addtoclone = false;
+						if(this._info) {
+							this._info.parentNode.removeChild(this._info);
+							this._info = false;
+						}
+						if(this._selected) {
+							this._selected.parentNode.removeChild(this._selected);
+							this._selected = false;
+						}
+						if(this._matching) {
+							this._matching.parentNode.removeChild(this._matching);
+							this._matching = false;
+						}
+						if(this._addtoclone) {
+							this._addtoclone.parentNode.removeChild(this._addtoclone);
+							this._addtoclone = false;
+						}
+						if(this._error) {
+							this._error.parentNode.removeChild(this._error);
+							this._error = false;
+						}
 					}
 				}
 			}
@@ -714,7 +788,7 @@ Util.Objects["unidentifiedList"] = new function() {
 											// add advanced options menu
 											// add all SELECTED
 											// add SELECTED to CLONE
-											if(!this._selected) {
+											if(!this._info) {
 
 												var i, info_string;
 												var brand = u.qs("ul.tags li.brand .value", this);
@@ -820,11 +894,18 @@ Util.Objects["unidentifiedList"] = new function() {
 											}
 											// remove advanced menu
 											else {
-												this._selected.parentNode.removeChild(this._selected);
-												this._addtoclone.parentNode.removeChild(this._addtoclone);
-
-												this._selected = false;
-												this._addtoclone = false;
+												if(this._info) {
+													this._info.parentNode.removeChild(this._info);
+													this._info = false;
+												}
+												if(this._selected) {
+													this._selected.parentNode.removeChild(this._selected);
+													this._selected = false;
+												}
+												if(this._addtoclone) {
+													this._addtoclone.parentNode.removeChild(this._addtoclone);
+													this._addtoclone = false;
+												}
 											}
 
 										}

@@ -396,7 +396,32 @@ class TypeDevice extends Model {
 
 
 	// TODO: make it possible to delete unidentified useragent
-	function deleteUnidentified() {}
+	function deleteUnidentified($action) {
+		
+		// check parameter count
+		if(count($action) == 2) {
+			$query = new Query();
+
+			$sql = "SELECT useragent FROM ".$this->db_unidentified." WHERE id = ".$action[1];
+//			print $sql."\n";
+			$query->sql($sql);
+
+			$ua = $query->result(0, "useragent");
+//			print $ua."\n";
+
+
+			$sql = "DELETE FROM ".$this->db_unidentified." WHERE useragent = '$ua'";
+//				print $sql."\n";
+			if($query->sql($sql)) {
+
+				message()->addMessage("Useragent ".$action[1].", deleted");
+				return true;
+			}
+		}
+
+		message()->addMessage("Useragent ".$action[1].", could not be deleted", array("type" => "error"));
+		return false;
+	}
 
 
 	// add unidentified useragent to device

@@ -33,17 +33,15 @@ header("Content-type: text/html; charset=UTF-8");
 <html>
 <body>
 
+<h1>Thank you for submitting your information</h1>
+<p>Your browser details has been emailed to the API administrator.</p>
+
 <div id="device">
 	<div id="useragent" class="proporty">UserAgent: <?= $ua ?></div>
 	<div id="segment" class="proporty">Segment: <?= $device["segment"] ?></div>
 	<div id="model" class="proporty">Model: <?= $device["name"] ?></div>
 	<div id="description" class="proporty">Description: <?= $device["description"] ?></div>
-	<div id="published_at" class="proporty">Published at: <?= $device["published_at"] ?></div>
-<? if($device["tags"]): ?>
-<?	foreach($device["tags"] as $tag): ?>
-	<div id="<?= $tag["context"] ?>" class="proporty"><?= $tag["context"] ?>:<?= $tag["value"] ?></div>
-<?	endforeach; ?>
-<? endif; ?>
+	<div id="published_at" class="proporty">Published at: <?= date("Y-m", strtotime($device["published_at"])) ?></div>
 </div>
 
 </body>
