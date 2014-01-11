@@ -6,14 +6,14 @@ $IC = new Item();
 $tags = $IC->getTags();
 
 ?>
-<div class="scene i:defaultList defaultList tagList">
+<div class="scene defaultList tagList">
 	<h1>Tags</h1>
 	<p>
 		Tags are used to index the content of the website and some tags are required for
 		certain pages. You should NOT delete or edit tags, unless you know what you are doing.
 	</p>
 
-	<div class="all_items">
+	<div class="all_items i:defaultList filters">
 <?		if($tags): ?>
 		<ul class="items">
 <?			foreach($tags as $tag): ?>
