@@ -222,7 +222,7 @@ function fase_2() {
 
 
 // execute
-//fase_1();
+fase_1();
 //fase_2();
 
 ?>
