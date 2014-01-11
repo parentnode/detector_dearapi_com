@@ -5,6 +5,10 @@ $tags = getPost("tags");
 $search = getPost("search");
 $search_string = getPost("search_string");
 
+
+//print $search.",".$search_string.",".$tags."<br>";
+
+// if not new search - check for stored search values
 if(!$search) {
 	if(Session::value("device_search")) {
 		$search_string = Session::value("device_search");
@@ -16,6 +20,8 @@ if(!$search) {
 	}
 }
 
+//print $search.",".$search_string.",".$tags."<br>";
+
 
 $IC = new Item();
 $itemtype = "device";
@@ -24,9 +30,20 @@ $model = $IC->typeObject($itemtype);
 
 if($search && ($search_string || $tags)) {
 	$all_items = $model->searchDevices(array("search_string" => $search_string, "tags" => $tags));
-	Session::value("device_search", $search_string);
-	Session::value("device_search_tags", $tags);
-	
+
+	// save search
+	if($search_string) {
+		Session::value("device_search", $search_string);
+	}
+	else {
+		Session::reset("device_search");
+	}
+	if($tags) {
+		Session::value("device_search_tags", $tags);
+	}
+	else {
+		Session::reset("device_search_tags");
+	}
 }
 else {
 	$all_items = $IC->getItems(array("itemtype" => $itemtype, "order" => "modified_at DESC", "limit" => 50));

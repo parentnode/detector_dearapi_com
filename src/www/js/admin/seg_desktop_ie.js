@@ -4076,12 +4076,15 @@ Util.Objects["searchDevice"] = new function() {
 		form.submitted = function() {
 			var params = u.f.getParams(this);
 			var tags = u.qsa("li:not(.add)", this._tags._list);
-			u.bug("tags:" + tags.length)
 			if(tags) {
 				params += "&tags=";
 				var tag_array = [];
 				var i, tag;
 				for(i = 0; tag = tags[i]; i++) {
+					if(!tag._context) {
+						tag._context = u.qs(".context", tag).innerHTML;
+						tag._value = u.qs(".value", tag).innerHTML;
+					}
 					tag_array.push(tag._context+":"+tag._value);
 				}
 				params += tag_array.join(";");

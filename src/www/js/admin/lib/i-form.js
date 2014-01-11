@@ -10,13 +10,20 @@ Util.Objects["searchDevice"] = new function() {
 			var params = u.f.getParams(this);
 //			u.xInObject(params);
 			var tags = u.qsa("li:not(.add)", this._tags._list);
-			u.bug("tags:" + tags.length)
+//			u.bug("tags:" + tags.length)
+
 			if(tags) {
 				params += "&tags=";
 				var tag_array = [];
 				var i, tag;
 				for(i = 0; tag = tags[i]; i++) {
-					
+
+					if(!tag._context) {
+						tag._context = u.qs(".context", tag).innerHTML;
+						tag._value = u.qs(".value", tag).innerHTML;
+					}
+//					u.bug("add tag to params:" + tag + "; " + tag._value)
+
 					tag_array.push(tag._context+":"+tag._value);
 				}
 				params += tag_array.join(";");

@@ -363,7 +363,9 @@ class TypeDevice extends Model {
 		 	$FROM[] = $this->db_useragents." as ua";
 
 			$WHERE[] = "items.id = device.item_id";
+			// TDOD: problem if no useragents are created (but alternate queries are too slow)
 			$WHERE[] = "items.id = ua.item_id";
+
 			$WHERE[] = "(device.name LIKE '%$search_string%' OR device.description LIKE '%$search_string%' OR ua.useragent LIKE '%$search_string%')";
 		}
 
