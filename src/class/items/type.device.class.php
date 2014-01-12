@@ -298,6 +298,7 @@ class TypeDevice extends Model {
 
 		$SELECT = array();
 		$FROM = array();
+		$LEFTJOIN = array();
 		$WHERE = array();
 		$GROUP_BY = "";
 		$ORDER = array();
@@ -315,6 +316,9 @@ class TypeDevice extends Model {
 
 
 		if(isset($tags) && is_string($tags)) {
+
+			$LEFTJOIN[] = UT_TAGGINGS." as taggings ON taggings.item_id = items.id";
+			$LEFTJOIN[] = UT_TAG." as tags ON tags.id = taggings.tag_id";
 
 			$tag_array = explode(";", $tags);
 
@@ -343,28 +347,36 @@ class TypeDevice extends Model {
 					}
 
 					if($context || $value) {
+//						AND tags.context = 'brand' AND tags.value = 'Mozilla'
+
 						// Negative !tag
+						// TODO: not yet sure how to make negative query in best possible way
 						if($exclude) {
-							$WHERE[] = "items.id NOT IN (SELECT item_id FROM ".UT_TAGGINGS." as item_tags, ".UT_TAG." as tags WHERE item_tags.tag_id = tags.id" . ($context ? " AND tags.context = '$context'" : "") . ($value ? " AND tags.value = '$value'" : "") . ")";
+							// ($context ? " AND tags.context = '$context'" : "") . ($value ? " AND tags.value = '$value'" : "")
+							// $WHERE[] = "tags.context = 'brand' AND tags.value = 'Mozilla'";
+							// $WHERE[] = "items.id NOT IN (SELECT item_id FROM ".UT_TAGGINGS." as item_tags, ".UT_TAG." as tags WHERE item_tags.tag_id = tags.id" . ($context ? " AND tags.context = '$context'" : "") . ($value ? " AND tags.value = '$value'" : "") . ")";
 						}
 						// positive tag
 						else {
-							$WHERE[] = "items.id IN (SELECT item_id FROM ".UT_TAGGINGS." as item_tags, ".UT_TAG." as tags WHERE item_tags.tag_id = tags.id" . ($context ? " AND tags.context = '$context'" : "") . ($value ? " AND tags.value = '$value'" : "") . ")";
+							if($context) {
+								$WHERE[] = "tags.context = '$context'";
+							}
+							if($value) {
+								$WHERE[] = "tags.value = '$value'";
+							}
 						}
 					}
 				}
 			}
 		}
+	 
 
 
 		// TODO: TEST IMPLEMENTING THIS IN GLOBAL getItems for extended search
 		if(isset($search_string) && $search_string) {
-		 	$FROM[] = $this->db." as device";
-		 	$FROM[] = $this->db_useragents." as ua";
 
-			$WHERE[] = "items.id = device.item_id";
-			// TDOD: problem if no useragents are created (but alternate queries are too slow)
-			$WHERE[] = "items.id = ua.item_id";
+			$LEFTJOIN[] = $this->db." as device ON device.item_id = items.id";
+			$LEFTJOIN[] = $this->db_useragents." as ua ON ua.item_id = items.id";
 
 			$WHERE[] = "(device.name LIKE '%$search_string%' OR device.description LIKE '%$search_string%' OR ua.useragent LIKE '%$search_string%')";
 		}
@@ -377,9 +389,9 @@ class TypeDevice extends Model {
 		$items = array();
 
 
-//		print $query->compileQuery($SELECT, $FROM, array("WHERE" => $WHERE, "GROUP_BY" => $GROUP_BY, "ORDER" => $ORDER));
+//		print $query->compileQuery($SELECT, $FROM, array("LEFTJOIN" => $LEFTJOIN, "WHERE" => $WHERE, "GROUP_BY" => $GROUP_BY, "ORDER" => $ORDER));
 //		return array();
-		$query->sql($query->compileQuery($SELECT, $FROM, array("WHERE" => $WHERE, "GROUP_BY" => $GROUP_BY, "ORDER" => $ORDER)));
+		$query->sql($query->compileQuery($SELECT, $FROM, array("LEFTJOIN" => $LEFTJOIN, "WHERE" => $WHERE, "GROUP_BY" => $GROUP_BY, "ORDER" => $ORDER)));
 		for($i = 0; $i < $query->count(); $i++){
 
 			$item = array();
