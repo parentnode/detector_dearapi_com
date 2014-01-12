@@ -497,6 +497,7 @@ Util.Objects["unidentifiedList"] = new function() {
 			div._filter._input.onkeyup = function() {
 //				u.bug("set timer")
 				this._div.t_filter = u.t.setTimer(this._div, this._div.filter, 1500);
+				u.ac(this._div._filter, "filtering");
 			}
 			div.filter = function() {
 
@@ -518,6 +519,8 @@ Util.Objects["unidentifiedList"] = new function() {
 						}
 					}
 				}
+
+				u.rc(this._filter, "filtering");
 			}
 		}
 
@@ -543,15 +546,16 @@ Util.Objects["unidentifiedList"] = new function() {
 
 						var i;
 						var info_string = "";
+						info_string = this.details["method"];
+						if(this.details["guess"]) {
+							info_string += ", " + this.details["guess"];
+						}
 						if(this.details["tags"]) {
 							for(i in this.details["tags"]) {
 								if(this.details["tags"][i]["context"] == "brand") {
-									info_string = this.details["tags"][i]["value"]
+									info_string += ", " + this.details["tags"][i]["value"]
 								}
 							}
-						}
-						else {
-							info_string = this.details["method"];
 						}
 						info_string += ", " + this.details["description"];
 						this._info = u.ae(this, "div", {"class":"info", "html":info_string});
@@ -921,8 +925,11 @@ Util.Objects["unidentifiedList"] = new function() {
 										}
 		 							}
 								}
+
+								u.rc(this, "loading");
 							}
 
+							u.ac(search_input, "loading");
 							// perform search
 							u.request(search_input, "/admin/device/list", {"params":"search=1&search_string="+this.value, "method":"post"})
 						}
@@ -943,6 +950,9 @@ Util.Objects["unidentifiedList"] = new function() {
 				this._add_to.identified_options = [];
 
 				var i, ua, ua_id
+				this.wait_for_uas = inputs.length;
+				u.ac(this._add_to, "loading");
+
 				for(i = 0; ua = inputs[i]; i++) {
 
 					if(!ua.node._identified) {
@@ -965,6 +975,13 @@ Util.Objects["unidentifiedList"] = new function() {
 
 							// add new option to the options list
 							this.div.addOption(this._identified);
+
+							// check load status
+							this.div.wait_for_uas--;
+							if(!this.div.wait_for_uas) {
+								u.rc(this.div._add_to, "loading");
+							}
+
 						}
 						// request identification
 						u.request(ua.node, "/admin/device/identifyUnidentifiedId/"+ua.node.ua_id);
@@ -975,6 +992,12 @@ Util.Objects["unidentifiedList"] = new function() {
 
 						// add option
 						this.addOption(ua.node._identified);
+
+						// check load status
+						this.wait_for_uas--;
+						if(!this.wait_for_uas) {
+							u.rc(this._add_to, "loading");
+						}
 					}
 				}
 			}

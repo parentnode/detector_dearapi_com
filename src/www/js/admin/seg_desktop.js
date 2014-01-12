@@ -3744,6 +3744,7 @@ Util.Objects["defaultList"] = new function() {
 			}
 			div._filter._input.onkeyup = function() {
 				this._div.t_filter = u.t.setTimer(this._div, this._div.filter, 500);
+				u.ac(this._div._filter, "filtering");
 			}
 			div.filter = function() {
 				var i, node;
@@ -3758,6 +3759,7 @@ Util.Objects["defaultList"] = new function() {
 						}
 					}
 				}
+				u.rc(this._filter, "filtering");
 				this.scrolled();
 			}
 		}
@@ -3792,7 +3794,7 @@ Util.Objects["defaultEdit"] = new function() {
 		form.submitted = function(iN) {
 			this.response = function(response) {
 				if(response.cms_status == "success") {
-					location.href = this.actions["cancel"].url;
+					location.reload();
 				}
 				else {
 					alert(response.cms_message[0]);
@@ -4400,6 +4402,7 @@ Util.Objects["unidentifiedList"] = new function() {
 			}
 			div._filter._input.onkeyup = function() {
 				this._div.t_filter = u.t.setTimer(this._div, this._div.filter, 1500);
+				u.ac(this._div._filter, "filtering");
 			}
 			div.filter = function() {
 				var i, node;
@@ -4417,6 +4420,7 @@ Util.Objects["unidentifiedList"] = new function() {
 						}
 					}
 				}
+				u.rc(this._filter, "filtering");
 			}
 		}
 		div.addOption = function(option) {
@@ -4431,15 +4435,16 @@ Util.Objects["unidentifiedList"] = new function() {
 					if(!this._info) {
 						var i;
 						var info_string = "";
+						info_string = this.details["method"];
+						if(this.details["guess"]) {
+							info_string += ", " + this.details["guess"];
+						}
 						if(this.details["tags"]) {
 							for(i in this.details["tags"]) {
 								if(this.details["tags"][i]["context"] == "brand") {
-									info_string = this.details["tags"][i]["value"]
+									info_string += ", " + this.details["tags"][i]["value"]
 								}
 							}
-						}
-						else {
-							info_string = this.details["method"];
 						}
 						info_string += ", " + this.details["description"];
 						this._info = u.ae(this, "div", {"class":"info", "html":info_string});
@@ -4683,7 +4688,9 @@ Util.Objects["unidentifiedList"] = new function() {
 										}
 		 							}
 								}
+								u.rc(this, "loading");
 							}
+							u.ac(search_input, "loading");
 							u.request(search_input, "/admin/device/list", {"params":"search=1&search_string="+this.value, "method":"post"})
 						}
 					}
@@ -4693,6 +4700,8 @@ Util.Objects["unidentifiedList"] = new function() {
 				this._add_to._list.innerHTML = "";
 				this._add_to.identified_options = [];
 				var i, ua, ua_id
+				this.wait_for_uas = inputs.length;
+				u.ac(this._add_to, "loading");
 				for(i = 0; ua = inputs[i]; i++) {
 					if(!ua.node._identified) {
 						ua.node.response = function(response) {
@@ -4707,11 +4716,19 @@ Util.Objects["unidentifiedList"] = new function() {
 								this._identified.name = "Unknown";
 							}
 							this.div.addOption(this._identified);
+							this.div.wait_for_uas--;
+							if(!this.div.wait_for_uas) {
+								u.rc(this.div._add_to, "loading");
+							}
 						}
 						u.request(ua.node, "/admin/device/identifyUnidentifiedId/"+ua.node.ua_id);
 					}
 					else {
 						this.addOption(ua.node._identified);
+						this.wait_for_uas--;
+						if(!this.wait_for_uas) {
+							u.rc(this._add_to, "loading");
+						}
 					}
 				}
 			}

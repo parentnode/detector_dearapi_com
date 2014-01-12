@@ -123,6 +123,9 @@
 
 
 .addToDevice {position: fixed; z-index: 12; top: 0px; right: 0; width: 200px; height: 100%; background: #ffffff; border: 1px solid #dedede; border-top: none; border-right: none; padding: 0 20px 0 10px;}
+
+.addToDevice.loading {background: red;}
+
 .addToDevice h2 {text-align: left; padding: 20px 0 10px;}
 
 .addToDevice div.counter {border-bottom: 1px solid #dedede; padding: 0 0 5px;}
@@ -135,6 +138,9 @@
 .addToDevice div.search {padding: 10px 0; border-bottom: 1px solid #dedede;}
 
 .addToDevice div.search input {height: 14px; display: block; width: 194px;}
+
+.addToDevice div.search input.loading {background: red;}
+
 .addToDevice div.search input.default {color: #aaaaaa;}
 
 .addToDevice div.search .results li {padding-left: 10px; cursor: pointer;}

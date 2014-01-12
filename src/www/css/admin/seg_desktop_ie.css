@@ -277,6 +277,7 @@ input, select, textarea {font-size: 14px;}
 #content .defaultList ul.items > li .actions {position: absolute; top: 0px; padding: 0; right: 20px;}
 #content .defaultList ul.items > li .actions li {padding: 10px 0 10px 10px;}
 #content .defaultList .all_items div.filter {text-align: right; padding: 10px 20px; background: #dedede; border-bottom: 1px solid #dedede;}
+#content .defaultList .all_items div.filter.filtering {background: red;}
 #content .defaultList .all_items div.filter .field {padding: 0;}
 #content .defaultList .all_items div.filter .field label {display: inline-block; vertical-align: top; padding: 3px 4px; color: #aaaaaa;}
 #content .defaultList .all_items div.filter input {width: 100px; height: 16px; font-size: 12px;}
@@ -387,6 +388,7 @@ input, select, textarea {font-size: 14px;}
 #content .scene.unidentifiedList .items > li ul.info li.visits:after {content: "\00a0visits";}
 #content .scene.unidentifiedList .items > li ul.info li.comment {}
 .addToDevice {position: fixed; z-index: 12; top: 0px; right: 0; width: 200px; height: 100%; background: #ffffff; border: 1px solid #dedede; border-top: none; border-right: none; padding: 0 20px 0 10px;}
+.addToDevice.loading {background: red;}
 .addToDevice h2 {text-align: left; padding: 20px 0 10px;}
 .addToDevice div.counter {border-bottom: 1px solid #dedede; padding: 0 0 5px;}
 .addToDevice span.count {padding: 0 0 5px 5px; }
@@ -394,6 +396,7 @@ input, select, textarea {font-size: 14px;}
 .addToDevice li div.info {color: #7d848c; padding: 3px 0 3px 10px;}
 .addToDevice div.search {padding: 10px 0; border-bottom: 1px solid #dedede;}
 .addToDevice div.search input {height: 14px; display: block; width: 194px;}
+.addToDevice div.search input.loading {background: red;}
 .addToDevice div.search input.default {color: #aaaaaa;}
 .addToDevice div.search .results li {padding-left: 10px; cursor: pointer;}
 .addToDevice div.search .results li:first-child {border: none; padding-top: 10px;}
