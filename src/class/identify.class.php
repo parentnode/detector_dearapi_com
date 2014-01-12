@@ -86,7 +86,7 @@ class Identify {
 						return $this->uniqueId($useragent, "MSIE ".$matches[1].", Desktop", "desktop_light", $log);
 					}
 					if(preg_match("/MSIE (9|10).0; Windows NT [5-6]{1}.[0-2]{1}/", $useragent, $matches)) {
-						return $this->uniqueId($useragent, "MSIE ".$matches[1].", Desktop", "desktop_ie", $log);
+						return $this->uniqueIdTest($useragent, "MSIE ".$matches[1].", Desktop", "desktop_ie", $log);
 					}
 
 				}
@@ -100,6 +100,10 @@ class Identify {
 
 				}
 			}
+
+
+			// TODO: find unique pattern for IE 11
+
 
 			// Firefox specific (limit scope for extensive search)
 			if(preg_match("/Firefox/", $useragent) && !preg_match("/phone|mobile|fennec|tablet|maemo|kylo|trident|touch/i", $useragent)) {
@@ -164,7 +168,7 @@ class Identify {
 
 
 			// Desktop Safari specific (limit scope for extensive search)
-			if(preg_match("/AppleWebKit\/[123456]{3}/", $useragent) && !preg_match("/htc|mobile|iphone|ipod|ipad|android|symbian|blackberry|trident/i", $useragent)) {
+			if(preg_match("/AppleWebKit\/[0-9]{3}/", $useragent) && !preg_match("/htc|mobile|iphone|ipod|ipad|android|symbian|blackberry|trident/i", $useragent)) {
 
 				// Safari 5-7
 				if(preg_match("/AppleWebKit\/53[3-7]{1}[^$]+Gecko[^$]+Version\/([5-7]{1})[^$]+Safari\/53[3-7]{1}/", $useragent, $matches)) {
