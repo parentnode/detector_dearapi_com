@@ -127,7 +127,7 @@ class Identify {
 			if(preg_match("/Chrome/", $useragent) && !preg_match("/phone|mobile|chromeframe|android/i", $useragent)) {
 
 				// Chrome for iPad >= version 19
-				if(preg_match("/AppleWebKit\/53[3-7]{1}[^$]+Gecko[^$]+Chrome\/([0-9]{1,2}).0[^$]+Safari\/53[3-7]{1}/", $useragent, $matches)) {
+				if(preg_match("/AppleWebKit\/53[3-7]{1}[^$]+Gecko[^$]+Chrome\/([0-9]{1,2}).[^$]+Safari\/53[3-7]{1}/", $useragent, $matches)) {
 					if($matches[1] >= 5) {
 						return $this->uniqueIdTest($useragent, "Chrome ".$matches[1].", Desktop", "desktop", $log);
 					}
