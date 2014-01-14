@@ -6,7 +6,7 @@ $search = getPost("search");
 $search_string = getPost("search_string");
 
 
-//print $search.",".$search_string.",".$tags."<br>";
+print $search.",".$search_string.",".$tags."<br>";
 
 // if not new search - check for stored search values
 if(!$search) {

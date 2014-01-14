@@ -301,6 +301,7 @@ class TypeDevice extends Model {
 		$LEFTJOIN = array();
 		$WHERE = array();
 		$GROUP_BY = "";
+		$HAVING = "";
 		$ORDER = array();
 
 
@@ -321,6 +322,7 @@ class TypeDevice extends Model {
 			$LEFTJOIN[] = UT_TAG." as tags ON tags.id = taggings.tag_id";
 
 			$tag_array = explode(";", $tags);
+			$tag_sql = "";
 
 			foreach($tag_array as $tag) {
 //				$exclude = false;
@@ -358,16 +360,24 @@ class TypeDevice extends Model {
 						}
 						// positive tag
 						else {
-							if($context) {
-								$WHERE[] = "tags.context = '$context'";
+							if($context && $value) {
+								$tag_sql .= ($tag_sql ? " OR " : "") .  "tags.context = '$context' AND tags.value = '$value'";
+								
+
+//								$WHERE[] = "tags.context = '$context'";
 							}
-							if($value) {
-								$WHERE[] = "tags.value = '$value'";
+							else if($context) {
+								$tag_sql .= ($tag_sql ? " OR " : "") .  "tags.context = '$context'";
 							}
+							// if($value) {
+							// 	$WHERE[] = "tags.value = '$value'";
+							// }
 						}
 					}
 				}
 			}
+			$WHERE[] = "(".$tag_sql.")";
+			$HAVING = "count(*) = ".count($tag_array);
 		}
 	 
 
@@ -386,12 +396,14 @@ class TypeDevice extends Model {
 
 		$ORDER[] = "items.published_at DESC";
 
+
+
 		$items = array();
 
 
-//		print $query->compileQuery($SELECT, $FROM, array("LEFTJOIN" => $LEFTJOIN, "WHERE" => $WHERE, "GROUP_BY" => $GROUP_BY, "ORDER" => $ORDER));
+//		print $query->compileQuery($SELECT, $FROM, array("LEFTJOIN" => $LEFTJOIN, "WHERE" => $WHERE, "HAVING" => $HAVING, "GROUP_BY" => $GROUP_BY, "ORDER" => $ORDER));
 //		return array();
-		$query->sql($query->compileQuery($SELECT, $FROM, array("LEFTJOIN" => $LEFTJOIN, "WHERE" => $WHERE, "GROUP_BY" => $GROUP_BY, "ORDER" => $ORDER)));
+		$query->sql($query->compileQuery($SELECT, $FROM, array("LEFTJOIN" => $LEFTJOIN, "WHERE" => $WHERE, "HAVING" => $HAVING, "GROUP_BY" => $GROUP_BY, "ORDER" => $ORDER)));
 		for($i = 0; $i < $query->count(); $i++){
 
 			$item = array();
