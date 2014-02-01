@@ -2964,7 +2964,7 @@ u.sortable = function(node, options) {
 		}
 	}
 	node._sortablepick = function(event) {
-		u.bug("pick:" + u.nodeId(this) + "; "+ u.nodeId(this.d_node));
+		u.bug("pick:" + u.nodeId(this) + "; "+ u.nodeId(this.d_node) + ";" + u.nodeId(this.d_node.node));
 		if(!this.d_node.node._sorting_disabled) {
 			u.e.kill(event);
 			if(!this.d_node.node._dragged) {
@@ -3465,6 +3465,24 @@ u.e.addDOMReadyEvent(u.init)
 
 
 /*i-form.js*/
+Util.Objects["addPrices"] = new function() {
+	this.init = function(div) {
+		var form = u.qs("form", div);
+		u.f.init(form);
+		var i, field, actions;
+		form.submitted = function(event) {
+			this.response = function(response) {
+				if(response.cms_status == "success") {
+					location.reload();
+				}
+				else {
+					alert(response.cms_message[0]);
+				}
+			}
+			u.request(this, this.action, {"method":"post", "params":u.f.getParams(this)});
+		}
+	}
+}
 Util.Objects["formAddPrices"] = new function() {
 	this.init = function(form) {
 		u.f.init(form);
@@ -3794,7 +3812,7 @@ Util.Objects["defaultEdit"] = new function() {
 		form.submitted = function(iN) {
 			this.response = function(response) {
 				if(response.cms_status == "success") {
-					location.reload();
+					page.notify(response.cms_message);
 				}
 				else {
 					alert(response.cms_message[0]);
@@ -3948,12 +3966,7 @@ Util.Objects["formDefaultNew"] = new function() {
 					location.href = this.actions["cancel"].url.replace("\/list", "/edit/"+response.cms_object.item_id);
 				}
 				else if(response.cms_message) {
-					if(typeof(page.notify) == "function") {
-						page.notify(response.cms_message);
-					}
-					else {
-						alert(response.cms_message[0]);
-					}
+					page.notify(response.cms_message);
 				}
 			}
 			u.request(this, this.action, {"method":"post", "params" : u.f.getParams(this)});
@@ -4010,10 +4023,17 @@ Util.Objects["formDefaultDelete"] = new function() {
 					u.t.resetTimer(this.t_confirm);
 					this.response = function(response) {
 						if(response.cms_status == "success") {
-							location.reload();
+							if(response.cms_object && response.cms_object.constraint_error) {
+								page.notify(response.cms_message);
+								this.value = "Delete";
+								u.ac(this, "disabled");
+							}
+							else {
+								location.reload();
+							}
 						}
 						else {
-							alert(response.cms_message[0]);
+							page.notify(response.cms_message);
 						}
 					}
 					u.request(this, this.form.action, {"method":"post", "params" : u.f.getParams(this.form)});
@@ -4065,7 +4085,7 @@ u.notifier = function(node) {
 		else if(typeof(message) == "string") {
 			output = u.ae(this.notifications, "div", {"class":class_name, "html":message});
 		}
-		u.t.setTimer(this.notifications, this.notifications.hide, 2000);
+		u.t.setTimer(this.notifications, this.notifications.hide, 3500);
 	}
 }
 

@@ -34,41 +34,6 @@
 
 
 
-/* DEVICE EDIT */
-
-/*
-#content .scene.deviceEdit > div.tags {padding: 10px 0 20px; border-bottom: 1px solid #dedede;}
-#content .scene.deviceEdit > div.tags fieldset {display: inline-block; vertical-align: top;}
-#content .scene.deviceEdit > div.tags .field {padding-right: 12px;}
-#content .scene.deviceEdit > div.tags .field input[type=text] {width: 262px;}
-
-#content .scene.deviceEdit > div.tags .actions {display: inline-block; padding: 0;}
-#content .scene.deviceEdit > div.tags .actions li {padding-left: 0;}
-#content .scene.deviceEdit > div.tags .actions li input {margin-top: 4px;}
-#content .scene.deviceEdit > div.tags .actions {display: inline-block; vertical-align: top; padding-left: 0;}
-
-
-#content .scene.deviceEdit > div.tags ul.tags {padding: 0px 125px 0px 25px;}
-#content .scene.deviceEdit > div.tags ul.tags li {width: auto; display: inline-block; vertical-align: top; margin: 3px; border-radius: 13px; background-color: #313942; padding: 7px 10px; color: #ffffff; font-size: 0;}
-#content .scene.deviceEdit > div.tags ul.tags li.add {font-size: 12px; padding: 7px; cursor: pointer; width: 10px; text-align: center;}
-#content .scene.deviceEdit > div.tags ul.tags li.add:hover {background-color: #64ad8e;}
-#content .scene.deviceEdit > div.tags ul.tags li span {font-size: 12px;}
-#content .scene.deviceEdit > div.tags ul.tags li span.context {text-transform: uppercase;}
-#content .scene.deviceEdit > div.tags ul.tags li span.context:after {content: ":";}
-#content .scene.deviceEdit > div.tags ul.tags li span.value {}
-*/
-
-/* TAGGABLE */
-/* ADD TAGS ACTIVE */
-/*
-#content .scene.deviceEdit div.tags.addTags ul.tags li {cursor: pointer;}
-#content .scene.deviceEdit div.tags.addTags ul.tags li:hover,
-#content .scene.deviceEdit div.tags.addTags ul.tags li.add:hover {background-color: #df0000;}
-#content .scene.deviceEdit div.tags.addTags ul.tags li.add {padding: 6px 7px 8px;}
-#content .scene.deviceEdit div.tags.addTags ul.taglist {padding: 0 125px 0 25px;}
-*/
-
-
 #content .scene.deviceEdit div.useragents {padding: 10px 0 20px; border-bottom: 1px solid #dedede;}
 
 #content .scene.deviceEdit div.useragents .field textarea {height: 75px;}
@@ -165,10 +130,18 @@
 .addToDevice .search li div.matching {margin-left: -10px;}
 
 
+/* STATISTICS */
+#content .scene.statistic {}
+#content .scene.statistic h1 {border-bottom: 1px solid #dedede; padding-bottom: 74px;}
+#content .scene.statistic ul.tools {padding: 0 30px;}
+
+/* UNIQUE POTENTIAL LIST */
+#content .scene.uniquePotentialList h1 {border-bottom: 1px solid #dedede; padding-bottom: 74px;}
+
 
 /* NAVIGATION */
 body.device #navigation .device a,
-body.logs #navigation .logs a,
+body.statistic #navigation .statistic a,
 body.unidentified #navigation .unidentified a,
 body.tags #navigation .tags a {padding-left: 35px; color: #ffffff;}
 

@@ -4,7 +4,7 @@
 		<ul>
 			<li class="device"><a href="/admin/device/list">Devices</a></li>
 			<li class="unidentified"><a href="/admin/device/unidentified">Unidentified devices</a></li>
-			<li class="logs"><a href="/admin/log/list">Statistics</a></li>
+			<li class="statistic"><a href="/admin/statistic">Statistics</a></li>
 			<li class="tags"><a href="/admin/tag/list">Tags</a></li>
 		</ul>
 	</div>

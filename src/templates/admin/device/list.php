@@ -6,7 +6,7 @@ $search = getPost("search");
 $search_string = getPost("search_string");
 
 
-print $search.",".$search_string.",".$tags."<br>";
+//print $search.",".$search_string.",".$tags."<br>";
 
 // if not new search - check for stored search values
 if(!$search) {
@@ -29,21 +29,25 @@ $model = $IC->typeObject($itemtype);
 
 
 if($search && ($search_string || $tags)) {
-	$all_items = $model->searchDevices(array("search_string" => $search_string, "tags" => $tags));
+	$search_parameters = array();
 
 	// save search
 	if($search_string) {
+		$search_parameters["search_string"] = $search_string;
 		Session::value("device_search", $search_string);
 	}
 	else {
 		Session::reset("device_search");
 	}
 	if($tags) {
+		$search_parameters["tags"] = $tags;
 		Session::value("device_search_tags", $tags);
 	}
 	else {
 		Session::reset("device_search_tags");
 	}
+	
+	$all_items = $model->searchDevices($search_parameters);
 }
 else {
 	$all_items = $IC->getItems(array("itemtype" => $itemtype, "order" => "modified_at DESC", "limit" => 50));
@@ -71,7 +75,6 @@ else {
 <? 		if($tags): ?>
 		<div class="tags">
 			<ul class="tags">
-				<? print_r($tags) ?>
 <? 			$tags = explode(";", $tags);
 			foreach($tags as $tag):
 				list($context, $value) = explode(":", $tag);
@@ -87,7 +90,7 @@ else {
 <?		if($all_items): ?>
 		<ul class="items">
 <?			foreach($all_items as $item): 
-				$item = $IC->getCompleteItem($item["id"]); ?>
+				$item = $IC->extendItem($item); ?>
 			<li class="item item_id:<?= $item["id"] ?>">
 				<h3><?= $item["name"] ?></h3>
 
