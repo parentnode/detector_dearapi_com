@@ -144,6 +144,25 @@ class Identify {
 				}
 			}
 
+			// Facebook iOS specific (limit scope for extensive search)
+			if(preg_match("/^Mozilla\/5.0[^$]+FBAN\/FBIOS/", $useragent) && !preg_match("/android/i", $useragent)) {
+
+				// Facebook iPad app
+				if(preg_match("/iPad[^$]+AppleWebKit\/53[4-7]{1}[^$]+Gecko[^$]+FBSV\/([0-9]{1})./", $useragent, $matches)) {
+					return $this->uniqueIdTest($useragent, "Facebook iPad, Safari ".$matches[1], "tablet", $log, "unique-test-facebook");
+				}
+
+				// Facebook iPod app
+				if(preg_match("/iPod[^$]+AppleWebKit\/53[4-7]{1}[^$]+Gecko[^$]+FBSV\/([0-9]{1})./", $useragent, $matches)) {
+					return $this->uniqueIdTest($useragent, "Facebook iPod, Safari ".$matches[1], "mobile_touch", $log, "unique-test-facebook");
+				}
+
+				// Facebook iPhone app
+				if(preg_match("/iPhone[^$]+AppleWebKit\/53[4-7]{1}[^$]+Gecko[^$]+FBSV\/([0-9]{1})./", $useragent, $matches)) {
+					return $this->uniqueIdTest($useragent, "Facebook iPhone, Safari ".$matches[1], "mobile_touch", $log, "unique-test-facebook");
+				}
+
+			}
 
 			// iOS chrome specific (limit scope for extensive search)
 			if(preg_match("/^Mozilla\/5.0[^$]+CriOS/", $useragent) && !preg_match("/chromeframe|android/i", $useragent)) {
@@ -156,14 +175,14 @@ class Identify {
 					}
 				}
 
-				// Chrome for iPad 25 - IN TEST
+				// Chrome for iPod >= version 19
 				if(preg_match("/iPod[^$]+AppleWebKit\/53[4-7]{1}[^$]+Gecko[^$]+CriOS\/([0-9]{2}).0/", $useragent, $matches)) {
 					if($matches[1] >= 19) {
 						return $this->uniqueIdTest($useragent, "Chrome ".$matches[1].", iPod", "mobile_touch", $log, "unique-test-crios");
 					}
 				}
 
-				// Chrome for iPad 25 - IN TEST
+				// Chrome for iPhone >= version 19
 				if(preg_match("/iPhone[^$]+AppleWebKit\/53[4-7]{1}[^$]+Gecko[^$]+CriOS\/([0-9]{2}).0/", $useragent, $matches)) {
 					if($matches[1] >= 19) {
 						return $this->uniqueIdTest($useragent, "Chrome ".$matches[1].", iPhone", "mobile_touch", $log, "unique-test-crios");
@@ -274,7 +293,7 @@ class Identify {
 					}
 
 					// Samsung Galaxy S III, Android 4.0+
-					if(preg_match("/GT-I9300[^$]+AppleWebKit\/53[4-7]{1}/", $useragent)) {
+					if(preg_match("/(GT-I9300|GT-I9305)[^$]+AppleWebKit\/53[4-7]{1}/", $useragent)) {
 						return $this->uniqueIdTest($useragent, "Samsung Galaxy S III, Android 4.0+", "mobile_touch", $log, "unique-test-samsung");
 					}
 

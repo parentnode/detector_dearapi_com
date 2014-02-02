@@ -15,31 +15,63 @@ testing regexp
 // 	}
 // }
 
+// 
+// $useragent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_5) AppleWebKit/537.73.11 (KHTML, like Gecko) Version/6.1.1 Safari/537.73.11";
+// 
+// 
+// // Desktop Safari specific (limit scope for extensive search)
+// if(preg_match("/AppleWebKit\/[0-9]{3}/", $useragent) && !preg_match("/htc|mobile|iphone|ipod|ipad|android|symbian|blackberry|trident/i", $useragent)) {
+// 
+// 	print "safari?";
+// 
+// 	// Safari 5-7
+// 	if(preg_match("/AppleWebKit\/53[3-7]{1}[^$]+Gecko[^$]+Version\/([5-7]{1})[^$]+Safari\/53[3-7]{1}/", $useragent, $matches)) {
+// 		print_r($matches);
+// 	}
+// 
+// 	// Separate 4 from 4.1
+// 	// Safari 4.1
+// 	if(preg_match("/AppleWebKit\/533[^$]+Gecko[^$]+Version\/4.1[^$]+Safari\/533/", $useragent, $matches)) {
+// 		print_r($matches);
+// 	}
+// 	// Safari 3-4
+// 	if(preg_match("/AppleWebKit\/[4-5]{1}[0-9]{2}[^$]+Gecko[^$]+Version\/([3-4]{1})[^$]+Safari\/[4-5]{1}[0-9]{2}/", $useragent, $matches)) {
+// 		print_r($matches);
+// 	}
+// 
+// }
 
-$useragent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_5) AppleWebKit/537.73.11 (KHTML, like Gecko) Version/6.1.1 Safari/537.73.11";
 
-// Desktop Safari specific (limit scope for extensive search)
-if(preg_match("/AppleWebKit\/[0-9]{3}/", $useragent) && !preg_match("/htc|mobile|iphone|ipod|ipad|android|symbian|blackberry|trident/i", $useragent)) {
+//$useragent = "Mozilla/5.0 (iPhone; CPU iPhone OS 7_0_4 like Mac OS X) AppleWebKit/537.51.1 (KHTML, like Gecko) Mobile/11B554a [FBAN/MessengerForiOS;FBAV/3.1.2;FBBV/1027309;FBDV/iPhone6,2;FBMD/iPhone;FBSN/iPhone OS;FBSV/7.0.4;FBSS/2; FBCR/3DK;FBID/phone;FBLC/da_DK;FBOP/1]";
+$useragent = "Mozilla/5.0 (iPad; CPU OS 7_0_4 like Mac OS X) AppleWebKit/537.51.1 (KHTML, like Gecko) Mobile/11B554a [FBAN/FBIOS;FBAV/6.8;FBBV/745892;FBDV/iPad3,4;FBMD/iPad;FBSN/iPhone OS;FBSV/7.0.4;FBSS/2; FBCR/;FBID/tablet;FBLC/da_DK;FBOP/1]";
+$useragent = "Mozilla/5.0 (iPhone; CPU iPhone OS 7_0_4 like Mac OS X) AppleWebKit/537.51.1 (KHTML, like Gecko) Mobile/11B554a [FBAN/FBIOS;FBAV/6.8;FBBV/745892;FBDV/iPhone6,2;FBMD/iPhone;FBSN/iPhone OS;FBSV/7.0.4;FBSS/2; FBCR/TELIA;FBID/phone;FBLC/da_DK;FBOP/5]";
 
-	print "safari?";
+$useragent = "Mozilla/5.0 (iPad; CPU OS 6_0 like Mac OS X) AppleWebKit/536.26 (KHTML, like Gecko) Mobile/10A403 [FBAN/FBIOS;FBAV/5.0;FBBV/47423;FBDV/iPad2,2;FBMD/iPad;FBSN/iPhone OS;FBSV/6.0;FBSS/1; FBCR/3DK;FBID/tablet;FBLC/da_DK]";
 
-	// Safari 5-7
-	if(preg_match("/AppleWebKit\/53[3-7]{1}[^$]+Gecko[^$]+Version\/([5-7]{1})[^$]+Safari\/53[3-7]{1}/", $useragent, $matches)) {
+$useragent = "Mozilla/5.0 (iPhone; CPU iPhone OS 6_0 like Mac OS X) AppleWebKit/536.26 (KHTML, like Gecko) Mobile/10A403 [FBAN/FBIOS;FBAV/5.0;FBBV/47423;FBDV/iPhone3,1;FBMD/iPhone;FBSN/iPhone OS;FBSV/6.0;FBSS/2; FBCR/3SE;FBID/phone;FBLC/en_US]";
+
+$useragent = "Mozilla/5.0 (iPhone; U; CPU iPhone OS 5_1 like Mac OS X; da_DK) AppleWebKit (KHTML, like Gecko) Mobile [FBAN/FBForIPhone;FBAV/4.1;FBBV/4100.0;FBDV/iPhone2,1;FBMD/iPhone;FBSN/iPhone OS;FBSV/5.1;FBSS/1; FBCR/Sonofon;FBID/phone;FBLC/da_DK;FBSF/1.0]";
+
+// Facebook iOS specific (limit scope for extensive search)
+if(preg_match("/^Mozilla\/5.0[^$]+FBAN\/(FBIOS|FBForIPhone)/", $useragent) && !preg_match("/android/i", $useragent)) {
+
+	print "MATCHING FACEBOOK\n";
+	// Facebook iPad app
+	if(preg_match("/iPad[^$]+AppleWebKit\/53[4-7]{1}[^$]+Gecko[^$]+FBSV\/([0-9]{1})./", $useragent, $matches)) {
 		print_r($matches);
 	}
 
-	// Separate 4 from 4.1
-	// Safari 4.1
-	if(preg_match("/AppleWebKit\/533[^$]+Gecko[^$]+Version\/4.1[^$]+Safari\/533/", $useragent, $matches)) {
+	// Facebook iPod app
+	if(preg_match("/iPod[^$]+AppleWebKit\/53[4-7]{1}[^$]+Gecko[^$]+FBSV\/([0-9]{1})./", $useragent, $matches)) {
 		print_r($matches);
 	}
-	// Safari 3-4
-	if(preg_match("/AppleWebKit\/[4-5]{1}[0-9]{2}[^$]+Gecko[^$]+Version\/([3-4]{1})[^$]+Safari\/[4-5]{1}[0-9]{2}/", $useragent, $matches)) {
+
+	// Facebook iPhone app
+	if(preg_match("/iPhone[^$]+AppleWebKit\/53[4-7]{1}[^$]+Gecko[^$]+FBSV\/([0-9]{1})./", $useragent, $matches)) {
 		print_r($matches);
 	}
 
 }
-
 
 
  ?>
