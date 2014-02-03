@@ -594,7 +594,7 @@ class TypeDevice extends Model {
 		$WHERE[] = "items.itemtype = 'device'";
 		$WHERE[] = "ua.item_id = items.id";
 
-		$WHERE[] = "items.id NOT IN(SELECT item_id FROM devices_dearapi_com.tags as tags, devices_dearapi_com.taggings as taggings WHERE tags.id = taggings.tag_id AND tags.context = 'type' AND tags.value = 'unique' GROUP BY item_id)";
+		$WHERE[] = "items.id NOT IN(SELECT item_id FROM devices_dearapi_com.taggings as taggings WHERE taggings.tag_id = 600 GROUP BY item_id)";
 
 		$GROUP_BY = "items.id";
 
