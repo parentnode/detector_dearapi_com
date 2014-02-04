@@ -1,15 +1,9 @@
-[submodule "submodules/jes"]
-	path = submodules/jes
-	url = https://github.com/hvadhedderde/jes.git
-[submodule "submodules/wtf-js-merger"]
-	path = submodules/wtf-js-merger
-	url = https://github.com/hvadhedderde/wtf-js-merger.git
-[submodule "submodules/wtf-css-merger"]
-	path = submodules/wtf-css-merger
-	url = https://github.com/hvadhedderde/wtf-css-merger.git
 [submodule "submodules/janitor"]
 	path = submodules/janitor
 	url = https://github.com/parentnode/janitor.git
-[submodule "submodules/dearcss"]
-	path = submodules/dearcss
-	url = https://github.com/hvadhedderde/dearcss.git
+[submodule "submodules/js-merger"]
+	path = submodules/js-merger
+	url = https://github.com/parentnode/js-merger.git
+[submodule "submodules/css-merger"]
+	path = submodules/css-merger
+	url = https://github.com/parentnode/css-merger.git

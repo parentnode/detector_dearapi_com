@@ -45,7 +45,7 @@
 #content .scene.deviceEdit div.useragents ul.useragents li:hover {background-color: #cccccc;}
 #content .scene.deviceEdit div.useragents ul.useragents li .delete {position: absolute; right: 30px; top: -3px; height: 24px; width: 24px;
 	cursor: pointer; border-radius: 12px;
-	background: #fd0000 url(/css/dearcss/src/img/bg_icons.png) no-repeat 5px -45px;
+	background: #fd0000 url(/janitor/img/bg_icons.png) no-repeat 5px -45px;
 	display: none;
 }
 #content .scene.deviceEdit div.useragents ul.useragents li:hover .delete {display: block;}
