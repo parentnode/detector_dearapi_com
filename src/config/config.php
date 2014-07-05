@@ -30,6 +30,8 @@ define("SITE_ITEMS", true);
 // Enable notifications (send collection email after N notifications)
 define("SITE_COLLECT_NOTIFICATIONS", 50);
 //define("SHOP_ORDER_NOTIFIES", "martin@think.dk");
-define("SHOP_ORDER_NOTIFIES", "martin@whattheframework.org");
+define("SHOP_ORDER_NOTIFIES", "martin@parentnode.dk");
+
+define("SITE_INSTALL", true);
 
 ?>
