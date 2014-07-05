@@ -11,7 +11,7 @@
 
 	<div id="footer">
 		<ul class="servicenavigation">
-			<li class="copyright">Janitor, JES, WhatTheFramework, Martin Kæstel Nielsen - Copyright 2013</li>
+			<li class="copyright">Janitor, Manipulator, Modulator - parentNode - Copyright 2014</li>
 		</ul>
 	</div>
 

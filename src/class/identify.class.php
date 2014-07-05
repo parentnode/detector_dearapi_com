@@ -18,6 +18,8 @@ class Identify {
 
 	}
 
+	// TODO: update ipad identification - look at version/mobile/webkit inconsistencies
+
 
 	// added optional logging - now function can be used for manual identification work
 	function identifyDevice($useragent, $log=true) {
@@ -136,10 +138,18 @@ class Identify {
 			// Chrome specific (limit scope for extensive search)
 			if(preg_match("/^Mozilla\/5.0[^$]+Chrome/", $useragent) && !preg_match("/phone|mobile|chromeframe|android/i", $useragent)) {
 
-				// Chrome for iPad >= version 19
+				// Chrome for Desktop >= version 5
 				if(preg_match("/AppleWebKit\/53[3-7]{1}[^$]+Gecko[^$]+Chrome\/([0-9]{1,2}).[^$]+Safari\/53[3-7]{1}/", $useragent, $matches)) {
-					if($matches[1] >= 5) {
+					// version check
+					if($matches[1] >= 33) {
 						return $this->uniqueIdTest($useragent, "Chrome ".$matches[1].", Desktop", "desktop", $log, "unique-test-chrome");
+					}
+				}
+				// no test required for these
+				if(preg_match("/AppleWebKit\/53[3-7]{1}[^$]+Gecko[^$]+Chrome\/([0-9]{1,2}).[^$]+Safari\/53[3-7]{1}/", $useragent, $matches)) {
+					// version check
+					if($matches[1] >= 5) {
+						return $this->uniqueId($useragent, "Chrome ".$matches[1].", Desktop", "desktop", $log, "unique-test-chrome");
 					}
 				}
 			}
@@ -279,6 +289,12 @@ class Identify {
 				}
 			}
 
+
+			// TODO: include dalvik
+			// TODO: expiriment with fragments (desireHD,oneXplus etc) - should be possible to query in database using like %pattern%, and querying is only neccessary when indexing manually. This way identify class could be used without database for standalone implementations
+			// TODO: include some check to know whether database lookups are available
+
+			// TODO: 
 
 			// Android specific scope
 			if(preg_match("/^Mozilla\/5.0[^$]+Linux[^$]+Android/", $useragent) && !preg_match("/crios|ipod|ipad|symbian|blackberry|fban|firefox/i", $useragent)) {
@@ -472,6 +488,7 @@ class Identify {
 
 			// additional fallback methods
 			// TODO: perform various methods and see if two return same result
+			// TODO: obtional "no DB" execution
 
 
 
@@ -607,6 +624,22 @@ class Identify {
 				return $device;
 			}
 
+
+			// TODO: do additional simplified checks for minimal markers
+
+			// like ipad, ipod, iphone, tablet, android, touch, webkit in some combination
+			if(preg_match("/iPad/", $useragent, $matches)) {
+				return $this->uniqueIdTest($useragent, "Mobile Safari, iPad", "tablet", $log, "unique-fallback-ipad");
+			}
+			if(preg_match("/iPhone/", $useragent, $matches)) {
+				return $this->uniqueIdTest($useragent, "Mobile Safari, iPhone", "mobile_touch", $log, "unique-fallback-iphone");
+			}
+			if(preg_match("/touch/", $useragent, $matches)) {
+				return $this->uniqueIdTest($useragent, "Some tablet?", "tablet", $log, "unique-fallback-touch");
+			}
+
+
+
 		}
 
 
@@ -638,7 +671,7 @@ class Identify {
 		return false;
 	}
 
-
+	// TODO: explore option to save these directly on device
 	// identified by Unique ID
 	function uniqueId($useragent, $device, $segment, $log) {
 		global $page;
