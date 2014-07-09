@@ -11,9 +11,9 @@ error_reporting(E_ALL);
 * Required site information
 */
 define("SITE_UID", "DVCS");
-define("SITE_NAME", "devices.dearapi.com");
-define("SITE_URL", "devices.dearapi.com");
-define("SITE_EMAIL", "martin@whattheframework.org");
+define("SITE_NAME", "detector.dearapi.com");
+define("SITE_URL", "detector.dearapi.com");
+define("SITE_EMAIL", "martin@parentnode.dk");
 
 /**
 * Optional constants
