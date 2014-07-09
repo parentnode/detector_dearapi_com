@@ -870,7 +870,7 @@ class Identify {
 		}
 
 		// no match - return false to continue identification
-		return array("segment" => $segment, "name" => $device, "id" => "unknown", "method" => "unique_id - missing id");
+		return array("segment" => $segment, "name" => $device, "id" => "unknown", "method" => "unique_id test - missing id");
 	}
 
 

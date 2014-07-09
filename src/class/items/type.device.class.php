@@ -190,10 +190,9 @@ class TypeDevice extends Model {
 		$IC = new Item();
 		$query = new Query();
 
-
 		if(count($action) == 2) {
 
-			$device = $IC->getCompleteItem($action[1]);
+			$device = $IC->getCompleteItem(array("id" => $action[1]));
 
 			// create new device
 			$sql = "INSERT INTO ".UT_ITEMS." VALUES(DEFAULT, DEFAULT, 1, 'device', DEFAULT, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, '".$device["published_at"]."')";
@@ -205,7 +204,7 @@ class TypeDevice extends Model {
 			$sql = "INSERT INTO ".$this->db." VALUES(DEFAULT, $new_id, '".$device["name"]." (cloned)', '".$device["description"]."')";
 //			print $sql;
 			if($query->sql($sql)) {
-				
+
 				// add tags
 				if($device["tags"]) {
 					foreach($device["tags"] as $tag) {
@@ -216,7 +215,7 @@ class TypeDevice extends Model {
 				message()->addMessage("Device cloned");
 
 				// get and return new device (id will be used to redirect to new device page)
-				$item = $IC->getCompleteItem($new_id);
+				$item = $IC->getCompleteItem(array("id" => $new_id));
 				return $item;
 			}
 		}
@@ -565,7 +564,7 @@ class TypeDevice extends Model {
 			$ua = $uas[$i];
 			$device = $Identify->identifyDevice($ua["useragent"], false, false, false);
 //			print_r($device);
-			if($device && preg_match("/unique_id/", $device["method"])) {
+			if($device && ($device["method"] == "unique_id - missing id" || $device["method"] == "unique_id" || $device["method"] == "match")) {
 				$device["useragent"] = $ua["useragent"];
 				$device["id"] = $ua["id"];
 				$devices[] = $device;
