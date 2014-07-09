@@ -36,12 +36,20 @@ if(is_array($action) && count($action)) {
 		}
 	}
 
-	// LIST ITEM
-	// Requires exactly two parameters /enable/#item_id#
-	if(count($action) == 1 && $action[0] == "unique") {
+	// List devices with unique potential
+	if(count($action) == 1 && $action[0] == "uniquePotential") {
 
 		$page->header(array("type" => "admin"));
 		$page->template("admin/statistic/unique_potential.php");
+		$page->footer(array("type" => "admin"));
+		exit();
+
+	}
+	// eliminate devices with unique match
+	else if(count($action) == 1 && $action[0] == "uniqueMatch") {
+
+		$page->header(array("type" => "admin"));
+		$page->template("admin/statistic/unique_match.php");
 		$page->footer(array("type" => "admin"));
 		exit();
 

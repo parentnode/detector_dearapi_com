@@ -70,6 +70,13 @@ $ua[] = "BlackBerry1234/5.0.0.732 Profile/MIDP-2.1 Configuration/CLDC-1.1 Vendor
 $ua[] = "Dalvik/1.6.0 (Linux; U; Android 4.0.4; GT-S7560 Build/IMM76I)";
 $ua[] = "Mozilla/5.0 (compatible; MSIE 10.0; Windows Phone 8.0; Trident/6.0; IEMobile/10.0; ARM; Touch; NOKIA; Lumia 820)";
 $ua[] = "Mozilla/5.0 (Linux; U; Android 4.0.3; en-gb; GT-I9100G Build/IML74K) AppleWebKit/534.30 (KHTML, like Gecko) Version/4.0 Mobile Safari/534.30";
+
+$ua[] = "Mozilla/5.0 (Linux; U; Android 4.2.2; en-us; GT-P5113 Build/JDQ39) AppleWebKit/534.30 (KHTML, like Gecko) Version/4.0 Safari/534.30";
+$ua[] = "Mozilla/5.0 (Linux; Android 4.4.2; Galaxy Nexus Build/KVT49L) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/30.0.0.0 Mobile Safari/537.36";
+$ua[] = "Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_6_3; HTC_Flyer_P510e; en-de) AppleWebKit/533.16 (KHTML, like Gecko) Version/5.0 Safari/533.16";
+$ua[] = "Mozilla/5.0 (Linux; U; Android 4.0.3; da-dk; Sony Tablet S Build/TISU0143) AppleWebKit/534.30 (KHTML, like Gecko) Version/4.0 Safari/534.30";
+$ua[] = "Mozilla/5.0 (Linux; Android 4.1.2; ST27i Build/6.2.A.1.100) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/33.0.1750.166 Mobile Safari/537.36";
+
 //$ua[] = "";
 
 

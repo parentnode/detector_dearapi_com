@@ -13,10 +13,10 @@ include_once("class/system/output.class.php");
 include_once("class/identify.class.php");
 
 $action = $page->actions();
-
 $IC = new Item();
 $itemtype = "device";
 $model = $IC->typeObject($itemtype);
+
 $output = new Output();
 
 

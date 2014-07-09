@@ -13,7 +13,7 @@
 				sort($dates);
 				print $HTML->p("You have selected the period <strong>" . $dates[0] . "</strong> to <strong>" . $dates[count($dates)-1] . "</strong>.");
 
-
+				$fs = new FileSystem();
 				$entries = 0;
 				$ip_index = array();
 
@@ -31,7 +31,7 @@
 				// TODO: save top_devices_details info in file
 				// TODO: read files for output section (it still uses arrays)
 
-				FileSystem::mkdirr(BACKUP_FILE_PATH."cache");
+				$fs->mkdirr(BACKUP_FILE_PATH."cache");
 				$cache_logs = fopen(BACKUP_FILE_PATH."cache/logs", "w+");
 				$cache_log_index["UA IDENTIFIED"] = fopen(BACKUP_FILE_PATH."cache/ua_identified", "w+");
 				$cache_log_index["UA UNIQUE"] = fopen(BACKUP_FILE_PATH."cache/ua_unique", "w+");

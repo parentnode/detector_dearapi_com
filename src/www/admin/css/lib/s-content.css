@@ -88,33 +88,28 @@
 
 
 .addToDevice {position: fixed; z-index: 12; top: 0px; right: 0; width: 200px; height: 100%; background: #ffffff; border: 1px solid #dedede; border-top: none; border-right: none; padding: 0 20px 0 10px;}
-
 .addToDevice.loading {background: red;}
 
 .addToDevice h2 {text-align: left; padding: 20px 0 10px;}
-
 .addToDevice div.counter {border-bottom: 1px solid #dedede; padding: 0 0 5px;}
 .addToDevice span.count {padding: 0 0 5px 5px; }
 
 .addToDevice li {display: block; padding: 3px 0; border-top: 1px solid #dedede;}
-
 .addToDevice li div.info {color: #7d848c; padding: 3px 0 3px 10px;}
 
 .addToDevice div.search {padding: 10px 0; border-bottom: 1px solid #dedede;}
-
 .addToDevice div.search input {height: 14px; display: block; width: 194px;}
-
 .addToDevice div.search input.loading {background: red;}
-
 .addToDevice div.search input.default {color: #aaaaaa;}
-
 .addToDevice div.search .results li {padding-left: 10px; cursor: pointer;}
 .addToDevice div.search .results li:first-child {border: none; padding-top: 10px;}
 .addToDevice div.search .results li h3 {font-size: 12px; padding: 2px 0;}
 .addToDevice div.search .results li ul {display: none;}
+.addToDevice div.search .results li div.selected,
+.addToDevice div.search .results li div.addtoclone,
+.addToDevice div.search .results li div.matching {margin-left: -10px;}
 
 .addToDevice ul.options li {cursor: pointer; font-size: 12px; border-top: none; border-bottom: 1px solid #dedede; color: #313942;}
-
 
 .addToDevice li div.selected,
 .addToDevice li div.addtoclone,
@@ -125,18 +120,51 @@
 .addToDevice li div.matching.confirm {background-color: #df0000;}
 
 
-.addToDevice .search li div.selected,
-.addToDevice .search li div.addtoclone,
-.addToDevice .search li div.matching {margin-left: -10px;}
 
 
 /* STATISTICS */
 #content .scene.statistic {}
 #content .scene.statistic h1 {border-bottom: 1px solid #dedede; padding-bottom: 74px;}
 #content .scene.statistic ul.tools {padding: 0 30px;}
+#content .scene.statistic ul.tools li {display: block; font-size: 16px; padding: 10px 0;}
 
 /* UNIQUE POTENTIAL LIST */
 #content .scene.uniquePotentialList h1 {border-bottom: 1px solid #dedede; padding-bottom: 74px;}
+
+/* UNIQUE MATCH LIST */
+#content .scene.uniqueMatchList h1 {border-bottom: 1px solid #dedede; padding-bottom: 74px;}
+#content .scene.uniqueMatchList .items > li {padding: 10px 125px 10px 30px;}
+#content .scene.uniqueMatchList .items > li > input {position: absolute; top: 10px; left: 30px;}
+#content .scene.uniqueMatchList .items > li h3 {font-size: 13px; padding: 0 0 0 25px;}
+
+#content .scene.uniqueMatchList .items > li.all {padding-left: 55px;}
+#content .scene.uniqueMatchList .items > li.all > input {position: absolute; top: 8px; left: 30px;}
+
+#content .scene.uniqueMatchList .items > li input.button.delete.confirm {color: #ffffff; background-color: #df0000;}
+#content .scene.uniqueMatchList .items > li input.button.delete.confirm:hover {}
+
+#content .scene.uniqueMatchList .items > li ul.info {padding: 2px 25px;}
+#content .scene.uniqueMatchList .items > li ul.info li {padding: 0;}
+#content .scene.uniqueMatchList .items > li ul.info li.identified_at:after {content: ",\00a0";}
+#content .scene.uniqueMatchList .items > li ul.info li.identified_as:before {content: ",\00a0";}
+#content .scene.uniqueMatchList .items > li ul.info li.visits:after {content: "\00a0visits";}
+
+#content .scene.uniqueMatchList .items > li ul.info li.comment {}
+
+
+.deleteUnique {position: fixed; z-index: 12; top: 0px; right: 0; width: 200px; height: 100%; background: #ffffff; border: 1px solid #dedede; border-top: none; border-right: none; padding: 0 20px 0 10px;}
+.deleteUnique.loading {background: red;}
+
+.deleteUnique h2 {text-align: left; padding: 20px 0 10px;}
+.deleteUnique div.counter {border-bottom: 1px solid #dedede; padding: 0 0 5px;}
+.deleteUnique span.count {padding: 0 0 5px 5px; }
+
+.deleteUnique li {display: block; padding: 3px 0; border-top: 1px solid #dedede;}
+.deleteUnique ul.options {padding: 0 0 10px;}
+.deleteUnique ul.options li {font-size: 12px; border-top: none; border-bottom: 1px solid #dedede; color: #313942;}
+.deleteUnique div.delete {font-size: 11px; margin: 3px 0; border-radius: 10px; height: 11px; padding: 5px 10px; line-height: 1em; background: #64AD8E; text-align: center; color: #ffffff; cursor: pointer;}
+.deleteUnique div.delete.confirm {background-color: #df0000;}
+
 
 
 /* NAVIGATION */

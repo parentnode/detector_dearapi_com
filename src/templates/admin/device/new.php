@@ -1,31 +1,26 @@
 <?php
-
-$action = $this->actions();
-
-$IC = new Item();
-$itemtype = "device";
-$model = $IC->typeObject($itemtype);
-
+global $action;
+global $IC;
+global $itemtype;
+global $model;
 ?>
 <div class="scene defaultNew">
 	<h1>New <?= $itemtype ?></h1>
 
 	<ul class="actions">
-		<li class="cancel"><a href="/admin/<?= $itemtype ?>/list" class="button">Back</a></li>
+		<?= $model->link("Back", "/admin/".$itemtype."/list", array("class" => "button", "wrapper" => "li.cancel")) ?>
 	</ul>
 
-	<form action="/admin/cms/save/<?= $itemtype ?>" class="i:formDefaultNew labelstyle:inject" method="post" enctype="multipart/form-data">
-
+	<?= $model->formStart("/admin/cms/save/".$itemtype, array("class" => "i:formDefaultNew labelstyle:inject")) ?>
 		<fieldset>
 			<?= $model->input("name") ?>
 			<?= $model->input("description", array("class" => "autoexpand")) ?>
 		</fieldset>
 
 		<ul class="actions">
-			<li class="cancel"><a href="/admin/<?= $itemtype ?>/list" class="button key:esc">Back</a></li>
-			<li class="save"><input type="submit" value="Save" class="button primary key:s" /></li>
+			<?= $model->link("Back", "/admin/".$itemtype."/list", array("class" => "button key:esc", "wrapper" => "li.cancel")) ?>
+			<?= $model->submit("Save", array("class" => "primary key:s", "wrapper" => "li.save")) ?>
 		</ul>
-
-	</form>
+	<?= $model->formEnd() ?>
 
 </div>

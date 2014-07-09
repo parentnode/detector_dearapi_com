@@ -408,11 +408,11 @@ class TypeDevice extends Model {
 
 			$item = array();
 
-			$item["id"] = $query->result($i, "items.id");
+			$item["id"] = $query->result($i, "id");
 			$item["itemtype"] = "device";
-			$item["sindex"] = $query->result($i, "items.sindex");
-			$item["status"] = $query->result($i, "items.status");
-			$item["published_at"] = $query->result($i, "items.published_at");
+			$item["sindex"] = $query->result($i, "sindex");
+			$item["status"] = $query->result($i, "status");
+			$item["published_at"] = $query->result($i, "published_at");
 
 			$items[] = $item;
 		}
@@ -429,15 +429,17 @@ class TypeDevice extends Model {
 			$query = new Query();
 
 			$sql = "SELECT useragent FROM ".$this->db_unidentified." WHERE id = ".$action[1];
-			$query->sql($sql);
-
-			$ua = $query->result(0, "useragent");
-			$sql = "DELETE FROM ".$this->db_unidentified." WHERE useragent = '$ua'";
-//				print $sql."\n";
 			if($query->sql($sql)) {
 
-				message()->addMessage("Useragent ".$action[1].", deleted");
-				return true;
+				$ua = $query->result(0, "useragent");
+				$sql = "DELETE FROM ".$this->db_unidentified." WHERE useragent = '$ua'";
+//				print $sql."\n";
+				if($query->sql($sql)) {
+
+					message()->addMessage("Useragent ".$action[1].", deleted");
+					return true;
+
+				}
 			}
 		}
 
@@ -518,18 +520,6 @@ class TypeDevice extends Model {
 				if($query->sql($sql)) {
 					$results = $query->results();
 
-					// // get name of device, if useragent has already been identif
-					// if($results[0]["identified_as"]) {
-					// 	$sql = "SELECT name FROM ".$this->db." WHERE item_id = '".$results[0]["identified_as"]."'";
-					// 	$query->sql();
-					// 	$results[0]["identified_as_device"] = $query->result(0, "name");
-					// }
-					// // new identification attempt
-					// else {
-					// 	$results[0]["identified_as_device"] = "unknown";
-					// }
-
-//					print_r($query->results());
 					return $results;
 				}
 			}
@@ -560,6 +550,33 @@ class TypeDevice extends Model {
 		return false;
 	}
 
+
+	// full run through of all unidentified useragents to check if they match current unique IDs
+	function searchForUniqueMatches($_options = false) {
+
+		$query = new Query();
+		$Identify = new Identify();
+
+		$devices = array();
+		$uas = $this->unidentifiedUseragents();
+//		print "count:" . count($uas)."<br>";
+//		foreach($uas as $i => $ua) {
+		for($i = 0; $i < 500 && $i < count($uas); $i++) {
+			$ua = $uas[$i];
+			$device = $Identify->identifyDevice($ua["useragent"], false, false, false);
+//			print_r($device);
+			if($device && preg_match("/unique_id/", $device["method"])) {
+				$device["useragent"] = $ua["useragent"];
+				$device["id"] = $ua["id"];
+				$devices[] = $device;
+			}
+			unset($uas[$i]);
+		}
+
+		unset($uas);
+
+		return $devices;
+	}
 
 
 	// full LIKE search on name, description and useragent
@@ -608,11 +625,11 @@ class TypeDevice extends Model {
 
 			$item = array();
 
-			$item["id"] = $query->result($i, "items.id");
+			$item["id"] = $query->result($i, "id");
 			$item["itemtype"] = "device";
-			$item["sindex"] = $query->result($i, "items.sindex");
-			$item["status"] = $query->result($i, "items.status");
-			$item["published_at"] = $query->result($i, "items.published_at");
+			$item["sindex"] = $query->result($i, "sindex");
+			$item["status"] = $query->result($i, "status");
+			$item["published_at"] = $query->result($i, "published_at");
 			$item["uas"] = $query->result($i, "uas");
 
 			$items[] = $item;

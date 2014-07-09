@@ -22,7 +22,7 @@ class Identify {
 
 
 	// added optional logging - now function can be used for manual identification work
-	function identifyDevice($useragent, $log=true) {
+	function identifyDevice($useragent, $log=true, $mail=true, $details=true) {
 
 //		print "IDENTIFYING:" . $useragent . "\n";
 
@@ -64,7 +64,7 @@ class Identify {
 //				return $segment;
 			}
 
-			$device = $IC->getCompleteItem($device_id);
+			$device = $IC->getCompleteItem(array("id" => $device_id));
 			$device["method"] = "match";
 			return $device;
 		}
@@ -84,20 +84,29 @@ class Identify {
 				if(!preg_match("/phone|opera|chromeframe|mobile|touch|AppleWebKit|Gecko/i", $useragent)) {
 
 					// DESKTOP IE 6-8
-					if(preg_match("/MSIE ([678]{1}).0;[^$]+Windows NT [5-6]{1}.[0-2]{1}/", $useragent, $matches)) {
-						return $this->uniqueId($useragent, "MSIE ".$matches[1].", Desktop", "desktop_light", $log);
+					if(preg_match("/MSIE ([678]{1}).0;[^$]+Windows NT [5-6]{1}.[0-3]{1}/", $useragent, $matches)) {
+						return $this->uniqueId($useragent, "MSIE ".$matches[1].", Desktop", "desktop_light", $log, $mail, $details);
 					}
-					if(preg_match("/MSIE (9|10).0;[^$]+Windows NT [5-6]{1}.[0-2]{1}/", $useragent, $matches)) {
-						return $this->uniqueIdTest($useragent, "MSIE ".$matches[1].", Desktop", "desktop_ie", $log, "unique-test-ie9-10");
+					else if(preg_match("/MSIE (9|10).0;[^$]+Windows NT [5-6]{1}.[0-3]{1}/", $useragent, $matches)) {
+						return $this->uniqueId($useragent, "MSIE ".$matches[1].", Desktop", "desktop_ie", $log, $mail, $details);
+					}
+					else if(preg_match("/MSIE ([\d]{1})/", $useragent, $matches)) {
+						return $this->uniqueIdTest($useragent, "MSIE ".$matches[1].", Desktop", "desktop_light", $log, $mail, $details, "unique-test-ie");
 					}
 
 				}
 				// chromeframes
 				else if(preg_match("/chromeframe/i", $useragent)) {
 
-					// chromeFrame 27 - IN TEST
+					// chromeFrame
 					if(preg_match("/chromeframe\/([\d]+).0/", $useragent, $matches)) {
-						return $this->uniqueIdTest($useragent, "ChromeFrame ".$matches[1].", Desktop", "desktop", $log, "unique-test-chromeframe");
+						// already know - chromeframe development stopped at version 32
+						if($matches[1] <= 32) {
+							return $this->uniqueId($useragent, "ChromeFrame ".$matches[1].", Desktop", "desktop", $log, $mail, $details);
+						}
+						else {
+							return $this->uniqueIdTest($useragent, "ChromeFrame ".$matches[1].", Desktop", "desktop", $log, $mail, $details, "unique-test-chromeframe");
+						}
 					}
 
 				}
@@ -105,10 +114,11 @@ class Identify {
 
 
 			// TODO: find unique pattern for IE 11 - testing this
+			// TODO: consider special segment for IE tablets? Not yet.
 			// Mozilla/5.0 (Windows NT 6.1; WOW64; Trident/7.0; EIE10;DADKMSN; rv:11.0) like Gecko 
 			// IE 11
-			if(preg_match("/^Mozilla\/5.0[^$]+Trident\/7.0[^$]+rv:11.0\) like Gecko/", $useragent)) {
-				return $this->uniqueIdTest($useragent, "MSIE 11, Desktop", "desktop_ie", $log, "unique-test-ie11");
+			if(preg_match("/^Mozilla\/5.0[^$]+Trident\/7.0[^$]+rv:11.0\) like Gecko/", $useragent) && !preg_match("/MSIE/i", $useragent)) {
+				return $this->uniqueIdTest($useragent, "MSIE 11, Desktop", "desktop_ie", $log, $mail, $details, "unique-test-ie");
 			}
 
 
@@ -118,19 +128,24 @@ class Identify {
 
 				// Firefox - IN TEST
 				if(preg_match("/rv:([5-9]{1}|[0-9]{2}).0[^$]+Gecko[^$]+Firefox\/([5-9]{1}|[0-9]{2}).0/", $useragent, $matches)) {
-					if($matches[1] == $matches[1]) {
-						return $this->uniqueIdTest($useragent, "Firefox ".$matches[1].", Desktop", "desktop", $log, "unique-test-firefox5up");
+					// test version >= 33
+					if($matches[1] == $matches[1] && $matches[1] >= 33) {
+						return $this->uniqueIdTest($useragent, "Firefox ".$matches[1].", Desktop", "desktop", $log, $mail, $details, "unique-test-firefox");
+					}
+					// not required test for these
+					else if($matches[1] == $matches[1]) {
+						return $this->uniqueId($useragent, "Firefox ".$matches[1].", Desktop", "desktop", $log, $mail, $details);
 					}
 				}
 
 				// Firefox 4
 				if(preg_match("/rv:2.0[^$]+Gecko[^$]+Firefox\/4.0/", $useragent)) {
-					return $this->uniqueIdTest($useragent, "Firefox 4, Desktop", "desktop", $log, "unique-test-firefox4");
+					return $this->uniqueIdTest($useragent, "Firefox 4, Desktop", "desktop", $log, $mail, $details, "unique-test-firefox");
 				}
 
 				// Firefox 3.5 + 3.6
 				if(preg_match("/rv:1.9.[0-2]{1}[^$]+Gecko[^$]+Firefox\/(3.[056]{1})/", $useragent, $matches)) {
-					return $this->uniqueIdTest($useragent, "Firefox ".$matches[1].", Desktop", "desktop_light", $log, "unique-test-firefox36down");
+					return $this->uniqueIdTest($useragent, "Firefox ".$matches[1].", Desktop", "desktop_light", $log, $mail, $details, "unique-test-firefox");
 				}
 
 			}
@@ -140,16 +155,16 @@ class Identify {
 
 				// Chrome for Desktop >= version 5
 				if(preg_match("/AppleWebKit\/53[3-7]{1}[^$]+Gecko[^$]+Chrome\/([0-9]{1,2}).[^$]+Safari\/53[3-7]{1}/", $useragent, $matches)) {
-					// version check
-					if($matches[1] >= 33) {
-						return $this->uniqueIdTest($useragent, "Chrome ".$matches[1].", Desktop", "desktop", $log, "unique-test-chrome");
+					// version check - >= 36, keep in test mode
+					if($matches[1] >= 36) {
+						return $this->uniqueIdTest($useragent, "Chrome ".$matches[1].", Desktop", "desktop", $log, $mail, $details, "unique-test-chrome");
 					}
 				}
 				// no test required for these
 				if(preg_match("/AppleWebKit\/53[3-7]{1}[^$]+Gecko[^$]+Chrome\/([0-9]{1,2}).[^$]+Safari\/53[3-7]{1}/", $useragent, $matches)) {
 					// version check
 					if($matches[1] >= 5) {
-						return $this->uniqueId($useragent, "Chrome ".$matches[1].", Desktop", "desktop", $log, "unique-test-chrome");
+						return $this->uniqueId($useragent, "Chrome ".$matches[1].", Desktop", "desktop", $log, $mail, $details);
 					}
 				}
 			}
@@ -159,17 +174,17 @@ class Identify {
 
 				// Facebook iPad app
 				if(preg_match("/iPad[^$]+AppleWebKit\/53[4-7]{1}[^$]+Gecko[^$]+FBSV\/([0-9]{1})./", $useragent, $matches)) {
-					return $this->uniqueIdTest($useragent, "Facebook iPad, Safari ".$matches[1], "tablet", $log, "unique-test-facebook");
+					return $this->uniqueId($useragent, "Facebook iPad, Safari ".$matches[1], "tablet", $log, $mail, $details, "unique-test-facebook");
 				}
 
 				// Facebook iPod app
 				if(preg_match("/iPod[^$]+AppleWebKit\/53[4-7]{1}[^$]+Gecko[^$]+FBSV\/([0-9]{1})./", $useragent, $matches)) {
-					return $this->uniqueIdTest($useragent, "Facebook iPod, Safari ".$matches[1], "mobile_touch", $log, "unique-test-facebook");
+					return $this->uniqueId($useragent, "Facebook iPod, Safari ".$matches[1], "mobile_touch", $log, $mail, $details, "unique-test-facebook");
 				}
 
 				// Facebook iPhone app
 				if(preg_match("/iPhone[^$]+AppleWebKit\/53[4-7]{1}[^$]+Gecko[^$]+FBSV\/([0-9]{1})./", $useragent, $matches)) {
-					return $this->uniqueIdTest($useragent, "Facebook iPhone, Safari ".$matches[1], "mobile_touch", $log, "unique-test-facebook");
+					return $this->uniqueId($useragent, "Facebook iPhone, Safari ".$matches[1], "mobile_touch", $log, $mail, $details, "unique-test-facebook");
 				}
 
 			}
@@ -180,22 +195,31 @@ class Identify {
 				// iPhone last, because "iPhone" might occur in iPod and iPad useragents
 				// Chrome for iPad >= version 19
 				if(preg_match("/iPad[^$]+AppleWebKit\/53[4-7]{1}[^$]+Gecko[^$]+CriOS\/([0-9]{2}).0/", $useragent, $matches)) {
-					if($matches[1] >= 19) {
-						return $this->uniqueIdTest($useragent, "Chrome ".$matches[1].", iPad", "tablet", $log, "unique-test-crios");
+					if($matches[1] >= 36) {
+						return $this->uniqueIdTest($useragent, "Chrome ".$matches[1].", iPad", "tablet", $log, $mail, $details, "unique-test-crios");
+					}
+					else if($matches[1] >= 19) {
+						return $this->uniqueId($useragent, "Chrome ".$matches[1].", iPad", "tablet", $log, $mail, $details);
 					}
 				}
 
 				// Chrome for iPod >= version 19
 				if(preg_match("/iPod[^$]+AppleWebKit\/53[4-7]{1}[^$]+Gecko[^$]+CriOS\/([0-9]{2}).0/", $useragent, $matches)) {
-					if($matches[1] >= 19) {
-						return $this->uniqueIdTest($useragent, "Chrome ".$matches[1].", iPod", "mobile_touch", $log, "unique-test-crios");
+					if($matches[1] >= 36) {
+						return $this->uniqueIdTest($useragent, "Chrome ".$matches[1].", iPod", "mobile_touch", $log, $mail, $details, "unique-test-crios");
+					}
+					else if($matches[1] >= 19) {
+						return $this->uniqueId($useragent, "Chrome ".$matches[1].", iPod", "mobile_touch", $log, $mail, $details);
 					}
 				}
 
 				// Chrome for iPhone >= version 19
 				if(preg_match("/iPhone[^$]+AppleWebKit\/53[4-7]{1}[^$]+Gecko[^$]+CriOS\/([0-9]{2}).0/", $useragent, $matches)) {
-					if($matches[1] >= 19) {
-						return $this->uniqueIdTest($useragent, "Chrome ".$matches[1].", iPhone", "mobile_touch", $log, "unique-test-crios");
+					if($matches[1] >= 36) {
+						return $this->uniqueIdTest($useragent, "Chrome ".$matches[1].", iPhone", "mobile_touch", $log, $mail, $details, "unique-test-crios");
+					}
+					else if($matches[1] >= 19) {
+						return $this->uniqueId($useragent, "Chrome ".$matches[1].", iPhone", "mobile_touch", $log, $mail, $details);
 					}
 				}
 
@@ -207,17 +231,22 @@ class Identify {
 
 				// Safari 5-7
 				if(preg_match("/AppleWebKit\/53[3-7]{1}[^$]+Gecko[^$]+Version\/([5-7]{1})[^$]+Safari\/53[3-7]{1}/", $useragent, $matches)) {
-					return $this->uniqueIdTest($useragent, "Safari ".$matches[1].", Desktop", "desktop", $log, "unique-test-safari5up");
+					if($matches[1] <= 7) {
+						return $this->uniqueId($useragent, "Safari ".$matches[1].", Desktop", "desktop", $log, $mail, $details);
+					}
+					else {
+						return $this->uniqueIdTest($useragent, "Safari ".$matches[1].", Desktop", "desktop", $log, $mail, $details, "unique-test-safari");
+					}
 				}
 
 				// Separate 4 from 4.1
 				// Safari 4.1
 				if(preg_match("/AppleWebKit\/533[^$]+Gecko[^$]+Version\/4.1[^$]+Safari\/533/", $useragent, $matches)) {
-					return $this->uniqueIdTest($useragent, "Safari 4.1, Desktop", "desktop_light", $log, "unique-test-safari41");
+					return $this->uniqueId($useragent, "Safari 4.1, Desktop", "desktop_light", $log, $mail, $details);
 				}
 				// Safari 3-4
 				if(preg_match("/AppleWebKit\/[4-5]{1}[0-9]{2}[^$]+Gecko[^$]+Version\/([3-4]{1})[^$]+Safari\/[4-5]{1}[0-9]{2}/", $useragent, $matches)) {
-					return $this->uniqueIdTest($useragent, "Safari ".$matches[1].", Desktop", "desktop_light", $log, "unique-test-safari4down");
+					return $this->uniqueId($useragent, "Safari ".$matches[1].", Desktop", "desktop_light", $log, $mail, $details);
 				}
 
 			}
@@ -229,18 +258,23 @@ class Identify {
 				// iPad Mobile Safari 5-7 (BUILD, WebKit and Version aligned in 95% of cases)
 				if(preg_match("/AppleWebKit\/53([5-7]{1})[^$]+Gecko[^$]+Mobile\/(9|10|11)/", $useragent, $matches)) {
 //					print $matches[1] . ", " . ($matches[2]-4)."\n";
+					// validated match, no need for test
 					if($matches[1] == ($matches[2]-4)) {
-						return $this->uniqueIdTest($useragent, "Mobile Safari ".$matches[1].", iPad", "tablet", $log, "unique-test-ipad");
+						return $this->uniqueId($useragent, "Mobile Safari ".$matches[1].", iPad", "tablet", $log, $mail, $details);
+					}
+					// probably good, keep testing
+					else {
+						return $this->uniqueIdTest($useragent, "Mobile Safari ".$matches[1].", iPad", "tablet", $log, $mail, $details, "unique-test-ipad");
 					}
 				}
 
 				// iPad Mobile Safari 4-5 (BUILD, WebKit and Version rarely aligned)
 				if(preg_match("/AppleWebKit\/53([1-4]{1})[^$]+Gecko[^$]+Mobile\/([789]{1})/", $useragent, $matches)) {
 					if($matches[1] >= 3 && $matches[2] >= 8) {
-						return $this->uniqueIdTest($useragent, "Mobile Safari 5, iPad", "tablet", $log, "unique-test-ipad");
+						return $this->uniqueId($useragent, "Mobile Safari 5, iPad", "tablet", $log, $mail, $details);
 					}
 					else {
-						return $this->uniqueIdTest($useragent, "Mobile Safari 4, iPad", "tablet", $log, "unique-test-ipad");
+						return $this->uniqueId($useragent, "Mobile Safari 4, iPad", "tablet", $log, $mail, $details);
 					}
 				}
 			}
@@ -251,18 +285,23 @@ class Identify {
 				// more often then not, version section of useragent is missing
 				// iPod Mobile Safari 5-7 (BUILD, WebKit and Version aligned in 95% of cases)
 				if(preg_match("/AppleWebKit\/53([5-7]{1})[^$]+Gecko[^$]+Mobile\/(9|10|11)/", $useragent, $matches)) {
+					// validated match, no need for test
 					if($matches[1] == ($matches[2]-4)) {
-						return $this->uniqueIdTest($useragent, "Mobile Safari ".$matches[1].", iPod", "mobile_touch", $log, "unique-test-ipod");
+						return $this->uniqueId($useragent, "Mobile Safari ".$matches[1].", iPod", "mobile_touch", $log, $mail, $details);
+					}
+					// probably good, keep testing
+					else {
+						return $this->uniqueIdTest($useragent, "Mobile Safari ".$matches[1].", iPod", "mobile_touch", $log, $mail, $details, "unique-test-ipod");
 					}
 				}
 
 				// iPod Mobile Safari 4-5 (BUILD, WebKit and Version rarely aligned)
 				if(preg_match("/AppleWebKit\/53([1-4]{1})[^$]+Gecko[^$]+Mobile\/([789]{1})/", $useragent, $matches)) {
 					if($matches[1] >= 3 && $matches[2] >= 8) {
-						return $this->uniqueIdTest($useragent, "Mobile Safari 5, iPod", "mobile_touch", $log, "unique-test-ipod");
+						return $this->uniqueId($useragent, "Mobile Safari 5, iPod", "mobile_touch", $log, $mail, $details);
 					}
 					else {
-						return $this->uniqueIdTest($useragent, "Mobile Safari 4, iPod", "mobile", $log, "unique-test-ipod");
+						return $this->uniqueId($useragent, "Mobile Safari 4, iPod", "mobile", $log, $mail, $details);
 					}
 				}
 			}
@@ -273,18 +312,23 @@ class Identify {
 				// more often then not, version section of useragent is missing
 				// iPhone Mobile Safari 5-7 (BUILD, WebKit and Version aligned in 95% of cases)
 				if(preg_match("/AppleWebKit\/53([5-7]{1})[^$]+Gecko[^$]+Mobile\/(9|10|11)/", $useragent, $matches)) {
+					// validated match, no need for test
 					if($matches[1] == ($matches[2]-4)) {
-						return $this->uniqueIdTest($useragent, "Mobile Safari ".$matches[1].", iPhone", "mobile_touch", $log, "unique-test-iphone");
+						return $this->uniqueId($useragent, "Mobile Safari ".$matches[1].", iPhone", "mobile_touch", $log, $mail, $details);
+					}
+					// probably good, keep testing
+					else {
+						return $this->uniqueIdTest($useragent, "Mobile Safari ".$matches[1].", iPhone", "mobile_touch", $log, $mail, $details, "unique-test-iphone");
 					}
 				}
 
 				// iPhone Mobile Safari 4-5 (BUILD, WebKit and Version rarely aligned)
 				if(preg_match("/AppleWebKit\/53([1-4]{1})[^$]+Gecko[^$]+Mobile\/([789]{1})/", $useragent, $matches)) {
 					if($matches[1] >= 3 && $matches[2] >= 8) {
-						return $this->uniqueIdTest($useragent, "Mobile Safari 5, iPhone", "mobile_touch", $log, "unique-test-iphone");
+						return $this->uniqueId($useragent, "Mobile Safari 5, iPhone", "mobile_touch", $log, $mail, $details);
 					}
 					else {
-						return $this->uniqueIdTest($useragent, "Mobile Safari 4, iPhone", "mobile", $log, "unique-test-iphone");
+						return $this->uniqueId($useragent, "Mobile Safari 4, iPhone", "mobile", $log, $mail, $details);
 					}
 				}
 			}
@@ -299,57 +343,93 @@ class Identify {
 			// Android specific scope
 			if(preg_match("/^Mozilla\/5.0[^$]+Linux[^$]+Android/", $useragent) && !preg_match("/crios|ipod|ipad|symbian|blackberry|fban|firefox/i", $useragent)) {
 
-				// Android 4+ specific (limit scope for extensive search)
-				if(preg_match("/Android 4[^$]+/", $useragent)) {
+				// Android 3+4 specific (limit scope for extensive search)
+				if(preg_match("/Android [234]{1}/", $useragent) && preg_match("/AppleWebKit\/53[3-7]{1}/", $useragent)) {
+
 
 					// SAMSUNG
-					// Samsung Galaxy S II, Android 4.0+
-					if(preg_match("/GT-I9100[^$]+AppleWebKit\/53[4-7]{1}/", $useragent)) {
-						return $this->uniqueIdTest($useragent, "Samsung Galaxy S II, Android 4.0+", "mobile_touch", $log, "unique-test-samsung");
-					}
+					if(preg_match("/GT-[A-Z]{1}[\d]{4}|SAMSUNG|Galaxy/", $useragent)) {
 
-					// Samsung Galaxy S III, Android 4.0+
-					if(preg_match("/(GT-I9300|GT-I9305)[^$]+AppleWebKit\/53[4-7]{1}/", $useragent)) {
-						return $this->uniqueIdTest($useragent, "Samsung Galaxy S III, Android 4.0+", "mobile_touch", $log, "unique-test-samsung");
-					}
+						// KNOWN TABLETS
+						// GT-P5100|GT-P5110|GT-P5113
+						// GT-P5200|GT-P5210|GT-P5220
+						// GT-N5100|GT-N5105|GT-N5110|GT-N5120
+						// GT-N8000|GT-N8005|GT-N8010|GT-N8013|GT-N8020
+						// GT-P3100|GT-P3110|GT-P3113
+						// GT-P6200|GT-P6210
+						// GT-P7510|GT-P7500|GT-P7501
+						// GT-P1000|GT-P1010
+						// GT-P7300|GT-P7310|GT-P7320
+						// GT-N6800|Galaxy Nexus
 
-					// Samsung Nexus 4, Android 4.0+
-					if(preg_match("/Nexus 4[^$]+AppleWebKit\/53[4-7]{1}/", $useragent)) {
-						return $this->uniqueIdTest($useragent, "Nexus 4, Android 4.0+", "mobile_touch", $log, "unique-test-samsung");
-					}
+						// SAMSUNG - TABLETS
+						if(preg_match("/GT-P51[\d]{2}|GT-P52[\d]{2}|GT-N51[\d]{2}|GT-N80[\d]{2}|GT-P31[\d]{2}|GT-P62[\d]{2}|GT-N6800|Galaxy Nexus|GT-P75[\d]{2}|GT-P10[\d]{2}|GT-P73[\d]{2}/", $useragent)) {
+							return $this->uniqueIdTest($useragent, "Samsung Tablet, Android 4.0+", "tablet", $log, $mail, $details, "unique-test-samsung");
+						}
+						// SAMSUNG - MOBILE TOUCH
+						else if(preg_match("/GT-[A-Z]{1}[\d]{4}|SAMSUNG/", $useragent)) {
+							return $this->uniqueIdTest($useragent, "Samsung Smartphone, Android 4.0+", "mobile_touch", $log, $mail, $details, "unique-test-samsung");
+						}
 
-					// Galaxy Note 10.1", Android 4.0+
-					if(preg_match("/(GT-N8000|GT-N8005|GT-N8010|GT-N8013|GT-N8020)[^$]+AppleWebKit\/53[4-7]{1}/", $useragent)) {
-						return $this->uniqueIdTest($useragent, "Galaxy Note 10.1, Android 4.0+", "tablet", $log, "unique-test-samsung");
 					}
-
 
 					// HTC
-					// TODO: Find pattern of HTC one's to still be able to separate them
+					if(preg_match("/HTC/", $useragent)) {
 
+						// KNOWN TABLETS
+						// HTC Flyer P510|HTC_Flyer_P512
+						// Jetstream
+
+						// HTC TABLETS
+						if(preg_match("/Flyer[ _]{1}P51[02]{1}|Jetstream/", $useragent)) {
+							return $this->uniqueIdTest($useragent, "HTC Tablet, Android 4.0+", "tablet", $log, $mail, $details, "unique-test-htc");
+						}
+						// HTC - MOBILE TOUCH
+						else if(preg_match("/HTC/", $useragent)) {
+							return $this->uniqueIdTest($useragent, "HTC Smartphone, Android 4.0+", "mobile_touch", $log, $mail, $details, "unique-test-htc");
+						}
+
+					}
+
+					// SONY and SONY ERICSSON
+					if(preg_match("/Sony|[MTSLWK]{2}[\d]{2}/", $useragent)) {
+
+						// KNOWN TABLETS
+						// Sony Tablet S
+
+						// SONY TABLETS
+						if(preg_match("/Sony Tablet S/", $useragent)) {
+							return $this->uniqueIdTest($useragent, "Sony Tablet, Android 4.0+", "tablet", $log, $mail, $details, "unique-test-htc");
+						}
+						// SONY - MOBILE TOUCH
+						else if(preg_match("/[MTSLWK]{2}[\d]{2}/", $useragent)) {
+							return $this->uniqueIdTest($useragent, "Sony Smartphone, Android 4.0+", "mobile_touch", $log, $mail, $details, "unique-test-htc");
+						}
+
+					}
 
 				}
 
 				// Android 2.2+ specific (limit scope for extensive search)
-				if(preg_match("/Android 2[^$]+/", $useragent)) {
+				if(preg_match("/Android 2/", $useragent)) {
 
 					// SANSUNG
 					// Samsung Galaxy S II, Android 2.2+
-					if(preg_match("/GT-I9100[^$]+AppleWebKit\/533/", $useragent)) {
-						return $this->uniqueIdTest($useragent, "Samsung Galaxy S II, Android 2.2+", "mobile_touch", $log, "unique-test-samsung");
-					}
-
-
-					// HTC
-					// Desire S, Android 2.2+
-					if(preg_match("/HTC[\s_]{1}Desire[\s_]?S[^$]+AppleWebKit\/533/", $useragent)) {
-						return $this->uniqueIdTest($useragent, "Desire S, Android 2.2+", "mobile_touch", $log, "unique-test-htc");
-					}
-
-					// Desire HD, Android 2.2+
-					if(preg_match("/HTC[\s_]{1}Desire[\s_]?HD[^$]+AppleWebKit\/533/", $useragent)) {
-						return $this->uniqueIdTest($useragent, "Desire HD, Android 2.2+", "mobile_touch", $log, "unique-test-htc");
-					}
+					// if(preg_match("/GT-I9100[^$]+AppleWebKit\/533/", $useragent)) {
+					// 	return $this->uniqueIdTest($useragent, "Samsung Galaxy S II, Android 2.2+", "mobile_touch", $log, "unique-test-samsung");
+					// }
+					//
+					//
+					// // HTC
+					// // Desire S, Android 2.2+
+					// if(preg_match("/HTC[\s_]{1}Desire[\s_]?S[^$]+AppleWebKit\/533/", $useragent)) {
+					// 	return $this->uniqueIdTest($useragent, "Desire S, Android 2.2+", "mobile_touch", $log, "unique-test-htc");
+					// }
+					//
+					// // Desire HD, Android 2.2+
+					// if(preg_match("/HTC[\s_]{1}Desire[\s_]?HD[^$]+AppleWebKit\/533/", $useragent)) {
+					// 	return $this->uniqueIdTest($useragent, "Desire HD, Android 2.2+", "mobile_touch", $log, "unique-test-htc");
+					// }
 
 
 
@@ -402,25 +482,25 @@ class Identify {
 
 				// SEMC Browser - IN TEST
 				if(preg_match("/SEMC-Browser\/[0-9]{1}/", $useragent)) {
-					return $this->uniqueIdTest($useragent, "SEMC, Generic", "mobile_light", $log, "unique-test-prehistoric");
+					return $this->uniqueIdTest($useragent, "SEMC, Generic", "mobile_light", $log, $mail, $details, "unique-test-prehistoric");
 				}
 				// Openwave Browser - IN TEST
 				if(preg_match("/UP.Browser\/[0-9]{1}/", $useragent)) {
-					return $this->uniqueIdTest($useragent, "Openwave, Generic", "mobile_light", $log, "unique-test-prehistoric");
+					return $this->uniqueIdTest($useragent, "Openwave, Generic", "mobile_light", $log, $mail, $details, "unique-test-prehistoric");
 				}
 				// BlackBerry Browser - IN TEST
 				if(preg_match("/BlackBerry[0-9]+\/[1-6]{1}/", $useragent)) {
-					return $this->uniqueIdTest($useragent, "BlackBerry, Generic", "mobile_light", $log, "unique-test-prehistoric");
+					return $this->uniqueIdTest($useragent, "BlackBerry, Generic", "mobile_light", $log, $mail, $details, "unique-test-prehistoric");
 				}
 
 
 				// NetFront 3.x Browser - IN TEST
 				if(preg_match("/NetFront\/(3.[0-5]{1})/", $useragent, $matches)) {
 					if($matches >= 3.4) {
-						return $this->uniqueIdTest($useragent, "NetFront ".$matches[1].", Generic", "mobile", $log, "unique-test-prehistoric");
+						return $this->uniqueIdTest($useragent, "NetFront ".$matches[1].", Generic", "mobile", $log, $mail, $details, "unique-test-prehistoric");
 					}
 					else {
-						return $this->uniqueIdTest($useragent, "NetFront ".$matches[1].", Generic", "mobile_light", $log, "unique-test-prehistoric");
+						return $this->uniqueIdTest($useragent, "NetFront ".$matches[1].", Generic", "mobile_light", $log, $mail, $details, "unique-test-prehistoric");
 					}
 				}
 			}
@@ -428,12 +508,16 @@ class Identify {
 
 			// bot, spider, fetcher and crawler specific
 			// OS or rendering engine info generally means it wants a full load
-			if(preg_match("/bot|spider|crawler|Nutch|fetcher|feed/i", $useragent) && !preg_match("/AppleWebKit|Gecko|MSIE|Trident|Windows|Mac OS X|Linux/i", $useragent)) {
+			if(preg_match("/bot|spider|crawler|Nutch|fetcher|feed|WordPress/i", $useragent) && !preg_match("/AppleWebKit|Gecko|MSIE|Trident|Windows|Mac OS X|Linux/i", $useragent)) {
 
+				// wellknown bots
+				if(preg_match("/DotBot|AcoonBot|MJ12bot|Daumoa|linkdex|WordPress|UnwindFetchor|Nutch|Feedfetcher-Google|CheburashkaSearchBot/", $useragent)) {
+					return $this->uniqueId($useragent, "Bot, Generic", "basic", $log, $mail, $details);
+				}
 				// bots - IN TEST
-//				if(preg_match("/AcoonBot|MJ12bot|Daumoa|linkdex|UnwindFetchor|Nutch|Feedfetcher-Google/", $useragent)) {
-					return $this->uniqueIdTest($useragent, "Bot, Generic", "basic", $log, "unique-test-bot");
-//				}
+				else {
+					return $this->uniqueIdTest($useragent, "Bot, Generic", "basic", $log, $mail, $details, "unique-test-bot");
+				}
 
 			}
 
@@ -443,7 +527,7 @@ class Identify {
 			// \bERICY - Ericsson
 			// \bEricsson - Ericsson
 			if(preg_match("/\bERICY|\bEricsson/", $useragent) && !preg_match("/android|iphone/", $useragent)) {
-				return $this->uniqueIdTest($useragent, "Ericcson, Generic", "basic", $log, "unique-test-prehistoric");
+				return $this->uniqueIdTest($useragent, "Ericcson, Generic", "basic", $log, $mail, $details, "unique-test-prehistoric");
 			}
 
 
@@ -514,7 +598,14 @@ class Identify {
 
 //				$this->perf->mark("guessed - (known parts)");
 
-				$device = $IC->getCompleteItem($device_id);
+				if($details) {
+					$device = $IC->getCompleteItem(array("id" => $device_id));
+				}
+				else {
+					$device = array();
+					$device["id"] = $device_id;
+					$device["useragent"] = $useragent;
+				}
 				$device["method"] = "guess 1";
 				$device["guess"] = $partial_useragent;
 				return $device;
@@ -548,7 +639,14 @@ class Identify {
 
 //					$this->perf->mark("guessed - (space)");
 
-					$device = $IC->getCompleteItem($device_id);
+					if($details) {
+						$device = $IC->getCompleteItem(array("id" => $device_id));
+					}
+					else {
+						$device = array();
+						$device["id"] = $device_id;
+						$device["useragent"] = $useragent;
+					}
 					$device["method"] = "guess (space)";
 					$device["guess"] = $partial_useragent;
 					return $device;
@@ -583,7 +681,14 @@ class Identify {
 					}
 //					$this->perf->mark("guessed - (/)");
 
-					$device = $IC->getCompleteItem($device_id);
+					if($details) {
+						$device = $IC->getCompleteItem(array("id" => $device_id));
+					}
+					else {
+						$device = array();
+						$device["id"] = $device_id;
+						$device["useragent"] = $useragent;
+					}
 					$device["method"] = "guess (/)";
 					$device["guess"] = $partial_useragent;
 					return $device;
@@ -618,7 +723,15 @@ class Identify {
 
 //				$this->perf->mark("guessed - (known parts)");
 
-				$device = $IC->getCompleteItem($device_id);
+				if($details) {
+					$device = $IC->getCompleteItem(array("id" => $device_id));
+				}
+				else {
+					$device = array();
+					$device["id"] = $device_id;
+					$device["useragent"] = $useragent;
+				}
+
 				$device["method"] = "guess wildcard";
 				$device["guess"] = $partial_useragent;
 				return $device;
@@ -629,13 +742,13 @@ class Identify {
 
 			// like ipad, ipod, iphone, tablet, android, touch, webkit in some combination
 			if(preg_match("/iPad/", $useragent, $matches)) {
-				return $this->uniqueIdTest($useragent, "Mobile Safari, iPad", "tablet", $log, "unique-fallback-ipad");
+				return $this->uniqueIdTest($useragent, "Mobile Safari, iPad", "tablet", $log, $mail, $details, "unique-fallback-ipad");
 			}
 			if(preg_match("/iPhone/", $useragent, $matches)) {
-				return $this->uniqueIdTest($useragent, "Mobile Safari, iPhone", "mobile_touch", $log, "unique-fallback-iphone");
+				return $this->uniqueIdTest($useragent, "Mobile Safari, iPhone", "mobile_touch", $log, $mail, $details, "unique-fallback-iphone");
 			}
-			if(preg_match("/touch/", $useragent, $matches)) {
-				return $this->uniqueIdTest($useragent, "Some tablet?", "tablet", $log, "unique-fallback-touch");
+			if(preg_match("/Android[^$]+touch/", $useragent, $matches)) {
+				return $this->uniqueIdTest($useragent, "Some tablet?", "tablet", $log, $mail, $details, "unique-fallback-touch");
 			}
 
 
@@ -664,8 +777,10 @@ class Identify {
 			$string .= ";\n\n ".'$_SERVER: ' . print_r($_SERVER, true);
 
 			// send mail
-			global $page;
-			$page->mail(array("subject" => "UNABLE TO IDENTIFY: $useragent", "message" => $string));
+			if($mail) {
+				global $page;
+				$page->mail(array("subject" => "UNABLE TO IDENTIFY: $useragent", "message" => $string));
+			}
 		}
 
 		return false;
@@ -673,7 +788,7 @@ class Identify {
 
 	// TODO: explore option to save these directly on device
 	// identified by Unique ID
-	function uniqueId($useragent, $device, $segment, $log) {
+	function uniqueId($useragent, $device, $segment, $log, $mail, $details) {
 		global $page;
 
 //		print "UNIQUE:" . $ua_id . ", " . $log;
@@ -687,29 +802,33 @@ class Identify {
 			return array("segment" => $segment);
 		}
 
-		// else manual indexing, return additional information
-		$query = new Query();
-		if($query->sql("SELECT item_id FROM ".$this->db_useragents." WHERE useragent = '$device'")) {
-			$device_id = $query->result(0, "item_id");
+		if($details) {
+			// else manual indexing, return additional information
+			$query = new Query();
+			if($query->sql("SELECT item_id FROM ".$this->db_useragents." WHERE useragent = '$device'")) {
+				$device_id = $query->result(0, "item_id");
 
-			// get complete device
-			$IC = new Item();
-			$device = $IC->getCompleteItem($device_id);
-			$device["method"] = "unique_id";
-			return $device;
+				// get complete device
+				$IC = new Item();
+				$device = $IC->getCompleteItem(array("id" => $device_id));
+				$device["method"] = "unique_id";
+				return $device;
+			}
 		}
 
 		// FATAL ERROR
 		// missing ID - notify imediately
-		global $page;
-		$page->mail(array("subject" => "MISSING UNIQUE ID: $device", "message" => $device.", ".$useragent));
+		if($mail) {
+			global $page;
+			$page->mail(array("subject" => "MISSING UNIQUE ID: $device", "message" => $device.", ".$useragent));
+		}
 
 		// no match - return false to continue identification
 		return array("segment" => $segment, "name" => $device, "id" => "unknown", "method" => "unique_id - missing id");
 	}
 
 	// Unique ID - still in test phase
-	function uniqueIdTest($useragent, $device, $segment, $log, $collection = "unique-test") {
+	function uniqueIdTest($useragent, $device, $segment, $log, $mail, $details, $collection = "unique-test") {
 
 //		print "UNIQUE TEST:" . $useragent . ", " . $device . ", " . $log;
 
@@ -728,23 +847,27 @@ class Identify {
 			return array("segment" => $segment);
 		}
 
-		// else manual indexing, return additional information
-		$query = new Query();
-		$sql = "SELECT item_id FROM ".$this->db_useragents." WHERE useragent = '$device'";
-		if($query->sql($sql)) {
-			$device_id = $query->result(0, "item_id");
+		if($details) {
+			// else manual indexing, return additional information
+			$query = new Query();
+			$sql = "SELECT item_id FROM ".$this->db_useragents." WHERE useragent = '$device'";
+			if($query->sql($sql)) {
+				$device_id = $query->result(0, "item_id");
 
-			// get complete device
-			$IC = new Item();
-			$device = $IC->getCompleteItem($device_id);
-			$device["method"] = "unique_id";
-			return $device;
+				// get complete device
+				$IC = new Item();
+				$device = $IC->getCompleteItem(array("id" => $device_id));
+				$device["method"] = "unique_id";
+				return $device;
+			}
 		}
 
 		// FATAL ERROR
 		// missing ID - notify imediately
-		global $page;
-		$page->mail(array("subject" => "MISSING UNIQUE ID: $device", "message" => $device.", ".$useragent));
+		if($mail) {
+			global $page;
+			$page->mail(array("subject" => "MISSING UNIQUE ID: $device", "message" => $device.", ".$useragent));
+		}
 
 		// no match - return false to continue identification
 		return array("segment" => $segment, "name" => $device, "id" => "unknown", "method" => "unique_id - missing id");

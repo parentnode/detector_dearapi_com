@@ -1,26 +1,22 @@
 <?php
+global $action;
+global $IC;
+global $itemtype;
+global $model;
 
-$action = $this->actions();
-
-$IC = new Item();
-$itemtype = "device";
-$model = $IC->typeObject($itemtype);
-
-$item = $IC->getCompleteItem($action[1]);
+$item = $IC->getCompleteItem(array("id" => $action[1]));
 $item_id = $item["item_id"];
-
 ?>
 <div class="scene defaultEdit <?= $itemtype ?>Edit">
 	<h1>Edit <?= $itemtype ?></h1>
 
 	<ul class="actions">
-		<li class="cancel"><a href="/admin/<?= $itemtype ?>/list" class="button">Back</a></li>
-		<li class="clone i:cloneDevice"><a href="/admin/<?= $itemtype ?>/cloneDevice/<?= $item_id ?>" class="button primary">Clone</a></li>
+		<?= $HTML->link("Back", "/admin/".$itemtype."/list", array("class" => "button", "wrapper" => "li.cancel")) ?>
+		<?= $HTML->link("Clone", "/admin/".$itemtype."/cloneDevice/".$item_id, array("class" => "button primary", "wrapper" => "li.clone.i:cloneDevice")) ?>
 	</ul>
 
 	<div class="item i:defaultEdit">
-		<form action="/admin/cms/update/<?= $item_id ?>" class="labelstyle:inject" method="post" enctype="multipart/form-data">
-
+		<?= $model->formStart("/admin/cms/update/".$item_id, array("class" => "labelstyle:inject")) ?>
 			<fieldset>
 				<?= $model->input("published_at", array("value" => date("Y-m", strtotime($item["published_at"])))) ?>
 				<?= $model->input("name", array("value" => $item["name"])) ?>
@@ -28,24 +24,23 @@ $item_id = $item["item_id"];
 			</fieldset>
 
 			<ul class="actions">
-				<li class="cancel"><a href="/admin/<?= $itemtype ?>/list" class="button key:esc">Back</a></li>
-				<li class="save"><input type="submit" value="Update" class="button primary key:s" /></li>
+				<?= $model->link("Back", "/admin/".$itemtype."/list", array("class" => "button key:esc", "wrapper" => "li.cancel")) ?>
+				<?= $model->submit("Update", array("class" => "primary key:s", "wrapper" => "li.save")) ?>
 			</ul>
-
-		</form>
+		<?= $model->formEnd() ?>
 	</div>
 
 	<h2>Tags</h2>
 	<div class="tags i:defaultTags item_id:<?= $item_id ?>">
-		<form action="/admin/cms/update/<?= $item_id ?>" class="labelstyle:inject" method="post" enctype="multipart/form-data">
+		<?= $model->formStart("/admin/cms/update/".$item_id, array("class" => "labelstyle:inject")) ?>
 			<fieldset>
 				<?= $model->input("tags") ?>
 			</fieldset>
 
 			<ul class="actions">
-				<li class="save"><input type="submit" value="Add tag" class="button primary" /></li>
+				<?= $model->submit("Add tag", array("class" => "primary", "wrapper" => "li.save")) ?>
 			</ul>
-		</form>
+		<?= $model->formEnd() ?>
 
 		<ul class="tags">
 <?		if($item["tags"]): ?>
@@ -60,16 +55,16 @@ $item_id = $item["item_id"];
 
 	<h2>Useragents</h2>
 	<div class="useragents i:editUseragents item_id:<?= $item_id ?>">
-		<form action="/admin/cms/<?= $itemtype ?>/<?= $item_id ?>/addUseragent" class="labelstyle:inject" method="post" enctype="multipart/form-data">
+		<?= $model->formStart("/admin/cms/".$itemtype."/".$item_id."/addUseragent", array("class" => "labelstyle:inject")) ?>
+		<!--form action="/admin/cms/<?= $itemtype ?>/<?= $item_id ?>/addUseragent" class="labelstyle:inject" method="post" enctype="multipart/form-data"-->
 			<fieldset>
 				<?= $model->input("useragent") ?>
 			</fieldset>
 
 			<ul class="actions">
-				<li class="save"><input type="submit" value="Add useragent" class="button primary" /></li>
+				<?= $model->submit("Add useragent", array("class" => "primary", "wrapper" => "li.save")) ?>
 			</ul>
-
-		</form>
+		<?= $model->formEnd() ?>
 
 		<ul class="useragents">
 <?		if($item["useragents"]): ?>

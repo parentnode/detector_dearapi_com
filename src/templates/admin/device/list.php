@@ -1,5 +1,9 @@
 <?php
-$action = $this->actions();
+global $action;
+global $IC;
+global $itemtype;
+global $model;
+
 
 $tags = getPost("tags");
 $search = getPost("search");
@@ -10,22 +14,18 @@ $search_string = getPost("search_string");
 
 // if not new search - check for stored search values
 if(!$search) {
-	if(Session::value("device_search")) {
-		$search_string = Session::value("device_search");
+	if(session()->value("device_search")) {
+		$search_string = session()->value("device_search");
 		$search = 1;
 	}
-	if(Session::value("device_search_tags")) {
-		$tags = Session::value("device_search_tags");
+	if(session()->value("device_search_tags")) {
+		$tags = session()->value("device_search_tags");
 		$search = 1;
 	}
 }
 
 //print $search.",".$search_string.",".$tags."<br>";
 
-
-$IC = new Item();
-$itemtype = "device";
-$model = $IC->typeObject($itemtype);
 
 
 if($search && ($search_string || $tags)) {
@@ -34,17 +34,17 @@ if($search && ($search_string || $tags)) {
 	// save search
 	if($search_string) {
 		$search_parameters["search_string"] = $search_string;
-		Session::value("device_search", $search_string);
+		session()->value("device_search", $search_string);
 	}
 	else {
-		Session::reset("device_search");
+		session()->reset("device_search");
 	}
 	if($tags) {
 		$search_parameters["tags"] = $tags;
-		Session::value("device_search_tags", $tags);
+		session()->value("device_search_tags", $tags);
 	}
 	else {
-		Session::reset("device_search_tags");
+		session()->reset("device_search_tags");
 	}
 	
 	$all_items = $model->searchDevices($search_parameters);
@@ -52,8 +52,8 @@ if($search && ($search_string || $tags)) {
 else {
 	$all_items = $IC->getItems(array("itemtype" => $itemtype, "order" => "modified_at DESC", "limit" => 50));
 
-	Session::reset("device_search");
-	Session::reset("device_search_tags");
+	session()->reset("device_search");
+	session()->reset("device_search_tags");
 }
 
 ?>
@@ -61,16 +61,16 @@ else {
 	<h1>Devices</h1>
 
 	<ul class="actions">
-		<li class="new"><a href="/admin/<?= $itemtype ?>/new" class="button primary">New <?= $itemtype ?></a></li>
+		<?= $HTML->link("New ".$itemtype, "/admin/".$itemtype."/new", array("class" => "button primary key:n", "wrapper" => "li.new")) ?>
 	</ul>
 
-	<form class="options labelstyle:inject i:searchDevice" action="/admin/<?= $itemtype ?>/list" method="post" novalidate="novalidate">
+	<?= $model->formStart("/admin/".$itemtype."/list", array("class" => "options i:searchDevice labelstyle:inject")) ?>
 		<?= $model->input("search", array("type" => "hidden", "value" => "true")) ?>
 		<fieldset>
 			<?= $model->input("search_string", array("type" => "string", "label" => "Global search (regular expression)", "value" => $search_string)) ?>
 		</fieldset>
 		<ul class="actions">
-			<li><input type="submit" value="Search" class="button" /></li>
+			<?= $model->submit("Search", array("wrapper" => "li.search")) ?>
 		</ul>
 <? 		if($tags): ?>
 		<div class="tags">
@@ -84,13 +84,13 @@ else {
 			</ul>
 		</div>
 <?		endif; ?>
-	</form>
+	<?= $model->formEnd() ?>
 
 	<div class="all_items i:defaultList taggable filters">
 <?		if($all_items): ?>
 		<ul class="items">
 <?			foreach($all_items as $item): 
-				$item = $IC->extendItem($item); ?>
+				$item = $IC->extendItem($item, array("tags" => true)); ?>
 			<li class="item item_id:<?= $item["id"] ?>">
 				<h3><?= $item["name"] ?></h3>
 
@@ -103,17 +103,9 @@ else {
 <?				endif; ?>
 
 				<ul class="actions">
-					<li class="edit"><a href="/admin/<?= $itemtype ?>/edit/<?= $item["id"] ?>" class="button">Edit</a></li>
-					<li class="delete">
-						<form action="/admin/cms/delete/<?= $item["id"] ?>" class="i:formDefaultDelete" method="post" enctype="multipart/form-data">
-							<input type="submit" value="Delete" class="button delete" />
-						</form>
-					</li>
-					<li class="status">
-						<form action="/admin/cms/<?= ($item["status"] == 1 ? "disable" : "enable") ?>/<?= $item["id"] ?>" class="i:formDefaultStatus" method="post" enctype="multipart/form-data">
-							<input type="submit" value="<?= ($item["status"] == 1 ? "Disable" : "Enable") ?>" class="button status" />
-						</form>
-					</li>
+					<?= $HTML->link("Edit", "/admin/".$itemtype."/edit/".$item["id"], array("class" => "button", "wrapper" => "li.edit")) ?>
+					<?= $HTML->deleteButton("Delete", "/admin/cms/delete/".$item["id"], array("js" => true)) ?>
+					<?= $HTML->statusButton("Enable", "Disable", "/admin/cms/status", $item, array("js" => true)) ?>
 				</ul>
 			 </li>
 <?			endforeach; ?>
