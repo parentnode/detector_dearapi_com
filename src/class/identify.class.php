@@ -78,7 +78,7 @@ class Identify {
 			// Unique identifiers
 
 			// IE + IEchromeFrame specific (limit scope for extensive search)
-			if(preg_match("/^Mozilla\/[4-5]{1}.0[^$]+MSIE/", $useragent)) {
+			if(preg_match("/Mozilla\/[4-5]{1}.0[^$]+MSIE/", $useragent)) {
 
 				// Desktop
 				if(!preg_match("/phone|opera|chromeframe|mobile|touch|AppleWebKit|Gecko/i", $useragent)) {
@@ -117,14 +117,14 @@ class Identify {
 			// TODO: consider special segment for IE tablets? Not yet.
 			// Mozilla/5.0 (Windows NT 6.1; WOW64; Trident/7.0; EIE10;DADKMSN; rv:11.0) like Gecko 
 			// IE 11
-			if(preg_match("/^Mozilla\/5.0[^$]+Trident\/7.0[^$]+rv:11.0\) like Gecko/", $useragent) && !preg_match("/MSIE/i", $useragent)) {
+			if(preg_match("/Mozilla\/5.0[^$]+Trident\/7.0[^$]+rv:11.0\) like Gecko/", $useragent) && !preg_match("/MSIE/i", $useragent)) {
 				return $this->uniqueIdTest($useragent, "MSIE 11, Desktop", "desktop_ie", $log, $mail, $details, "unique-test-ie");
 			}
 
 
 
 			// Firefox specific (limit scope for extensive search)
-			if(preg_match("/^Mozilla\/5.0[^$]+Firefox/", $useragent) && !preg_match("/phone|mobile|fennec|tablet|maemo|kylo|trident|touch/i", $useragent)) {
+			if(preg_match("/Mozilla\/5.0[^$]+Firefox/", $useragent) && !preg_match("/phone|mobile|fennec|tablet|maemo|kylo|trident|touch/i", $useragent)) {
 
 				// Firefox - IN TEST
 				if(preg_match("/rv:([5-9]{1}|[0-9]{2}).0[^$]+Gecko[^$]+Firefox\/([5-9]{1}|[0-9]{2}).0/", $useragent, $matches)) {
@@ -151,7 +151,7 @@ class Identify {
 			}
 
 			// Chrome specific (limit scope for extensive search)
-			if(preg_match("/^Mozilla\/5.0[^$]+Chrome/", $useragent) && !preg_match("/phone|mobile|chromeframe|android/i", $useragent)) {
+			if(preg_match("/Mozilla\/5.0[^$]+Chrome/", $useragent) && !preg_match("/phone|mobile|chromeframe|android/i", $useragent)) {
 
 				// Chrome for Desktop >= version 5
 				if(preg_match("/AppleWebKit\/53[3-7]{1}[^$]+Gecko[^$]+Chrome\/([0-9]{1,2}).[^$]+Safari\/53[3-7]{1}/", $useragent, $matches)) {
@@ -170,7 +170,7 @@ class Identify {
 			}
 
 			// Facebook iOS specific (limit scope for extensive search)
-			if(preg_match("/^Mozilla\/5.0[^$]+FBAN\/FBIOS/", $useragent) && !preg_match("/android/i", $useragent)) {
+			if(preg_match("/Mozilla\/5.0[^$]+FBAN\/FBIOS/", $useragent) && !preg_match("/android/i", $useragent)) {
 
 				// Facebook iPad app
 				if(preg_match("/iPad[^$]+AppleWebKit\/53[4-7]{1}[^$]+Gecko[^$]+FBSV\/([0-9]{1})./", $useragent, $matches)) {
@@ -190,7 +190,7 @@ class Identify {
 			}
 
 			// iOS chrome specific (limit scope for extensive search)
-			if(preg_match("/^Mozilla\/5.0[^$]+CriOS/", $useragent) && !preg_match("/chromeframe|android/i", $useragent)) {
+			if(preg_match("/Mozilla\/5.0[^$]+CriOS/", $useragent) && !preg_match("/chromeframe|android/i", $useragent)) {
 
 				// iPhone last, because "iPhone" might occur in iPod and iPad useragents
 				// Chrome for iPad >= version 19
@@ -227,7 +227,7 @@ class Identify {
 
 
 			// Desktop Safari specific (limit scope for extensive search)
-			if(preg_match("/^Mozilla\/5.0[^$]+AppleWebKit\/[0-9]{3}/", $useragent) && !preg_match("/htc|mobile|iphone|ipod|ipad|android|symbian|blackberry|trident/i", $useragent)) {
+			if(preg_match("/Mozilla\/5.0[^$]+AppleWebKit\/[0-9]{3}/", $useragent) && !preg_match("/htc|mobile|iphone|ipod|ipad|android|symbian|blackberry|trident/i", $useragent)) {
 
 				// Safari 5-7
 				if(preg_match("/AppleWebKit\/53[3-7]{1}[^$]+Gecko[^$]+Version\/([5-7]{1})[^$]+Safari\/53[3-7]{1}/", $useragent, $matches)) {
@@ -252,7 +252,7 @@ class Identify {
 			}
 
 			// iPad Mobile Safari specific (limit scope for extensive search)
-			if(preg_match("/^Mozilla\/5.0[^$]+iPad[^$]+CPU OS[^$]+AppleWebKit/", $useragent) && !preg_match("/crios|htc|ipod|android|symbian|blackberry|fban|opera|firefox/i", $useragent)) {
+			if(preg_match("/Mozilla\/5.0[^$]+iPad[^$]+CPU OS[^$]+AppleWebKit/", $useragent) && !preg_match("/crios|htc|ipod|android|symbian|blackberry|fban|opera|firefox/i", $useragent)) {
 
 				// more often then not, version section of useragent is missing
 				// iPad Mobile Safari 5-7 (BUILD, WebKit and Version aligned in 95% of cases)
@@ -280,7 +280,7 @@ class Identify {
 			}
 
 			// iPod Mobile Safari specific (limit scope for extensive search)
-			if(preg_match("/^Mozilla\/5.0[^$]+iPod[^$]+iPhone OS[^$]+AppleWebKit/", $useragent) && !preg_match("/crios|htc|ipad|android|symbian|blackberry|fban|opera|firefox/i", $useragent)) {
+			if(preg_match("/Mozilla\/5.0[^$]+iPod[^$]+iPhone OS[^$]+AppleWebKit/", $useragent) && !preg_match("/crios|htc|ipad|android|symbian|blackberry|fban|opera|firefox/i", $useragent)) {
 
 				// more often then not, version section of useragent is missing
 				// iPod Mobile Safari 5-7 (BUILD, WebKit and Version aligned in 95% of cases)
@@ -307,7 +307,7 @@ class Identify {
 			}
 
 			// iPhone Mobile Safari specific (limit scope for extensive search)
-			if(preg_match("/^Mozilla\/5.0[^$]+iPhone[^$]+iPhone OS[^$]+AppleWebKit/", $useragent) && !preg_match("/crios|htc|ipod|ipad|android|symbian|blackberry|fban|opera|firefox/i", $useragent)) {
+			if(preg_match("/Mozilla\/5.0[^$]+iPhone[^$]+iPhone OS[^$]+AppleWebKit/", $useragent) && !preg_match("/crios|htc|ipod|ipad|android|symbian|blackberry|fban|opera|firefox/i", $useragent)) {
 
 				// more often then not, version section of useragent is missing
 				// iPhone Mobile Safari 5-7 (BUILD, WebKit and Version aligned in 95% of cases)
@@ -341,7 +341,7 @@ class Identify {
 			// TODO: 
 
 			// Android specific scope
-			if(preg_match("/^Mozilla\/5.0[^$]+Linux[^$]+Android/", $useragent) && !preg_match("/crios|ipod|ipad|symbian|blackberry|fban|firefox/i", $useragent)) {
+			if(preg_match("/Mozilla\/5.0[^$]+Linux[^$]+Android/", $useragent) && !preg_match("/crios|ipod|ipad|symbian|blackberry|fban|firefox/i", $useragent)) {
 
 				// Android 3+4 specific (limit scope for extensive search)
 				if(preg_match("/Android [234]{1}/", $useragent) && preg_match("/AppleWebKit\/53[3-7]{1}/", $useragent)) {

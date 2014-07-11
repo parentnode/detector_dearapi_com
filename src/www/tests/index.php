@@ -77,6 +77,8 @@ $ua[] = "Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_6_3; HTC_Flyer_P510e; en-d
 $ua[] = "Mozilla/5.0 (Linux; U; Android 4.0.3; da-dk; Sony Tablet S Build/TISU0143) AppleWebKit/534.30 (KHTML, like Gecko) Version/4.0 Safari/534.30";
 $ua[] = "Mozilla/5.0 (Linux; Android 4.1.2; ST27i Build/6.2.A.1.100) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/33.0.1750.166 Mobile Safari/537.36";
 
+$ua[] = "\'Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Trident/5.0)\'";
+
 //$ua[] = "";
 
 
