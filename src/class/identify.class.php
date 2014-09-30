@@ -155,8 +155,8 @@ class Identify {
 
 				// Chrome for Desktop >= version 5
 				if(preg_match("/AppleWebKit\/53[3-7]{1}[^$]+Gecko[^$]+Chrome\/([0-9]{1,2}).[^$]+Safari\/53[3-7]{1}/", $useragent, $matches)) {
-					// version check - >= 36, keep in test mode
-					if($matches[1] >= 36) {
+					// version check - >= 38, keep in test mode
+					if($matches[1] >= 38) {
 						return $this->uniqueIdTest($useragent, "Chrome ".$matches[1].", Desktop", "desktop", $log, $mail, $details, "unique-test-chrome");
 					}
 				}
@@ -225,16 +225,27 @@ class Identify {
 
 			}
 
+			// Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10) AppleWebKit/600.1.8 (KHTML, like Gecko)
+			//
+			// Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_5) AppleWebKit/600.1.17 (KHTML, like Gecko) Version/7.1 Safari/537.85.10
+			//
+			// Mozilla/5.0 (iPhone; CPU iPhone OS 8_0_2 like Mac OS X) AppleWebKit/600.1.4 (KHTML, like Gecko) Version/8.0 Mobile/12A405 Safari/600.1.4
+			//
+			// Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10) AppleWebKit/600.1.8 (KHTML, like Gecko) Version/8.0 Safari/600.1.8
+
+
 
 			// Desktop Safari specific (limit scope for extensive search)
 			if(preg_match("/Mozilla\/5.0[^$]+AppleWebKit\/[0-9]{3}/", $useragent) && !preg_match("/htc|mobile|iphone|ipod|ipad|android|symbian|blackberry|trident/i", $useragent)) {
 
+
 				// Safari 5-7
 				if(preg_match("/AppleWebKit\/53[3-7]{1}[^$]+Gecko[^$]+Version\/([5-7]{1})[^$]+Safari\/53[3-7]{1}/", $useragent, $matches)) {
-					if($matches[1] <= 7) {
-						return $this->uniqueId($useragent, "Safari ".$matches[1].", Desktop", "desktop", $log, $mail, $details);
-					}
-					else {
+					return $this->uniqueId($useragent, "Safari ".$matches[1].", Desktop", "desktop", $log, $mail, $details);
+				}
+				// looser detection of 7+8 with new Webkit version
+				else if(preg_match("/Gecko[^$]+Version\/([5-8]{1})/", $useragent, $matches)) {
+					if($matches[1] >= 7) {
 						return $this->uniqueIdTest($useragent, "Safari ".$matches[1].", Desktop", "desktop", $log, $mail, $details, "unique-test-safari");
 					}
 				}
@@ -259,14 +270,21 @@ class Identify {
 				if(preg_match("/AppleWebKit\/53([5-7]{1})[^$]+Gecko[^$]+Mobile\/(9|10|11)/", $useragent, $matches)) {
 //					print $matches[1] . ", " . ($matches[2]-4)."\n";
 					// validated match, no need for test
-					if($matches[1] == ($matches[2]-4)) {
+//					if($matches[1] == ($matches[2]-4)) {
 						return $this->uniqueId($useragent, "Mobile Safari ".$matches[1].", iPad", "tablet", $log, $mail, $details);
-					}
-					// probably good, keep testing
-					else {
+//					}
+					// // probably good, keep testing
+					// else {
+					// 	return $this->uniqueIdTest($useragent, "Mobile Safari ".$matches[1].", iPad", "tablet", $log, $mail, $details, "unique-test-ipad");
+					// }
+				}
+				// looser detection of 7+8 with new Webkit version
+				else if(preg_match("/Gecko[^$]+Version\/([5-8]{1})/", $useragent, $matches)) {
+					if($matches[1] >= 7) {
 						return $this->uniqueIdTest($useragent, "Mobile Safari ".$matches[1].", iPad", "tablet", $log, $mail, $details, "unique-test-ipad");
 					}
 				}
+
 
 				// iPad Mobile Safari 4-5 (BUILD, WebKit and Version rarely aligned)
 				if(preg_match("/AppleWebKit\/53([1-4]{1})[^$]+Gecko[^$]+Mobile\/([789]{1})/", $useragent, $matches)) {
@@ -286,11 +304,18 @@ class Identify {
 				// iPod Mobile Safari 5-7 (BUILD, WebKit and Version aligned in 95% of cases)
 				if(preg_match("/AppleWebKit\/53([5-7]{1})[^$]+Gecko[^$]+Mobile\/(9|10|11)/", $useragent, $matches)) {
 					// validated match, no need for test
-					if($matches[1] == ($matches[2]-4)) {
+//					if($matches[1] == ($matches[2]-4)) {
 						return $this->uniqueId($useragent, "Mobile Safari ".$matches[1].", iPod", "mobile_touch", $log, $mail, $details);
-					}
-					// probably good, keep testing
-					else {
+					// }
+					// // probably good, keep testing
+					// else {
+					// 	return $this->uniqueIdTest($useragent, "Mobile Safari ".$matches[1].", iPod", "mobile_touch", $log, $mail, $details, "unique-test-ipod");
+					// }
+				}
+
+				// looser detection of 7+8 with new Webkit version
+				else if(preg_match("/Gecko[^$]+Version\/([5-8]{1})/", $useragent, $matches)) {
+					if($matches[1] >= 7) {
 						return $this->uniqueIdTest($useragent, "Mobile Safari ".$matches[1].", iPod", "mobile_touch", $log, $mail, $details, "unique-test-ipod");
 					}
 				}
@@ -313,11 +338,17 @@ class Identify {
 				// iPhone Mobile Safari 5-7 (BUILD, WebKit and Version aligned in 95% of cases)
 				if(preg_match("/AppleWebKit\/53([5-7]{1})[^$]+Gecko[^$]+Mobile\/(9|10|11)/", $useragent, $matches)) {
 					// validated match, no need for test
-					if($matches[1] == ($matches[2]-4)) {
+//					if($matches[1] == ($matches[2]-4)) {
 						return $this->uniqueId($useragent, "Mobile Safari ".$matches[1].", iPhone", "mobile_touch", $log, $mail, $details);
-					}
-					// probably good, keep testing
-					else {
+					// }
+					// // probably good, keep testing
+					// else {
+					// 	return $this->uniqueIdTest($useragent, "Mobile Safari ".$matches[1].", iPhone", "mobile_touch", $log, $mail, $details, "unique-test-iphone");
+					// }
+				}
+				// looser detection of 7+8 with new Webkit version
+				else if(preg_match("/Gecko[^$]+Version\/([5-8]{1})/", $useragent, $matches)) {
+					if($matches[1] >= 7) {
 						return $this->uniqueIdTest($useragent, "Mobile Safari ".$matches[1].", iPhone", "mobile_touch", $log, $mail, $details, "unique-test-iphone");
 					}
 				}
