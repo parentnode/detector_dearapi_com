@@ -14,6 +14,7 @@ $action = $page->actions();
 
 
 $ua = array();
+$ua[] = "Martinisarealbadass";
 $ua[] = "Mozilla/5.0 (Macintosh; U; Intel Mac OS X; it-it) AppleWebKit/523.12 (KHTML, like Gecko) Version/3.0.4 Safari/523.12";
 $ua[] = "Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 5.1; Trident/4.0; GTB7.2; chromeframe/16.0.912.75; .NET CLR 1.1.4322; .NET CLR 2.0.50727; .NET CLR 3.0.4506.2152; .NET CLR 3.5.30729; .NET4.0C)";
 $ua[] = "Mozilla/5.0 (Linux; U; Android 2.3.4; da-dk; LT18i Build/4.0.2.A.0.42) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 Mobile Safari/533.1";

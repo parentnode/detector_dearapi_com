@@ -128,7 +128,7 @@ class Identify {
 
 				// Firefox - IN TEST
 				if(preg_match("/rv:([5-9]{1}|[0-9]{2}).0[^$]+Gecko[^$]+Firefox\/([5-9]{1}|[0-9]{2}).0/", $useragent, $matches)) {
-					// test version >= 33
+					// test version >= 34
 					if($matches[1] == $matches[1] && $matches[1] >= 34) {
 						return $this->uniqueIdTest($useragent, "Firefox ".$matches[1].", Desktop", "desktop", $log, $mail, $details, "unique-test-firefox");
 					}
@@ -155,8 +155,8 @@ class Identify {
 
 				// Chrome for Desktop >= version 5
 				if(preg_match("/AppleWebKit\/53[3-7]{1}[^$]+Gecko[^$]+Chrome\/([0-9]{1,2}).[^$]+Safari\/53[3-7]{1}/", $useragent, $matches)) {
-					// version check - >= 38, keep in test mode
-					if($matches[1] >= 38) {
+					// version check - >= 40, keep in test mode
+					if($matches[1] >= 40) {
 						return $this->uniqueIdTest($useragent, "Chrome ".$matches[1].", Desktop", "desktop", $log, $mail, $details, "unique-test-chrome");
 					}
 				}
@@ -193,32 +193,34 @@ class Identify {
 			if(preg_match("/Mozilla\/5.0[^$]+CriOS/", $useragent) && !preg_match("/chromeframe|android/i", $useragent)) {
 
 				// iPhone last, because "iPhone" might occur in iPod and iPad useragents
+				// CriOS occasionally uses webkit/600
+
 				// Chrome for iPad >= version 19
-				if(preg_match("/iPad[^$]+AppleWebKit\/53[4-7]{1}[^$]+Gecko[^$]+CriOS\/([0-9]{2}).0/", $useragent, $matches)) {
-					if($matches[1] >= 36) {
+				if(preg_match("/iPad[^$]+AppleWebKit\/(53[4-7]{1}|600)[^$]+Gecko[^$]+CriOS\/([0-9]{2}).0/", $useragent, $matches)) {
+					if($matches[2] >= 36) {
 						return $this->uniqueIdTest($useragent, "Chrome ".$matches[1].", iPad", "tablet", $log, $mail, $details, "unique-test-crios");
 					}
-					else if($matches[1] >= 19) {
+					else if($matches[2] >= 19) {
 						return $this->uniqueId($useragent, "Chrome ".$matches[1].", iPad", "tablet", $log, $mail, $details);
 					}
 				}
 
 				// Chrome for iPod >= version 19
-				if(preg_match("/iPod[^$]+AppleWebKit\/53[4-7]{1}[^$]+Gecko[^$]+CriOS\/([0-9]{2}).0/", $useragent, $matches)) {
-					if($matches[1] >= 36) {
+				if(preg_match("/iPod[^$]+AppleWebKit\/(53[4-7]{1}|600)[^$]+Gecko[^$]+CriOS\/([0-9]{2}).0/", $useragent, $matches)) {
+					if($matches[2] >= 36) {
 						return $this->uniqueIdTest($useragent, "Chrome ".$matches[1].", iPod", "mobile_touch", $log, $mail, $details, "unique-test-crios");
 					}
-					else if($matches[1] >= 19) {
+					else if($matches[2] >= 19) {
 						return $this->uniqueId($useragent, "Chrome ".$matches[1].", iPod", "mobile_touch", $log, $mail, $details);
 					}
 				}
 
 				// Chrome for iPhone >= version 19
-				if(preg_match("/iPhone[^$]+AppleWebKit\/53[4-7]{1}[^$]+Gecko[^$]+CriOS\/([0-9]{2}).0/", $useragent, $matches)) {
-					if($matches[1] >= 36) {
+				if(preg_match("/iPhone[^$]+AppleWebKit\/(53[4-7]{1}|600)[^$]+Gecko[^$]+CriOS\/([0-9]{2}).0/", $useragent, $matches)) {
+					if($matches[2] >= 36) {
 						return $this->uniqueIdTest($useragent, "Chrome ".$matches[1].", iPhone", "mobile_touch", $log, $mail, $details, "unique-test-crios");
 					}
-					else if($matches[1] >= 19) {
+					else if($matches[2] >= 19) {
 						return $this->uniqueId($useragent, "Chrome ".$matches[1].", iPhone", "mobile_touch", $log, $mail, $details);
 					}
 				}
@@ -243,8 +245,8 @@ class Identify {
 				if(preg_match("/AppleWebKit\/53[3-7]{1}[^$]+Gecko[^$]+Version\/([5-7]{1})[^$]+Safari\/53[3-7]{1}/", $useragent, $matches)) {
 					return $this->uniqueId($useragent, "Safari ".$matches[1].", Desktop", "desktop", $log, $mail, $details);
 				}
-				// looser detection of 7+8 with new Webkit version
-				else if(preg_match("/Gecko[^$]+Version\/([5-8]{1})/", $useragent, $matches)) {
+				// looser detection of 7+8 with new Webkit version 600
+				else if(preg_match("/AppleWebKit\/(53[4-7]{1}|600)[^$]+Gecko[^$]+Version\/([5-8]{1})/", $useragent, $matches)) {
 					if($matches[1] >= 7) {
 						return $this->uniqueIdTest($useragent, "Safari ".$matches[1].", Desktop", "desktop", $log, $mail, $details, "unique-test-safari");
 					}
@@ -278,8 +280,8 @@ class Identify {
 					// 	return $this->uniqueIdTest($useragent, "Mobile Safari ".$matches[1].", iPad", "tablet", $log, $mail, $details, "unique-test-ipad");
 					// }
 				}
-				// looser detection of 7+8 with new Webkit version
-				else if(preg_match("/Gecko[^$]+Version\/([5-8]{1})/", $useragent, $matches)) {
+				// looser detection of 7+8 with new Webkit version 600
+				else if(preg_match("/AppleWebKit\/(53[4-7]{1}|600)[^$]+Gecko[^$]+Version\/([5-8]{1})/", $useragent, $matches)) {
 					if($matches[1] >= 7) {
 						return $this->uniqueIdTest($useragent, "Mobile Safari ".$matches[1].", iPad", "tablet", $log, $mail, $details, "unique-test-ipad");
 					}
@@ -313,8 +315,8 @@ class Identify {
 					// }
 				}
 
-				// looser detection of 7+8 with new Webkit version
-				else if(preg_match("/Gecko[^$]+Version\/([5-8]{1})/", $useragent, $matches)) {
+				// looser detection of 7+8 with new Webkit version 600
+				else if(preg_match("/AppleWebKit\/(53[4-7]{1}|600)[^$]+Gecko[^$]+Version\/([5-8]{1})/", $useragent, $matches)) {
 					if($matches[1] >= 7) {
 						return $this->uniqueIdTest($useragent, "Mobile Safari ".$matches[1].", iPod", "mobile_touch", $log, $mail, $details, "unique-test-ipod");
 					}
@@ -346,8 +348,8 @@ class Identify {
 					// 	return $this->uniqueIdTest($useragent, "Mobile Safari ".$matches[1].", iPhone", "mobile_touch", $log, $mail, $details, "unique-test-iphone");
 					// }
 				}
-				// looser detection of 7+8 with new Webkit version
-				else if(preg_match("/Gecko[^$]+Version\/([5-8]{1})/", $useragent, $matches)) {
+				// looser detection of 7+8 with new Webkit version 600
+				else if(preg_match("/AppleWebKit\/(53[4-7]{1}|600)[^$]+Gecko[^$]+Version\/([5-8]{1})/", $useragent, $matches)) {
 					if($matches[1] >= 7) {
 						return $this->uniqueIdTest($useragent, "Mobile Safari ".$matches[1].", iPhone", "mobile_touch", $log, $mail, $details, "unique-test-iphone");
 					}
@@ -542,7 +544,7 @@ class Identify {
 			if(preg_match("/bot|spider|crawler|Nutch|fetcher|feed|WordPress/i", $useragent) && !preg_match("/AppleWebKit|Gecko|MSIE|Trident|Windows|Mac OS X|Linux/i", $useragent)) {
 
 				// wellknown bots
-				if(preg_match("/DotBot|AcoonBot|MJ12bot|Daumoa|linkdex|WordPress|UnwindFetchor|Nutch|Feedfetcher-Google|CheburashkaSearchBot/", $useragent)) {
+				if(preg_match("/AdvBot|RSSMicro|OpenLinkProfiler|IssueCrawler|Screaming Frog|msnbot|rogerbot|DotBot|AcoonBot|MJ12bot|Daumoa|linkdex|WordPress|UnwindFetchor|Nutch|Feedfetcher-Google|CheburashkaSearchBot/", $useragent)) {
 					return $this->uniqueId($useragent, "Bot, Generic", "basic", $log, $mail, $details);
 				}
 				// bots - IN TEST
@@ -814,7 +816,13 @@ class Identify {
 			}
 		}
 
-		return false;
+		if($details) {
+			return array("segment" => "desktop", "name" => "UNIDENTIFIED", "method" => "UNIDENTIFIED");
+		}
+
+		return array("segment" => "desktop");
+
+//		return false;
 	}
 
 	// TODO: explore option to save these directly on device

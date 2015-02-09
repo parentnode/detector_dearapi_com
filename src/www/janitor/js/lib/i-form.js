@@ -551,7 +551,7 @@ Util.Objects["unidentifiedList"] = new function() {
 		div.addOption = function(option) {
 
 			// check options index for current option
-			if(this._add_to.identified_options.indexOf(option.id) == -1) {
+			if(this._add_to.identified_options && this._add_to.identified_options.indexOf(option.id) == -1) {
 				this._add_to.identified_options.push(option.id);
 				var li_option = u.ae(this._add_to._list, "li", {"html":option.name});
 				li_option.details = option;
@@ -987,9 +987,10 @@ Util.Objects["unidentifiedList"] = new function() {
 								if(response.cms_object.id) {
 									this._identified = response.cms_object;
 								}
+
 							}
 							// bad result - device not identified
-							else {
+							if(!this._identified) {
 								this._identified = {};
 								this._identified.id = "unknown";
 								this._identified.name = "Unknown";
@@ -1000,7 +1001,7 @@ Util.Objects["unidentifiedList"] = new function() {
 
 							// check load status
 							this.div.wait_for_uas--;
-							if(!this.div.wait_for_uas) {
+							if(!this.div.wait_for_uas && this.div._add_to) {
 								u.rc(this.div._add_to, "loading");
 							}
 
