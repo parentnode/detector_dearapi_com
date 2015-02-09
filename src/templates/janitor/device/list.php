@@ -64,27 +64,29 @@ else {
 		<?= $JML->listNew(array("label" => "New ".$itemtype)) ?>
 	</ul>
 
-	<?= $model->formStart("list", array("class" => "options i:searchDevice labelstyle:inject")) ?>
-		<?= $model->input("search", array("type" => "hidden", "value" => "true")) ?>
-		<fieldset>
-			<?= $model->input("search_string", array("type" => "string", "label" => "Global search (regular expression)", "value" => $search_string)) ?>
-		</fieldset>
-		<ul class="actions">
-			<?= $model->submit("Search", array("wrapper" => "li.search")) ?>
-		</ul>
-<? 		if($tags): ?>
-		<div class="tags">
-			<ul class="tags">
-<? 			$tags = explode(";", $tags);
-			foreach($tags as $tag):
-				list($context, $value) = explode(":", $tag);
-				 ?>
-				<li class="tag"><span class="context"><?= $context ?></span><span class="value"><?= $value ?></span></li>
-<?			endforeach; ?>
+	<div class="search i:searchDevice"<?= $JML->jsData() ?>>
+		<?= $model->formStart("list", array("class" => "options labelstyle:inject")) ?>
+			<?= $model->input("search", array("type" => "hidden", "value" => "true")) ?>
+			<fieldset>
+				<?= $model->input("search_string", array("type" => "string", "label" => "Global search (regular expression)", "value" => $search_string)) ?>
+			</fieldset>
+			<ul class="actions">
+				<?= $model->submit("Search", array("wrapper" => "li.search")) ?>
 			</ul>
-		</div>
-<?		endif; ?>
-	<?= $model->formEnd() ?>
+	<? 		if($tags): ?>
+			<div class="tags">
+				<ul class="tags">
+	<? 			$tags = explode(";", $tags);
+				foreach($tags as $tag):
+					list($context, $value) = explode(":", $tag);
+					 ?>
+					<li class="tag"><span class="context"><?= $context ?></span><span class="value"><?= $value ?></span></li>
+	<?			endforeach; ?>
+				</ul>
+			</div>
+	<?		endif; ?>
+		<?= $model->formEnd() ?>
+	</div>
 
 	<div class="all_items i:defaultList taggable filters"<?= $JML->jsData() ?>>
 <?		if($all_items): ?>

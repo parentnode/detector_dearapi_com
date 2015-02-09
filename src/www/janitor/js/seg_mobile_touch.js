@@ -7916,7 +7916,7 @@ Util.Objects["defaultList"] = new function() {
 			u.t.resetTimer(this.t_scroll);
 			this.scrolled();
 		}
-		var event_id = u.e.addWindowScrollEvent(div, div._scrollHandler);
+		div.scroll_event_id = u.e.addWindowScrollEvent(div, div._scrollHandler);
 		div.buildNode = function(node) {
 			node._item_id = u.cv(node, "item_id");
 			node._variant = u.cv(node, "variant");

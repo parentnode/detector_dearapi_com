@@ -41,7 +41,15 @@ else {
 		<p>A total of unidentified <?= pluralize(count($all_items), "useragent", "useragents")?> were returned by the server</p>
 	</div>
 
-	<div class="all_items i:unidentifiedList filters">
+	<div class="all_items i:unidentifiedList filters"
+		data-csrf-token="<?= session()->value("csrf") ?>"
+		data-useragent-delete="<?= $this->validPath("/janitor/device/deleteUnidentified") ?>"
+		data-useragent-details="<?= $this->validPath("/janitor/device/unidentifiedUseragentDetails") ?>"
+		data-useragent-identify="<?= $this->validPath("/janitor/device/identifyUnidentifiedId") ?>"
+		data-useragent-add="<?= $this->validPath("/janitor/device/addUnidentifiedToDevice") ?>"
+		data-device-clone="<?= $this->validPath("/janitor/device/cloneDevice") ?>"
+		data-device-list="<?= $this->validPath("/janitor/device/list") ?>"
+	>
 <?		if($all_items): ?>
 		<ul class="items">
 <?			foreach($all_items as $item): ?>

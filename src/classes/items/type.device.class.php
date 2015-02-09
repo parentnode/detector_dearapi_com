@@ -432,6 +432,7 @@ class TypeDevice extends Itemtype {
 
 
 	// delete unidentified useragent
+	// /janitor/device/deleteUnidentified/#ua_id#
 	function deleteUnidentified($action) {
 		
 		// check parameter count

@@ -1,11 +1,22 @@
+u.bug_force = true;
+
 // device search 
 Util.Objects["searchDevice"] = new function() {
-	this.init = function(form) {
+	this.init = function(div) {
+
+//		u.bug("searchDevice");
+
+		var form = u.qs("form", div);
+		form.div = div;
+		div.csrf_token = div.getAttribute("data-csrf-token");
+		div.add_tag_url = div.getAttribute("data-tag-add");
+		div.delete_tag_url = div.getAttribute("data-tag-delete");
+		div.get_tags_url = div.getAttribute("data-tag-get");
 
 		u.f.init(form);
 
 		form.submitted = function() {
-
+//			u.bug("submitted")
 
 			var params = u.f.getParams(this);
 //			u.xInObject(params);
@@ -30,8 +41,14 @@ Util.Objects["searchDevice"] = new function() {
 			}
 			
 			this.response = function(response) {
+
 				var list = u.qs(".all_items");
 				list.parentNode.replaceChild(u.qs(".all_items", response), list);
+
+				// remove existing scroll handler
+				u.e.removeWindowScrollEvent(list, list.scroll_event_id);
+
+				// reinitialize
 				u.init();
 				
 			}
@@ -74,7 +91,8 @@ Util.Objects["searchDevice"] = new function() {
 			}
 		}
 		// get tags
-		u.request(form._tags, "/janitor/admin/items/tags", {"callback":"tagsResponse"});
+		u.request(form._tags, div.get_tags_url, {"callback":"tagsResponse", "method":"post", "params":"csrf-token=" + div.csrf_token});
+
 
 		form.enableTaggedSearch = function() {
 
@@ -214,6 +232,7 @@ Util.Objects["searchDevice"] = new function() {
 Util.Objects["cloneDevice"] = new function() {
 	this.init = function(li) {
 
+		li.csrf_token = li.parentNode.getAttribute("data-csrf-token");
 		u.ce(li);
 		li.clicked = function() {
 			
@@ -221,14 +240,14 @@ Util.Objects["cloneDevice"] = new function() {
 				if(response.cms_status == "success" && response.cms_object.id) {
 
 					// load cloned device
-					location.href = "/janitor/device/edit/"+response.cms_object.id;
+					location.href = location.href.replace(/[\d]+$/, response.cms_object.id);
 
 				}
 				else {
 					page.notify(response);
 				}
 			}
-			u.request(this, this.url);
+			u.request(this, this.url, {"method":"post", "params":"csrf-token="+li.csrf_token});
 		}
 	}
 }
@@ -315,6 +334,15 @@ Util.Objects["unidentifiedList"] = new function() {
 
 		div.list = u.qs("ul.items", div);
 		div.nodes = u.qsa("li.item", div.list);
+		
+		div.csrf_token = div.getAttribute("data-csrf-token");
+		div.useragent_delete = div.getAttribute("data-useragent-delete");
+		div.useragent_details = div.getAttribute("data-useragent-details");
+		div.useragent_identify = div.getAttribute("data-useragent-identify");
+		div.useragent_add = div.getAttribute("data-useragent-add");
+		div.device_clone = div.getAttribute("data-device-clone");
+		div.device_list = div.getAttribute("data-device-list");
+
 		document.body.unidentified_div = div;
 
 
@@ -422,19 +450,15 @@ Util.Objects["unidentifiedList"] = new function() {
 									u.bug("node.ua_id:" + this.node.ua_id);
 
 									this.response = function(response) {
+
+										page.notify(response);
+
 										if(response.cms_status == "success") {
 
 											this.node.parentNode.removeChild(this.node);
-
-//											location.reload();
-				//							location.href = this.actions["cancel"].url;
 										}
-										page.notify(response.cms_message);
-										// else {
-										// 	alert(response.cms_message[0]);
-										// }
 									}
-									u.request(this, "/janitor/device/deleteUnidentified/"+this.node.ua_id);
+									u.request(this, this.node.div.useragent_delete+"/"+this.node.ua_id, {"method":"post", "params":"csrf-token="+this.node.div.csrf_token});
 								}
 							}
 
@@ -453,15 +477,10 @@ Util.Objects["unidentifiedList"] = new function() {
 							}
 						}
 						else {
-							if(typeof(page.notify) == "function") {
-								page.notify(response.cms_message);
-							}
-							else {
-								alert(response.cms_message[0]);
-							}
+							page.notify(response);
 						}
 					}
-					u.request(this, "/janitor/device/unidentifiedUseragentDetails/"+this.ua_id);
+					u.request(this, this.div.useragent_details+"/"+this.ua_id, {"method":"post","params":"csrf-token=" + this.div.csrf_token});
 				}
 				else {
 					var uls = u.qsa("ul", this);
@@ -589,7 +608,7 @@ Util.Objects["unidentifiedList"] = new function() {
 											this.parentNode.removeChild(this);
 											this.div.toggleAddToOption();
 										}
-										u.request(input.node, "/janitor/device/addUnidentifiedToDevice/"+this.option.device_id+"/"+input.node.ua_id);
+										u.request(input.node, input.node.div.useragent_add+"/"+this.option.device_id+"/"+input.node.ua_id, {"method":"post", "params":"csrf-token="+input.node.div.csrf_token});
 
 									}
 								}
@@ -621,7 +640,7 @@ Util.Objects["unidentifiedList"] = new function() {
 												this.parentNode.removeChild(this);
 												this.div.toggleAddToOption();
 											}
-											u.request(input.node, "/janitor/device/addUnidentifiedToDevice/"+this.option.device_id+"/"+input.node.ua_id);
+											u.request(input.node, input.node.div.useragent_add+"/"+this.option.device_id+"/"+input.node.ua_id, {"method":"post", "params":"csrf-token="+input.node.div.csrf_token});
 										}
 									}
 								}
@@ -657,16 +676,16 @@ Util.Objects["unidentifiedList"] = new function() {
 													this.div.toggleAddToOption();
 												}
 												// add useragent to device
-												u.request(input.node, "/janitor/device/addUnidentifiedToDevice/"+response.cms_object.id+"/"+input.node.ua_id);
+												u.request(input.node, input.node.div.useragent_add+"/"+response.cms_object.id+"/"+input.node.ua_id, {"method":"post", "params":"csrf-token="+input.node.div.csrf_token});
 											}
 
 										}
 										else {
-											page.notify(response.cms_message);
+											page.notify(response);
 										}
 									}
 									// clone device
-									u.request(this, "/janitor/device/cloneDevice/"+this.option.device_id);
+									u.request(this, this.option.div.device_clone+"/"+this.option.device_id, {"method":"post", "params":"csrf-token="+this.option.div.csrf_token});
 
 								}
 								// activate confirm mechanism
@@ -841,7 +860,7 @@ Util.Objects["unidentifiedList"] = new function() {
 																this.div.toggleAddToOption();
 															}
 															// add useragent to device
-															u.request(input.node, "/janitor/device/addUnidentifiedToDevice/"+this.option.device_id+"/"+input.node.ua_id);
+															u.request(input.node, input.node.div.useragent_add+"/"+this.option.device_id+"/"+input.node.ua_id, {"method":"post", "params":"csrf-token="+input.node.div.csrf_token});
 
 														}
 													}
@@ -878,16 +897,16 @@ Util.Objects["unidentifiedList"] = new function() {
 																		this.div.toggleAddToOption();
 																	}
 																	// add useragent to device
-																	u.request(input.node, "/janitor/device/addUnidentifiedToDevice/"+response.cms_object.id+"/"+input.node.ua_id);
+																	u.request(input.node, input.node.div.useragent_add+"/"+response.cms_object.id+"/"+input.node.ua_id, {"method":"post", "params":"csrf-token="+input.node.div.csrf_token});
 																}
 
 															}
 															else {
-																page.notify(response.cms_message);
+																page.notify(response);
 															}
 														}
 														// clone device
-														u.request(this, "/janitor/device/cloneDevice/"+this.option.device_id);
+														u.request(this, this.option.div.device_clone+"/"+this.option.device_id, {"method":"post", "params":"csrf-token="+this.option.div.csrf_token});
 
 													}
 													// activate confirm mechanism
@@ -934,7 +953,7 @@ Util.Objects["unidentifiedList"] = new function() {
 
 							u.ac(search_input, "loading");
 							// perform search
-							u.request(search_input, "/janitor/device/list", {"params":"search=1&search_string="+this.value, "method":"post"})
+							u.request(search_input, this.div.device_list, {"params":"search=1&search_string="+this.value, "method":"post"})
 						}
 					}
 
@@ -987,7 +1006,7 @@ Util.Objects["unidentifiedList"] = new function() {
 
 						}
 						// request identification
-						u.request(ua.node, "/janitor/device/identifyUnidentifiedId/"+ua.node.ua_id);
+						u.request(ua.node, ua.node.div.useragent_identify+"/"+ua.node.ua_id, {"method":"post", "params":"csrf-token="+ua.node.div.csrf_token});
 					}
 					// already identified
 					else {
@@ -1031,6 +1050,15 @@ Util.Objects["uniqueMatchList"] = new function() {
 
 		div.list = u.qs("ul.items", div);
 		div.nodes = u.qsa("li.item", div.list);
+
+		div.csrf_token = div.getAttribute("data-csrf-token");
+		div.useragent_delete = div.getAttribute("data-useragent-delete");
+		div.useragent_details = div.getAttribute("data-useragent-details");
+		div.useragent_identify = div.getAttribute("data-useragent-identify");
+		div.useragent_add = div.getAttribute("data-useragent-add");
+		div.device_clone = div.getAttribute("data-device-clone");
+		div.device_list = div.getAttribute("data-device-list");
+
 		document.body.unidentified_div = div;
 
 
@@ -1123,10 +1151,10 @@ Util.Objects["uniqueMatchList"] = new function() {
 							}
 						}
 						else {
-							page.notify(response.cms_message);
+							page.notify(response);
 						}
 					}
-					u.request(this, "/janitor/device/unidentifiedUseragentDetails/"+this.ua_id);
+					u.request(this, this.div.useragent_details+"/"+this.ua_id, {"method":"post","params":"csrf-token=" + this.div.csrf_token});
 				}
 				else {
 					var uls = u.qsa("ul", this);
@@ -1196,6 +1224,7 @@ Util.Objects["uniqueMatchList"] = new function() {
 		// add option to options list - if it does not already exist
 		div.addOption = function(option) {
 
+			u.xInObject(option, {"objects":true});
 			// check options index for current option
 			if(this._delete_uas.identified_options.indexOf(option.name) == -1) {
 				this._delete_uas.identified_options.push(option.name);
@@ -1269,10 +1298,10 @@ Util.Objects["uniqueMatchList"] = new function() {
 											if(response.cms_status == "success") {
 												this.parentNode.removeChild(this);
 											}
-											page.notify(response.cms_message);
+											page.notify(response);
 											this.div.toggleAddToOption();
 										}
-										u.request(ua.node, "/janitor/device/deleteUnidentified/"+ua.node.ua_id);
+										u.request(ua.node, ua.node.div.useragent_delete+"/"+ua.node.ua_id, {"method":"post","params":"csrf-token=" + ua.node.div.csrf_token});
 
 									}
 								}
@@ -1330,7 +1359,7 @@ Util.Objects["uniqueMatchList"] = new function() {
 
 						}
 						// request identification
-						u.request(ua.node, "/janitor/device/identifyUnidentifiedId/"+ua.node.ua_id);
+						u.request(ua.node, ua.node.div.useragent_identify+"/"+ua.node.ua_id, {"method":"post","params":"csrf-token=" + ua.node.div.csrf_token});
 					}
 					// already identified
 					else {
