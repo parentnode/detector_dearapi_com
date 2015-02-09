@@ -77,23 +77,32 @@ testing regexp
 //
 // }
 
-$useragent = "Mozilla/5.0 (iPhone; CPU iPhone OS 8_1_3 like Mac OS X) AppleWebKit/600.1.4 (KHTML, like Gecko) CriOS/40.0.2214.69 Mobile/12B466 Safari/600.1.4";
-$useragent = "Mozilla/5.0 (iPhone; CPU iPhone OS 8_1_3 like Mac OS X) AppleWebKit/437.1.4 (KHTML, like Gecko) CriOS/40.0.2214.69 Mobile/12B466 Safari/600.1.4";
+// $useragent = "Mozilla/5.0 (iPhone; CPU iPhone OS 8_1_3 like Mac OS X) AppleWebKit/600.1.4 (KHTML, like Gecko) CriOS/40.0.2214.69 Mobile/12B466 Safari/600.1.4";
+// $useragent = "Mozilla/5.0 (iPhone; CPU iPhone OS 8_1_3 like Mac OS X) AppleWebKit/537.1.4 (KHTML, like Gecko) CriOS/40.0.2214.69 Mobile/12B466 Safari/600.1.4";
+//
+// // CriOS - webkit 600
+// if(preg_match("/iPhone[^$]+AppleWebKit\/(53[4-7]{1}|600)[^$]+Gecko[^$]+CriOS\/([0-9]{2}).0/", $useragent, $matches)) {
+// 	print_r($matches);
+// }
 
 
-// CriOS - webkit 600
-if(preg_match("/iPhone[^$]+AppleWebKit\/(53[4-7]{1}|600)[^$]+Gecko[^$]+CriOS\/([0-9]{2}).0/", $useragent, $matches)) {
-	print_r($matches);
-}
+// $useragent = "Mozilla/5.0 (Macintosh; Intel Mac OS X) AppleWebKit/0600.1.25 (KHTML, like Gecko) Version/8.0 Safari/0600.1.25";
+// $useragent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_1) AppleWebKit/600.2.2 (KHTML, like Gecko) Version/8.0 Safari/600.1.25";
+// //$useragent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10) AppleWebKit/537.16 (KHTML, like Gecko) Version/8.0 Safari/537.16";
+//
+//
+// if(preg_match("/AppleWebKit\/(53[4-7]{1}|600)[^$]+Gecko[^$]+Version\/([5-8]{1})/", $useragent, $matches)) {
+// 	print_r($matches);
+// }
 
 
-$useragent = "Mozilla/5.0 (Macintosh; Intel Mac OS X) AppleWebKit/0600.1.25 (KHTML, like Gecko) Version/8.0 Safari/0600.1.25";
-//$useragent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_1) AppleWebKit/600.2.2 (KHTML, like Gecko) Version/8.0 Safari/600.1.25";
-//$useragent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10) AppleWebKit/537.16 (KHTML, like Gecko) Version/8.0 Safari/537.16";
+$useragent = "Mozilla/5.0 (Linux; U; en-gb; KFTT Build/IML74K) AppleWebKit/535.19 (KHTML, like Gecko) Silk/3.16 Safari/535.19 Silk-Accelerated=true";
 
+if(preg_match("/Mozilla\/5.0[^$]+Linux[^$]+Android/", $useragent) && !preg_match("/crios|ipod|ipad|symbian|blackberry|firefox/i", $useragent)) {
 
-if(preg_match("/AppleWebKit\/(53[4-7]{1}|600)[^$]+Gecko[^$]+Version\/([5-8]{1})/", $useragent, $matches)) {
-	print_r($matches);
+	if(preg_match("/Kindle Fire|KF[^$]+Silk/", $useragent, $matches)) {
+		print_r($matches);
+	}
 }
 
  ?>

@@ -374,37 +374,60 @@ class Identify {
 			// TODO: 
 
 			// Android specific scope
-			if(preg_match("/Mozilla\/5.0[^$]+Linux[^$]+Android/", $useragent) && !preg_match("/crios|ipod|ipad|symbian|blackberry|fban|firefox/i", $useragent)) {
+			if(preg_match("/Mozilla\/5.0[^$]+Linux[^$]+Android/", $useragent) && !preg_match("/crios|ipod|ipad|symbian|blackberry|firefox/i", $useragent)) {
 
-				// Android 3+4 specific (limit scope for extensive search)
-				if(preg_match("/Android [234]{1}/", $useragent) && preg_match("/AppleWebKit\/53[3-7]{1}/", $useragent)) {
+				// Android 2+3+4+5 specific (limit scope for extensive search)
+				if(preg_match("/Android [2345]{1}/", $useragent) && preg_match("/AppleWebKit\/53[3-7]{1}/", $useragent)) {
 
+
+					// Nexus Tablets
+					if(preg_match("/Nexus (7|9|10)/", $useragent)) {
+						return $this->uniqueIdTest($useragent, "Nexus Tablet, Android 4.0+", "tablet", $log, $mail, $details, "unique-test-nexus");
+					}
 
 					// SAMSUNG
-					if(preg_match("/GT-[A-Z]{1}[\d]{4}|SAMSUNG|Galaxy/", $useragent)) {
+					if(preg_match("/SM-[A-Z]{1}[\d]{3}|SCH-[A-Z]{1}[\d]{3}|GT-[A-Z]{1}[\d]{4}|SAMSUNG|Galaxy/", $useragent)) {
 
 						// KNOWN TABLETS
 						// GT-P5100|GT-P5110|GT-P5113
 						// GT-P5200|GT-P5210|GT-P5220
 						// GT-N5100|GT-N5105|GT-N5110|GT-N5120
 						// GT-N8000|GT-N8005|GT-N8010|GT-N8013|GT-N8020
-						// GT-P3100|GT-P3110|GT-P3113
-						// GT-P6200|GT-P6210
+						// SM-P600|SM-P601|SM-P605
+						// GT-P3100|GT-P3105|GT-P3108|GT-P3110|GT-P3113
+						// GT-P6200|GT-P6210|GT-P6201
 						// GT-P7510|GT-P7500|GT-P7501
+						// GT-P7100
 						// GT-P1000|GT-P1010
 						// GT-P7300|GT-P7310|GT-P7320
 						// GT-N6800|Galaxy Nexus
+						// GT-P6800
+						// SCH-I800|SCH-I815
+						// SCH-I905
+						// SM-T110|SM-T111
+						// SM-T210|SM-T211
+						// SM-T230|SM-T231|SM-T235
+						// SM-T310|SM-T311|SM-T315
+						// SM-T320|SM-T321|SM-T325
+						// SM-T330|SM-T331|SM-T335
+						// SM-T520|SM-T525
+						// SM-T530|SM-T531|SM-T535
+						// SM-T700|SM-T701|SM-T705|SM-T707 
+						// SM-T800|SM-T801|SM-T805 
+						// SM-T900|SM-T901|SM-T905 
+
 
 						// SAMSUNG - TABLETS
-						if(preg_match("/GT-P51[\d]{2}|GT-P52[\d]{2}|GT-N51[\d]{2}|GT-N80[\d]{2}|GT-P31[\d]{2}|GT-P62[\d]{2}|GT-N6800|Galaxy Nexus|GT-P75[\d]{2}|GT-P10[\d]{2}|GT-P73[\d]{2}/", $useragent)) {
+						if(preg_match("/GT-P51[\d]{2}|GT-P52[\d]{2}|GT-N51[\d]{2}|GT-N80[\d]{2}|GT-P31[\d]{2}|GT-P62[\d]{2}|GT-P68[\d]{2}|GT-N6800|GT-P75[\d]{2}|GT-P71[\d]{2}|GT-P10[\d]{2}|GT-P73[\d]{2}|SCH-I800|SCH-I815|SCH-I705|SCH-I915|SM-T1[\d]{2}|SM-T2[\d]{2}|SM-T3[\d]{2}|SM-T5[\d]{2}|SM-T7[\d]{2}|SM-T8[\d]{2}|SM-T9[\d]{2}|SM-P6[\d]{2}/", $useragent)) {
 							return $this->uniqueIdTest($useragent, "Samsung Tablet, Android 4.0+", "tablet", $log, $mail, $details, "unique-test-samsung");
 						}
 						// SAMSUNG - MOBILE TOUCH
-						else if(preg_match("/GT-[A-Z]{1}[\d]{4}|SAMSUNG/", $useragent)) {
+						else if(preg_match("/SM-[A-Z]{1}[\d]{3}|SCH-[A-Z]{1}[\d]{3}|GT-[A-Z]{1}[\d]{4}|SAMSUNG|Galaxy Nexus/", $useragent)) {
 							return $this->uniqueIdTest($useragent, "Samsung Smartphone, Android 4.0+", "mobile_touch", $log, $mail, $details, "unique-test-samsung");
 						}
 
 					}
+
 
 					// HTC
 					if(preg_match("/HTC/", $useragent)) {
@@ -425,21 +448,42 @@ class Identify {
 					}
 
 					// SONY and SONY ERICSSON
-					if(preg_match("/Sony|[MTSLWK]{2}[\d]{2}/", $useragent)) {
+					if(preg_match("/Sony|(ST|LT|MT|WT|MK|SK)[\d]{2}/", $useragent)) {
 
 						// KNOWN TABLETS
 						// Sony Tablet S
 
 						// SONY TABLETS
-						if(preg_match("/Sony Tablet S/", $useragent)) {
+						if(preg_match("/Sony Tablet S|XperiaTablet/", $useragent)) {
 							return $this->uniqueIdTest($useragent, "Sony Tablet, Android 4.0+", "tablet", $log, $mail, $details, "unique-test-htc");
 						}
 						// SONY - MOBILE TOUCH
-						else if(preg_match("/[MTSLWK]{2}[\d]{2}/", $useragent)) {
+						else if(preg_match("/(ST|LT|MT|WT|MK|SK)[\d]{2}/", $useragent)) {
 							return $this->uniqueIdTest($useragent, "Sony Smartphone, Android 4.0+", "mobile_touch", $log, $mail, $details, "unique-test-htc");
 						}
 
 					}
+
+
+					// LG
+					if(preg_match("/LG-/", $useragent)) {
+
+						// LG TABLETS
+						if(preg_match("/LG-V(9|7|5|4)[\d]{2} /", $useragent)) {
+							return $this->uniqueIdTest($useragent, "LG Tablet, Android 4.0+", "tablet", $log, $mail, $details, "unique-test-lg");
+						}
+						// LG - MOBILE TOUCH
+						else {
+							return $this->uniqueIdTest($useragent, "LG Smartphone, Android 4.0+", "mobile_touch", $log, $mail, $details, "unique-test-lg");
+						}
+
+					}
+
+					// ASUS
+					if(preg_match("/Transformer (TF10|TF20|TF30|TF70)|/", $useragent)) {
+						return $this->uniqueIdTest($useragent, "Asus Tablet, Android 4.0+", "tablet", $log, $mail, $details, "unique-test-asus");
+					}
+
 
 				}
 
@@ -501,6 +545,12 @@ class Identify {
 				}
 
 			}
+
+			// Kindle Tablet
+			if(preg_match("/Kindle Fire|KF[^$]+AppleWebKit\/53[3-7]{1}[^$]+Silk/", $useragent)) {
+				return $this->uniqueIdTest($useragent, "Kindle Fire Tablet, Android 4.0+", "tablet", $log, $mail, $details, "unique-test-kindle");
+			}
+			
 
 			// Netfront
 			// Teleca/Obigo
