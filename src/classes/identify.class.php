@@ -129,7 +129,7 @@ class Identify {
 				// Firefox - IN TEST
 				if(preg_match("/rv:([5-9]{1}|[0-9]{2}).0[^$]+Gecko[^$]+Firefox\/([5-9]{1}|[0-9]{2}).0/", $useragent, $matches)) {
 					// test version >= 33
-					if($matches[1] == $matches[1] && $matches[1] >= 33) {
+					if($matches[1] == $matches[1] && $matches[1] >= 34) {
 						return $this->uniqueIdTest($useragent, "Firefox ".$matches[1].", Desktop", "desktop", $log, $mail, $details, "unique-test-firefox");
 					}
 					// not required test for these

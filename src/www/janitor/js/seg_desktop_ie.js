@@ -10357,226 +10357,228 @@ Util.Objects["uniqueMatchList"] = new function() {
 		u.bug("init uniqueMatchList")
 		var i, node;
 		div.list = u.qs("ul.items", div);
-		div.nodes = u.qsa("li.item", div.list);
-		div.csrf_token = div.getAttribute("data-csrf-token");
-		div.useragent_delete = div.getAttribute("data-useragent-delete");
-		div.useragent_details = div.getAttribute("data-useragent-details");
-		div.useragent_identify = div.getAttribute("data-useragent-identify");
-		div.useragent_add = div.getAttribute("data-useragent-add");
-		div.device_clone = div.getAttribute("data-device-clone");
-		div.device_list = div.getAttribute("data-device-list");
-		document.body.unidentified_div = div;
-		div.bn_all = u.ie(div.list, "li", {"class":"all", "html":"Select all"});
-		div.bn_all._checkbox = u.ie(div.bn_all, "input", {"type":"checkbox"});
-		div.bn_all.div = div;
-		div.bn_all._checkbox.div = div;
-		u.e.click(div.bn_all);
-		div.bn_all.clicked = function() {
-			var i, node;
-			var inputs = u.qsa("li:not(.all) input:checked", this.div.list);
+		if(div.list) {
+			div.nodes = u.qsa("li.item", div.list);
+			div.csrf_token = div.getAttribute("data-csrf-token");
+			div.useragent_delete = div.getAttribute("data-useragent-delete");
+			div.useragent_details = div.getAttribute("data-useragent-details");
+			div.useragent_identify = div.getAttribute("data-useragent-identify");
+			div.useragent_add = div.getAttribute("data-useragent-add");
+			div.device_clone = div.getAttribute("data-device-clone");
+			div.device_list = div.getAttribute("data-device-list");
+			document.body.unidentified_div = div;
+			div.bn_all = u.ie(div.list, "li", {"class":"all", "html":"Select all"});
+			div.bn_all._checkbox = u.ie(div.bn_all, "input", {"type":"checkbox"});
+			div.bn_all.div = div;
+			div.bn_all._checkbox.div = div;
+			u.e.click(div.bn_all);
+			div.bn_all.clicked = function() {
+				var i, node;
+				var inputs = u.qsa("li:not(.all) input:checked", this.div.list);
+				for(i = 0; node = div.nodes[i]; i++) {
+					if(inputs.length) {
+						node._checkbox.checked = false;
+					}
+					else if(!node._hidden) {
+						node._checkbox.checked = true;
+					}
+				}
+				this.div.toggleAddToOption();
+			}
 			for(i = 0; node = div.nodes[i]; i++) {
-				if(inputs.length) {
-					node._checkbox.checked = false;
+				node.ua_id = u.cv(node, "ua_id");
+				node.div = div;
+				node._checkbox = u.ie(node, "input", {"type":"checkbox"});
+				node._checkbox.node = node;
+				u.e.click(node._checkbox);
+				node._checkbox.onclick = function(event) {u.e.kill(event);}
+				node._checkbox.inputStarted = function(event) {
+					u.e.kill(event);
+					if(this.checked) {
+						this.checked = false;
+						document.body._multideselection = true;
+					}
+					else {
+						this.checked = true;
+						document.body._multiselection = true;
+					}
+					document.body.onmouseup = function() {
+						this.onmouseup = null;
+						this._multiselection = false;
+						this._multideselection = false;
+						this.unidentified_div.toggleAddToOption();
+					}
 				}
-				else if(!node._hidden) {
-					node._checkbox.checked = true;
+				node._checkbox.onmouseover = function() {
+					if(document.body._multiselection) {
+						this.checked = true;
+					}
+					else if(document.body._multideselection) {
+						this.checked = false;
+					}
 				}
-			}
-			this.div.toggleAddToOption();
-		}
-		for(i = 0; node = div.nodes[i]; i++) {
-			node.ua_id = u.cv(node, "ua_id");
-			node.div = div;
-			node._checkbox = u.ie(node, "input", {"type":"checkbox"});
-			node._checkbox.node = node;
-			u.e.click(node._checkbox);
-			node._checkbox.onclick = function(event) {u.e.kill(event);}
-			node._checkbox.inputStarted = function(event) {
-				u.e.kill(event);
-				if(this.checked) {
-					this.checked = false;
-					document.body._multideselection = true;
-				}
-				else {
-					this.checked = true;
-					document.body._multiselection = true;
-				}
-				document.body.onmouseup = function() {
-					this.onmouseup = null;
-					this._multiselection = false;
-					this._multideselection = false;
-					this.unidentified_div.toggleAddToOption();
-				}
-			}
-			node._checkbox.onmouseover = function() {
-				if(document.body._multiselection) {
-					this.checked = true;
-				}
-				else if(document.body._multideselection) {
-					this.checked = false;
-				}
-			}
-			u.e.click(node);
-			node.clicked = function() {
-				if(!this._ul) {
-					this.response = function(response) {
-						if(response.cms_status == "success") {
-							this._ul = u.ae(this, "ul", {"class":"info"});
-							u.ae(this._ul, "li", {"class":"visits", "html":response.cms_object.length})
-							u.ae(this._ul, "li", {"class":"identified_as", "html":response.cms_object[0].identified_as_device})
-							var i, node;
-							for(i = 0; node = response.cms_object[i]; i++) {
-								var ul = u.ae(this, "ul", {"class":"info"});
-								u.ae(ul, "li", {"class":"identified_at", "html":node.identified_at})
-								u.ae(ul, "li", {"class":"comment", "html":node.comment})
+				u.e.click(node);
+				node.clicked = function() {
+					if(!this._ul) {
+						this.response = function(response) {
+							if(response.cms_status == "success") {
+								this._ul = u.ae(this, "ul", {"class":"info"});
+								u.ae(this._ul, "li", {"class":"visits", "html":response.cms_object.length})
+								u.ae(this._ul, "li", {"class":"identified_as", "html":response.cms_object[0].identified_as_device})
+								var i, node;
+								for(i = 0; node = response.cms_object[i]; i++) {
+									var ul = u.ae(this, "ul", {"class":"info"});
+									u.ae(ul, "li", {"class":"identified_at", "html":node.identified_at})
+									u.ae(ul, "li", {"class":"comment", "html":node.comment})
+								}
+							}
+							else {
+								page.notify(response);
 							}
 						}
-						else {
-							page.notify(response);
+						u.request(this, this.div.useragent_details+"/"+this.ua_id, {"method":"post","params":"csrf-token=" + this.div.csrf_token});
+					}
+					else {
+						var uls = u.qsa("ul", this);
+						var i, ul;
+						for(i = 0; ul = uls[i]; i++) {
+							this.removeChild(ul);
 						}
+						this._ul = false;
 					}
-					u.request(this, this.div.useragent_details+"/"+this.ua_id, {"method":"post","params":"csrf-token=" + this.div.csrf_token});
-				}
-				else {
-					var uls = u.qsa("ul", this);
-					var i, ul;
-					for(i = 0; ul = uls[i]; i++) {
-						this.removeChild(ul);
-					}
-					this._ul = false;
 				}
 			}
-		}
-		if(u.hc(div, "filters")) {
-			div._filter = u.ie(div, "div", {"class":"filter"});
-			var i, node;
-			for(i = 0; node = div.nodes[i]; i++) {
-				node._c = node.textContent.toLowerCase();
-			}
-			div._filter._field = u.ae(div._filter, "div", {"class":"field"});
-			u.ae(div._filter._field, "label", {"html":"Filter"});
-			div._filter._input = u.ae(div._filter._field, "input", {"class":"filter ignoreinput"});
-			div._filter._input._div = div;
-			div._filter._input.onkeydown = function() {
-				u.t.resetTimer(this._div.t_filter);
-			}
-			div._filter._input.onkeyup = function() {
-				this._div.t_filter = u.t.setTimer(this._div, this._div.filter, 1500);
-				u.ac(this._div._filter, "filtering");
-			}
-			div.filter = function() {
+			if(u.hc(div, "filters")) {
+				div._filter = u.ie(div, "div", {"class":"filter"});
 				var i, node;
-				if(this._current_filter != this._filter._input.value.toLowerCase()) {
-					this._current_filter = this._filter._input.value.toLowerCase();
-					for(i = 0; node = this.nodes[i]; i++) {
-						if(node._c.match(this._current_filter)) {
-							node._hidden = false;
-							u.as(node, "display", "block", false);
-						}
-						else {
-							node._hidden = true;
-							u.as(node, "display", "none", false);
-							node._checkbox.checked = false;
-						}
-					}
+				for(i = 0; node = div.nodes[i]; i++) {
+					node._c = node.textContent.toLowerCase();
 				}
-				u.rc(this._filter, "filtering");
-			}
-		}
-		div.addOption = function(option) {
-			u.xInObject(option, {"objects":true});
-			if(this._delete_uas.identified_options.indexOf(option.name) == -1) {
-				this._delete_uas.identified_options.push(option.name);
-				var li_option = u.ae(this._delete_uas._list, "li", {"html":option.name});
-				li_option.details = option;
-				li_option.div = this;
-			}
-		}
-		div.toggleAddToOption = function() {
-			var inputs = u.qsa("li:not(.all) input:checked", this.list);
-			if(inputs.length) {
-				if(!this._delete_uas) {
-					this._delete_uas = u.ae(document.body, "div", {"class":"deleteUnique"});
-					u.ae(this._delete_uas, "h2", {"html":"Delete useragents"});
-					var count_div = u.ae(this._delete_uas, "div", {"html":"Selected useragents:", "class":"counter"});
-					this._delete_uas._count = u.ae(count_div, "span", {"class":"count"});
-					u.as(page, "width", parseInt(u.gcs(page, "width")) - this._delete_uas.offsetWidth + "px");
-					this._delete_uas._list = u.ae(this._delete_uas, "ul", {"class":"options"});
-					this._delete = u.ae(this._delete_uas, "div", {"class":"delete", "html":"Delete selected"})
-					this._delete.node = this;
-					u.e.click(this._delete);
-					this._delete.restore = function(event) {
-						this.value = "Delete selected";
-						u.rc(this, "confirm");
-					}
-					this._delete.clicked = function(event) {
-						u.e.kill(event);
-						if(!u.hc(this, "confirm")) {
-							u.ac(this, "confirm");
-							this.value = "Confirm";
-							this.t_confirm = u.t.setTimer(this, this.restore, 3000);
+				div._filter._field = u.ae(div._filter, "div", {"class":"field"});
+				u.ae(div._filter._field, "label", {"html":"Filter"});
+				div._filter._input = u.ae(div._filter._field, "input", {"class":"filter ignoreinput"});
+				div._filter._input._div = div;
+				div._filter._input.onkeydown = function() {
+					u.t.resetTimer(this._div.t_filter);
+				}
+				div._filter._input.onkeyup = function() {
+					this._div.t_filter = u.t.setTimer(this._div, this._div.filter, 1500);
+					u.ac(this._div._filter, "filtering");
+				}
+				div.filter = function() {
+					var i, node;
+					if(this._current_filter != this._filter._input.value.toLowerCase()) {
+						this._current_filter = this._filter._input.value.toLowerCase();
+						for(i = 0; node = this.nodes[i]; i++) {
+							if(node._c.match(this._current_filter)) {
+								node._hidden = false;
+								u.as(node, "display", "block", false);
+							}
+							else {
+								node._hidden = true;
+								u.as(node, "display", "none", false);
+								node._checkbox.checked = false;
+							}
 						}
-						else {
-							u.t.resetTimer(this.t_confirm);
-							var inputs = u.qsa("li:not(.all) input:checked", this.list);
-							var i, ua;
-							if(inputs.length) {
-								for(i = 0; ua = inputs[i]; i++) {
-									if(ua.node.ua_id) {
-										ua.node.response = function(response) {
-											if(response.cms_status == "success") {
-												this.parentNode.removeChild(this);
+					}
+					u.rc(this._filter, "filtering");
+				}
+			}
+			div.addOption = function(option) {
+				u.xInObject(option, {"objects":true});
+				if(this._delete_uas.identified_options.indexOf(option.name) == -1) {
+					this._delete_uas.identified_options.push(option.name);
+					var li_option = u.ae(this._delete_uas._list, "li", {"html":option.name});
+					li_option.details = option;
+					li_option.div = this;
+				}
+			}
+			div.toggleAddToOption = function() {
+				var inputs = u.qsa("li:not(.all) input:checked", this.list);
+				if(inputs.length) {
+					if(!this._delete_uas) {
+						this._delete_uas = u.ae(document.body, "div", {"class":"deleteUnique"});
+						u.ae(this._delete_uas, "h2", {"html":"Delete useragents"});
+						var count_div = u.ae(this._delete_uas, "div", {"html":"Selected useragents:", "class":"counter"});
+						this._delete_uas._count = u.ae(count_div, "span", {"class":"count"});
+						u.as(page, "width", parseInt(u.gcs(page, "width")) - this._delete_uas.offsetWidth + "px");
+						this._delete_uas._list = u.ae(this._delete_uas, "ul", {"class":"options"});
+						this._delete = u.ae(this._delete_uas, "div", {"class":"delete", "html":"Delete selected"})
+						this._delete.node = this;
+						u.e.click(this._delete);
+						this._delete.restore = function(event) {
+							this.value = "Delete selected";
+							u.rc(this, "confirm");
+						}
+						this._delete.clicked = function(event) {
+							u.e.kill(event);
+							if(!u.hc(this, "confirm")) {
+								u.ac(this, "confirm");
+								this.value = "Confirm";
+								this.t_confirm = u.t.setTimer(this, this.restore, 3000);
+							}
+							else {
+								u.t.resetTimer(this.t_confirm);
+								var inputs = u.qsa("li:not(.all) input:checked", this.list);
+								var i, ua;
+								if(inputs.length) {
+									for(i = 0; ua = inputs[i]; i++) {
+										if(ua.node.ua_id) {
+											ua.node.response = function(response) {
+												if(response.cms_status == "success") {
+													this.parentNode.removeChild(this);
+												}
+												page.notify(response);
+												this.div.toggleAddToOption();
 											}
-											page.notify(response);
-											this.div.toggleAddToOption();
+											u.request(ua.node, ua.node.div.useragent_delete+"/"+ua.node.ua_id, {"method":"post","params":"csrf-token=" + ua.node.div.csrf_token});
 										}
-										u.request(ua.node, ua.node.div.useragent_delete+"/"+ua.node.ua_id, {"method":"post","params":"csrf-token=" + ua.node.div.csrf_token});
 									}
 								}
 							}
 						}
 					}
-				}
-				this._delete_uas._count.innerHTML = inputs.length;
-				this._delete_uas._list.innerHTML = "";
-				this._delete_uas.identified_options = [];
-				var i, ua, ua_id
-				this.wait_for_uas = inputs.length;
-				u.ac(this._delete_uas, "loading");
-				for(i = 0; ua = inputs[i]; i++) {
-					if(!ua.node._identified) {
-						ua.node.response = function(response) {
-							if(response.cms_status == "success") {
-								if(response.cms_object) {
-									this._identified = response.cms_object;
+					this._delete_uas._count.innerHTML = inputs.length;
+					this._delete_uas._list.innerHTML = "";
+					this._delete_uas.identified_options = [];
+					var i, ua, ua_id
+					this.wait_for_uas = inputs.length;
+					u.ac(this._delete_uas, "loading");
+					for(i = 0; ua = inputs[i]; i++) {
+						if(!ua.node._identified) {
+							ua.node.response = function(response) {
+								if(response.cms_status == "success") {
+									if(response.cms_object) {
+										this._identified = response.cms_object;
+									}
+								}
+								else {
+									this._identified = {};
+									this._identified.name = "Unknown";
+								}
+								this.div.addOption(this._identified);
+								this.div.wait_for_uas--;
+								if(!this.div.wait_for_uas) {
+									u.rc(this.div._delete_uas, "loading");
 								}
 							}
-							else {
-								this._identified = {};
-								this._identified.name = "Unknown";
-							}
-							this.div.addOption(this._identified);
-							this.div.wait_for_uas--;
-							if(!this.div.wait_for_uas) {
-								u.rc(this.div._delete_uas, "loading");
-							}
+							u.request(ua.node, ua.node.div.useragent_identify+"/"+ua.node.ua_id, {"method":"post","params":"csrf-token=" + ua.node.div.csrf_token});
 						}
-						u.request(ua.node, ua.node.div.useragent_identify+"/"+ua.node.ua_id, {"method":"post","params":"csrf-token=" + ua.node.div.csrf_token});
-					}
-					else {
-						this.addOption(ua.node._identified);
-						this.wait_for_uas--;
-						if(!this.wait_for_uas) {
-							u.rc(this._delete_uas, "loading");
+						else {
+							this.addOption(ua.node._identified);
+							this.wait_for_uas--;
+							if(!this.wait_for_uas) {
+								u.rc(this._delete_uas, "loading");
+							}
 						}
 					}
 				}
-			}
-			else {
-				if(this._delete_uas) {
-					this._delete_uas.parentNode.removeChild(this._delete_uas);
-					this._delete_uas = false;
-					u.as(page, "width", "auto");
+				else {
+					if(this._delete_uas) {
+						this._delete_uas.parentNode.removeChild(this._delete_uas);
+						this._delete_uas = false;
+						u.as(page, "width", "auto");
+					}
 				}
 			}
 		}
