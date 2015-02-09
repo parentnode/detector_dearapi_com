@@ -6,7 +6,7 @@ if(isset($read_access) && $read_access) {
 
 
 include_once($_SERVER["FRAMEWORK_PATH"]."/config/init.php");
-include_once("class/identify.class.php");
+include_once("classes/identify.class.php");
 
 $action = $page->actions();
 
