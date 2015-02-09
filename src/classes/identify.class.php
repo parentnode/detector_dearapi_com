@@ -246,9 +246,9 @@ class Identify {
 					return $this->uniqueId($useragent, "Safari ".$matches[1].", Desktop", "desktop", $log, $mail, $details);
 				}
 				// looser detection of 7+8 with new Webkit version 600
-				else if(preg_match("/AppleWebKit\/(53[4-7]{1}|600)[^$]+Gecko[^$]+Version\/([5-8]{1})/", $useragent, $matches)) {
-					if($matches[1] >= 7) {
-						return $this->uniqueIdTest($useragent, "Safari ".$matches[1].", Desktop", "desktop", $log, $mail, $details, "unique-test-safari");
+				else if(preg_match("/AppleWebKit\/(53[4-7]{1}|600)[^$]+Gecko[^$]+Version\/([5-9]{1})/", $useragent, $matches)) {
+					if($matches[2] >= 7) {
+						return $this->uniqueIdTest($useragent, "Safari ".$matches[2].", Desktop", "desktop", $log, $mail, $details, "unique-test-safari");
 					}
 				}
 
@@ -281,9 +281,9 @@ class Identify {
 					// }
 				}
 				// looser detection of 7+8 with new Webkit version 600
-				else if(preg_match("/AppleWebKit\/(53[4-7]{1}|600)[^$]+Gecko[^$]+Version\/([5-8]{1})/", $useragent, $matches)) {
-					if($matches[1] >= 7) {
-						return $this->uniqueIdTest($useragent, "Mobile Safari ".$matches[1].", iPad", "tablet", $log, $mail, $details, "unique-test-ipad");
+				else if(preg_match("/AppleWebKit\/(53[4-7]{1}|600)[^$]+Gecko[^$]+Version\/([5-9]{1})/", $useragent, $matches)) {
+					if($matches[2] >= 7) {
+						return $this->uniqueIdTest($useragent, "Mobile Safari ".$matches[2].", iPad", "tablet", $log, $mail, $details, "unique-test-ipad");
 					}
 				}
 
@@ -316,9 +316,9 @@ class Identify {
 				}
 
 				// looser detection of 7+8 with new Webkit version 600
-				else if(preg_match("/AppleWebKit\/(53[4-7]{1}|600)[^$]+Gecko[^$]+Version\/([5-8]{1})/", $useragent, $matches)) {
-					if($matches[1] >= 7) {
-						return $this->uniqueIdTest($useragent, "Mobile Safari ".$matches[1].", iPod", "mobile_touch", $log, $mail, $details, "unique-test-ipod");
+				else if(preg_match("/AppleWebKit\/(53[4-7]{1}|600)[^$]+Gecko[^$]+Version\/([5-9]{1})/", $useragent, $matches)) {
+					if($matches[2] >= 7) {
+						return $this->uniqueIdTest($useragent, "Mobile Safari ".$matches[2].", iPod", "mobile_touch", $log, $mail, $details, "unique-test-ipod");
 					}
 				}
 
@@ -349,9 +349,9 @@ class Identify {
 					// }
 				}
 				// looser detection of 7+8 with new Webkit version 600
-				else if(preg_match("/AppleWebKit\/(53[4-7]{1}|600)[^$]+Gecko[^$]+Version\/([5-8]{1})/", $useragent, $matches)) {
-					if($matches[1] >= 7) {
-						return $this->uniqueIdTest($useragent, "Mobile Safari ".$matches[1].", iPhone", "mobile_touch", $log, $mail, $details, "unique-test-iphone");
+				else if(preg_match("/AppleWebKit\/(53[4-7]{1}|600)[^$]+Gecko[^$]+Version\/([5-9]{1})/", $useragent, $matches)) {
+					if($matches[2] >= 7) {
+						return $this->uniqueIdTest($useragent, "Mobile Safari ".$matches[2].", iPhone", "mobile_touch", $log, $mail, $details, "unique-test-iphone");
 					}
 				}
 
