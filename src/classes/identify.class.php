@@ -480,7 +480,7 @@ class Identify {
 					}
 
 					// ASUS
-					if(preg_match("/Transformer (TF10|TF20|TF30|TF70)/", $useragent)) {
+					if(preg_match("/Transformer[^$]+(TF10|TF20|TF30|TF70)/", $useragent)) {
 						return $this->uniqueIdTest($useragent, "Asus Tablet, Android 4.0+", "tablet", $log, $mail, $details, "unique-test-asus");
 					}
 
