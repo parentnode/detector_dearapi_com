@@ -484,6 +484,13 @@ class Identify {
 						return $this->uniqueIdTest($useragent, "Asus Tablet, Android 4.0+", "tablet", $log, $mail, $details, "unique-test-asus");
 					}
 
+					// not tested yet
+
+					// if(preg_match("/Xoom|Electrify|MZ5[0-9]{2}|MZ6[0-9]{2}|DROID3/", $useragent)) {
+					// 	return $this->uniqueIdTest($useragent, "Asus Tablet, Android 4.0+", "tablet", $log, $mail, $details, "unique-test-asus");
+					// }
+
+
 
 				}
 
