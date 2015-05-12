@@ -910,6 +910,15 @@ class Identify {
 				$device["method"] = "unique_id";
 				return $device;
 			}
+			else if($query->sql("SELECT item_id FROM ".$this->db." WHERE name = '$device'")) {
+				$device_id = $query->result(0, "item_id");
+
+				// get complete device
+				$IC = new Items();
+				$device = $IC->getItem(array("id" => $device_id, "extend" => array("tags" => true)));
+				$device["method"] = "unique_id";
+				return $device;
+			}
 		}
 
 		// FATAL ERROR
@@ -948,6 +957,15 @@ class Identify {
 			$query = new Query();
 			$sql = "SELECT item_id FROM ".$this->db_useragents." WHERE useragent = '$device'";
 			if($query->sql($sql)) {
+				$device_id = $query->result(0, "item_id");
+
+				// get complete device
+				$IC = new Items();
+				$device = $IC->getItem(array("id" => $device_id, "extend" => array("tags" => true)));
+				$device["method"] = "unique_id";
+				return $device;
+			}
+			else if($query->sql("SELECT item_id FROM ".$this->db." WHERE name = '$device'")) {
 				$device_id = $query->result(0, "item_id");
 
 				// get complete device

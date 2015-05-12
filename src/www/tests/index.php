@@ -116,8 +116,11 @@ $ua[] = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10) AppleWebKit/600.1.8 (KHTM
 
 $ua[] = "Mozilla/5.0 (iPad; CPU OS 8_0 like Mac OS X) AppleWebKit/600.1.3 (KHTML, like Gecko) Version/8.0 Mobile/12A4345d Safari/600.1.4";
 
-//$ua[] = "";
+$ua[] = "Mozilla/5.0 (Windows NT 5.1; rv:5.0) Gecko/20100102 Firefox/5.0";
+$ua[] = "Mozilla/5.0 (Windows NT 6.2; WOW64; rv:25.0) Gecko/20100101 Firefox/25.0";
 
+//$ua[] = "";
+ 
 
 print "Direct<br>";
 
@@ -126,9 +129,9 @@ $Identify = new Identify();
 
 foreach($ua as $useragent) {
 
-	$device = $Identify->identifyDevice($useragent, false);
+	$device = $Identify->identifyDevice($useragent, false, false);
 
-	print $useragent."<br>".$device["name"].", ".$device["segment"].", ".$device["method"]."<br><br>";
+	print $useragent."<br>".$device["segment"]."<br><br>";
 }
 //print $perf->result();
 
