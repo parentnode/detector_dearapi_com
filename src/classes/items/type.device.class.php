@@ -164,7 +164,7 @@ class TypeDevice extends Itemtype {
 		if($tags) {
 			foreach($tags as $tag) {
 				if($tag["context"] == "segment") {
-					return $tag["value"];
+					return $this->translateNewSegments($tag["value"]);
 				}
 			}
 
@@ -214,7 +214,7 @@ class TypeDevice extends Itemtype {
 					$tags = $IC->getTags(array("item_id" => $devices[0]["id"], "context" => "segment"));
 					if($tags) {
 	//					print "segment:" . $tags[0]["value"];
-						return $tags[0]["value"];
+						return $this->translateNewSegments($tags[0]["value"]);
 					}
 
 				}
@@ -228,7 +228,25 @@ class TypeDevice extends Itemtype {
 		return false;
 	}
 
-	// custom loopback function
+	// custom segment translator - converting new segments to old segments
+	function translateNewSegments($segment) {
+		if(preg_match("/^(desktop_edge)$/", $segment)) {
+			return "desktop";
+		}
+		else if(preg_match("/^(ie9|ie10|ie11)$/", $segment)) {
+			return "desktop_ie";
+		}
+		else if(preg_match("/^(smartphone)$/", $segment)) {
+			return "mobile_touch";
+		}
+		else if(preg_match("/^(phablet|phablet_light)$/", $segment)) {
+			return "mobile_touch";
+		}
+		else if(preg_match("/^(tablet_light)$/", $segment)) {
+			return "tablet";
+		}
+		return $segment;
+	}
 
 
 	// clone device, including tags
