@@ -10,8 +10,8 @@ error_reporting(E_ALL);
 /**
 * Required site information
 */
-define("SITE_UID", "DVCS");
-define("SITE_NAME", "detector.dearapi.com");
+define("SITE_UID", "DV3");
+define("SITE_NAME", "detector-v3.dearapi.com");
 define("SITE_URL", (isset($_SERVER["HTTPS"]) ? "https" : "http")."://".$_SERVER["SERVER_NAME"]);
 define("SITE_EMAIL", "info@parentnode.dk");
 

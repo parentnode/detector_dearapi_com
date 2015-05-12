@@ -34,12 +34,53 @@
 
 
 
-#content .scene.deviceEdit div.useragents {padding: 10px 0 20px; border-bottom: 1px solid #dedede;}
+/* MARKERS */
+#content .scene.deviceEdit div.markers {padding: 0 0 20px; border-bottom: 1px solid #dedede; overflow: hidden;}
+#content .scene.deviceEdit div.markers fieldset {display: inline-block; vertical-align: top;}
+#content .scene.deviceEdit div.markers fieldset .field {padding-right: 12px; padding-bottom: 0;}
+#content .scene.deviceEdit div.markers fieldset .field input[type=text] {width: 262px;}
 
+#content .scene.deviceEdit div.markers .actions {display: inline-block; vertical-align: top; padding: 0;}
+#content .scene.deviceEdit div.markers .actions li {padding-left: 0;}
+#content .scene.deviceEdit div.markers .actions li input {margin-top: 4px;}
+
+#content .scene.deviceEdit div.markers ul.markers {padding: 10px 0;}
+#content .scene.deviceEdit div.markers ul.markers li {padding: 3px 30px; font-size: 11px; position: relative; display: block;}
+#content .scene.deviceEdit div.markers ul.markers li:hover {background-color: #cccccc;}
+#content .scene.deviceEdit div.markers ul.markers li .delete {display: none; position: absolute; right: 30px; top: -3px; height: 24px; width: 24px; cursor: pointer; border-radius: 12px;
+	background: #fd0000 url(/janitor/admin/img/bg_icons.png) no-repeat 5px -45px;
+}
+#content .scene.deviceEdit div.markers ul.markers li:hover .delete {display: block;}
+
+
+/* EXCEPTIONS */
+#content .scene.deviceEdit div.exceptions {padding: 0 0 20px; border-bottom: 1px solid #dedede; overflow: hidden;}
+#content .scene.deviceEdit div.exceptions fieldset {display: inline-block; vertical-align: top;}
+#content .scene.deviceEdit div.exceptions fieldset .field {padding-right: 12px; padding-bottom: 0;}
+#content .scene.deviceEdit div.exceptions fieldset .field input[type=text] {width: 262px;}
+
+#content .scene.deviceEdit div.exceptions .actions {display: inline-block; vertical-align: top; padding: 0;}
+#content .scene.deviceEdit div.exceptions .actions li {padding-left: 0;}
+#content .scene.deviceEdit div.exceptions .actions li input {margin-top: 4px;}
+
+#content .scene.deviceEdit div.exceptions ul.exceptions {padding: 10px 0;}
+#content .scene.deviceEdit div.exceptions ul.exceptions li {padding: 3px 30px; font-size: 11px; position: relative; display: block;}
+#content .scene.deviceEdit div.exceptions ul.exceptions li:hover {background-color: #cccccc;}
+#content .scene.deviceEdit div.exceptions ul.exceptions li .delete {display: none; position: absolute; right: 30px; top: -3px; height: 24px; width: 24px; cursor: pointer; border-radius: 12px;
+	background: #fd0000 url(/janitor/admin/img/bg_icons.png) no-repeat 5px -45px;
+}
+#content .scene.deviceEdit div.exceptions ul.exceptions li:hover .delete {display: block;}
+
+
+/* TEST MARKERS */
+#content .scene.deviceEdit div.testmarkers {padding: 0 0 20px; border-bottom: 1px solid #dedede; overflow: hidden;}
+
+
+/* USERAGENTS */
+#content .scene.deviceEdit div.useragents {padding: 0 0 20px; border-bottom: 1px solid #dedede; overflow: hidden;}
 #content .scene.deviceEdit div.useragents .field textarea {height: 75px;}
 #content .scene.deviceEdit div.useragents .actions {text-align: left;}
 #content .scene.deviceEdit div.useragents .actions li {padding: 0 5px 10px;}
-
 #content .scene.deviceEdit div.useragents ul.useragents {padding: 10px 0;}
 #content .scene.deviceEdit div.useragents ul.useragents li {padding: 3px 30px; font-size: 11px; position: relative; display: block;}
 #content .scene.deviceEdit div.useragents ul.useragents li:hover {background-color: #cccccc;}
@@ -49,6 +90,36 @@
 	display: none;
 }
 #content .scene.deviceEdit div.useragents ul.useragents li:hover .delete {display: block;}
+
+
+#content .scene.deviceEdit div.useragents div.filter {text-align: right; padding: 10px 20px; background: #f5f7f8; border-bottom: 1px solid #bbbbbb; border-top: 1px solid #dedede;}
+
+#content .scene.deviceEdit div.useragents div.filter.filtering {background: red;}
+
+#content .scene.deviceEdit div.useragents div.filter .field {padding: 0;}
+#content .scene.deviceEdit div.useragents div.filter .field label {display: none;}
+#content .scene.deviceEdit div.useragents div.filter input {width: 200px; height: 16px; font-size: 12px;}
+
+
+/* MERGE */
+#content .scene.deviceEdit div.merge {padding: 0 0 20px; border-bottom: 1px solid #dedede; overflow: hidden;}
+#content .scene.deviceEdit div.merge ul.results > li {display: block; border-top: 1px solid #dedede;}
+#content .scene.deviceEdit div.merge ul.results > li h3 {font-size: 13px; padding-top: 10px; display: inline-block; vertical-align: top;}
+#content .scene.deviceEdit div.merge ul.results > li div.mergewith {display: inline-block; vertical-align: top; margin: 6px -15px 0 30px; height: 14px; padding: 3px 12px 4px; border-radius: 3px; color: #ffffff; cursor: pointer; font-size: 0.923rem; line-height: 1em; background-color: #64ad8e;}
+#content .scene.deviceEdit div.merge ul.results ul.tags {display: none;}
+#content .scene.deviceEdit div.merge ul.results ul.actions {display: none;}
+#content .scene.deviceEdit div.merge ul.results div.merge {display: none;}
+
+/* MERGE IN LIST */
+#content .scene.deviceList div.merge {margin: 0 0 20px; overflow: hidden;}
+#content .scene.deviceList div.merge h4 {padding-bottom: 3px;}
+#content .scene.deviceList div.merge ul.results > li {display: block; border-top: 1px solid #dedede;}
+#content .scene.deviceList div.merge ul.results > li h3 {font-size: 13px; padding-top: 10px; padding-bottom: 10px; display: inline-block; vertical-align: top;}
+#content .scene.deviceList div.merge ul.results > li div.mergewith {display: inline-block; vertical-align: top; margin: 6px -15px 0 30px; height: 14px; padding: 3px 12px 4px; border-radius: 3px; color: #ffffff; cursor: pointer; font-size: 0.923rem; line-height: 1em; background-color: #64ad8e;}
+#content .scene.deviceList div.merge ul.results ul.tags {display: none;}
+#content .scene.deviceList div.merge ul.results ul.actions {display: none;}
+#content .scene.deviceList div.merge ul.results div.merge {display: none;}
+
 
 
 /* UNIDENTIFIED LIST - EXTREME DATA SETS, CUSTOM NEEDS */
@@ -167,10 +238,15 @@
 
 
 
+
+
 /* NAVIGATION */
 body.device #navigation .device a,
 body.statistic #navigation .statistic a,
 body.unidentified #navigation .unidentified a,
 body.tags #navigation .tags a {padding-left: 35px; color: #ffffff;}
+
+
+
 
 

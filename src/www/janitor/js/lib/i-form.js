@@ -253,59 +253,6 @@ Util.Objects["cloneDevice"] = new function() {
 }
 
 
-Util.Objects["editUseragents"] = new function() {
-	this.init = function(div) {
-
-		div.item_id = u.cv(div, "item_id");
-
-		div._form = u.qs("form", div);
-		u.f.init(div._form);
-
-		div._form.submitted = function(iN) {
-
-			this.response = function(response) {
-				if(response.cms_status == "success") {
-					location.reload();
-				}
-				else {
-					page.notify(response);
-				}
-			}
-			u.request(this, this.action, {"method":"post", "params" : u.f.getParams(this)});
-		}
-
-		div._uas = u.qsa("li.useragent", div);
-		div.csrf_token = div.getAttribute("data-csrf-token");
-		div.useragent_delete = div.getAttribute("data-useragent-delete");
-
-		if(div.useragent_delete) {
-			var i, ua, bn_delete;
-			for(i = 0; ua = div._uas[i]; i++) {
-				ua.ua_id = u.cv(ua, "ua_id")
-				bn_delete = u.ae(ua, "div", {"class":"delete"});
-				bn_delete.ua = ua;
-				bn_delete.div = div;
-
-				u.e.click(bn_delete);
-				bn_delete.clicked = function(event) {
-		
-					this.response = function(response) {
-
-						page.notify(response);
-
-						if(response.cms_status == "success") {
-							this.ua.parentNode.removeChild(this.ua);
-						}
-					}
-					u.request(this, this.div.useragent_delete+"/"+this.ua.ua_id, {"method":"post", "params":"csrf-token=" + this.div.csrf_token});
-
-				}
-			}
-		}
-
-	}
-}
-
 
 Util.Objects["searchUnidentified"] = new function() {
 	this.init = function(form) {
@@ -1393,6 +1340,638 @@ Util.Objects["uniqueMatchList"] = new function() {
 			}
 		}
 
+
+	}
+}
+
+
+
+
+Util.Objects["editUseragents"] = new function() {
+	this.init = function(div) {
+
+		div.item_id = u.cv(div, "item_id");
+
+		// add collapsable header
+		div._header = u.qs("h2", div);
+		div._header.div = div;
+		u.e.click(div._header);
+		div._header.clicked = function() {
+			if(this.div.is_closed) {
+				u.as(this.div, "height", "auto");
+				this.div.is_closed = false;
+			}
+			else {
+				u.as(this.div, "height", this.offsetHeight+"px");
+				this.div.is_closed = true;
+			}
+		}
+		div._header.clicked();
+
+
+		div._form = u.qs("form", div);
+		u.f.init(div._form);
+
+		div._form.submitted = function(iN) {
+
+			this.response = function(response) {
+				if(response.cms_status == "success") {
+					location.reload();
+				}
+				else {
+					page.notify(response);
+				}
+			}
+			u.request(this, this.action, {"method":"post", "params" : u.f.getParams(this)});
+		}
+
+
+
+		div._uas = u.qsa("li.useragent", div);
+		div.csrf_token = div.getAttribute("data-csrf-token");
+		div.useragent_delete = div.getAttribute("data-useragent-delete");
+
+		if(div.useragent_delete) {
+			var i, ua, bn_delete;
+			for(i = 0; ua = div._uas[i]; i++) {
+				ua.ua_id = u.cv(ua, "ua_id")
+				bn_delete = u.ae(ua, "div", {"class":"delete"});
+				bn_delete.ua = ua;
+				bn_delete.div = div;
+
+				ua._c = ua.textContent.toLowerCase();
+
+				u.e.click(bn_delete);
+				bn_delete.clicked = function(event) {
+		
+					this.response = function(response) {
+
+						page.notify(response);
+
+						if(response.cms_status == "success") {
+							this.ua.parentNode.removeChild(this.ua);
+						}
+					}
+					u.request(this, this.div.useragent_delete+"/"+this.ua.ua_id, {"method":"post", "params":"csrf-token=" + this.div.csrf_token});
+
+				}
+			}
+		}
+
+		div._ua_ul = u.qs("ul.useragents", div);
+		div._filter = u.ae(div, "div", {"class":"filter"});
+		div.insertBefore(div._filter, div._ua_ul);
+		
+		div._filter_form = u.f.addForm(div._filter, {"class":"labelstyle:inject"});
+		div._filter_field = u.f.addField(div._filter_form, {"label":"Filter useragents"});
+		div._filter_field.div = div;
+		u.f.init(div._filter_form)
+		u.bug("field:" + div._filter_field)
+
+		div._filter_field._input.onkeydown = function() {
+//				u.bug("reset timer")
+			u.t.resetTimer(this.field.div.t_filter);
+		}
+		div._filter_field._input.onkeyup = function() {
+//				u.bug("set timer")
+			this.field.div.t_filter = u.t.setTimer(this.field.div, this.field.div.filter, 500);
+			u.ac(this.field.div._filter, "filtering");
+		}
+		div.filter = function() {
+			var i, node;
+			if(this._current_filter != this._filter_field._input.value.toLowerCase()) {
+//					u.bug("filter by:" + this._filter._input.value)
+
+				this._current_filter = this._filter_field._input.value.toLowerCase();
+				for(i = 0; node = this._uas[i]; i++) {
+
+					if(node._c.match(this._current_filter)) {
+						u.as(node, "display", "block", false);
+					}
+					else {
+						u.as(node, "display", "none", false);
+					}
+				}
+			}
+
+			u.rc(this._filter, "filtering");
+		}
+	}
+}
+
+
+Util.Objects["editMarkers"] = new function() {
+	this.init = function(div) {
+
+		div.item_id = u.cv(div, "item_id");
+
+
+		// add collapsable header
+		div._header = u.qs("h2", div);
+		div._header.div = div;
+		u.e.click(div._header);
+		div._header.clicked = function() {
+			if(this.div.is_closed) {
+				u.as(this.div, "height", "auto");
+				this.div.is_closed = false;
+			}
+			else {
+				u.as(this.div, "height", this.offsetHeight+"px");
+				this.div.is_closed = true;
+			}
+		}
+		div._header.clicked();
+
+
+
+		div._form = u.qs("form", div);
+		u.f.init(div._form);
+
+		div._form.submitted = function(iN) {
+
+			this.response = function(response) {
+				if(response.cms_status == "success") {
+					location.reload();
+				}
+				else {
+					page.notify(response);
+				}
+			}
+			u.request(this, this.action, {"method":"post", "params" : u.f.getParams(this)});
+		}
+
+		div._markers = u.qsa("li.marker", div);
+		div.csrf_token = div.getAttribute("data-csrf-token");
+		div.url_marker_delete = div.getAttribute("data-marker-delete");
+
+		if(div.url_marker_delete) {
+			var i, marker, bn_delete;
+			for(i = 0; marker = div._markers[i]; i++) {
+				marker.marker_id = u.cv(marker, "marker_id")
+				bn_delete = u.ae(marker, "div", {"class":"delete"});
+				bn_delete.marker = marker;
+				bn_delete.div = div;
+
+				u.e.click(bn_delete);
+				bn_delete.clicked = function(event) {
+		
+					this.response = function(response) {
+
+						page.notify(response);
+
+						if(response.cms_status == "success") {
+							this.marker.parentNode.removeChild(this.marker);
+						}
+					}
+					u.request(this, this.div.url_marker_delete+"/"+this.marker.marker_id, {"method":"post", "params":"csrf-token=" + this.div.csrf_token});
+
+				}
+			}
+		}
+
+	}
+}
+
+
+Util.Objects["editExceptions"] = new function() {
+	this.init = function(div) {
+
+		div.item_id = u.cv(div, "item_id");
+
+
+		// add collapsable header
+		div._header = u.qs("h2", div);
+		div._header.div = div;
+		u.e.click(div._header);
+		div._header.clicked = function() {
+			if(this.div.is_closed) {
+				u.as(this.div, "height", "auto");
+				this.div.is_closed = false;
+			}
+			else {
+				u.as(this.div, "height", this.offsetHeight+"px");
+				this.div.is_closed = true;
+			}
+		}
+		div._header.clicked();
+
+
+
+		div._form = u.qs("form", div);
+		u.f.init(div._form);
+
+		div._form.submitted = function(iN) {
+
+			this.response = function(response) {
+				if(response.cms_status == "success") {
+					location.reload();
+				}
+				else {
+					page.notify(response);
+				}
+			}
+			u.request(this, this.action, {"method":"post", "params" : u.f.getParams(this)});
+		}
+
+		div._exceptions = u.qsa("li.exception", div);
+		div.csrf_token = div.getAttribute("data-csrf-token");
+		div.url_exception_delete = div.getAttribute("data-exception-delete");
+
+		if(div.url_exception_delete) {
+			var i, exception, bn_delete;
+			for(i = 0; exception = div._exceptions[i]; i++) {
+				exception.exception_id = u.cv(exception, "exception_id")
+				bn_delete = u.ae(exception, "div", {"class":"delete"});
+				bn_delete.exception = exception;
+				bn_delete.div = div;
+
+				u.e.click(bn_delete);
+				bn_delete.clicked = function(event) {
+		
+					this.response = function(response) {
+
+						page.notify(response);
+
+						if(response.cms_status == "success") {
+							this.exception.parentNode.removeChild(this.exception);
+						}
+					}
+					u.request(this, this.div.url_exception_delete+"/"+this.exception.exception_id, {"method":"post", "params":"csrf-token=" + this.div.csrf_token});
+
+				}
+			}
+		}
+
+	}
+}
+
+
+
+Util.Objects["testMarkers"] = new function() {
+	this.init = function(div) {
+		u.bug("init testMarkers")
+
+		u.ae(div, "h2", {"html":"Test device markers"});
+
+		// add collapsable header
+		div._header = u.qs("h2", div);
+		div._header.div = div;
+		u.e.click(div._header);
+		div._header.clicked = function() {
+			if(this.div.is_closed) {
+				u.as(this.div, "height", "auto");
+				this.div.is_closed = false;
+			}
+			else {
+				u.as(this.div, "height", this.offsetHeight+"px");
+				this.div.is_closed = true;
+			}
+		}
+		div._header.clicked();
+
+
+
+		div.item_id = u.cv(div, "item_id");
+
+		div.csrf_token = div.getAttribute("data-csrf-token");
+
+		div.url_device_test = div.getAttribute("data-device-test");
+
+
+
+
+		div.test_form = u.f.addForm(div, {"class":"labelstyle:inject"});
+		div.test_form.div = div;
+
+		div.bn_test = u.f.addAction(div.test_form, {"value":"Test markers", "class":"button primary"});
+		div.bn_test.div = div;
+
+
+		u.f.init(div.test_form);
+
+
+		// add list for not matched results
+		div.not_matched_result = u.ae(div, "ul", {"class":"results not"});
+
+		div.bad_matched_result = u.ae(div, "ul", {"class":"results bad"});
+
+
+		// perform search
+		div.test_form.submitted = function() {
+
+			u.bug("perform test")
+
+			// // only do search with valid search string
+			// if(this.search_field._input.val() && this.search_field._input.val() != this.current_search_term) {
+			//
+				// get search response
+				this.response = function(response) {
+
+					if(response.cms_status == "success") {
+						var not_matched = response.cms_object[0];
+						var bad_matched = response.cms_object[1];
+
+						var i, node;
+
+						for(i = 0; node = not_matched[i]; i++) {
+
+							u.ae(this.div.bad_matched_result, "li", {"html":node});
+
+						}
+
+
+						for(x in bad_matched) {
+
+							node = u.ae(this.div.bad_matched_result, "li");
+							u.ae(node, "h3", {"html":bad_matched[x].name})
+
+
+							u.e.click(node);
+							node.clicked = function() {
+								u.bug("show useragents");
+							}
+						}
+					}
+
+					u.rc(this.div, "loading");
+				}
+
+				u.ac(this.div, "loading");
+
+
+				// empty result list
+				this.div.not_matched_result.innerHTML = "";
+				this.div.bad_matched_result.innerHTML = "";
+
+
+				// perform search
+				u.request(this, this.div.url_device_test+"/"+this.div.item_id, {"params":"csrf-token="+this.div.csrf_token, "method":"post"})
+			// }
+		}
+
+	}
+}
+
+
+
+Util.Objects["mergeDevices"] = new function() {
+	this.init = function(div) {
+		u.bug("init mergeDevices")
+
+
+		div.item_id = u.cv(div, "item_id");
+
+		u.ae(div, "h2", {"html":"Merge with device"});
+		div.search_form = u.f.addForm(div, {"class":"labelstyle:inject"});
+		var fieldset = u.f.addFieldset(div.search_form);
+		div.search_field = u.f.addField(fieldset, {"name":"search", "label":"Search for device"});
+		div.search_field.div = div;
+		u.f.init(div.search_form);
+
+		// add list for search results
+		div.search_result = u.ae(div, "ul", {"class":"results"});
+
+
+
+		// add collapsable header
+		div._header = u.qs("h2", div);
+		div._header.div = div;
+		u.e.click(div._header);
+		div._header.clicked = function() {
+			if(this.div.is_closed) {
+				u.as(this.div, "height", "auto");
+				this.div.is_closed = false;
+			}
+			else {
+				u.as(this.div, "height", this.offsetHeight+"px");
+				this.div.is_closed = true;
+			}
+		}
+		div._header.clicked();
+
+
+
+		div.csrf_token = div.getAttribute("data-csrf-token");
+
+		div.url_device_list = div.getAttribute("data-device-list");
+		div.url_device_edit = div.getAttribute("data-device-edit");
+		div.url_device_merge = div.getAttribute("data-device-merge");
+
+
+
+
+
+
+		div.search_field._input.onkeyup = function() {
+			u.t.resetTimer(this.field.div.t_search);
+			this.field.div.t_search = u.t.setTimer(this.field.div, this.field.div.search, 1000);
+		}
+		div.search_field._input.onkeydown = function() {
+			u.t.resetTimer(this.field.div.t_search);
+		}
+
+		// perform search
+		div.search = function() {
+
+
+			// only do search with valid search string
+			if(this.search_field._input.val() && this.search_field._input.val() != this.current_search_term) {
+
+				// get search response
+				this.response = function(response) {
+
+					// get items from result
+					var items = u.qsa(".all_items li.item", response);
+					if(items.length) {
+
+						var i, node;
+						for(i = 0; node = items[i]; i++) {
+
+							if(u.cv(node, "item_id") != this.item_id) {
+
+								node = this.search_result.appendChild(node);
+								node.div = this;
+								node.device_id = u.cv(node, "item_id");
+
+								u.e.click(node);
+								node.clicked = function() {
+
+									if(!this.bn_merge) {
+
+										this.bn_merge = u.ie(this, "div", {"class":"mergewith", "html":"Merge"});
+										this.bn_merge.node = this;
+
+										u.e.click(this.bn_merge);
+										this.bn_merge.clicked = function() {
+
+											this.response = function(response) {
+												if(response.cms_status == "success") {
+													location.href = this.node.div.url_device_edit+"/"+this.node.device_id;
+												}
+												else {
+													page.notify(response);
+												}
+											}
+											u.request(this, this.node.div.url_device_merge+"/"+this.node.div.item_id+"/"+this.node.device_id, {"method":"post", "params":"csrf-token="+this.node.div.csrf_token});
+
+										}
+
+									}
+									else {
+										this.removeChild(this.bn_merge);
+										this.bn_merge = false;
+									}
+
+								}
+							}
+						}
+					}
+
+					u.rc(this, "loading");
+				}
+
+				u.ac(this, "loading");
+
+
+				this.current_search_term = this.search_field._input.val();
+				// empty result list
+				this.search_result.innerHTML = "";
+
+
+				// perform search
+				u.request(this, this.url_device_list, {"params":"search=ajax&search_string="+this.current_search_term, "method":"post"})
+			}
+		}
+
+	}
+}
+
+
+
+Util.Objects["mergeDevicesList"] = new function() {
+	this.init = function(div) {
+		u.bug("init mergeDevicesList")
+
+
+		div.item_id = u.cv(div, "item_id");
+
+		div.li = div.parentNode;
+
+		u.ae(div, "h4", {"html":"Merge with device"});
+		div.search_form = u.f.addForm(div, {"class":"labelstyle:inject"});
+		var fieldset = u.f.addFieldset(div.search_form);
+		div.search_field = u.f.addField(fieldset, {"name":"search", "label":"Search for device"});
+		div.search_field.div = div;
+		u.f.init(div.search_form);
+
+		// add list for search results
+		div.search_result = u.ae(div, "ul", {"class":"results"});
+
+		// add collapsable header
+		div._header = u.qs("h4", div);
+		div._header.div = div;
+		u.e.click(div._header);
+		div._header.clicked = function() {
+			if(this.div.is_closed) {
+				u.as(this.div, "height", "auto");
+				this.div.is_closed = false;
+			}
+			else {
+				u.as(this.div, "height", this.offsetHeight+"px");
+				this.div.is_closed = true;
+			}
+		}
+		div._header.clicked();
+
+
+
+		div.csrf_token = div.getAttribute("data-csrf-token");
+
+		div.url_device_list = div.getAttribute("data-device-list");
+		div.url_device_edit = div.getAttribute("data-device-edit");
+		div.url_device_merge = div.getAttribute("data-device-merge");
+
+
+		div.search_field._input.onkeyup = function() {
+			u.t.resetTimer(this.field.div.t_search);
+			this.field.div.t_search = u.t.setTimer(this.field.div, this.field.div.search, 1000);
+		}
+		div.search_field._input.onkeydown = function() {
+			u.t.resetTimer(this.field.div.t_search);
+		}
+
+		// perform search
+		div.search = function() {
+
+
+			// only do search with valid search string
+			if(this.search_field._input.val() && this.search_field._input.val() != this.current_search_term) {
+
+				// get search response
+				this.response = function(response) {
+
+					// get items from result
+					var items = u.qsa(".all_items li.item", response);
+					if(items.length) {
+
+						var i, device;
+						for(i = 0; device = items[i]; i++) {
+
+							if(u.cv(device, "item_id") != this.li._item_id) {
+								device = this.search_result.appendChild(device);
+								device.div = this;
+								device.device_id = u.cv(device, "item_id");
+
+								u.e.click(device);
+								device.clicked = function() {
+
+									if(!this.bn_merge) {
+
+										this.bn_merge = u.ie(this, "div", {"class":"mergewith", "html":"Merge"});
+										this.bn_merge.device = this;
+
+										u.e.click(this.bn_merge);
+										this.bn_merge.clicked = function() {
+
+											this.response = function(response) {
+												if(response.cms_status == "success") {
+													this.device.div.li.parentNode.removeChild(this.device.div.li);
+	//												location.href = this.device.div.url_device_edit+"/"+this.device.device_id;
+												}
+												else {
+													page.notify(response);
+												}
+											}
+											u.request(this, this.device.div.url_device_merge+"/"+this.device.div.item_id+"/"+this.device.device_id, {"method":"post", "params":"csrf-token="+this.device.div.csrf_token});
+
+										}
+
+									}
+									else {
+										this.removeChild(this.bn_merge);
+										this.bn_merge = false;
+									}
+
+								}
+							}
+						}
+					}
+
+					u.rc(this, "loading");
+				}
+
+				u.ac(this, "loading");
+
+
+				this.current_search_term = this.search_field._input.val();
+				// empty result list
+				this.search_result.innerHTML = "";
+
+
+				// perform search
+				u.request(this, this.url_device_list, {"params":"search=ajax&search_string="+this.current_search_term, "method":"post"})
+			}
+		}
 
 	}
 }

@@ -17,6 +17,10 @@ class TypeDevice extends Itemtype {
 		// itemtype database
 		$this->db = SITE_DB.".item_device";
 		$this->db_useragents = SITE_DB.".device_useragents";
+		$this->db_markers = SITE_DB.".device_markers";
+		$this->db_exceptions = SITE_DB.".device_exceptions";
+
+
 		$this->db_unidentified = SITE_DB.".unidentified_useragents";
 
 		// Name
@@ -45,11 +49,25 @@ class TypeDevice extends Itemtype {
 			"hint_message" => "Devices may have many names, especially when released under Network operator subbrands like O2, Orange, Vodafone or T-Mobile. Add these names here. You can also add any interesting details about the device."
 		));
 
-		// Description
+		// Useragent
 		$this->addToModel("useragent", array(
 			"type" => "text",
 			"label" => "Useragent",
 			"hint_message" => "Device useragent. Only add actual useragents."
+		));
+
+		// Markers (unique markers for device)
+		$this->addToModel("marker", array(
+			"type" => "string",
+			"label" => "Marker",
+			"hint_message" => "Device marker. Always test your markers."
+		));
+
+		// Exceptions (unique exections for device)
+		$this->addToModel("exception", array(
+			"type" => "string",
+			"label" => "Exception",
+			"hint_message" => "Device exception. Always test your exceptions."
 		));
 
 		// // Tags
@@ -87,8 +105,7 @@ class TypeDevice extends Itemtype {
 
 			// useragents
 			$item["useragents"] = false;
-
-			// get slides
+			// get useragents
 			if($query->sql("SELECT * FROM ".$this->db_useragents." WHERE item_id = $item_id")) {
 
 				$useragents = $query->results();
@@ -97,6 +114,33 @@ class TypeDevice extends Itemtype {
 					$item["useragents"][$i]["useragent"] = $useragent["useragent"];
 				}
 			}
+
+
+			// markers
+			$item["markers"] = false;
+			// get markers
+			if($query->sql("SELECT * FROM ".$this->db_markers." WHERE item_id = $item_id")) {
+
+				$markers = $query->results();
+				foreach($markers as $i => $marker) {
+					$item["markers"][$i]["id"] = $marker["id"];
+					$item["markers"][$i]["marker"] = $marker["marker"];
+				}
+			}
+
+
+			// exceptions
+			$item["exceptions"] = false;
+			// get exceptions
+			if($query->sql("SELECT * FROM ".$this->db_exceptions." WHERE item_id = $item_id")) {
+
+				$exceptions = $query->results();
+				foreach($exceptions as $i => $exception) {
+					$item["exceptions"][$i]["id"] = $exception["id"];
+					$item["exceptions"][$i]["exception"] = $exception["exception"];
+				}
+			}
+
 
 			return $item;
 		}
@@ -235,6 +279,187 @@ class TypeDevice extends Itemtype {
 	}
 
 
+	// merge device, copy all user-agents to new device and delete original
+	// mergeDevice/#device_id_source#/#device_id_destination#
+	function mergeDevice($action) {
+
+		$IC = new Items();
+		$this->getPostedEntities();
+
+		$query = new Query();
+
+
+		if(count($action) == 3) {
+
+			$device_id_source = $action[1];
+			$device_id_destination = $action[2];
+
+			// get source device details
+			$device = $this->get($device_id_source);
+
+			// switch useragent to new device
+			if($device["useragents"]) {
+				// copy useragents
+				foreach($device["useragents"] as $useragent) {
+
+					$sql = "UPDATE ".$this->db_useragents." SET item_id = $device_id_destination WHERE id = ".$useragent["id"];
+					$query->sql($sql);
+
+				}
+			}
+
+			// switch markers to new device
+			if($device["markers"]) {
+				// copy useragents
+				foreach($device["markers"] as $marker) {
+
+					$sql = "UPDATE ".$this->db_markers." SET item_id = $device_id_destination WHERE id = ".$marker["id"];
+					$query->sql($sql);
+
+				}
+			}
+
+			// switch exceptions to new device
+			if($device["exceptions"]) {
+				// copy useragents
+				foreach($device["exceptions"] as $exception) {
+
+					$sql = "UPDATE ".$this->db_exceptions." SET item_id = $device_id_destination WHERE id = ".$exception["id"];
+					$query->sql($sql);
+
+				}
+			}
+
+
+			// delete source device
+			$this->delete(array("delete", $device_id_source));
+
+
+			message()->addMessage("Devices merged");
+			return $device_id_destination;
+
+		}
+
+		message()->addMessage("Device could not be merged", array("type" => "error"));
+		return false;
+	}
+
+
+
+	// MARKERS
+
+	// add marker - 3 parameters exactly
+	// /janitor/device/addMarker/#item_id#
+	function addMarker($action) {
+
+		$marker = getPost("marker");
+
+		if(count($action) == 2 && $marker) {
+			$item_id = $action[1];
+
+			$query = new Query();
+			$query->checkDbExistance($this->db_markers);
+
+			if($query->sql("INSERT INTO ".$this->db_markers." VALUES(DEFAULT, ".$item_id.", '".$marker."')")) {
+
+				// update modified time of device
+				$query->sql("UPDATE ".UT_ITEMS." SET modified_at=CURRENT_TIMESTAMP WHERE id = ".$item_id);
+
+				message()->addMessage("Marker added");
+				return true;
+			}
+		}
+
+		message()->addMessage("Marker could not be added", array("type" => "error"));
+		return false;
+	}
+
+	// delete device marker - 3 parameters exactly
+	// /janitor/device/deleteMarker/#item_id#/#marker_id#
+	function deleteMarker($action) {
+
+		if(count($action) == 3) {
+
+			$item_id = $action[1];
+			$marker_id = $action[2];
+
+			$query = new Query();
+
+			$sql = "DELETE FROM ".$this->db_markers." WHERE item_id = ".$item_id." AND id = '".$marker_id."'";
+			if($query->sql($sql)) {
+
+				// update modified time of device
+				$query->sql("UPDATE ".UT_ITEMS." SET modified_at=CURRENT_TIMESTAMP WHERE id = ".$item_id);
+
+				message()->addMessage("Marker deleted");
+				return true;
+			}
+		}
+
+		message()->addMessage("Marker could not be deleted", array("type" => "error"));
+		return false;
+	}
+
+
+
+	// EXCEPTIONS
+
+	// add exception - 3 parameters exactly
+	// /janitor/device/addException/#item_id#
+	function addException($action) {
+
+		$exception = getPost("exception");
+
+		if(count($action) == 2 && $exception) {
+			$item_id = $action[1];
+
+			$query = new Query();
+			$query->checkDbExistance($this->db_exceptions);
+
+			if($query->sql("INSERT INTO ".$this->db_exceptions." VALUES(DEFAULT, ".$item_id.", '".$exception."')")) {
+
+				// update modified time of device
+				$query->sql("UPDATE ".UT_ITEMS." SET modified_at=CURRENT_TIMESTAMP WHERE id = ".$item_id);
+
+				message()->addMessage("Exception added");
+				return true;
+			}
+		}
+
+		message()->addMessage("Exception could not be added", array("type" => "error"));
+		return false;
+	}
+
+	// delete device exception - 3 parameters exactly
+	// /janitor/device/deleteException/#item_id#/#exception_id#
+	function deleteException($action) {
+
+		if(count($action) == 3) {
+
+			$item_id = $action[1];
+			$exception_id = $action[2];
+
+			$query = new Query();
+
+			$sql = "DELETE FROM ".$this->db_exceptions." WHERE item_id = ".$item_id." AND id = '".$exception_id."'";
+			if($query->sql($sql)) {
+
+				// update modified time of device
+				$query->sql("UPDATE ".UT_ITEMS." SET modified_at=CURRENT_TIMESTAMP WHERE id = ".$item_id);
+
+				message()->addMessage("Exception deleted");
+				return true;
+			}
+		}
+
+		message()->addMessage("Exception could not be deleted", array("type" => "error"));
+		return false;
+	}
+
+
+
+	// USERAGENTS
+
 	// add useragent - 3 parameters exactly
 	// /janitor/device/addUseragent/#item_id#
 	function addUseragent($action) {
@@ -258,7 +483,6 @@ class TypeDevice extends Itemtype {
 		message()->addMessage("Useragent could not be added", array("type" => "error"));
 		return false;
 	}
-
 
 	// delete device useragent - 3 parameters exactly
 	// /janitor/device/deleteUseragent/#item_id#/#useragent_id#
@@ -288,6 +512,95 @@ class TypeDevice extends Itemtype {
 
 		message()->addMessage("Useragent could not be deleted", array("type" => "error"));
 		return false;
+	}
+
+
+
+	// TEST MARKERS FOR DEVICE
+
+	// test device markers
+	// testMarkers/#device_id#
+	function testMarkers($action) {
+	
+		if(count($action) == 2) {
+
+			$device_id = $action[1];
+			$device = $this->get($device_id);
+
+			// compile regular expression
+
+			if($device["markers"]) {
+
+				$markers = array();
+				$reg_exp_pos = "";
+				$reg_exp_neg = "";
+
+				foreach($device["markers"] as $marker) {
+					array_push($markers, $marker["marker"]);
+				}
+
+				$reg_exp_pos = implode($markers, "|");
+
+
+				if($device["exceptions"]) {
+					$exceptions = array();
+
+					foreach($device["exceptions"] as $exception) {
+						array_push($exceptions, $exception["exception"]);
+					}
+
+					$reg_exp_neg = implode($exceptions, "|");
+				}
+
+				$not_matched_useragents = array();
+
+				// first run test on current device to identify holes in identification
+				foreach($device["useragents"] as $useragent) {
+					if(!(preg_match("/".$reg_exp_pos."/i", $useragent["useragent"]) && (!$reg_exp_neg || !preg_match("/".$reg_exp_neg."/i", $useragent["useragent"])))) {
+						array_push($not_matched_useragents, $useragent["useragent"]);
+					}
+				}
+
+				// get all useragents
+				$query = new Query();
+
+				$sql = "SELECT * FROM ".$this->db_useragents;
+				$query->sql($sql);
+				$all_useragents = $query->results();
+				$bad_matched_useragents = array();
+
+				foreach($all_useragents as $useragent) {
+					if($useragent["item_id"] != $device_id && (preg_match("/".$reg_exp_pos."/i", $useragent["useragent"]) && (!$reg_exp_neg || !preg_match("/".$reg_exp_neg."/i", $useragent["useragent"])))) {
+
+						if(!isset($bad_matched_useragents[$useragent["item_id"]])) {
+							$bad_matched_useragents[$useragent["item_id"]] = array();
+
+							$query->sql("SELECT * FROM ".$this->db." WHERE item_id = ".$useragent["item_id"]);
+							$name = $query->result(0, "name");
+
+							$bad_matched_useragents[$useragent["item_id"]]["name"] = $name;
+							$bad_matched_useragents[$useragent["item_id"]]["useragents"] = array();
+						}
+						array_push($bad_matched_useragents[$useragent["item_id"]]["useragents"], $useragent["useragent"]);
+
+					}
+				}
+
+				$result = array($not_matched_useragents, $bad_matched_useragents);
+
+//				print_r($result);
+
+
+				return $result;
+			}
+
+
+		
+		}
+
+		message()->addMessage("Device could not be tested", array("type" => "error"));
+		return false;
+
 	}
 
 

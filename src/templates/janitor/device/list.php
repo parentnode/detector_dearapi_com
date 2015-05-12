@@ -34,14 +34,18 @@ if($search && ($search_string || $tags)) {
 	// save search
 	if($search_string) {
 		$search_parameters["search_string"] = $search_string;
-		session()->value("device_search", $search_string);
+		if($search != "ajax") {
+			session()->value("device_search", $search_string);
+		}
 	}
 	else {
 		session()->reset("device_search");
 	}
 	if($tags) {
 		$search_parameters["tags"] = $tags;
-		session()->value("device_search_tags", $tags);
+		if($search != "ajax") {
+			session()->value("device_search_tags", $tags);
+		}
 	}
 	else {
 		session()->reset("device_search_tags");
@@ -100,6 +104,14 @@ else {
 				<?= $JML->tagList($item["tags"]) ?>
 
 				<?= $JML->listActions($item) ?>
+
+				<div class="merge i:mergeDevicesList item_id:<?= $item["item_id"] ?>"
+					data-csrf-token="<?= session()->value("csrf") ?>"
+					data-device-list="<?= $this->validPath("/janitor/device/list") ?>"
+					data-device-edit="<?= $this->validPath("/janitor/device/edit") ?>"
+					data-device-merge="<?= $this->validPath("/janitor/device/mergeDevice") ?>"
+					>
+				</div>
 			 </li>
 <?			endforeach; ?>
 		</ul>
