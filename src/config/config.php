@@ -10,10 +10,10 @@ error_reporting(E_ALL);
 /**
 * Required site information
 */
-define("SITE_UID", "DVCS");
-define("SITE_NAME", "detector.dearapi.com");
-define("SITE_URL", "detector.dearapi.com");
-define("SITE_EMAIL", "martin@parentnode.dk");
+define("SITE_UID", "DV2");
+define("SITE_NAME", "detector-v2.dearapi.com");
+define("SITE_URL", (isset($_SERVER["HTTPS"]) ? "https" : "http")."://".$_SERVER["SERVER_NAME"]);
+define("SITE_EMAIL", "info@parentnode.dk");
 
 /**
 * Optional constants
@@ -29,9 +29,10 @@ define("SITE_ITEMS", true);
 
 // Enable notifications (send collection email after N notifications)
 define("SITE_COLLECT_NOTIFICATIONS", 50);
-//define("SHOP_ORDER_NOTIFIES", "martin@think.dk");
-define("SHOP_ORDER_NOTIFIES", "martin@parentnode.dk");
 
-define("SITE_INSTALL", true);
+//define("SHOP_ORDER_NOTIFIES", "martin@think.dk");
+//define("SHOP_ORDER_NOTIFIES", "martin@parentnode.dk");
+
+//define("SITE_INSTALL", true);
 
 ?>
