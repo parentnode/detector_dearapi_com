@@ -189,7 +189,7 @@ class TypeDevice extends Itemtype {
 		if(preg_match("/^(desktop_edge)$/", $segment)) {
 			return "desktop";
 		}
-		else if(preg_match("/^(ie9|ie10|ie11)$/", $segment)) {
+		else if(preg_match("/^(desktop_ie9|desktop_ie10|desktop_ie11)$/", $segment)) {
 			return "desktop_ie";
 		}
 		else if(preg_match("/^(smartphone)$/", $segment)) {
