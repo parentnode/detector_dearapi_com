@@ -360,11 +360,13 @@ class TypeDevice extends Itemtype {
 
 			if($query->sql("INSERT INTO ".$this->db_markers." VALUES(DEFAULT, ".$item_id.", '".$marker."')")) {
 
+				$marker_id = $query->lastInsertId();
+
 				// update modified time of device
 				$query->sql("UPDATE ".UT_ITEMS." SET modified_at=CURRENT_TIMESTAMP WHERE id = ".$item_id);
 
 				message()->addMessage("Marker added");
-				return true;
+				return array("marker" => prepareForHTML($marker), "id" => $marker_id);
 			}
 		}
 
@@ -416,11 +418,13 @@ class TypeDevice extends Itemtype {
 
 			if($query->sql("INSERT INTO ".$this->db_exceptions." VALUES(DEFAULT, ".$item_id.", '".$exception."')")) {
 
+				$exception_id = $query->lastInsertId();
+
 				// update modified time of device
 				$query->sql("UPDATE ".UT_ITEMS." SET modified_at=CURRENT_TIMESTAMP WHERE id = ".$item_id);
 
 				message()->addMessage("Exception added");
-				return true;
+				return array("exception" => prepareForHTML($exception), "id" => $exception_id);
 			}
 		}
 

@@ -118,6 +118,10 @@ $ua[] = "Mozilla/5.0 (iPad; CPU OS 8_0 like Mac OS X) AppleWebKit/600.1.3 (KHTML
 
 $ua[] = "Mozilla/5.0 (Windows NT 6.0; rv:5.0) Gecko/20100101 Firefox/5.0";
 $ua[] = "Mozilla/5.0 (Windows NT 6.3; rv:25.0) Gecko/20100101 Firefox/25.0";
+$ua[] = "Mozilla/5.0 (Windows NT 6.3; rv:25.0) Gecko/20100102 Firefox/25.0";
+
+$ua[] = "Mozilla/5.0 (Windows NT 6.1; Trident/7.0; EIE10;ENUSWOL; rv:11.0) like Gecko";
+$ua[] = "Mozilla/5.0 (Windows NT 6.1; Trident/7.0; EIE10;ENU; rv:11.0) like Gecko";
 
 //$ua[] = "";
 

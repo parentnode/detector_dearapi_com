@@ -810,6 +810,14 @@ body #selection_options ul.actions a.button:hover {background-color: #313942;}
 }
 #content .scene.deviceEdit div.exceptions ul.exceptions li:hover .delete {display: block;}
 #content .scene.deviceEdit div.testmarkers {padding: 0 0 20px; border-bottom: 1px solid #dedede; overflow: hidden;}
+#content .scene.deviceEdit div.testmarkers h3 {font-size: 1.1rem; padding-top: 15px;}
+#content .scene.deviceEdit div.testmarkers ul.results {}
+#content .scene.deviceEdit div.testmarkers ul.results li {display: block; padding: 0 0 2px;}
+#content .scene.deviceEdit div.testmarkers h3.not {color: orange;}
+#content .scene.deviceEdit div.testmarkers ul.results.not {}
+#content .scene.deviceEdit div.testmarkers h3.bad {color: red;}
+#content .scene.deviceEdit div.testmarkers ul.results.bad li ul.useragents {height: 0; overflow: hidden;}
+#content .scene.deviceEdit div.testmarkers ul.results.bad li ul.useragents li {display: block; padding: 3px 35px 0;}
 #content .scene.deviceEdit div.useragents {padding: 0 0 20px; border-bottom: 1px solid #dedede; overflow: hidden;}
 #content .scene.deviceEdit div.useragents .field textarea {height: 75px;}
 #content .scene.deviceEdit div.useragents .actions {text-align: left;}
