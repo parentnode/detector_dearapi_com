@@ -554,11 +554,21 @@ class TypeDevice extends Itemtype {
 					$reg_exp_neg = implode($exceptions, "|");
 				}
 
+				// print "preg_match(/".$reg_exp_pos."/i<br>\n";
+				// print "preg_match(/".$reg_exp_neg."/i<br>\n";
+
+				// print "reg_exp_pos:/".preg_replace("/([\/\.])/", "\$1"$reg_exp_pos)."/i<br>\n";
+				// print "reg_exp_neg:/".addcslashes($reg_exp_neg)."/i<br>\n";
+				//
+				// print "reg_exp_pos:/".escape($reg_exp_pos)."/i<br>\n";
+				// print "reg_exp_neg:/".escape($reg_exp_neg)."/i<br>\n";
+
+
 				$not_matched_useragents = array();
 
 				// first run test on current device to identify holes in identification
 				foreach($device["useragents"] as $useragent) {
-					if(!(preg_match("/".$reg_exp_pos."/i", $useragent["useragent"]) && (!$reg_exp_neg || !preg_match("/".$reg_exp_neg."/i", $useragent["useragent"])))) {
+					if(!(preg_match("/(".$reg_exp_pos.")/i", $useragent["useragent"]) && (!$reg_exp_neg || !preg_match("/(".$reg_exp_neg.")/i", $useragent["useragent"])))) {
 						array_push($not_matched_useragents, $useragent["useragent"]);
 					}
 				}
@@ -572,7 +582,7 @@ class TypeDevice extends Itemtype {
 				$bad_matched_useragents = array();
 
 				foreach($all_useragents as $useragent) {
-					if($useragent["item_id"] != $device_id && (preg_match("/".$reg_exp_pos."/i", $useragent["useragent"]) && (!$reg_exp_neg || !preg_match("/".$reg_exp_neg."/i", $useragent["useragent"])))) {
+					if($useragent["item_id"] != $device_id && (preg_match("/(".$reg_exp_pos.")/i", $useragent["useragent"]) && (!$reg_exp_neg || !preg_match("/(".$reg_exp_neg.")/i", $useragent["useragent"])))) {
 
 						if(!isset($bad_matched_useragents[$useragent["item_id"]])) {
 							$bad_matched_useragents[$useragent["item_id"]] = array();

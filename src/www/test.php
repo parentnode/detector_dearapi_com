@@ -96,15 +96,28 @@ testing regexp
 // }
 
 
-$useragent = "Mozilla/5.0 (Linux; U; en-gb; KFTT Build/IML74K) AppleWebKit/535.19 (KHTML, like Gecko) Silk/3.16 Safari/535.19 Silk-Accelerated=true";
+// $useragent = "Mozilla/5.0 (Linux; U; en-gb; KFTT Build/IML74K) AppleWebKit/535.19 (KHTML, like Gecko) Silk/3.16 Safari/535.19 Silk-Accelerated=true";
+//
+// if(preg_match("/Mozilla\/5.0[^$]+Linux[^$]+Android/", $useragent) && !preg_match("/crios|ipod|ipad|symbian|blackberry|firefox/i", $useragent)) {
+//
+// 	if(preg_match("/Kindle Fire|KF[^$]+Silk/", $useragent, $matches)) {
+// 		print_r($matches);
+// 	}
+// }
 
-if(preg_match("/Mozilla\/5.0[^$]+Linux[^$]+Android/", $useragent) && !preg_match("/crios|ipod|ipad|symbian|blackberry|firefox/i", $useragent)) {
+$useragent = "";
 
-	if(preg_match("/Kindle Fire|KF[^$]+Silk/", $useragent, $matches)) {
-		print_r($matches);
-	}
+$reg_exp_pos = "/firefox\/[0-4]\b/i";
+$reg_exp_neg = "/msie/i";
+
+if(preg_match("/".$reg_exp_pos."/i", $useragent) && (!$reg_exp_neg || !preg_match("/".$reg_exp_neg."/i", $useragent)))) {
+
+	print "passed";
 }
+else {
 
+	print "failed";
+}
  ?>
 
 
