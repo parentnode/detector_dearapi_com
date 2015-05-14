@@ -697,7 +697,7 @@ Util.Objects["unidentifiedList"] = new function() {
 					var i, node;
 					for(i = 0; node = this.ua_nodes[i]; i++) {
 						u.rc(node, "mapped");
-						node.option_node = false;
+//						node.option_node = false;
 					}
 
 				}
@@ -723,21 +723,11 @@ Util.Objects["unidentifiedList"] = new function() {
 						}
 
 
-						// TODO: highlight all matching ua_nodes
-
+						// highlight all matching ua_nodes
 						var i, node;
 						for(i = 0; node = this.ua_nodes[i]; i++) {
 							u.ac(node, "mapped");
 						}
-
-
-						var i;
-
-
-						// info_string = this.details["method"];
-						// if(this.details["guess"]) {
-						// 	info_string += ", " + this.details["guess"];
-						// }
 
 
 						// option matches device
@@ -805,6 +795,11 @@ Util.Objects["unidentifiedList"] = new function() {
 
 										input.node.response = function(response) {
 
+											if(this.option_node) {
+												// remove node from option_node array
+												this.option_node.ua_nodes.splice(this.option_node.ua_nodes.indexOf(this), 1);
+											}
+
 											// and remove node
 											this.parentNode.removeChild(this);
 											this.div.toggleAddToOption();
@@ -836,6 +831,11 @@ Util.Objects["unidentifiedList"] = new function() {
 										if(input.node._identified.id == this.option.device_id) {
 
 											input.node.response = function(response) {
+
+												if(this.option_node) {
+													// remove node from option_node array
+													this.option_node.ua_nodes.splice(this.option_node.ua_nodes.indexOf(this), 1);
+												}
 
 												// and remove node
 												this.parentNode.removeChild(this);
@@ -873,6 +873,12 @@ Util.Objects["unidentifiedList"] = new function() {
 												// add response
 												input.node.response = function(response) {
 													// remove node from list
+
+													if(this.option_node) {
+														// remove node from option_node array
+														this.option_node.ua_nodes.splice(this.option_node.ua_nodes.indexOf(this), 1);
+													}
+
 													this.parentNode.removeChild(this);
 													this.div.toggleAddToOption();
 												}

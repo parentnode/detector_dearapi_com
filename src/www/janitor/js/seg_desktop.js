@@ -8714,7 +8714,6 @@ Util.Objects["unidentifiedList"] = new function() {
 					var i, node;
 					for(i = 0; node = this.ua_nodes[i]; i++) {
 						u.rc(node, "mapped");
-						node.option_node = false;
 					}
 				}
 				option_node.clicked = function() {
@@ -8728,7 +8727,6 @@ Util.Objects["unidentifiedList"] = new function() {
 						for(i = 0; node = this.ua_nodes[i]; i++) {
 							u.ac(node, "mapped");
 						}
-						var i;
 						if(this.device_id != "unknown") {
 							var info_array = [];
 							if(this.details["description"]) {
@@ -8755,6 +8753,9 @@ Util.Objects["unidentifiedList"] = new function() {
 									var inputs = u.qsa("li:not(.all) input:checked", this.option.div.list);
 									for(i = 0; input = inputs[i]; i++) {
 										input.node.response = function(response) {
+											if(this.option_node) {
+												this.option_node.ua_nodes.splice(this.option_node.ua_nodes.indexOf(this), 1);
+											}
 											this.parentNode.removeChild(this);
 											this.div.toggleAddToOption();
 										}
@@ -8775,6 +8776,9 @@ Util.Objects["unidentifiedList"] = new function() {
 									for(i = 0; input = inputs[i]; i++) {
 										if(input.node._identified.id == this.option.device_id) {
 											input.node.response = function(response) {
+												if(this.option_node) {
+													this.option_node.ua_nodes.splice(this.option_node.ua_nodes.indexOf(this), 1);
+												}
 												this.parentNode.removeChild(this);
 												this.div.toggleAddToOption();
 											}
@@ -8798,6 +8802,9 @@ Util.Objects["unidentifiedList"] = new function() {
 											var i, input;
 											for(i = 0; input = inputs[i]; i++) {
 												input.node.response = function(response) {
+													if(this.option_node) {
+														this.option_node.ua_nodes.splice(this.option_node.ua_nodes.indexOf(this), 1);
+													}
 													this.parentNode.removeChild(this);
 													this.div.toggleAddToOption();
 												}
