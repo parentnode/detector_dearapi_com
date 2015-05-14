@@ -589,9 +589,9 @@ class TypeDevice extends Itemtype {
 
 							$query->sql("SELECT * FROM ".$this->db." WHERE item_id = ".$useragent["item_id"]);
 							$name = $query->result(0, "name");
-							$device_id = $query->result(0, "item_id");
+							$matched_device_id = $query->result(0, "item_id");
 
-							$bad_matched_useragents[$useragent["item_id"]]["id"] = $device_id;
+							$bad_matched_useragents[$useragent["item_id"]]["id"] = $matched_device_id;
 							$bad_matched_useragents[$useragent["item_id"]]["name"] = $name;
 							$bad_matched_useragents[$useragent["item_id"]]["useragents"] = array();
 						}
@@ -919,7 +919,7 @@ class TypeDevice extends Itemtype {
 			if($query->sql($sql)) {
 
 				$ua = $query->result(0, "useragent");
-				$sql = "DELETE FROM ".$this->db_unidentified." WHERE useragent = '$ua'";
+				$sql = "DELETE FROM ".$this->db_unidentified." WHERE useragent = '".addSlashes($ua)."'";
 //				print $sql."\n";
 				if($query->sql($sql)) {
 
