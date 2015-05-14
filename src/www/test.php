@@ -110,7 +110,7 @@ $useragent = "";
 $reg_exp_pos = "/firefox\/[0-4]\b/i";
 $reg_exp_neg = "/msie/i";
 
-if(preg_match("/".$reg_exp_pos."/i", $useragent) && (!$reg_exp_neg || !preg_match("/".$reg_exp_neg."/i", $useragent)))) {
+if(preg_match("/".$reg_exp_pos."/i", $useragent) && (!$reg_exp_neg || !preg_match("/".$reg_exp_neg."/i", $useragent))) {
 
 	print "passed";
 }

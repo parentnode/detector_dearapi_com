@@ -8278,6 +8278,7 @@ if(u.ga_account) {
 
 
 /*i-form.js*/
+u.bug_force = true;
 u.toggleHeader = function(div, header) {
 	header = header ? header : "h2";
 	div._toggle_header = u.qs(header, div);
@@ -8468,7 +8469,6 @@ Util.Objects["searchUnidentified"] = new function() {
 }
 Util.Objects["unidentifiedList"] = new function() {
 	this.init = function(div) {
-		u.bug("init unidentifiedList")
 		var i, node;
 		div.list = u.qs("ul.items", div);
 		div.nodes = u.qsa("li.item", div.list);
@@ -8480,15 +8480,18 @@ Util.Objects["unidentifiedList"] = new function() {
 		div.device_clone = div.getAttribute("data-device-clone");
 		div.device_list = div.getAttribute("data-device-list");
 		document.body.unidentified_div = div;
-		div.bn_all = u.ie(div.list, "li", {"class":"all", "html":"Select all"});
+		div.bn_all = u.ie(div.list, "li", {"class":"all"});
+		div.bn_all._text = u.ae(div.bn_all, "span", {"html":"Select all"})
 		div.bn_all._checkbox = u.ie(div.bn_all, "input", {"type":"checkbox"});
+		div.bn_all.onclick = function(event) {u.e.kill(event);}
 		div.bn_all.div = div;
 		div.bn_all._checkbox.div = div;
 		u.e.click(div.bn_all);
-		div.bn_all.clicked = function() {
+		div.bn_all.clicked = function(event) {
 			var i, node;
+			u.e.kill(event);
 			var inputs = u.qsa("li:not(.all) input:checked", this.div.list);
-			for(i = 0; node = div.nodes[i]; i++) {
+			for(i = 0; node = this.div.nodes[i]; i++) {
 				if(inputs.length) {
 					node._checkbox.checked = false;
 				}
@@ -8497,6 +8500,36 @@ Util.Objects["unidentifiedList"] = new function() {
 				}
 			}
 			this.div.toggleAddToOption();
+		}
+		div.bn_all.updateState = function() {
+			this.div.checked_inputs = u.qsa("li:not(.all) input:checked", this.div.list);
+			this.div.visible_inputs = u.qsa("li:not(.all):not(.hidden) input", this.div.list);
+			if(this.div.checked_inputs.length == this.div.visible_inputs.length) {
+				this._text.innerHTML = "Deselect all";
+				u.rc(this, "deselect");
+				this._checkbox.checked = true;
+			}
+			else if(this.div.checked_inputs.length) {
+				this._text.innerHTML = "Deselect all";
+				u.ac(this, "deselect");
+				this._checkbox.checked = true;
+			}
+			else {
+				this._text.innerHTML = "Select all";
+				u.rc(this, "deselect");
+				this._checkbox.checked = false;
+			}
+		}
+		div.unselectNode = function(node) {
+			u.bug("REMOVE option reference for:" + u.nodeId(node) + ", has option:" + node.option_node)
+			node.response = null;
+			u.rc(node, "identifying");
+			node._is_identifying = false;
+			if(node.option_node) {
+				node.option_node.ua_nodes.splice(node.option_node.ua_nodes.indexOf(node), 1);
+				u.rc(node, "mapped");
+				node.option_node = false;
+			}
 		}
 		for(i = 0; node = div.nodes[i]; i++) {
 			node.ua_id = u.cv(node, "ua_id");
@@ -8510,12 +8543,13 @@ Util.Objects["unidentifiedList"] = new function() {
 				if(this.checked) {
 					this.checked = false;
 					document.body._multideselection = true;
+					this.node.div.unselectNode(this.node);
 				}
 				else {
 					this.checked = true;
 					document.body._multiselection = true;
 				}
-				document.body.onmouseup = function() {
+				document.body.onmouseup = function(event) {
 					this.onmouseup = null;
 					this._multiselection = false;
 					this._multideselection = false;
@@ -8528,6 +8562,22 @@ Util.Objects["unidentifiedList"] = new function() {
 				}
 				else if(document.body._multideselection) {
 					this.checked = false;
+					this.node.div.unselectNode(this.node);
+				}
+			}
+			node.onmouseover = function() {
+				if(this.option_node) {
+					u.ac(this.option_node, "mappedto");
+					this.id_span = u.ae(this, "span", {"class":"mappedto", "html":this._identified.method + (this._identified.guess ? ", " + this._identified.guess : "")});
+				}
+			}
+			node.onmouseout = function() {
+				if(this.option_node) {
+					u.rc(this.option_node, "mappedto");
+				}
+				if(this.id_span) {
+					this.removeChild(this.id_span);
+					this.id_span = false;
 				}
 			}
 			u.e.click(node);
@@ -8553,7 +8603,6 @@ Util.Objects["unidentifiedList"] = new function() {
 								}
 								else {
 									u.t.resetTimer(this.t_confirm);
-									u.bug("node.ua_id:" + this.node.ua_id);
 									this.response = function(response) {
 										page.notify(response);
 										if(response.cms_status == "success") {
@@ -8565,7 +8614,7 @@ Util.Objects["unidentifiedList"] = new function() {
 							}
 							this._ul = u.ae(this, "ul", {"class":"info"});
 							u.ae(this._ul, "li", {"class":"visits", "html":response.cms_object.length})
-							u.ae(this._ul, "li", {"class":"identified_as", "html":response.cms_object[0].identified_as_device})
+							u.ae(this._ul, "li", {"class":"identified_as", "html":(response.cms_object[0].identified_as_device ? response.cms_object[0].identified_as_device : "unidentified")})
 							var i, node;
 							for(i = 0; node = response.cms_object[i]; i++) {
 								var ul = u.ae(this, "ul", {"class":"info"});
@@ -8614,49 +8663,92 @@ Util.Objects["unidentifiedList"] = new function() {
 						if(node._c.match(this._current_filter)) {
 							node._hidden = false;
 							u.as(node, "display", "block", false);
+							u.rc(node, "hidden", false);
 						}
 						else {
 							node._hidden = true;
 							u.as(node, "display", "none", false);
 							node._checkbox.checked = false;
+							u.ac(node, "hidden", false);
 						}
 					}
 				}
+				this.bn_all.updateState();
 				u.rc(this._filter, "filtering");
+				this.toggleAddToOption();
 			}
 		}
-		div.addOption = function(option) {
-			if(this._add_to.identified_options && this._add_to.identified_options.indexOf(option.id) == -1) {
+		div.addOption = function(option, ua_node) {
+			if(this._add_to.identified_options.indexOf(option.id) == -1) {
+				var option_node = u.ae(this._add_to._list, "li", {"html":option.name + " (<span>1</span>)", "class":"device_id:"+option.id});
+				option_node.span = u.qs("span", option_node);
+				option_node.details = option;
+				option_node.div = this;
+				option_node.device_id = option.id;
+				option_node.ua_nodes = [];
+				option_node.ua_nodes.push(ua_node);
 				this._add_to.identified_options.push(option.id);
-				var li_option = u.ae(this._add_to._list, "li", {"html":option.name});
-				li_option.details = option;
-				li_option.div = this;
-				li_option.device_id = option.id;
-				u.e.click(li_option);
-				li_option.clicked = function() {
+				this._add_to.identified_options_lis.push(option_node);
+				u.e.click(option_node);
+				option_node.closeOption = function() {
+					if(this._info) {
+						this._info.parentNode.removeChild(this._info);
+						this._info = false;
+					}
+					if(this._show_selected_only) {
+						this._show_selected_only.parentNode.removeChild(this._show_selected_only);
+						this._show_selected_only = false;
+					}
+					if(this._selected) {
+						this._selected.parentNode.removeChild(this._selected);
+						this._selected = false;
+					}
+					if(this._matching) {
+						this._matching.parentNode.removeChild(this._matching);
+						this._matching = false;
+					}
+					if(this._addtoclone) {
+						this._addtoclone.parentNode.removeChild(this._addtoclone);
+						this._addtoclone = false;
+					}
+					var i, node;
+					for(i = 0; node = this.ua_nodes[i]; i++) {
+						u.rc(node, "mapped");
+						node.option_node = false;
+					}
+				}
+				option_node.clicked = function() {
 					if(!this._info) {
-						var i;
-						var info_string = "";
-						info_string = this.details["method"];
-						if(this.details["guess"]) {
-							info_string += ", " + this.details["guess"];
-						}
-						if(this.details["tags"]) {
-							for(i in this.details["tags"]) {
-								if(this.details["tags"][i]["context"] == "brand") {
-									info_string += ", " + this.details["tags"][i]["value"]
-								}
+						for(i = 0; li = this.div._add_to.identified_options_lis[i]; i++) {
+							if(li != this) {
+								li.closeOption();
 							}
 						}
-						info_string += ", " + this.details["description"];
-						this._info = u.ae(this, "div", {"class":"info", "html":info_string});
+						var i, node;
+						for(i = 0; node = this.ua_nodes[i]; i++) {
+							u.ac(node, "mapped");
+						}
+						var i;
 						if(this.device_id != "unknown") {
+							var info_array = [];
+							if(this.details["description"]) {
+								info_array.push(this.details["description"]);
+							}
+							if(this.details["tags"]) {
+								for(i in this.details["tags"]) {
+									info_array.push(this.details["tags"][i]["value"]);
+								}
+							}
+							this._info = u.ae(this, "div", {"class":"info", "html":info_array.join(", ")});
 							this._selected = u.ae(this, "div", {"class":"selected", "html":"Add all SELECTED"});
 							this._selected.option = this;
 							this._matching = u.ae(this, "div", {"class":"matching", "html":"Add all MATCHING"});
 							this._matching.option = this;
 							this._addtoclone = u.ae(this, "div", {"class":"addtoclone", "html":"Add SELECTED to CLONE"});
 							this._addtoclone.option = this;
+							// 	
+							// 		
+							// 		
 							u.e.click(this._selected);
 							this._selected.clicked = function() {
 								if(this.t_execute) {
@@ -8732,37 +8824,50 @@ Util.Objects["unidentifiedList"] = new function() {
 							}
 						}
 						else {
-							this._error = u.ae(this, "div", {"class":"info", "html":"identification did not return a valid device id"});
+							this._info = u.ae(this, "div", {"class":"info", "html":"identification did not return a valid device id"});
 						}
 					}
 					else {
-						if(this._info) {
-							this._info.parentNode.removeChild(this._info);
-							this._info = false;
-						}
-						if(this._selected) {
-							this._selected.parentNode.removeChild(this._selected);
-							this._selected = false;
-						}
-						if(this._matching) {
-							this._matching.parentNode.removeChild(this._matching);
-							this._matching = false;
-						}
-						if(this._addtoclone) {
-							this._addtoclone.parentNode.removeChild(this._addtoclone);
-							this._addtoclone = false;
-						}
-						if(this._error) {
-							this._error.parentNode.removeChild(this._error);
-							this._error = false;
-						}
+						this.closeOption();
 					}
+				}
+			}
+			else {
+				var option_index = this._add_to.identified_options.indexOf(option.id);
+				var option_node = this._add_to.identified_options_lis[option_index];
+				if(option_node.ua_nodes.indexOf(ua_node) == -1) {
+					option_node.ua_nodes.push(ua_node);
+				}
+			}
+			ua_node.option_node = option_node;
+			this.updateOptions();
+		}
+		div.updateOptions = function() {
+			var i, option_node, checkbox;
+			if(this._add_to) {
+				for(i = 0; option_node = this._add_to.identified_options_lis[i]; i++) {
+					if(option_node.ua_nodes.length) {
+						option_node.span.innerHTML = option_node.ua_nodes.length;
+					}
+					else {
+						option_node.closeOption();
+						option_node.parentNode.removeChild(option_node);
+						this._add_to.identified_options_lis.splice(i, 1);
+						this._add_to.identified_options.splice(i, 1);
+					}
+				}
+			}
+			else {
+				for(i = 0; checkbox = this.visible_inputs[i]; i++) {
+					u.rc(checkbox.node, "mapped", false);
+					checkbox.node.option_node = false;
 				}
 			}
 		}
 		div.toggleAddToOption = function() {
-			var inputs = u.qsa("li:not(.all) input:checked", this.list);
-			if(inputs.length) {
+			u.bug("----- toggle add to options")
+			this.bn_all.updateState();
+			if(this.checked_inputs.length) {
 				if(!this._add_to) {
 					this._add_to = u.ae(document.body, "div", {"class":"addToDevice"});
 					u.ae(this._add_to, "h2", {"html":"Add to device"});
@@ -8774,7 +8879,7 @@ Util.Objects["unidentifiedList"] = new function() {
 					var search_input = u.ae(search_option, "input", {"class":"search default ignoreinput"});
 					search_input.div = this;
 					search_input.search_result = u.ae(search_option, "ul", {"class":"results"});
-					search_input._default_value = "Search";
+					search_input._default_value = "Search for device";
 					search_input.value = search_input._default_value;
 					search_input.onfocus = function() {
 						u.rc(this, "default");
@@ -8897,27 +9002,36 @@ Util.Objects["unidentifiedList"] = new function() {
 						}
 					}
 					this._add_to._list = u.ae(this._add_to, "ul", {"class":"options"});
+					this._add_to.identified_options = [];
+					this._add_to.identified_options_lis = [];
 				}
-				this._add_to._count.innerHTML = inputs.length;
-				this._add_to._list.innerHTML = "";
-				this._add_to.identified_options = [];
+				this._add_to._count.innerHTML = this.checked_inputs.length;
 				var i, ua, ua_id
-				this.wait_for_uas = inputs.length;
+				this.wait_for_uas = this.checked_inputs.length;
 				u.ac(this._add_to, "loading");
-				for(i = 0; ua = inputs[i]; i++) {
+				for(i = 0; ua = this.checked_inputs[i]; i++) {
+					u.ac(ua.node, "identifying");
+					ua.node._is_identifying = true;
 					if(!ua.node._identified) {
 						ua.node.response = function(response) {
-							if(response.cms_status == "success") {
-								if(response.cms_object.id) {
-									this._identified = response.cms_object;
-								}
+							u.rc(this, "identifying");
+							this._is_identifying = false;
+							this._identified = {};
+							if(response.cms_status == "success" && response.cms_object.id) {
+								this._identified.id = response.cms_object.id;
+								this._identified.name = response.cms_object.name;
+								this._identified.tags = response.cms_object.tags;
+								this._identified.method = response.cms_object.method;
+								this._identified.guess = response.cms_object.guess;
 							}
-							if(!this._identified) {
-								this._identified = {};
+							else {
 								this._identified.id = "unknown";
-								this._identified.name = "Unknown";
+								this._identified.name = "unknown";
+								this._identified.tags = [];
+								this._identified.method = "unknown";
+								this._identified.guess = "unknown";
 							}
-							this.div.addOption(this._identified);
+							this.div.addOption(this._identified, this);
 							this.div.wait_for_uas--;
 							if(!this.div.wait_for_uas && this.div._add_to) {
 								u.rc(this.div._add_to, "loading");
@@ -8926,7 +9040,9 @@ Util.Objects["unidentifiedList"] = new function() {
 						u.request(ua.node, ua.node.div.useragent_identify+"/"+ua.node.ua_id, {"method":"post", "params":"csrf-token="+ua.node.div.csrf_token});
 					}
 					else {
-						this.addOption(ua.node._identified);
+						u.rc(ua.node, "identifying");
+						ua.node._is_identifying = false;
+						this.addOption(ua.node._identified, ua.node);
 						this.wait_for_uas--;
 						if(!this.wait_for_uas) {
 							u.rc(this._add_to, "loading");
@@ -8941,6 +9057,24 @@ Util.Objects["unidentifiedList"] = new function() {
 					u.as(page, "width", "auto");
 				}
 			}
+			this.updateOptions();
+		}
+	}
+}
+Util.Objects["generate"] = new function() {
+	this.init = function(div) {
+		var form = u.qs("form", div);
+		u.f.init(form);
+		form.submitted = function() {
+			this.response = function(response) {
+				page.notify(response);
+				if(response.cms_status == "success") {
+					var actions = u.qs(".actions", this);
+					actions.parentNode.removeChild(actions);
+					u.ae(this, "p", {"html":"Script created"});
+				}
+			}
+			u.request(this, this.action, {"params":u.f.getParams(this), "method":"post"});
 		}
 	}
 }
@@ -9361,6 +9495,7 @@ Util.Objects["testMarkers"] = new function() {
 		div.item_id = u.cv(div, "item_id");
 		div.csrf_token = div.getAttribute("data-csrf-token");
 		div.url_device_test = div.getAttribute("data-device-test");
+		div.url_device_edit = div.getAttribute("data-device-edit");
 		div.test_form = u.f.addForm(div, {"class":"labelstyle:inject"});
 		div.test_form.div = div;
 		div.bn_test = u.f.addAction(div.test_form, {"value":"Test markers", "class":"button primary"});
@@ -9387,7 +9522,9 @@ Util.Objects["testMarkers"] = new function() {
 							this.div.bad_matched_result = u.ae(this.div, "ul", {"class":"results bad"});
 							for(x in bad_matched) {
 								node = u.ae(this.div.bad_matched_result, "li", {"class":"device_id:"+x});
-								node._device = u.ae(node, "h4", {"html":bad_matched[x].name})
+								node._device = u.ae(node, "h4");
+								node._device_link = u.ae(node._device, "a", {"href":this.div.url_device_edit+"/"+bad_matched[x].id, "html":bad_matched[x].name, "target":"_blank"});
+								u.ce(node._device_link, {"type":"link"});
 								node._device.node = node;
 								node.ua_list = u.ae(node, "ul", {"class":"useragents"});
 								for(y in bad_matched[x].useragents) {
@@ -9420,6 +9557,82 @@ Util.Objects["testMarkers"] = new function() {
 					this.div.bad_matched_result.parentNode.removeChild(this.div.bad_matched_result);
 				}
 				u.request(this, this.div.url_device_test+"/"+this.div.item_id, {"params":"csrf-token="+this.div.csrf_token, "method":"post"})
+		}
+	}
+}
+Util.Objects["testMarkersOnUnidentified"] = new function() {
+	this.init = function(div) {
+		u.bug("init testMarkersOnUnidentified")
+		div._header = u.ae(div, "h2", {"html":"Test device markers"});
+		div._header.div = div;
+		div.csrf_token = div.getAttribute("data-csrf-token");
+		div.url_device_test = div.getAttribute("data-device-test");
+		div.url_device_get = div.getAttribute("data-device-get");
+		div.response = function(response) {
+			page.notify(response);
+			if(response.cms_status == "success") {
+				this._open = true;
+				this.div_results = u.qs(".all_items");
+				this.div_stats = u.qs(".stats");
+				this.markers_ul = u.ae(this, "ul", {"class":"markers"});
+				var i, node, li;
+				for(i = 0; node = response.cms_object[i]; i++) {
+					li = u.ae(this.markers_ul, "li", {"html":node.name});
+					li.div = this;
+					li.item_id = node.item_id;
+					u.e.click(li);
+					li.clicked = function() {
+						var existing_filter = u.qs("div.filter", this.div.div_results);
+						if(existing_filter) {
+							existing_filter.parentNode.removeChild(existing_filter);
+						}
+						this.existing_results = u.qs("ul.items", this.div.div_results);
+						if(this.existing_results) {
+							this.existing_results.innerHTML = "";
+						}
+						else {
+							this.existing_results = u.ae(this.div.div_results, "ul", {"class":"items"});
+						}
+						var existing_no_results = u.qs("p", this.div.div_results);
+						if(existing_no_results) {
+							existing_no_results.parentNode.removeChild(existing_no_results);
+						}
+						this.div.div_stats.innerHTML = "Loading ...";
+						this.div.div_results.toggleAddToOption();
+						u.bug("test device markers")
+						this.response = function(response) {
+							page.notify(response);
+							if(response.isHTML) {
+								this.div.div_stats.innerHTML = u.qs(".stats", response).innerHTML;
+								var new_items = u.qsa(".all_items ul.items li", response);
+								if(new_items) {
+									var i, node;
+									for(i = 0; node = new_items[i]; i++) {
+										u.ae(this.existing_results, node);
+									}
+									u.o.unidentifiedList.init(this.div.div_results);
+								}
+								else {
+									u.ae(this.existing_results, u.qs(".all_items p", response));
+								}
+								u.rc(this, "loading");
+							}
+						}
+						u.ac(this, "loading");
+						u.request(this, this.div.url_device_test, {"params":"csrf-token="+this.div.csrf_token+"&test_marker=true&device_id="+this.item_id, "method":"post"});
+					}
+				}
+			}
+		}
+		u.e.click(div._header);
+		div._header.clicked = function() {
+			if(this.div._open) {
+				this.div.removeChild(this.div.markers_ul);
+				this.div._open = false;
+			}
+			else {
+				u.request(this.div, this.div.url_device_get, {"params":"csrf-token="+this.div.csrf_token, "method":"post"})
+			}
 		}
 	}
 }

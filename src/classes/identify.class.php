@@ -33,6 +33,49 @@ class Identify {
 //			return "basic";
 		}
 
+
+		// Include static detection script for initial test
+		$detection_script = PUBLIC_FILE_PATH."/detection_script.php";
+		if(file_exists($detection_script)) {
+			include($detection_script);
+		}
+
+
+		// did static test return match
+		if(isset($device_name) && isset($device_segment)) {
+
+			// if log is true, use fastest method to return segment
+			if($log) {
+				// add to general id log
+				$this->logString("UA MARKER", $useragent, $device_segment, "marker");
+
+				// return segment
+				return array("segment" => $device_segment);
+			}
+
+			// if details are required
+			if($details) {
+
+				// get additional information
+				$query = new Query();
+				if($query->sql("SELECT item_id FROM ".$this->db." WHERE name = '$device_name'")) {
+					$device_id = $query->result(0, "item_id");
+
+					// get complete device
+					$IC = new Items();
+					$device = $IC->getItem(array("id" => $device_id, "extend" => array("tags" => true)));
+					$device["method"] = "marker";
+					return $device;
+				}
+			}
+		}
+
+
+
+		// continue with old match patterns
+
+
+
 		$IC = new Items();
 		$query = new Query();
 		$DC = $IC->typeObject("device");
@@ -68,6 +111,7 @@ class Identify {
 			$device["method"] = "match";
 			return $device;
 		}
+
 		// unidentified
 		else {
 
@@ -117,10 +161,10 @@ class Identify {
 			// TODO: consider special segment for IE tablets? Not yet.
 			// Mozilla/5.0 (Windows NT 6.1; WOW64; Trident/7.0; EIE10;DADKMSN; rv:11.0) like Gecko 
 			// IE 11
-			if(preg_match("/Mozilla\/5.0[^$]+Trident\/7.0[^$]+rv:11.0\) like Gecko/", $useragent) && !preg_match("/MSIE/i", $useragent)) {
-//				return $this->uniqueIdTest($useragent, "MSIE 11, Desktop", "desktop_ie", $log, $mail, $details, "unique-test-ie");
-				return $this->uniqueIdTest($useragent, "Internet Explorer 11, Desktop", "desktop_ie11", $log, $mail, $details, "unique-test-ie");
-			}
+// 			if(preg_match("/Mozilla\/5.0[^$]+Trident\/7.0[^$]+rv:11.0\) like Gecko/", $useragent) && !preg_match("/MSIE/i", $useragent)) {
+// //				return $this->uniqueIdTest($useragent, "MSIE 11, Desktop", "desktop_ie", $log, $mail, $details, "unique-test-ie");
+// 				return $this->uniqueIdTest($useragent, "Internet Explorer 11, Desktop", "desktop_ie11", $log, $mail, $details, "unique-test-ie");
+// 			}
 
 
 
@@ -150,6 +194,7 @@ class Identify {
 				}
 
 			}
+
 
 			// Chrome specific (limit scope for extensive search)
 			if(preg_match("/Mozilla\/5.0[^$]+Chrome/", $useragent) && !preg_match("/phone|mobile|chromeframe|android/i", $useragent)) {
@@ -883,6 +928,7 @@ class Identify {
 //		return false;
 	}
 
+
 	// TODO: explore option to save these directly on device
 	// identified by Unique ID
 	function uniqueId($useragent, $device, $segment, $log, $mail, $details) {
@@ -944,7 +990,7 @@ class Identify {
 			$this->logString("UA UNIQUE TEST", $useragent, $segment, "uniquetest");
 
 			// save useragent for manuel indexing
-			$this->saveForIdentification($useragent);
+			$this->saveForIdentification($useragent, $segment);
 
 			// save for email notification
 			$this->notificationString("UNIQUE-TEST", $useragent, $segment, $collection);
@@ -992,7 +1038,7 @@ class Identify {
 
 
 	// log useragent for manual indexing
-	function saveForIdentification($useragent, $device_id = "") {
+	function saveForIdentification($useragent, $segment = "") {
 		$query = new Query();
 
 		$comment = stringOr(getVar("site"), SITE_UID).stringOr(getVar("file"), "?")."\n";
@@ -1002,7 +1048,7 @@ class Identify {
 		}
 
 		// TODO: update insert
-		$query->sql("INSERT INTO ".$this->db_unidentified." VALUES(DEFAULT, '$useragent', '$comment', '$device_id', DEFAULT)");
+		$query->sql("INSERT INTO ".$this->db_unidentified." VALUES(DEFAULT, '$useragent', '$comment', '$segment', DEFAULT)");
 	}
 
 

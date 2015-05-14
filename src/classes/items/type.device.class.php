@@ -589,7 +589,9 @@ class TypeDevice extends Itemtype {
 
 							$query->sql("SELECT * FROM ".$this->db." WHERE item_id = ".$useragent["item_id"]);
 							$name = $query->result(0, "name");
+							$device_id = $query->result(0, "item_id");
 
+							$bad_matched_useragents[$useragent["item_id"]]["id"] = $device_id;
 							$bad_matched_useragents[$useragent["item_id"]]["name"] = $name;
 							$bad_matched_useragents[$useragent["item_id"]]["useragents"] = array();
 						}
@@ -608,6 +610,155 @@ class TypeDevice extends Itemtype {
 
 
 		
+		}
+
+		message()->addMessage("Device could not be tested", array("type" => "error"));
+		return false;
+
+	}
+
+	// Find all devices with markers to create list for testing unidentified devices
+	function getDevicesWithMarkers() {
+
+		$query = new Query();
+
+		$sql = "SELECT item_id, name FROM ".$this->db." as devices WHERE devices.item_id IN (SELECT item_id FROM ".$this->db_markers.")";
+		$query->sql($sql);
+		$devices_with_markers = $query->results();
+		
+		return $devices_with_markers;
+	}
+
+	// create detections script based on available markers
+	function createDetectionScript() {
+
+		$IC = new Items();
+
+		$devices_with_markers = $this->getDevicesWithMarkers();
+		$devices = array();
+		foreach($devices_with_markers as $device_with_marker) {
+			$device = $IC->getItem(array("id" => $device_with_marker["item_id"], "extend" => array("tags" => true)));
+			unset($device["useragents"]);
+			$device["segment"] = $this->segment($device["id"], $device["tags"]);
+			unset($device["tags"]);
+			$devices[] = $device;
+		}	
+
+		$add_else = false;
+
+		$_ = '$ua = $useragent ? $useragent : stringOr(getVar("ua"), $_SERVER["HTTP_USER_AGENT"]);'."\n\n";
+		foreach($devices as $device) {
+
+
+			if($device["markers"]) {
+
+				$markers = array();
+				$reg_exp_pos = "";
+				$reg_exp_neg = "";
+
+				foreach($device["markers"] as $marker) {
+					array_push($markers, $marker["marker"]);
+				}
+
+				$reg_exp_pos = implode($markers, "|");
+
+
+				if($device["exceptions"]) {
+					$exceptions = array();
+
+					foreach($device["exceptions"] as $exception) {
+						array_push($exceptions, $exception["exception"]);
+					}
+
+					$reg_exp_neg = implode($exceptions, "|");
+				}
+
+
+				$_ .= $add_else ? "else " : "";
+
+				$_ .= 'if(!preg_match("/('.$reg_exp_neg.')/i", $ua) && preg_match("/('.$reg_exp_pos.')/i", $ua)) {'."\n";
+					$_ .= '	$device_segment = "'.$device["segment"].'";'."\n";
+					$_ .= '	$device_name = "'.$device["name"].'";'."\n";
+				$_ .= '}'."\n";
+
+				$add_else = true;
+			}
+		}
+
+		return $_;
+	}
+
+	// write detection script to library/public
+	function writeDetectionScript($action) {
+
+		$_ = '<?php'."\n";
+		$_ .= $this->createDetectionScript();
+		$_ .= '?>'."\n";
+
+		if(file_put_contents(PUBLIC_FILE_PATH."/detection_script.php", $_)) {
+
+			message()->addMessage("Script created");
+			return true;
+		}
+
+		message()->addMessage("Script creation failed", array("type" => "error"));
+		return false;
+	}
+
+	// test device markers on unidentified useragents
+	// testMarkersOnUnidentified/#device_id#
+	function testMarkersOnUnidentified($device_id) {
+	
+		$device = $this->get($device_id);
+
+		// compile regular expression
+
+		if($device["markers"]) {
+
+			$markers = array();
+			$reg_exp_pos = "";
+			$reg_exp_neg = "";
+
+			foreach($device["markers"] as $marker) {
+				array_push($markers, $marker["marker"]);
+			}
+
+			$reg_exp_pos = implode($markers, "|");
+
+
+			if($device["exceptions"]) {
+				$exceptions = array();
+
+				foreach($device["exceptions"] as $exception) {
+					array_push($exceptions, $exception["exception"]);
+				}
+
+				$reg_exp_neg = implode($exceptions, "|");
+			}
+
+
+			// print "preg_match(/".$reg_exp_pos."/i<br>\n";
+			// print "preg_match(/".$reg_exp_neg."/i<br>\n";
+
+			// get all useragents
+			$query = new Query();
+
+			$sql = "SELECT id, useragent FROM ".$this->db_unidentified." GROUP BY useragent";
+			$query->sql($sql);
+			$all_useragents = $query->results();
+			$matched_useragents = array();
+
+//			print "count:" .count($all_useragents)."<br>\n";
+			foreach($all_useragents as $useragent) {
+				if((preg_match("/(".$reg_exp_pos.")/i", $useragent["useragent"]) && (!$reg_exp_neg || !preg_match("/(".$reg_exp_neg.")/i", $useragent["useragent"])))) {
+
+					$matched_useragents[] = array("id" => $useragent["id"], "useragent" => $useragent["useragent"]);
+
+				}
+			}
+
+			return $matched_useragents;
+
 		}
 
 		message()->addMessage("Device could not be tested", array("type" => "error"));
@@ -831,6 +982,7 @@ class TypeDevice extends Itemtype {
 		}
 		else {
 			$sql = "SELECT *, MAX(identified_at) as lastentry FROM ".$this->db_unidentified." GROUP BY useragent ORDER BY lastentry DESC";
+//			$sql = "SELECT * FROM ".$this->db_unidentified." GROUP BY useragent";
 		}
 
 //		print $sql."<br>";

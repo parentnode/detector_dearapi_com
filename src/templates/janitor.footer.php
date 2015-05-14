@@ -4,6 +4,7 @@
 		<ul>
 			<?= $HTML->link("Devices", "/janitor/device/list", array("wrapper" => "li.device")) ?>
 			<?= $HTML->link("Unidentified devices", "/janitor/device/unidentified", array("wrapper" => "li.unidentified")) ?>
+			<?= $HTML->link("Generate script", "/janitor/generate", array("wrapper" => "li.generate")) ?>
 			<?= $HTML->link("Statistics", "/janitor/statistic", array("wrapper" => "li.statistic")) ?>
 
 			<?= $HTML->link("Users", "/janitor/admin/user/list", array("wrapper" => "li.user")) ?>

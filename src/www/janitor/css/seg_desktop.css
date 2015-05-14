@@ -859,15 +859,26 @@ body #selection_options ul.actions a.button:hover {background-color: #313942;}
 #content .scene.unidentifiedList form.options .actions {display: inline-block; vertical-align: top; padding-left: 0;}
 #content .scene.unidentifiedList form.options .actions li {padding-left: 0;}
 #content .scene.unidentifiedList form.options .actions li input {margin-top: 4px;}
+#content .scene.unidentifiedList .testmarkers {border-bottom: 1px solid #dedede;}
+#content .scene.unidentifiedList .testmarkers h2 {font-size: 12px; text-transform: uppercase;}
+#content .scene.unidentifiedList .testmarkers ul.markers {padding: 10px 30px;}
+#content .scene.unidentifiedList .testmarkers ul.markers li {display: inline-block; vertical-align: top; padding: 5px 12px 6px; border-radius: 13px; background-color: #64ad8e; margin: 0 6px 6px 0; color: #ffffff; cursor: pointer;}
+#content .scene.unidentifiedList .testmarkers ul.markers li.loading {
+	padding-left: 35px; background-image: url(/janitor/admin/img/gx_loader.gif); background-position: 10px 6px; background-repeat: no-repeat;
+}
 #content .scene.unidentifiedList .stats {padding: 5px 30px; border-bottom: 1px solid #dedede;}
 #content .scene.unidentifiedList .stats p {padding: 0;}
-#content .scene.unidentifiedList .items > li {padding: 10px 125px 10px 30px;}
+#content .scene.unidentifiedList .items > li {padding: 10px 125px 10px 30px; position: relative;}
 #content .scene.unidentifiedList .items > li > input {position: absolute; top: 10px; left: 30px;}
 #content .scene.unidentifiedList .items > li h3 {font-size: 13px; padding: 0 0 0 25px;}
 #content .scene.unidentifiedList .items > li.all {padding-left: 55px;}
 #content .scene.unidentifiedList .items > li.all > input {position: absolute; top: 8px; left: 30px;}
+#content .scene.unidentifiedList .items > li.all.deselect input {opacity: 0.4;}
 #content .scene.unidentifiedList .items > li input.button.delete.confirm {color: #ffffff; background-color: #df0000;}
 #content .scene.unidentifiedList .items > li input.button.delete.confirm:hover {}
+#content .scene.unidentifiedList .items > li.identifying {background: red;}
+#content .scene.unidentifiedList .items > li.mapped {background: #00ff00;}
+#content .scene.unidentifiedList .items > li span.mappedto {position: absolute; display: inline-block; vertical-align: top; padding: 5px 10px; top: -15px; left: 30px; background-color: #00ff00; border-radius: 10px; color: #000000;}
 #content .scene.unidentifiedList .items > li ul.info {padding: 2px 25px;}
 #content .scene.unidentifiedList .items > li ul.info li {padding: 0;}
 #content .scene.unidentifiedList .items > li ul.info li.identified_at:after {content: ",\00a0";}
@@ -880,7 +891,7 @@ body #selection_options ul.actions a.button:hover {background-color: #313942;}
 .addToDevice div.counter {border-bottom: 1px solid #dedede; padding: 0 0 5px;}
 .addToDevice span.count {padding: 0 0 5px 5px; }
 .addToDevice li {display: block; padding: 3px 0; border-top: 1px solid #dedede;}
-.addToDevice li div.info {color: #7d848c; padding: 3px 0 3px 10px;}
+.addToDevice li div.info {color: #aaaaaa; padding: 10px 0;}
 .addToDevice div.search {padding: 10px 0; border-bottom: 1px solid #dedede;}
 .addToDevice div.search input {height: 14px; display: block; width: 194px;}
 .addToDevice div.search input.loading {background: red;}
@@ -892,10 +903,13 @@ body #selection_options ul.actions a.button:hover {background-color: #313942;}
 .addToDevice div.search .results li div.selected,
 .addToDevice div.search .results li div.addtoclone,
 .addToDevice div.search .results li div.matching {margin-left: -10px;}
-.addToDevice ul.options li {cursor: pointer; font-size: 12px; border-top: none; border-bottom: 1px solid #dedede; color: #313942;}
+.addToDevice ul.options > li {cursor: pointer; font-size: 12px; border-top: none; border-bottom: 1px solid #dedede; color: #313942;}
+.addToDevice ul.options > li.mappedto {background-color: #00ff00;}
+.addToDevice li div.showselectedonly,
 .addToDevice li div.selected,
 .addToDevice li div.addtoclone,
 .addToDevice li div.matching {font-size: 11px; margin: 3px 0; border-radius: 10px; height: 11px; padding: 5px 10px; background: #64AD8E; text-align: center; color: #ffffff; cursor: pointer;}
+.addToDevice li div.addtoclone {margin-bottom: 10px;}
 .addToDevice li div.selected.confirm,
 .addToDevice li div.addtoclone.confirm,
 .addToDevice li div.matching.confirm {background-color: #df0000;}
@@ -927,8 +941,17 @@ body #selection_options ul.actions a.button:hover {background-color: #313942;}
 .deleteUnique ul.options li {font-size: 12px; border-top: none; border-bottom: 1px solid #dedede; color: #313942;}
 .deleteUnique div.delete {font-size: 11px; margin: 3px 0; border-radius: 10px; height: 11px; padding: 5px 10px; line-height: 1em; background: #64AD8E; text-align: center; color: #ffffff; cursor: pointer;}
 .deleteUnique div.delete.confirm {background-color: #df0000;}
+#content .scene.generate {}
+#content .scene.generate h1 {border-bottom: 1px solid #dedede; padding-bottom: 74px;}
+#content .scene.generate div.script {margin: 20px 30px; padding: 10px; background: #ffffff;}
+#content .scene.generate code {white-space: pre-wrap; font-family: "Monaco", "Courier New", "Courier"; font-size: 12px; display: block;
+	tab-size: 4;
+	-webkit-tab-size: 4;
+	-moz-tab-size: 4;
+}
 body.device #navigation .device a,
 body.statistic #navigation .statistic a,
+body.generate #navigation .generate a,
 body.unidentified #navigation .unidentified a,
 body.tags #navigation .tags a {padding-left: 35px; color: #ffffff;}
 

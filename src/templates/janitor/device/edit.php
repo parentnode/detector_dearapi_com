@@ -103,6 +103,7 @@ $item = $IC->getItem(array("id" => $item_id, "extend" => array("tags" => true, "
 	<div class="testmarkers i:testMarkers item_id:<?= $item["item_id"] ?>"
 		data-csrf-token="<?= session()->value("csrf") ?>"
 		data-device-test="<?= $this->validPath("/janitor/device/testMarkers") ?>"
+		data-device-edit="<?= $this->validPath("/janitor/device/edit") ?>"
 		>
 	</div>
 

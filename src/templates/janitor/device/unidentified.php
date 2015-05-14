@@ -8,6 +8,9 @@ global $model;
 $search = getPost("search");
 $search_string = getPost("search_string");
 
+$test_marker = getPost("test_marker");
+$device_id = getPost("device_id");
+
 // old search stored?
 if(!$search && session()->value("unidentified_search")) {
 	$search_string = session()->value("unidentified_search");
@@ -15,7 +18,10 @@ if(!$search && session()->value("unidentified_search")) {
 }
 
 
-if($search) {
+if($test_marker && $device_id) {
+	$all_items = $model->testMarkersOnUnidentified($device_id);
+}
+else if($search) {
 	$all_items = $model->unidentifiedUseragents($search_string);
 	session()->value("unidentified_search", $search_string);
 }
@@ -37,6 +43,15 @@ else {
 		</ul>
 	<?= $model->formEnd() ?>
 
+
+	<div class="testmarkers i:testMarkersOnUnidentified"
+		data-csrf-token="<?= session()->value("csrf") ?>"
+		data-device-get="<?= $this->validPath("/janitor/device/getDevicesWithMarkers") ?>"
+		data-device-test="<?= $this->validPath("/janitor/device/unidentified") ?>"
+		>
+	</div>
+
+
 	<div class="stats">
 		<p>A total of unidentified <?= pluralize(count($all_items), "useragent", "useragents")?> were returned by the server</p>
 	</div>
@@ -53,7 +68,7 @@ else {
 <?		if($all_items): ?>
 		<ul class="items">
 <?			foreach($all_items as $item): ?>
-			<li class="item ua_id:<?= $item["id"] ?>"><h3><?= $item["useragent"] ?></h3></li>
+			<li class="item ua_id:<?= $item["id"] ?>"><h3><?= stringOr($item["useragent"], "&nbsp;") ?></h3></li>
 <?			endforeach; ?>
 		</ul>
 <?		else: ?>
