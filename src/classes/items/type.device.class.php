@@ -675,8 +675,13 @@ class TypeDevice extends Itemtype {
 
 
 				$_ .= $add_else ? "else " : "";
+				if($reg_exp_neg && $reg_exp_pos) {
+					$_ .= 'if(!preg_match("/('.$reg_exp_neg.')/i", $ua) && preg_match("/('.$reg_exp_pos.')/i", $ua)) {'."\n";
+				}
+				else if($reg_exp_pos) {
+					$_ .= 'if(preg_match("/('.$reg_exp_pos.')/i", $ua)) {'."\n";
+				}
 
-				$_ .= 'if(!preg_match("/('.$reg_exp_neg.')/i", $ua) && preg_match("/('.$reg_exp_pos.')/i", $ua)) {'."\n";
 					$_ .= '	$device_segment = "'.$device["segment"].'";'."\n";
 					$_ .= '	$device_name = "'.$device["name"].'";'."\n";
 				$_ .= '}'."\n";
