@@ -2076,7 +2076,7 @@ Util.Objects["testMarkers"] = new function() {
 						}
 
 						// add list for badly matched results
-						if(bad_matched) {
+						if(Object.keys(bad_matched).length) {
 							this.div.bad_matched_header = u.ae(this.div, "h3", {"class":"bad", "html":"The markers also matched these devices"});
 							this.div.bad_matched_result = u.ae(this.div, "ul", {"class":"results bad"});
 
