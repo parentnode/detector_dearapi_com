@@ -99,6 +99,13 @@
 #content .scene.deviceEdit div.testmarkers ul.results.bad li ul.useragents {height: 0; overflow: hidden;}
 #content .scene.deviceEdit div.testmarkers ul.results.bad li ul.useragents li {display: block; padding: 0 35px 3px;}
 #content .scene.deviceEdit div.testmarkers ul.results.bad li ul.useragents li:last-child {padding-bottom: 10px;}
+#content .scene.deviceEdit div.testmarkers ul.results.bad > li.marked h4 {color: orange;}
+
+#content .scene.deviceEdit div.testmarkers > ul.actions {overflow: hidden; padding: 0 25px;}
+#content .scene.deviceEdit div.testmarkers > ul.actions li {display: inline-block; vertical-align: top; padding: 4px 10px; margin: 10px 3px; border-radius: 10px; background: #64ad8e; color: #ffffff;}
+#content .scene.deviceEdit div.testmarkers > ul.actions li a {text-decoration: none;}
+
+
 
 /* USERAGENTS */
 #content .scene.deviceEdit div.useragents {padding: 0 0 20px; border-bottom: 1px solid #dedede; overflow: hidden;}

@@ -2082,13 +2082,16 @@ Util.Objects["testMarkers"] = new function() {
 
 							for(x in bad_matched) {
 
-								node = u.ae(this.div.bad_matched_result, "li", {"class":"device_id:"+x});
-								node._device = u.ae(node, "h4", {"html":bad_matched[x].name});
+								node = u.ae(this.div.bad_matched_result, "li", {"class":"device device_id:"+x+(bad_matched[x].marked ? " marked" : "")});
 
+								// does matched device already have markers
+								node._marked = bad_matched[x].marked;
+
+								node._device = u.ae(node, "h4", {"html":bad_matched[x].name});
 								node.actions = u.ae(node, "ul", {"class":"actions"});
 
 								// add show link
-								li = u.ae(node.actions, "li", {"class":"device"});
+								li = u.ae(node.actions, "li", {"class":"show"});
 								node._device_link = u.ae(li, "a", {"href":this.div.url_device_edit+"/"+bad_matched[x].id, "html":"Show device", "target":"_blank"});
 //								u.ce(node._device_link, {"type":"link"});
 
@@ -2135,9 +2138,7 @@ Util.Objects["testMarkers"] = new function() {
 								node.ua_list = u.ae(node, "ul", {"class":"useragents"});
 
 								for(y in bad_matched[x].useragents) {
-
 									u.ae(node.ua_list, "li", {"html":bad_matched[x].useragents[y]});
-
 								}
 
 								u.e.click(node._device);
@@ -2155,6 +2156,42 @@ Util.Objects["testMarkers"] = new function() {
 									u.bug("show useragents");
 								}
 							}
+
+							this.div.bad_match_actions = u.ae(this.div, "ul", {"class":"actions"});
+							this.div.bad_match_merge = u.ae(this.div.bad_match_actions, "li", {"class":"merge", "html":"Merge all NON-MARKED devices"});
+							this.div.bad_match_merge.div = this.div;
+
+							u.e.click(this.div.bad_match_merge);
+							this.div.bad_match_merge.reset = function() {
+								u.t.resetTimer(this.t_confirm);
+
+								this.innerHTML = this.org_text;
+								this._confirm = false;
+							}
+							this.div.bad_match_merge.clicked = function() {
+								u.t.resetTimer(this.t_confirm);
+
+								if(this._confirm) {
+
+									var results = u.qsa("li.device", this.div.bad_matched_result);
+									var i, node;
+									for(i = 0; node = results[i]; i++) {
+										if(!node._marked) {
+											node._device_merge._confirm = true;
+											node._device_merge.clicked();
+										}
+									}
+
+								}
+								else {
+
+									this.org_text = this.innerHTML;
+									this.innerHTML = "Are you absolutely sure??";
+									this._confirm = true;
+									this.t_confirm = u.t.setTimer(this, this.reset, 2000);
+								}
+							}
+
 						}
 
 
@@ -2176,6 +2213,7 @@ Util.Objects["testMarkers"] = new function() {
 				if(this.div.bad_matched_header) {
 					this.div.bad_matched_header.parentNode.removeChild(this.div.bad_matched_header);
 					this.div.bad_matched_result.parentNode.removeChild(this.div.bad_matched_result);
+					this.div.bad_match_actions.parentNode.removeChild(this.div.bad_match_actions);
 				}
 
 

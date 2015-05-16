@@ -594,6 +594,15 @@ class TypeDevice extends Itemtype {
 							$bad_matched_useragents[$useragent["item_id"]]["id"] = $matched_device_id;
 							$bad_matched_useragents[$useragent["item_id"]]["name"] = $name;
 							$bad_matched_useragents[$useragent["item_id"]]["useragents"] = array();
+
+							// is matched device already marked
+							if($query->sql("SELECT * FROM ".$this->db_markers." WHERE item_id = ".$useragent["item_id"])) {
+								$bad_matched_useragents[$useragent["item_id"]]["marked"] = true;
+							}
+							else {
+								$bad_matched_useragents[$useragent["item_id"]]["marked"] = false;
+							}
+
 						}
 						array_push($bad_matched_useragents[$useragent["item_id"]]["useragents"], $useragent["useragent"]);
 

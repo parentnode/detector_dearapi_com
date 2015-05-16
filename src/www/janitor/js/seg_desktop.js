@@ -9557,10 +9557,11 @@ Util.Objects["testMarkers"] = new function() {
 							this.div.bad_matched_header = u.ae(this.div, "h3", {"class":"bad", "html":"The markers also matched these devices"});
 							this.div.bad_matched_result = u.ae(this.div, "ul", {"class":"results bad"});
 							for(x in bad_matched) {
-								node = u.ae(this.div.bad_matched_result, "li", {"class":"device_id:"+x});
+								node = u.ae(this.div.bad_matched_result, "li", {"class":"device device_id:"+x+(bad_matched[x].marked ? " marked" : "")});
+								node._marked = bad_matched[x].marked;
 								node._device = u.ae(node, "h4", {"html":bad_matched[x].name});
 								node.actions = u.ae(node, "ul", {"class":"actions"});
-								li = u.ae(node.actions, "li", {"class":"device"});
+								li = u.ae(node.actions, "li", {"class":"show"});
 								node._device_link = u.ae(li, "a", {"href":this.div.url_device_edit+"/"+bad_matched[x].id, "html":"Show device", "target":"_blank"});
 								node._device_merge = u.ae(node.actions, "li", {"class":"merge", "html":"Merge"});
 								node._device_merge.url = this.div.url_device_merge+"/"+bad_matched[x].id+"/"+this.div.item_id;
@@ -9611,6 +9612,34 @@ Util.Objects["testMarkers"] = new function() {
 									u.bug("show useragents");
 								}
 							}
+							this.div.bad_match_actions = u.ae(this.div, "ul", {"class":"actions"});
+							this.div.bad_match_merge = u.ae(this.div.bad_match_actions, "li", {"class":"merge", "html":"Merge all NON-MARKED devices"});
+							this.div.bad_match_merge.div = this.div;
+							u.e.click(this.div.bad_match_merge);
+							this.div.bad_match_merge.reset = function() {
+								u.t.resetTimer(this.t_confirm);
+								this.innerHTML = this.org_text;
+								this._confirm = false;
+							}
+							this.div.bad_match_merge.clicked = function() {
+								u.t.resetTimer(this.t_confirm);
+								if(this._confirm) {
+									var results = u.qsa("li.device", this.div.bad_matched_result);
+									var i, node;
+									for(i = 0; node = results[i]; i++) {
+										if(!node._marked) {
+											node._device_merge._confirm = true;
+											node._device_merge.clicked();
+										}
+									}
+								}
+								else {
+									this.org_text = this.innerHTML;
+									this.innerHTML = "Are you absolutely sure??";
+									this._confirm = true;
+									this.t_confirm = u.t.setTimer(this, this.reset, 2000);
+								}
+							}
 						}
 					}
 					u.rc(this.div, "loading");
@@ -9623,6 +9652,7 @@ Util.Objects["testMarkers"] = new function() {
 				if(this.div.bad_matched_header) {
 					this.div.bad_matched_header.parentNode.removeChild(this.div.bad_matched_header);
 					this.div.bad_matched_result.parentNode.removeChild(this.div.bad_matched_result);
+					this.div.bad_match_actions.parentNode.removeChild(this.div.bad_match_actions);
 				}
 				u.request(this, this.div.url_device_test+"/"+this.div.item_id, {"params":"csrf-token="+this.div.csrf_token, "method":"post"})
 		}
