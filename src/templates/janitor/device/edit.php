@@ -104,6 +104,8 @@ $item = $IC->getItem(array("id" => $item_id, "extend" => array("tags" => true, "
 		data-csrf-token="<?= session()->value("csrf") ?>"
 		data-device-test="<?= $this->validPath("/janitor/device/testMarkers") ?>"
 		data-device-edit="<?= $this->validPath("/janitor/device/edit") ?>"
+		data-device-merge="<?= $this->validPath("/janitor/device/mergeDevice") ?>"
+		data-useragent-delete="<?= $this->validPath("/janitor/device/deleteUseragent/".$item["item_id"]) ?>" 
 		>
 	</div>
 

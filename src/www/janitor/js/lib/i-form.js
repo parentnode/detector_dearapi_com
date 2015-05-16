@@ -1990,6 +1990,8 @@ Util.Objects["testMarkers"] = new function() {
 
 		div.url_device_test = div.getAttribute("data-device-test");
 		div.url_device_edit = div.getAttribute("data-device-edit");
+		div.url_device_merge = div.getAttribute("data-device-merge");
+		div.url_useragent_delete = div.getAttribute("data-useragent-delete");
 
 
 
@@ -2021,7 +2023,7 @@ Util.Objects["testMarkers"] = new function() {
 						var not_matched = response.cms_object[0];
 						var bad_matched = response.cms_object[1];
 
-						var i, node, n_node;
+						var i, node, n_node, li, actions;
 
 
 						// add list for not matched results
@@ -2032,7 +2034,43 @@ Util.Objects["testMarkers"] = new function() {
 							for(i = 0; node = not_matched[i]; i++) {
 
 								n_node = u.ae(this.div.not_matched_result, "li");
-								u.ae(n_node, "h4", {"html":node})
+								n_node._device = u.ae(n_node, "h4", {"html":node.useragent})
+
+								n_node.actions = u.ae(n_node, "ul", {"class":"actions"});
+								n_node._delete_ua = u.ae(n_node.actions, "li", {"class":"delete", "html":"Delete"});
+								n_node._delete_ua.url = this.div.url_useragent_delete+"/"+node.id;
+								n_node._delete_ua.n_node = n_node;
+								n_node._delete_ua.div = this.div;
+
+								u.e.click(n_node._delete_ua);
+								n_node._delete_ua.clicked = function(event) {
+		
+									this.response = function(response) {
+
+										page.notify(response);
+
+										if(response.cms_status == "success") {
+											this.n_node.parentNode.removeChild(this.n_node);
+										}
+									}
+									u.request(this, this.url, {"method":"post", "params":"csrf-token=" + this.div.csrf_token});
+
+								}
+
+
+								n_node._device.n_node = n_node;
+								u.e.click(n_node._device);
+								n_node._device.clicked = function() {
+									if(!this.n_node._open) {
+										this.n_node._open = true;
+										u.as(this.n_node.actions, "height", "auto");
+									}
+									else {
+										this.n_node._open = false;
+										u.as(this.n_node.actions, "height", 0);
+									}
+								}
+
 
 							}
 						}
@@ -2045,9 +2083,53 @@ Util.Objects["testMarkers"] = new function() {
 							for(x in bad_matched) {
 
 								node = u.ae(this.div.bad_matched_result, "li", {"class":"device_id:"+x});
-								node._device = u.ae(node, "h4");
-								node._device_link = u.ae(node._device, "a", {"href":this.div.url_device_edit+"/"+bad_matched[x].id, "html":bad_matched[x].name, "target":"_blank"});
-								u.ce(node._device_link, {"type":"link"});
+								node._device = u.ae(node, "h4", {"html":bad_matched[x].name});
+
+								node.actions = u.ae(node, "ul", {"class":"actions"});
+
+								// add show link
+								li = u.ae(node.actions, "li", {"class":"device"});
+								node._device_link = u.ae(li, "a", {"href":this.div.url_device_edit+"/"+bad_matched[x].id, "html":"Show device", "target":"_blank"});
+//								u.ce(node._device_link, {"type":"link"});
+
+								// add merge link
+								node._device_merge = u.ae(node.actions, "li", {"class":"merge", "html":"Merge"});
+								node._device_merge.url = this.div.url_device_merge+"/"+bad_matched[x].id+"/"+this.div.item_id;
+								node._device_merge.div = this.div;
+								node._device_merge.node = node;
+
+								u.e.click(node._device_merge);
+								node._device_merge.reset = function() {
+									u.t.resetTimer(this.t_confirm);
+
+									this.innerHTML = this.org_text;
+									this._confirm = false;
+								}
+								node._device_merge.clicked = function() {
+									u.t.resetTimer(this.t_confirm);
+
+									if(this._confirm) {
+										u.bug("merge device")
+
+										this.response = function(response) {
+											page.notify(response);
+
+											if(response.cms_status == "success") {
+												this.node.parentNode.removeChild(this.node);
+											}
+										}
+										u.request(this, this.url, {"method":"post", "params":"csrf-token="+this.div.csrf_token});
+
+									}
+									else {
+
+										this.org_text = this.innerHTML;
+										this.innerHTML = "Confirm";
+										this._confirm = true;
+										this.t_confirm = u.t.setTimer(this, this.reset, 2000);
+									}
+								}
+
 
 								node._device.node = node;
 								node.ua_list = u.ae(node, "ul", {"class":"useragents"});
@@ -2063,10 +2145,12 @@ Util.Objects["testMarkers"] = new function() {
 									if(!this.node._devices_open) {
 										this.node._devices_open = true;
 										u.as(this.node.ua_list, "height", "auto");
+										u.as(this.node.actions, "height", "auto");
 									}
 									else {
 										this.node._devices_open = false;
 										u.as(this.node.ua_list, "height", 0);
+										u.as(this.node.actions, "height", 0);
 									}
 									u.bug("show useragents");
 								}

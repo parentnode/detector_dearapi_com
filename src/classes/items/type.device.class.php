@@ -569,7 +569,7 @@ class TypeDevice extends Itemtype {
 				// first run test on current device to identify holes in identification
 				foreach($device["useragents"] as $useragent) {
 					if(!(preg_match("/(".$reg_exp_pos.")/i", $useragent["useragent"]) && (!$reg_exp_neg || !preg_match("/(".$reg_exp_neg.")/i", $useragent["useragent"])))) {
-						array_push($not_matched_useragents, $useragent["useragent"]);
+						array_push($not_matched_useragents, array("id" => $useragent["id"], "useragent" => $useragent["useragent"]));
 					}
 				}
 

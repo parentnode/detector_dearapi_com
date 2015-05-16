@@ -81,10 +81,24 @@
 
 #content .scene.deviceEdit div.testmarkers h3.not {color: orange;}
 #content .scene.deviceEdit div.testmarkers ul.results.not {}
+#content .scene.deviceEdit div.testmarkers ul.results.not li h4 {cursor: pointer;}
+#content .scene.deviceEdit div.testmarkers ul.results.not li h4:hover {text-decoration: underline;}
+#content .scene.deviceEdit div.testmarkers ul.results.not li ul.actions {height: 0; overflow: hidden; padding: 0 30px;}
+#content .scene.deviceEdit div.testmarkers ul.results.not li ul.actions li {display: inline-block; vertical-align: top; padding: 4px 10px; margin: 6px 3px; border-radius: 10px; background: #64ad8e; color: #ffffff;}
+#content .scene.deviceEdit div.testmarkers ul.results.not li ul.actions li a {text-decoration: none;}
+
+
 
 #content .scene.deviceEdit div.testmarkers h3.bad {color: red;}
+#content .scene.deviceEdit div.testmarkers ul.results.bad li h4 {cursor: pointer;}
+#content .scene.deviceEdit div.testmarkers ul.results.bad li h4:hover {text-decoration: underline;}
+#content .scene.deviceEdit div.testmarkers ul.results.bad li ul.actions {height: 0; overflow: hidden; padding: 0 30px;}
+#content .scene.deviceEdit div.testmarkers ul.results.bad li ul.actions li {display: inline-block; vertical-align: top; padding: 4px 10px; margin: 6px 3px; border-radius: 10px; background: #64ad8e; color: #ffffff;}
+#content .scene.deviceEdit div.testmarkers ul.results.bad li ul.actions li a {text-decoration: none;}
+
 #content .scene.deviceEdit div.testmarkers ul.results.bad li ul.useragents {height: 0; overflow: hidden;}
-#content .scene.deviceEdit div.testmarkers ul.results.bad li ul.useragents li {display: block; padding: 3px 35px 0;}
+#content .scene.deviceEdit div.testmarkers ul.results.bad li ul.useragents li {display: block; padding: 0 35px 3px;}
+#content .scene.deviceEdit div.testmarkers ul.results.bad li ul.useragents li:last-child {padding-bottom: 10px;}
 
 /* USERAGENTS */
 #content .scene.deviceEdit div.useragents {padding: 0 0 20px; border-bottom: 1px solid #dedede; overflow: hidden;}
