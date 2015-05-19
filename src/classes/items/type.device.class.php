@@ -1053,6 +1053,113 @@ class TypeDevice extends Itemtype {
 	}
 
 
+
+
+	// ADVANCED MAINTENANCE TOOLS
+
+
+	// All devices without useragents
+	function listEmptyDevices($_options = false) {
+
+		$query = new Query();
+		$sql = "SELECT * FROM ".$this->db." as devices WHERE item_id NOT IN (SELECT item_id FROM ".$this->db_useragents.")";
+		$query->sql($sql);
+		return $query->results();
+	}
+
+	// Somehow some useragents are left without device
+	// could be the result an old error - should not be possible anymore
+	function listLostUseragents($_options = false) {
+
+		$query = new Query();
+		$sql = "SELECT * FROM ".$this->db_useragents." as devices WHERE item_id NOT IN (SELECT item_id FROM ".$this->db.")";
+		$query->sql($sql);
+		return $query->results();
+
+	}
+
+	// Move lost useragents to unidentified for re-indexing
+	function deleteLostUseragents($action) {
+
+		// check parameter count
+		if(count($action) == 1) {
+
+			$query = new Query();
+			// $sql = "SELECT * FROM ".$this->db_useragents." as devices WHERE item_id NOT IN (SELECT item_id FROM ".$this->db.")";
+			// $query->sql($sql);
+			$uas = $this->listLostUseragents(); //$query->results();
+
+			foreach($uas as $ua) {
+				$sql = "DELETE FROM ".$this->db_useragents." WHERE id = '".$ua["id"]."'";
+				if($query->sql($sql)) {
+
+					$sql = "INSERT INTO ".$this->db_unidentified." VALUES(DEFAULT, '".$ua["useragent"]."', 'orphanaged', '', DEFAULT)";
+					$query->sql($sql);
+				}
+			}
+		}
+
+	}
+
+
+	// Somehow some items are left without device
+	// could be the result an old error - should not be possible anymore
+	function listLostDevices($_options = false) {
+
+		$query = new Query();
+		$sql = "SELECT * FROM ".UT_ITEMS." as items WHERE id NOT IN (SELECT item_id FROM ".$this->db.")";
+		$query->sql($sql);
+		return $query->results();
+
+	}
+
+	// Delete lost device items
+	function deleteLostDevices($action) {
+
+		// check parameter count
+		if(count($action) == 1) {
+
+			$query = new Query();
+			// $sql = "SELECT * FROM ".$this->db_useragents." as devices WHERE item_id NOT IN (SELECT item_id FROM ".$this->db.")";
+			// $query->sql($sql);
+			$items = $this->listLostDevices(); //$query->results();
+
+			foreach($items as $item) {
+				$sql = "DELETE FROM ".UT_ITEMS." WHERE id = '".$item["id"]."'";
+				$query->sql($sql);
+
+			}
+		}
+
+	}
+
+
+	// Somehow some don't have any tags - that makes it really easy for them to hide
+	function listDevicesWithoutTags($_options = false) {
+
+		$query = new Query();
+		$sql = "SELECT * FROM ".UT_ITEMS." as items WHERE id NOT IN (SELECT item_id FROM ".UT_TAGGINGS.")";
+		$query->sql($sql);
+		return $query->results();
+
+	}
+
+	// Somehow some don't have any Brand-tag - that makes it really easy for them to hide
+	function listDevicesWithoutBrand($_options = false) {
+
+		$query = new Query();
+		$sql = "SELECT * FROM ".UT_ITEMS." as items WHERE id NOT IN (SELECT item_id FROM ".UT_TAG." as tags, ".UT_TAGGINGS." as taggings WHERE tags.context = 'brand' AND tags.id = taggings.tag_id)";
+		$query->sql($sql);
+		return $query->results();
+
+	}
+
+
+
+
+	// OLDER MAINTENANCE FUNCTIONS
+
+
 	// full run through of all unidentified useragents to check if they match current unique IDs
 	function searchForUniqueMatches($_options = false) {
 

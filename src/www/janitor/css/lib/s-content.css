@@ -247,11 +247,41 @@
 
 
 
-/* STATISTICS */
-#content .scene.statistic {}
-#content .scene.statistic h1 {border-bottom: 1px solid #dedede; padding-bottom: 74px;}
-#content .scene.statistic ul.tools {padding: 0 30px;}
-#content .scene.statistic ul.tools li {display: block; font-size: 16px; padding: 10px 0;}
+
+/* MAINTENANCE */
+#content .scene.maintenance {}
+#content .scene.maintenance h1 {border-bottom: 1px solid #dedede; padding-bottom: 74px;}
+#content .scene.maintenance ul.tools {padding: 0 30px;}
+#content .scene.maintenance ul.tools li {display: block; font-size: 16px; padding: 10px 0;}
+
+
+/* LOST USERAGENTS */
+#content .scene.lostUseragents > .actions li.delete {float: right; padding: 0 0 10px 10px;}
+#content .scene.lostUseragents ul.items > li h3 {padding-bottom: 16px;}
+#content .scene.lostUseragents ul.items > li > h3 > span {font-size: 12px;}
+
+/* LOST DEVICES */
+#content .scene.lostDevices > .actions li.delete {float: right; padding: 0 0 10px 10px;}
+#content .scene.lostDevices ul.items > li h3 {padding-bottom: 16px;}
+#content .scene.lostDevices ul.items > li > h3 > span {font-size: 12px;}
+
+/* DEVICES WITHOUT USERAGENTS */
+#content .scene.devicesWithoutUseragents h1 {border-bottom: 1px solid #dedede; padding-bottom: 74px;}
+#content .scene.devicesWithoutUseragents ul.items > li h3 {padding-bottom: 16px;}
+
+/* DEVICES WITHOUT TAGS */
+#content .scene.devicesWithoutTags h1 {border-bottom: 1px solid #dedede; padding-bottom: 74px;}
+#content .scene.devicesWithoutTags ul.items > li h3 {padding-bottom: 16px;}
+
+/* DEVICES WITHOUT BRAND */
+#content .scene.devicesWithoutBrand h1 {border-bottom: 1px solid #dedede; padding-bottom: 74px;}
+#content .scene.devicesWithoutBrand ul.items > li h3 {padding-bottom: 16px;}
+
+
+/*#content .scene.lostUseragents h1 {border-bottom: 1px solid #dedede; padding-bottom: 74px;}
+*/
+
+
 
 /* UNIQUE POTENTIAL LIST */
 /*#content .scene.uniquePotentialList h1 {border-bottom: 1px solid #dedede; padding-bottom: 74px;}*/
@@ -304,7 +334,7 @@
 
 /* NAVIGATION */
 body.device #navigation .device a,
-body.statistic #navigation .statistic a,
+body.maintenance #navigation .maintenance a,
 body.generate #navigation .generate a,
 body.unidentified #navigation .unidentified a,
 body.tags #navigation .tags a {padding-left: 35px; color: #ffffff;}
