@@ -295,6 +295,14 @@ class TypeDevice extends Itemtype {
 			// get source device details
 			$device = $this->get($device_id_source);
 
+
+			// add comments to new device
+			$dest_device = $this->get($device_id_destination);
+			$updated_comment = $dest_device["description"]."\n\n".$device["name"]."\n".$device["description"];
+			$sql = "UPDATE ".$this->db." SET description = '$updated_comment' WHERE item_id = ".$device_id_destination;
+			$query->sql($sql);
+
+
 			// switch useragent to new device
 			if($device["useragents"]) {
 				// copy useragents
