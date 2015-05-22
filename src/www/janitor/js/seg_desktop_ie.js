@@ -5121,6 +5121,97 @@ if(u.a.vendor() == "ms") {
 }
 
 
+/*u-navigation.js*/
+u.navigation = function(_options) {
+	var callback_navigate = "navigate";
+	var navigation_node = page;
+	if(typeof(_options) == "object") {
+		var argument;
+		for(argument in _options) {
+			switch(argument) {
+				case "callback"       : callback_navigate      = _options[argument]; break;
+				case "node"           : navigation_node        = _options[argument]; break;
+			}
+		}
+	}
+	navigation_node._nav_path = navigation_node._nav_path ? navigation_node._nav_path : u.h.getCleanUrl(location.href, 1);
+	navigation_node._nav_history = navigation_node._nav_history ? navigation_node._nav_history : [];
+	navigation_node._navigate = function(url) {
+		url = u.h.getCleanUrl(url);
+		navigation_node._nav_history.unshift(url);
+		u.stats.pageView(url);
+		if(!this._nav_path || ((this._nav_path != u.h.getCleanHash(location.hash, 1) && !u.h.popstate) || (this._nav_path != u.h.getCleanUrl(location.href, 1) && u.h.popstate))) {
+			if(this.cN && typeof(this.cN.navigate) == "function") {
+				this.cN.navigate(url);
+			}
+		}
+		else {
+			if(this.cN.scene && this.cN.scene.parentNode && typeof(this.cN.scene.navigate) == "function") {
+				this.cN.scene.navigate(url);
+			}
+			else if(this.cN && typeof(this.cN.navigate) == "function") {
+				this.cN.navigate(url);
+			}
+		}
+		if(!u.h.popstate) {
+			this._nav_path = u.h.getCleanHash(location.hash, 1);
+		}
+		else {
+			this._nav_path = u.h.getCleanUrl(location.href, 1);
+		}
+	}
+	navigation_node.navigate = function(url, node) {
+		this.history_node = node ? node : false;
+		if(u.h.popstate) {
+			history.pushState({}, url, url);
+			navigation_node._navigate(url);
+		}
+		else {
+			location.hash = u.h.getCleanUrl(url);
+		}
+	}
+	if(location.hash.length && location.hash.match(/^#!/)) {
+		location.hash = location.hash.replace(/!/, "");
+	}
+	if(!u.h.popstate) {
+		if(location.hash.length < 2) {
+			navigation_node.navigate(location.href, page);
+			navigation_node._nav_path = u.h.getCleanUrl(location.href);
+			u.init(navigation_node.cN);
+		}
+		else if(u.h.getCleanHash(location.hash) != u.h.getCleanUrl(location.href) && location.hash.match(/^#\//)) {
+			navigation_node._nav_path = u.h.getCleanUrl(location.href);
+			navigation_node._navigate(u.h.getCleanHash(location.hash), page);
+		}
+		else {
+			u.init(navigation_node.cN);
+		}
+	}
+	else {
+		if(u.h.getCleanHash(location.hash) != u.h.getCleanUrl(location.href) && location.hash.match(/^#\//)) {
+			navigation_node._nav_path = u.h.getCleanHash(location.hash);
+			navigation_node.navigate(u.h.getCleanHash(location.hash), page);
+		}
+		else {
+			u.init(navigation_node.cN);
+		}
+	}
+	navigation_node._initHistory = function() {
+		u.h.catchEvent(page, {"callback":"_navigate"});
+	}
+	u.t.setTimer(page, navigation_node._initHistory, 100);
+	navigation_node.historyBack = function() {
+		if(this._nav_history.length > 1) {
+			this._nav_history.shift();
+			return this._nav_history.shift();
+		}
+		else {
+			return "/";
+		}
+	}
+}
+
+
 /*u-form-htmleditor.js*/
 Util.Form.customInit["html"] = function(form, field) {
 	field._input = u.qs("textarea", field);
@@ -5330,6 +5421,12 @@ u.f.textEditor = function(field) {
 	field.update = function() {
 		this.updateViewer();
 		this.updateContent();
+		if(this._input.form && typeof(this._input.form.updated) == "function") {
+			this._input.form.updated(this._input);
+		}
+		if(this._input.form && typeof(this._input.form.changed) == "function") {
+			this._input.form.changed(this._input);
+		}
 	}
 	field.updateViewer = function() {
 		var tags = u.qsa("div.tag", this);
@@ -6681,6 +6778,7 @@ u.f.addAction = function(node, _options) {
 u.bug_console_only = true;
 Util.Objects["page"] = new function() {
 	this.init = function(page) {
+		u.bug("init page:" + page)
 		var i, node;
 		page.hN = u.qs("#header", page);
 		page.cN = u.qs("#content", page);
@@ -6706,7 +6804,7 @@ Util.Objects["page"] = new function() {
 				u.e.addEvent(window, "scroll", page.scrolled);
 				page.initHeader();
 				u.notifier(page);
-				u.navigation(page);
+				u.navigation();
 			}
 		}
 		page.initHeader = function() {
@@ -7130,34 +7228,42 @@ Util.Objects["defaultEdit"] = new function() {
 		form.submitted = function(iN) {
 			u.t.resetTimer(page.t_autosave);
 			this.response = function(response) {
-				page.t_autosave = u.t.setTimer(this, "autosave", page._autosave_interval);
 				page.notify(response);
 			}
 			u.request(this, this.action, {"method":"post", "params" : u.f.getParams(this, {"send_as":"formdata"})});
 		}
-		form.autosave = function() {
-			for(name in this.fields) {
-				if(this.fields[name].field) {
-					if(!this.fields[name].used) {
-						if(u.hc(this.fields[name].field, "required") && !this.fields[name].val()) {
-							page.t_autosave = u.t.setTimer(this, "autosave", page._autosave_interval);
-							return false;
-						}
-					}
-					else {
-						u.f.validate(this.fields[name]);
-					}
-				}
-			}
-			if(!u.qs(".field.error", this)) {
-				this.submitted();
-			}
-			else {
+		form.updated = function() {
+			this.change_state = true;
+			u.t.resetTimer(page.t_autosave);
+			if(!page.autosave_disabled) {
 				page.t_autosave = u.t.setTimer(this, "autosave", page._autosave_interval);
 			}
 		}
+		form.autosave = function() {
+			if(!page.autosave_disabled && this.change_state) {
+				for(name in this.fields) {
+					if(this.fields[name].field) {
+						if(!this.fields[name].used) {
+							if(u.hc(this.fields[name].field, "required") && !this.fields[name].val()) {
+								return false;
+							}
+						}
+						else {
+							u.f.validate(this.fields[name]);
+						}
+					}
+				}
+				if(!u.qs(".field.error", this)) {
+					this.change_state = false;
+					this.submitted();
+				}
+			}
+			else {
+			}
+		}
+		form.change_state = false;
 		page._autosave_node = form;
-		page._autosave_interval = 15000;
+		page._autosave_interval = 3000;
 		page.t_autosave = u.t.setTimer(form, "autosave", page._autosave_interval);
 		form.cancelBackspace = function(event) {
 			if(event.keyCode == 8 && !u.qsa(".field.focus").length) {
@@ -7242,26 +7348,27 @@ Util.Objects["defaultEditStatus"] = new function() {
 /*i-defaulteditactions.js*/
 Util.Objects["defaultEditActions"] = new function() {
 	this.init = function(node) {
+		u.bug("defaultEditActions:" + u.nodeId(node));
 		node._item_id = u.cv(node, "item_id");
 		node.csrf_token = node.getAttribute("data-csrf-token");
-		var cancel = u.qs("li.cancel a");
-		var action = u.qs("li.delete");
-		if(action && cancel && cancel.href) {
-			if(!action.childNodes.length) {
-				action.delete_item_url = action.getAttribute("data-item-delete");
-				if(action.delete_item_url) {
-					form = u.f.addForm(action, {"action":action.delete_item_url, "class":"delete"});
+		var bn_cancel = u.qs("li.cancel a", node);
+		var bn_delete = u.qs("li.delete", node);
+		if(bn_delete && bn_cancel && bn_cancel.href) {
+			if(!bn_delete.childNodes.length) {
+				bn_delete.delete_item_url = bn_delete.getAttribute("data-item-delete");
+				if(bn_delete.delete_item_url) {
+					form = u.f.addForm(bn_delete, {"action":bn_delete.delete_item_url, "class":"delete"});
 					u.ae(form, "input", {"type":"hidden","name":"csrf-token", "value":node.csrf_token});
 					form.node = node;
 					bn_delete = u.f.addAction(form, {"value":"Delete", "class":"button delete", "name":"delete"});
 				}
 			}
 			else {
-				form = u.qs("form", action);
+				form = u.qs("form", bn_delete);
 			}
 			if(form) {
 				u.f.init(form);
-				form.cancel_url = cancel.href;
+				form.cancel_url = bn_cancel.href;
 				form.restore = function(event) {
 					this.actions["delete"].value = "Delete";
 					u.rc(this.actions["delete"], "confirm");
@@ -8549,13 +8656,11 @@ u.notifier = function(node) {
 			}
 		}
 		var output;
-		u.bug("message:" + typeof(response) + "; JSON: " + response.isJSON + "; HTML: " + response.isHTML);
 		if(typeof(response) == "object" && response.isJSON) {
 			var message = response.cms_message;
 			var cms_status = response.cms_status;
 			if(typeof(message) == "object") {
 				for(type in message) {
-					u.bug("typeof(message[type]:" + typeof(message[type]) + "; " + type);
 					if(typeof(message[type]) == "string") {
 						output = u.ae(this.notifications, "div", {"class":class_name+" "+cms_status, "html":message[type]});
 					}
