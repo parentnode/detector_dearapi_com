@@ -195,11 +195,11 @@ class TypeDevice extends Itemtype {
 		else if(preg_match("/^(smartphone)$/", $segment)) {
 			return "mobile_touch";
 		}
-		else if(preg_match("/^(phablet|phablet_light)$/", $segment)) {
-			return "mobile_touch";
-		}
 		else if(preg_match("/^(tablet_light)$/", $segment)) {
 			return "tablet";
+		}
+		else if(preg_match("/^(seo)$/", $segment)) {
+			return "basic";
 		}
 		return $segment;
 	}
