@@ -46,7 +46,7 @@ else {
 
 	<div class="testmarkers i:testMarkersOnUnidentified"
 		data-csrf-token="<?= session()->value("csrf") ?>"
-		data-device-get="<?= $this->validPath("/janitor/device/getDevicesWithMarkers") ?>"
+		data-device-get="<?= $this->validPath("/janitor/device/getDevicesWithPatterns") ?>"
 		data-device-test="<?= $this->validPath("/janitor/device/unidentified") ?>"
 		>
 	</div>

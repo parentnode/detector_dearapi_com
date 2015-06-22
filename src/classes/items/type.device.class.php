@@ -537,60 +537,116 @@ class TypeDevice extends Itemtype {
 			$device_id = $action[1];
 			$device = $this->get($device_id);
 
-			// compile regular expression
+			// get global grouping
+			$device_segment = $this->segment($device_id);
+			$global_group_device = $this->getGlobalPatterns($device_segment);
+
+
+			// compile regular expression for specific device
+			$regex_pos = "";
+			$regex_neg = "";
 
 			if($device["markers"]) {
-
 				$markers = array();
-				$reg_exp_pos = "";
-				$reg_exp_neg = "";
 
 				foreach($device["markers"] as $marker) {
 					array_push($markers, $marker["marker"]);
 				}
 
-				$reg_exp_pos = implode($markers, "|");
+				$regex_pos = implode($markers, "|");
+			}
 
+			if($device["exceptions"]) {
+				$exceptions = array();
 
-				if($device["exceptions"]) {
-					$exceptions = array();
-
-					foreach($device["exceptions"] as $exception) {
-						array_push($exceptions, $exception["exception"]);
-					}
-
-					$reg_exp_neg = implode($exceptions, "|");
+				foreach($device["exceptions"] as $exception) {
+					array_push($exceptions, $exception["exception"]);
 				}
 
-				// print "preg_match(/".$reg_exp_pos."/i<br>\n";
-				// print "preg_match(/".$reg_exp_neg."/i<br>\n";
-
-				// print "reg_exp_pos:/".preg_replace("/([\/\.])/", "\$1"$reg_exp_pos)."/i<br>\n";
-				// print "reg_exp_neg:/".addcslashes($reg_exp_neg)."/i<br>\n";
-				//
-				// print "reg_exp_pos:/".escape($reg_exp_pos)."/i<br>\n";
-				// print "reg_exp_neg:/".escape($reg_exp_neg)."/i<br>\n";
+				$regex_neg = implode($exceptions, "|");
+			}
 
 
-				$not_matched_useragents = array();
+			// compile regular expression for global grouping
+			$group_regex_pos = "";
+			$group_regex_neg = "";
 
-				// first run test on current device to identify holes in identification
-				foreach($device["useragents"] as $useragent) {
-					if(!(preg_match("/(".$reg_exp_pos.")/i", $useragent["useragent"]) && (!$reg_exp_neg || !preg_match("/(".$reg_exp_neg.")/i", $useragent["useragent"])))) {
-						array_push($not_matched_useragents, array("id" => $useragent["id"], "useragent" => $useragent["useragent"]));
-					}
+			if($global_group_device["markers"]) {
+				$markers = array();
+
+				foreach($global_group_device["markers"] as $marker) {
+					array_push($markers, $marker["marker"]);
 				}
 
-				// get all useragents
-				$query = new Query();
+				$group_regex_pos = implode($markers, "|");
+			}
 
-				$sql = "SELECT * FROM ".$this->db_useragents;
-				$query->sql($sql);
-				$all_useragents = $query->results();
-				$bad_matched_useragents = array();
+			if($global_group_device["exceptions"]) {
+				$exceptions = array();
 
-				foreach($all_useragents as $useragent) {
-					if($useragent["item_id"] != $device_id && (preg_match("/(".$reg_exp_pos.")/i", $useragent["useragent"]) && (!$reg_exp_neg || !preg_match("/(".$reg_exp_neg.")/i", $useragent["useragent"])))) {
+				foreach($global_group_device["exceptions"] as $exception) {
+					array_push($exceptions, $exception["exception"]);
+				}
+
+				$group_regex_neg = implode($exceptions, "|");
+			}
+
+
+			// print "preg_match(/".$regex_pos."/i<br>\n";
+			// print "preg_match(/".$regex_neg."/i<br>\n";
+
+			// print "regex_pos:/".preg_replace("/([\/\.])/", "\$1"$regex_pos)."/i<br>\n";
+			// print "regex_neg:/".addcslashes($regex_neg)."/i<br>\n";
+			//
+			// print "regex_pos:/".escape($regex_pos)."/i<br>\n";
+			// print "regex_neg:/".escape($regex_neg)."/i<br>\n";
+
+
+
+			$not_matched_useragents = array();
+
+			// first run test on current device to identify holes in identification
+			foreach($device["useragents"] as $useragent) {
+
+				// each UA should match both global and specific marker/exception test
+				if(!(
+					(
+						(!$group_regex_pos || preg_match("/(".$group_regex_pos.")/i", $useragent["useragent"])) && 
+						(!$group_regex_neg || !preg_match("/(".$group_regex_neg.")/i", $useragent["useragent"]))
+					)
+					||
+					(
+						(!$regex_pos || preg_match("/(".$regex_pos.")/i", $useragent["useragent"])) && 
+						(!$regex_neg || !preg_match("/(".$regex_neg.")/i", $useragent["useragent"]))
+					)
+				)) {
+					array_push($not_matched_useragents, array("id" => $useragent["id"], "useragent" => $useragent["useragent"]));
+				}
+			}
+
+
+			// get all useragents
+			$query = new Query();
+
+			$sql = "SELECT * FROM ".$this->db_useragents;
+			$query->sql($sql);
+			$all_useragents = $query->results();
+			$bad_matched_useragents = array();
+
+			foreach($all_useragents as $useragent) {
+
+				// don't check useragent for this device
+				// check group pattern
+				if($useragent["item_id"] != $device_id && (
+					(!$group_regex_pos || preg_match("/(".$group_regex_pos.")/i", $useragent["useragent"])) && 
+					(!$group_regex_neg || !preg_match("/(".$group_regex_neg.")/i", $useragent["useragent"]))
+				)) {
+
+					// check device pattern
+					if(
+						(!$regex_pos || preg_match("/(".$regex_pos.")/i", $useragent["useragent"])) && 
+						(!$regex_neg || !preg_match("/(".$regex_neg.")/i", $useragent["useragent"]))
+					) {
 
 						if(!isset($bad_matched_useragents[$useragent["item_id"]])) {
 							$bad_matched_useragents[$useragent["item_id"]] = array();
@@ -613,20 +669,17 @@ class TypeDevice extends Itemtype {
 
 						}
 						array_push($bad_matched_useragents[$useragent["item_id"]]["useragents"], $useragent["useragent"]);
-
 					}
 				}
+			}
 
-				$result = array($not_matched_useragents, $bad_matched_useragents);
+			$result = array($not_matched_useragents, $bad_matched_useragents);
 
 //				print_r($result);
 
 
-				return $result;
-			}
+			return $result;
 
-
-		
 		}
 
 		message()->addMessage("Device could not be tested", array("type" => "error"));
@@ -634,87 +687,541 @@ class TypeDevice extends Itemtype {
 
 	}
 
-	// Find all devices with markers to create list for testing unidentified devices
-	function getDevicesWithMarkers() {
 
-		$query = new Query();
 
-		$sql = "SELECT item_id, name FROM ".$this->db." as devices WHERE devices.item_id IN (SELECT item_id FROM ".$this->db_markers.")";
-		$query->sql($sql);
-		$devices_with_markers = $query->results();
-		
-		return $devices_with_markers;
-	}
+	// get global patterns for groupings (using nested regex' to improve performance)
 
-	// create detections script based on available markers
-	function createDetectionScript() {
+	function getGlobalPatterns($segment) {
+
 
 		$IC = new Items();
 
-		$devices_with_markers = $this->getDevicesWithMarkers();
-		$devices = array();
-		foreach($devices_with_markers as $device_with_marker) {
-			$device = $IC->getItem(array("id" => $device_with_marker["item_id"], "extend" => array("tags" => true)));
-			unset($device["useragents"]);
-			$device["segment"] = $this->segment($device["id"], $device["tags"]);
-			unset($device["tags"]);
-			$devices[] = $device;
-		}	
+		if(preg_match("/desktop_ie/", $segment)) {
+			$global_segment = "desktop_ie";
+		}
+		else if(preg_match("/desktop_light/", $segment)) {
+			$global_segment = "desktop_light";
+		}
+		else if(preg_match("/desktop/", $segment)) {
+			$global_segment = "desktop";
+		}
+		else if(preg_match("/tablet/", $segment)) {
+			$global_segment = "tablet";
+		}
+		else if(preg_match("/smartphone/", $segment)) {
+			$global_segment = "smartphone";
+		}
+		else if(preg_match("/mobile/", $segment)) {
+			$global_segment = "mobile";
+		}
+		// use segment as is
+		else {
+			$global_segment = $segment;
+		}
 
-		$add_else = false;
 
-		$_ = '$ua = $useragent ? $useragent : stringOr(getVar("ua"), $_SERVER["HTTP_USER_AGENT"]);'."\n\n";
-		foreach($devices as $device) {
+		$global_device = $IC->getItems(array("tags" => "segment:".$global_segment.";type:global", "limit" => 1));
+		if($global_device) {
+			return $this->get($global_device[0]["id"]);
+		}
 
 
-			if($device["markers"]) {
+		// no global device was found
+		return false;
+
+	}
+
+
+	// Find all devices with markers to create list for testing unidentified devices
+	function getDevicesWithPatterns($segment) {
+
+		$query = new Query();
+		$IC = new Items();
+
+
+		$sql = "SELECT item_id, name FROM ".$this->db." as devices WHERE ";
+		$sql .= "(";
+			$sql .= "devices.item_id IN (SELECT item_id FROM ".$this->db_markers.") OR ";
+			$sql .= "devices.item_id IN (SELECT item_id FROM ".$this->db_exceptions.")";
+		$sql .= ")";
+		$sql .= " AND devices.item_id NOT IN (SELECT taggings.item_id FROM ".UT_TAG." as tags, ".UT_TAGGINGS." as taggings WHERE tags.id = taggings.tag_id AND tags.context = 'type' AND tags.value = 'global')";
+		$sql .= " AND devices.item_id NOT IN (SELECT taggings.item_id FROM ".UT_TAG." as tags, ".UT_TAGGINGS." as taggings WHERE tags.id = taggings.tag_id AND tags.context = 'type' AND tags.value = 'fallback')";
+
+//		print $sql;
+		$query->sql($sql);
+
+
+		$devices_with_patterns = $query->results();
+		$segment_patterns = array();
+
+		if($devices_with_patterns) {
+
+			foreach($devices_with_patterns as $device_with_pattern) {
+				
+				$device = $IC->getItem(array("id" => $device_with_pattern["item_id"], "extend" => true));
+
+				// forget unnecessary data
+				unset($device["useragents"]);
+				unset($device["tags"]);
+
+				$device["segment"] = $segment;
+
+//				print_r($device);
+
+				$segment_patterns[] = $device;
+
+			}
+			
+		}
+		// loop through devices and get markers/exceptions
+
+//		print_r($segment_patterns);
+		return $segment_patterns;
+
+	}
+
+
+	// Find all devices with patterns for segment
+	function getSegmentPatterns($segment) {
+
+		$query = new Query();
+		$IC = new Items();
+
+
+		$sql = "SELECT item_id, name FROM ".$this->db." as devices WHERE ";
+		$sql .= "(";
+			$sql .= "devices.item_id IN (SELECT item_id FROM ".$this->db_markers.") OR ";
+			$sql .= "devices.item_id IN (SELECT item_id FROM ".$this->db_exceptions.")";
+		$sql .= ")";
+		$sql .= " AND devices.item_id IN (SELECT taggings.item_id FROM ".UT_TAG." as tags, ".UT_TAGGINGS." as taggings WHERE tags.id = taggings.tag_id AND tags.context = 'segment' AND tags.value = '".$segment."')";
+		$sql .= " AND devices.item_id NOT IN (SELECT taggings.item_id FROM ".UT_TAG." as tags, ".UT_TAGGINGS." as taggings WHERE tags.id = taggings.tag_id AND tags.context = 'type' AND tags.value = 'global')";
+		$sql .= " AND devices.item_id NOT IN (SELECT taggings.item_id FROM ".UT_TAG." as tags, ".UT_TAGGINGS." as taggings WHERE tags.id = taggings.tag_id AND tags.context = 'type' AND tags.value = 'fallback')";
+
+//		print $sql;
+		$query->sql($sql);
+
+
+
+		$devices_with_patterns = $query->results();
+		$segment_patterns = array();
+
+		if($devices_with_patterns) {
+
+			foreach($devices_with_patterns as $device_with_pattern) {
+				
+				$device = $IC->getItem(array("id" => $device_with_pattern["item_id"], "extend" => true));
+
+				// forget unnecessary data
+				unset($device["useragents"]);
+				unset($device["tags"]);
+
+				$device["segment"] = $segment;
+
+//				print_r($device);
+
+				$segment_patterns[] = $device;
+
+			}
+			
+		}
+		// loop through devices and get markers/exceptions
+
+//		print_r($segment_patterns);
+		return $segment_patterns;
+
+	}
+
+	function getFallbackPattern($segment) {
+		return false;
+//		return array("markers" => array(), "exceptions" => array());
+	}
+
+
+	// filter out empty segment patterns (to make compile function cleaner)
+	function cleanSegmentPatterns($segment_patterns) {
+		foreach($segment_patterns as $i => $segment_pattern) {
+			if(!count($segment_pattern)) {
+				unset($segment_patterns[$i]);
+			}
+		}
+		return $segment_patterns;
+	}
+
+
+	// compile detection data
+	//
+	// Gets global devices in specific order for grouping regex and minimizing identification time
+	// For each global device, it gets the related segments in specific order
+	// For each releated segment, it gets all matching devices with markers
+	// Returns detection data in array structure for generation of individual detection scripts
+	function compileDetectionData() {
+
+		$groups = array();
+
+
+		// global group priority
+
+
+		// desktop_ie
+		$group_patterns = $this->getGlobalPatterns("desktop_ie");
+
+			// individual segment priority
+			$segment_patterns = array();
+
+			// desktop_ie9
+			$segment_patterns[] = $this->getSegmentPatterns("desktop_ie9");
+
+			// desktop_ie10
+			$segment_patterns[] = $this->getSegmentPatterns("desktop_ie10");
+
+			// desktop_ie11
+			$segment_patterns[] = $this->getSegmentPatterns("desktop_ie11");
+
+		// add combined group info
+		$groups[] = array("group_patterns" => $group_patterns, "segment_patterns" => $this->cleanSegmentPatterns($segment_patterns));
+
+
+
+		// desktop
+		$group_patterns = $this->getGlobalPatterns("desktop");
+
+			// individual segment priority
+			$segment_patterns = array();
+
+			// desktop_edge
+			$segment_patterns[] = $this->getSegmentPatterns("desktop_edge");
+
+			// desktop
+			$segment_patterns[] = $this->getSegmentPatterns("desktop");
+
+		// add combined group info
+		$groups[] = array("group_patterns" => $group_patterns, "segment_patterns" => $this->cleanSegmentPatterns($segment_patterns));
+
+
+
+		// desktop_light
+		$group_patterns = $this->getGlobalPatterns("desktop_light");
+
+			// individual segment priority
+			$segment_patterns = array();
+
+			// desktop_light
+			$segment_patterns[] = $this->getSegmentPatterns("desktop_light");
+
+		// add combined group info
+		$groups[] = array("group_patterns" => $group_patterns, "segment_patterns" => $this->cleanSegmentPatterns($segment_patterns));
+
+
+
+		// tablet
+		$group_patterns = $this->getGlobalPatterns("tablet");
+
+			// individual segment priority
+			$segment_patterns = array();
+
+			// tablet
+			$segment_patterns[] = $this->getSegmentPatterns("tablet");
+
+			// tablet_light
+			$segment_patterns[] = $this->getSegmentPatterns("tablet_light");
+
+		// add combined group info
+		$groups[] = array("group_patterns" => $group_patterns, "segment_patterns" => $this->cleanSegmentPatterns($segment_patterns));
+
+
+
+		// smartphone
+		$group_patterns = $this->getGlobalPatterns("smartphone");
+
+			// individual segment priority
+			$segment_patterns = array();
+
+			// smartphone
+			$segment_patterns[] = $this->getSegmentPatterns("smartphone");
+
+		// add combined group info
+		$groups[] = array("group_patterns" => $group_patterns, "segment_patterns" => $this->cleanSegmentPatterns($segment_patterns));
+
+
+
+		// mobile
+		$group_patterns = $this->getGlobalPatterns("mobile");
+
+			// individual segment priority
+			$segment_patterns = array();
+
+			// mobile_light
+			$segment_patterns[] = $this->getSegmentPatterns("mobile_light");
+
+			// mobile
+			$segment_patterns[] = $this->getSegmentPatterns("mobile");
+
+		// add combined group info
+		$groups[] = array("group_patterns" => $group_patterns, "segment_patterns" => $this->cleanSegmentPatterns($segment_patterns));
+
+
+
+		// seo
+		$group_patterns = $this->getGlobalPatterns("seo");
+
+			// individual segment priority
+			$segment_patterns = array();
+
+			// seo
+			$segment_patterns[] = $this->getSegmentPatterns("seo");
+
+		// add combined group info
+		$groups[] = array("group_patterns" => $group_patterns, "segment_patterns" => $this->cleanSegmentPatterns($segment_patterns));
+
+
+
+		// fallback
+		$fallback_pattern = $this->getFallbackPattern("desktop_ie9");
+		$groups[] = array("group_patterns" => array(), "segment_patterns" => $fallback_pattern);
+
+		$fallback_pattern = $this->getFallbackPattern("desktop_ie10");
+		$groups[] = array("group_patterns" => array(), "segment_patterns" => $fallback_pattern);
+
+		$fallback_pattern = $this->getFallbackPattern("desktop_ie11");
+		$groups[] = array("group_patterns" => array(), "segment_patterns" => $fallback_pattern);
+
+		$fallback_pattern = $this->getFallbackPattern("desktop_edge");
+		$groups[] = array("group_patterns" => array(), "segment_patterns" => $fallback_pattern);
+
+		$fallback_pattern = $this->getFallbackPattern("desktop");
+		$groups[] = array("group_patterns" => array(), "segment_patterns" => $fallback_pattern);
+
+		$fallback_pattern = $this->getFallbackPattern("desktop_light");
+		$groups[] = array("group_patterns" => array(), "segment_patterns" => $fallback_pattern);
+
+		$fallback_pattern = $this->getFallbackPattern("tablet");
+		$groups[] = array("group_patterns" => array(), "segment_patterns" => $fallback_pattern);
+
+		$fallback_pattern = $this->getFallbackPattern("tablet_light");
+		$groups[] = array("group_patterns" => array(), "segment_patterns" => $fallback_pattern);
+
+		$fallback_pattern = $this->getFallbackPattern("smartphone");
+		$groups[] = array("group_patterns" => array(), "segment_patterns" => $fallback_pattern);
+
+		$fallback_pattern = $this->getFallbackPattern("mobile");
+		$groups[] = array("group_patterns" => array(), "segment_patterns" => $fallback_pattern);
+
+		$fallback_pattern = $this->getFallbackPattern("mobile_light");
+		$groups[] = array("group_patterns" => array(), "segment_patterns" => $fallback_pattern);
+
+		$fallback_pattern = $this->getFallbackPattern("seo");
+		$groups[] = array("group_patterns" => array(), "segment_patterns" => $fallback_pattern);
+
+
+
+//		print_r($groups);
+
+		return $groups;
+	}
+
+
+
+
+	// create detections core
+	// used for API detection
+	function createDetectionCore() {
+
+		$patterns = $this->compileDetectionData();
+
+//		print_r($patterns);
+
+		$_ = "";
+
+		$group_add_else = false;
+
+		$_ .= '$ua = $useragent ? $useragent : stringOr(getVar("ua"), $_SERVER["HTTP_USER_AGENT"]);'."\n\n";
+
+		// loop through all grouping patterns
+
+		foreach($patterns as $pattern) {
+
+
+			$_ .= "// START GROUP\n";
+
+
+			// get group and segment patterns
+			$group_patterns = $pattern["group_patterns"];
+			$segment_patterns = $pattern["segment_patterns"];
+
+
+//			print_r($pattern);
+
+			// create pattern-statement for group
+			$group_regex_pos = "";
+			$group_regex_neg = "";
+
+			// prepare group pattern markers if they exist
+			if(isset($group_patterns["markers"]) && $group_patterns["markers"]) {
 
 				$markers = array();
-				$reg_exp_pos = "";
-				$reg_exp_neg = "";
 
-				foreach($device["markers"] as $marker) {
+				foreach($group_patterns["markers"] as $marker) {
 					array_push($markers, $marker["marker"]);
 				}
 
-				$reg_exp_pos = implode($markers, "|");
+				$group_regex_pos = implode($markers, "|");
+			}
+
+			// prepare group pattern exceptions if they exist
+			if(isset($group_patterns["exceptions"]) && $group_patterns["exceptions"]) {
+				$exceptions = array();
+
+				foreach($group_patterns["exceptions"] as $exception) {
+					array_push($exceptions, $exception["exception"]);
+				}
+
+				$group_regex_neg = implode($exceptions, "|");
+			}
 
 
-				if($device["exceptions"]) {
-					$exceptions = array();
+			// if first level grouping is started, add else to statement
+			if($group_regex_pos || $group_regex_neg || $segment_patterns) {
+				$_ .= $group_add_else ? "else " : "";
+			}
 
-					foreach($device["exceptions"] as $exception) {
-						array_push($exceptions, $exception["exception"]);
+			// indent segments or keep them on global level
+			if($group_regex_pos || $group_regex_neg) {
+				$group_indent = "	";
+			}
+			else {
+				$group_indent = "";
+			}
+
+
+			// create regex for patterns for group
+			if($group_regex_neg && $group_regex_pos) {
+				$_ .= 'if(!preg_match("/('.$group_regex_neg.')/i", $ua) && preg_match("/('.$group_regex_pos.')/i", $ua)) {'."\n".$group_indent;
+			}
+			else if($group_regex_pos) {
+				$_ .= 'if(preg_match("/('.$group_regex_pos.')/i", $ua)) {'."\n".$group_indent;
+			}
+			else if($group_regex_neg) {
+				$_ .= 'if(!preg_match("/('.$group_regex_neg.')/i", $ua)) {'."\n".$group_indent;
+			}
+
+
+
+			// create segment patterns
+			$segment_add_else = false;
+
+			// loop through segments
+			if($segment_patterns) {
+				foreach($segment_patterns as $segment_pattern) {
+
+					foreach($segment_pattern as $device_pattern) {
+
+
+						$_ .= "// START DEVICE\n";
+
+
+						// create pattern-statement for device
+						$device_regex_pos = "";
+						$device_regex_neg = "";
+
+						// prepare device pattern markers if they exist
+						if(isset($device_pattern["markers"]) && $device_pattern["markers"]) {
+
+							$markers = array();
+
+							foreach($device_pattern["markers"] as $marker) {
+								array_push($markers, $marker["marker"]);
+							}
+
+							$device_regex_pos = implode($markers, "|");
+						}
+
+						// prepare device pattern exceptions if they exist
+						if(isset($device_pattern["exceptions"]) && $device_pattern["exceptions"]) {
+							$exceptions = array();
+
+							foreach($device_pattern["exceptions"] as $exception) {
+								array_push($exceptions, $exception["exception"]);
+							}
+
+							$device_regex_neg = implode($exceptions, "|");
+						}
+
+
+						// if second level statement is started, add else to statement
+						$_ .= $segment_add_else ? $group_indent."else " : "";
+
+
+						// create regex for patterns for device
+						if($device_regex_neg && $device_regex_pos) {
+							$_ .= 'if(!preg_match("/('.$device_regex_neg.')/i", $ua) && preg_match("/('.$device_regex_pos.')/i", $ua)) {'."\n";
+						}
+						else if($device_regex_pos) {
+							$_ .= 'if(preg_match("/('.$device_regex_pos.')/i", $ua)) {'."\n";
+						}
+						else if($device_regex_neg) {
+							$_ .= 'if(!preg_match("/('.$device_regex_neg.')/i", $ua)) {'."\n";
+						}
+
+
+						$_ .= $group_indent.'	$device_segment = "'.$device_pattern["segment"].'";'."\n";
+						$_ .= $group_indent.'	$device_name = "'.$device_pattern["name"].'";'."\n";
+
+						$_ .= $group_indent.'}'."\n";
+
+
+						// add else statement on next loop
+						$segment_add_else = true;
+
+						// segment could be global
+						// else statement needs to be switched on even if no global marker is available
+						$group_add_else = true;
+
 					}
 
-					$reg_exp_neg = implode($exceptions, "|");
 				}
+			}
 
 
-				$_ .= $add_else ? "else " : "";
-				if($reg_exp_neg && $reg_exp_pos) {
-					$_ .= 'if(!preg_match("/('.$reg_exp_neg.')/i", $ua) && preg_match("/('.$reg_exp_pos.')/i", $ua)) {'."\n";
-				}
-				else if($reg_exp_pos) {
-					$_ .= 'if(preg_match("/('.$reg_exp_pos.')/i", $ua)) {'."\n";
-				}
 
-					$_ .= '	$device_segment = "'.$device["segment"].'";'."\n";
-					$_ .= '	$device_name = "'.$device["name"].'";'."\n";
+			// only end group pattern if it exists
+			if($group_regex_pos || $group_regex_neg) {
 				$_ .= '}'."\n";
 
-				$add_else = true;
+				// grouping statements started
+				$group_add_else = true;
+				$group_indent = "	";
 			}
+			else {
+				$group_indent = "";
+			}
+
+
+
+
 		}
 
+
 		return $_;
+
 	}
 
+	function createPHPDetection() {
+		
+
+	}
+
+
+	function createJavaScriptDetection() {
+		
+
+	}
+
+
 	// write detection script to library/public
-	function writeDetectionScript($action) {
+	function writeDetectionCore($action) {
 
 		$_ = '<?php'."\n";
-		$_ .= $this->createDetectionScript();
+		$_ .= $this->createDetectionCore();
 		$_ .= '?>'."\n";
 
 		if(file_put_contents(PUBLIC_FILE_PATH."/detection_script.php", $_)) {
@@ -727,6 +1234,9 @@ class TypeDevice extends Itemtype {
 		return false;
 	}
 
+
+
+	// TODO: update test to new standard
 	// test device markers on unidentified useragents
 	// testMarkersOnUnidentified/#device_id#
 	function testMarkersOnUnidentified($device_id) {

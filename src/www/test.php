@@ -105,10 +105,10 @@ testing regexp
 // 	}
 // }
 
-$useragent = "";
+$useragent = "Mozilla/5.0 (Linux; Android 4.2.2; A1-810 Build/JDQ39) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/35.0.1916.141 Safari/537.36";
 
-$reg_exp_pos = "/firefox\/[0-4]\b/i";
-$reg_exp_neg = "/msie/i";
+$reg_exp_pos = "A1-(8)[0-9]{2} b";
+$reg_exp_neg = false; //"msie";
 
 if(preg_match("/".$reg_exp_pos."/i", $useragent) && (!$reg_exp_neg || !preg_match("/".$reg_exp_neg."/i", $useragent))) {
 

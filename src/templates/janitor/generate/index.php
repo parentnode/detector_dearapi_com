@@ -4,7 +4,7 @@ global $IC;
 global $itemtype;
 global $model;
 
-$script = $model->createDetectionScript();
+$script = $model->createDetectionCore();
 ?>
 
 <div class="scene generate i:generate">
@@ -14,9 +14,9 @@ $script = $model->createDetectionScript();
 		<code><?= $script ?></code>
 	</div>
 
-	<?= $model->formStart("writeDetectionScript", array("class" => "labelstyle:inject")) ?>
+	<?= $model->formStart("writeDetectionCore", array("class" => "labelstyle:inject")) ?>
 		<ul class="actions">
-			<?= $model->submit("Write script", array("class" => "primary", "wrapper" => "li.write")) ?>
+			<?= $model->submit("Update detection core", array("class" => "primary", "wrapper" => "li.write")) ?>
 		</ul>
 	<?= $model->formEnd() ?>
 
