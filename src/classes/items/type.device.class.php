@@ -546,7 +546,7 @@ class TypeDevice extends Itemtype {
 			$regex_pos = "";
 			$regex_neg = "";
 
-			if($device["markers"]) {
+			if(isset($device["markers"]) && $device["markers"]) {
 				$markers = array();
 
 				foreach($device["markers"] as $marker) {
@@ -556,7 +556,7 @@ class TypeDevice extends Itemtype {
 				$regex_pos = implode($markers, "|");
 			}
 
-			if($device["exceptions"]) {
+			if(isset($device["exceptions"]) && $device["exceptions"]) {
 				$exceptions = array();
 
 				foreach($device["exceptions"] as $exception) {
@@ -609,13 +609,13 @@ class TypeDevice extends Itemtype {
 			foreach($device["useragents"] as $useragent) {
 
 				// each UA should match both global and specific marker/exception test
-				if(!(
-					(
+				if((
+					!(
 						(!$group_regex_pos || preg_match("/(".$group_regex_pos.")/i", $useragent["useragent"])) && 
 						(!$group_regex_neg || !preg_match("/(".$group_regex_neg.")/i", $useragent["useragent"]))
 					)
 					||
-					(
+					!(
 						(!$regex_pos || preg_match("/(".$regex_pos.")/i", $useragent["useragent"])) && 
 						(!$regex_neg || !preg_match("/(".$regex_neg.")/i", $useragent["useragent"]))
 					)
@@ -1116,7 +1116,7 @@ class TypeDevice extends Itemtype {
 					foreach($segment_pattern as $device_pattern) {
 
 
-						$_ .= "// START DEVICE\n";
+						$_ .= "// START DEVICE\n".$group_indent;
 
 
 						// create pattern-statement for device
