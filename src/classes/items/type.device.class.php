@@ -1056,6 +1056,7 @@ class TypeDevice extends Itemtype {
 
 		$_ .= '$ua = $useragent ? $useragent : stringOr(getVar("ua"), $_SERVER["HTTP_USER_AGENT"]);'."\n\n";
 
+		$_ .= 'function detectionCore($ua) {'."\n";
 		// loop through all grouping patterns
 
 		foreach($patterns as $pattern) {
@@ -1101,9 +1102,9 @@ class TypeDevice extends Itemtype {
 
 
 			// if first level grouping is started, add else to statement
-			if($group_regex_pos || $group_regex_neg || $segment_patterns) {
-				$_ .= $group_add_else ? "else " : "";
-			}
+			// if($group_regex_pos || $group_regex_neg || $segment_patterns) {
+			// 	$_ .= $group_add_else ? "else " : "";
+			// }
 
 			// indent segments or keep them on global level
 			if($group_regex_pos || $group_regex_neg) {
@@ -1186,8 +1187,8 @@ class TypeDevice extends Itemtype {
 						}
 
 
-						$_ .= $group_indent.'	$device_segment = "'.$device_pattern["segment"].'";'."\n";
-						$_ .= $group_indent.'	$device_name = "'.$device_pattern["name"].'";'."\n";
+						$_ .= $group_indent.'	return "'.$device_pattern["segment"].';'.$device_pattern["name"].'";'."\n";
+//						$_ .= $group_indent.'	$device_name = "'.$device_pattern["name"].'";'."\n";
 
 						$_ .= $group_indent.'}'."\n";
 
@@ -1223,6 +1224,11 @@ class TypeDevice extends Itemtype {
 
 		}
 
+		$_ .= '}'."\n";
+		$_ .= '$identified = detectionCore($ua);'."\n";
+		$_ .= 'if($identified) {'."\n";
+			$_ .= 'list($device_segment, $device_name) = explode(";", $identified);'."\n";
+		$_ .= '}'."\n";
 
 		return $_;
 
