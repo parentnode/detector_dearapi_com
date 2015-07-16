@@ -49,6 +49,7 @@ $item = $IC->getItem(array("id" => $item_id, "extend" => array("tags" => true, "
 	<div class="markers i:editMarkers item_id:<?= $item["item_id"] ?>"
 		data-csrf-token="<?= session()->value("csrf") ?>"
 		data-marker-delete="<?= $this->validPath("/janitor/device/deleteMarker/".$item["item_id"]) ?>" 
+		data-marker-update="<?= $this->validPath("/janitor/device/updateMarker/".$item["item_id"]) ?>" 
 		>
 		<h2>Markers</h2>
 		<?= $model->formStart("addMarker/".$item["item_id"], array("class" => "labelstyle:inject")) ?>
@@ -65,7 +66,7 @@ $item = $IC->getItem(array("id" => $item_id, "extend" => array("tags" => true, "
 <?		if($item["markers"]): ?>
 <?			foreach($item["markers"] as $index => $marker): ?>
 			<li class="marker marker_id:<?= $marker["id"] ?>">
-				<?= $marker["marker"] ?>
+				<span class="marker"><?= $marker["marker"] ?></span>
 			</li>
 <?			endforeach; ?>
 <?		endif; ?>
@@ -76,6 +77,7 @@ $item = $IC->getItem(array("id" => $item_id, "extend" => array("tags" => true, "
 	<div class="exceptions i:editExceptions item_id:<?= $item["item_id"] ?>"
 		data-csrf-token="<?= session()->value("csrf") ?>"
 		data-exception-delete="<?= $this->validPath("/janitor/device/deleteException/".$item["item_id"]) ?>" 
+		data-exception-update="<?= $this->validPath("/janitor/device/updateException/".$item["item_id"]) ?>" 
 		>
 		<h2>Exceptions</h2>
 		<?= $model->formStart("addException/".$item["item_id"], array("class" => "labelstyle:inject")) ?>
@@ -92,7 +94,7 @@ $item = $IC->getItem(array("id" => $item_id, "extend" => array("tags" => true, "
 <?		if($item["exceptions"]): ?>
 <?			foreach($item["exceptions"] as $index => $exception): ?>
 			<li class="exception exception_id:<?= $exception["id"] ?>">
-				<?= $exception["exception"] ?>
+				<span class="exception"><?= $exception["exception"] ?></span>
 			</li>
 <?			endforeach; ?>
 <?		endif; ?>

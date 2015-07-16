@@ -772,10 +772,13 @@ body #selection_options ul.actions a.button:hover {background-color: #313942;}
 #content .scene.deviceEdit div.markers .actions li {padding-left: 0;}
 #content .scene.deviceEdit div.markers .actions li input {margin-top: 4px;}
 #content .scene.deviceEdit div.markers ul.markers {padding: 10px 0;}
-#content .scene.deviceEdit div.markers ul.markers li {padding: 3px 30px; font-size: 11px; position: relative; display: block;}
+#content .scene.deviceEdit div.markers ul.markers li {padding: 0 27px; font-size: 11px; position: relative; display: block;}
+#content .scene.deviceEdit div.markers ul.markers li span {padding: 3px; display: inline-block;}
+#content .scene.deviceEdit div.markers ul.markers li span.editable {background-color: #ffffff; border: 1px solid #dcdcdc; padding: 4px; margin: -2px; outline: none; border-radius: 3px; box-shadow: inset 0 1px 2px #dedede;}
+#content .scene.deviceEdit div.markers ul.markers li span.error {color: #fd0000;}
 #content .scene.deviceEdit div.markers ul.markers li:hover {background-color: #cccccc;}
-#content .scene.deviceEdit div.markers ul.markers li .delete {display: none; position: absolute; right: 30px; top: -3px; height: 24px; width: 24px; cursor: pointer; border-radius: 12px;
-	background: #fd0000 url(/janitor/admin/img/bg_icons.png) no-repeat 5px -45px;
+#content .scene.deviceEdit div.markers ul.markers li .delete {display: none; position: absolute; right: 30px; top: -4px; height: 24px; width: 24px; cursor: pointer; border-radius: 12px; border: 1px solid #fd0000;
+	background: #ffffff url(/janitor/admin/img/bg_icons.png) no-repeat 5px -45px;
 }
 #content .scene.deviceEdit div.markers ul.markers li:hover .delete {display: block;}
 #content .scene.deviceEdit div.exceptions {padding: 0 0 20px; border-bottom: 1px solid #dedede; overflow: hidden;}
@@ -786,10 +789,13 @@ body #selection_options ul.actions a.button:hover {background-color: #313942;}
 #content .scene.deviceEdit div.exceptions .actions li {padding-left: 0;}
 #content .scene.deviceEdit div.exceptions .actions li input {margin-top: 4px;}
 #content .scene.deviceEdit div.exceptions ul.exceptions {padding: 10px 0;}
-#content .scene.deviceEdit div.exceptions ul.exceptions li {padding: 3px 30px; font-size: 11px; position: relative; display: block;}
+#content .scene.deviceEdit div.exceptions ul.exceptions li {padding: 0 27px; font-size: 11px; position: relative; display: block;}
+#content .scene.deviceEdit div.exceptions ul.exceptions li span {padding: 3px; display: inline-block;}
+#content .scene.deviceEdit div.exceptions ul.exceptions li span.editable {background-color: #ffffff; border: 1px solid #dcdcdc; padding: 4px; margin: -2px; outline: none; border-radius: 3px; box-shadow: inset 0 1px 2px #dedede;}
+#content .scene.deviceEdit div.exceptions ul.exceptions li span.error {color: #fd0000;}
 #content .scene.deviceEdit div.exceptions ul.exceptions li:hover {background-color: #cccccc;}
-#content .scene.deviceEdit div.exceptions ul.exceptions li .delete {display: none; position: absolute; right: 30px; top: -3px; height: 24px; width: 24px; cursor: pointer; border-radius: 12px;
-	background: #fd0000 url(/janitor/admin/img/bg_icons.png) no-repeat 5px -45px;
+#content .scene.deviceEdit div.exceptions ul.exceptions li .delete {display: none; position: absolute; right: 30px; top: -4px; height: 24px; width: 24px; cursor: pointer; border-radius: 12px; border: 1px solid #fd0000;
+	background: #ffffff url(/janitor/admin/img/bg_icons.png) no-repeat 5px -45px;
 }
 #content .scene.deviceEdit div.exceptions ul.exceptions li:hover .delete {display: block;}
 #content .scene.deviceEdit div.testmarkers {padding: 0 0 20px; border-bottom: 1px solid #dedede; overflow: hidden;}

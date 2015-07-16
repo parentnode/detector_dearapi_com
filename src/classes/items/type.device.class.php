@@ -354,7 +354,7 @@ class TypeDevice extends Itemtype {
 
 	// MARKERS
 
-	// add marker - 3 parameters exactly
+	// add marker - 2 parameters exactly
 	// /janitor/device/addMarker/#item_id#
 	function addMarker($action) {
 
@@ -379,6 +379,32 @@ class TypeDevice extends Itemtype {
 		}
 
 		message()->addMessage("Marker could not be added", array("type" => "error"));
+		return false;
+	}
+
+	// update marker - 3 parameters exactly
+	// /janitor/device/updateMarker/#item_id#/#marker_id#
+	function updateMarker($action) {
+
+		$marker = getPost("marker");
+
+		if(count($action) == 3 && $marker) {
+			$item_id = $action[1];
+			$marker_id = $action[2];
+
+			$query = new Query();
+
+			if($query->sql("UPDATE ".$this->db_markers." SET marker = '$marker' WHERE item_id = $item_id AND id = $marker_id")) {
+
+				// update modified time of device
+				$query->sql("UPDATE ".UT_ITEMS." SET modified_at=CURRENT_TIMESTAMP WHERE id = ".$item_id);
+
+				message()->addMessage("Marker updated");
+				return true;
+			}
+		}
+
+		message()->addMessage("Marker could not be updated", array("type" => "error"));
 		return false;
 	}
 
@@ -412,7 +438,7 @@ class TypeDevice extends Itemtype {
 
 	// EXCEPTIONS
 
-	// add exception - 3 parameters exactly
+	// add exception - 2 parameters exactly
 	// /janitor/device/addException/#item_id#
 	function addException($action) {
 
@@ -437,6 +463,32 @@ class TypeDevice extends Itemtype {
 		}
 
 		message()->addMessage("Exception could not be added", array("type" => "error"));
+		return false;
+	}
+
+	// update exception - 3 parameters exactly
+	// /janitor/device/updateException/#item_id#/#exception_id#
+	function updateException($action) {
+
+		$exception = getPost("exception");
+
+		if(count($action) == 3 && $exception) {
+			$item_id = $action[1];
+			$exception_id = $action[2];
+
+			$query = new Query();
+
+			if($query->sql("UPDATE ".$this->db_exceptions." SET exception = '$exception' WHERE item_id = $item_id AND id = $exception_id")) {
+
+				// update modified time of device
+				$query->sql("UPDATE ".UT_ITEMS." SET modified_at=CURRENT_TIMESTAMP WHERE id = ".$item_id);
+
+				message()->addMessage("Exception updated");
+				return true;
+			}
+		}
+
+		message()->addMessage("Exception could not be updated", array("type" => "error"));
 		return false;
 	}
 
