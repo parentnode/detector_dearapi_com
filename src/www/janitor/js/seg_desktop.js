@@ -8817,12 +8817,14 @@ Util.Objects["editMarkers"] = new function() {
 		div._form.submitted = function(iN) {
 			this.response = function(response) {
 				if(response.cms_status == "success") {
-					var li = u.ae(this.div._markers_ul, "li", {"html":response.cms_object.marker, "class":"marker marker_id:"+response.cms_object.id});
+					var li = u.ae(this.div._markers_ul, "li", {"class":"marker marker_id:"+response.cms_object.id});
+					u.ae(li, "span", {"html":response.cms_object.marker, "class":"marker"});
 					li.div = this.div;
 					this.fields["marker"].val("");
 					this.fields["marker"].focus();
 					this.fields["marker"].blur();
 					this.div.enableDeletion(li);
+					this.div.enableEditing(li);
 				}
 				else {
 					page.notify(response);
@@ -8862,6 +8864,7 @@ Util.Objects["editMarkers"] = new function() {
 			bn_edit.blurred = function(event) {
 				u.rc(this, "editable");
 				this.contentEditable = false;
+				this.innerHTML = this.innerHTML.trim().replace(/<br[^>]*>/g, "");
 				this.save();
 			}
 			u.e.click(bn_edit);
@@ -8908,12 +8911,14 @@ Util.Objects["editExceptions"] = new function() {
 		div._form.submitted = function(iN) {
 			this.response = function(response) {
 				if(response.cms_status == "success") {
-					var li = u.ae(this.div._exceptions_ul, "li", {"html":response.cms_object.exception, "class":"exception exception_id:"+response.cms_object.id});
+					var li = u.ae(this.div._exceptions_ul, "li", {"class":"exception exception_id:"+response.cms_object.id});
+					u.ae(li, "span", {"html":response.cms_object.exception, "class":"exception"});
 					li.div = this.div;
 					this.fields["exception"].val("");
 					this.fields["exception"].focus();
 					this.fields["exception"].blur();
 					this.div.enableDeletion(li);
+					this.div.enableEditing(li);
 				}
 				else {
 					page.notify(response);
@@ -8953,6 +8958,7 @@ Util.Objects["editExceptions"] = new function() {
 			bn_edit.blurred = function(event) {
 				u.rc(this, "editable");
 				this.contentEditable = false;
+				this.innerHTML = this.innerHTML.trim().replace(/<br[^>]*>/g, "");
 				this.save();
 			}
 			u.e.click(bn_edit);

@@ -115,12 +115,14 @@ Util.Objects["editMarkers"] = new function() {
 
 			this.response = function(response) {
 				if(response.cms_status == "success") {
-					var li = u.ae(this.div._markers_ul, "li", {"html":response.cms_object.marker, "class":"marker marker_id:"+response.cms_object.id});
+					var li = u.ae(this.div._markers_ul, "li", {"class":"marker marker_id:"+response.cms_object.id});
+					u.ae(li, "span", {"html":response.cms_object.marker, "class":"marker"});
 					li.div = this.div;
 					this.fields["marker"].val("");
 					this.fields["marker"].focus();
 					this.fields["marker"].blur();
 					this.div.enableDeletion(li);
+					this.div.enableEditing(li);
 
 				}
 				else {
@@ -178,6 +180,9 @@ Util.Objects["editMarkers"] = new function() {
 			bn_edit.blurred = function(event) {
 				u.rc(this, "editable");
 				this.contentEditable = false;
+
+				// remove noise from editable span
+				this.innerHTML = this.innerHTML.trim().replace(/<br[^>]*>/g, "");
 
 				this.save();
 			}
@@ -248,12 +253,14 @@ Util.Objects["editExceptions"] = new function() {
 
 			this.response = function(response) {
 				if(response.cms_status == "success") {
-					var li = u.ae(this.div._exceptions_ul, "li", {"html":response.cms_object.exception, "class":"exception exception_id:"+response.cms_object.id});
+					var li = u.ae(this.div._exceptions_ul, "li", {"class":"exception exception_id:"+response.cms_object.id});
+					u.ae(li, "span", {"html":response.cms_object.exception, "class":"exception"});
 					li.div = this.div;
 					this.fields["exception"].val("");
 					this.fields["exception"].focus();
 					this.fields["exception"].blur();
 					this.div.enableDeletion(li);
+					this.div.enableEditing(li);
 				}
 				else {
 					page.notify(response);
@@ -311,6 +318,9 @@ Util.Objects["editExceptions"] = new function() {
 			bn_edit.blurred = function(event) {
 				u.rc(this, "editable");
 				this.contentEditable = false;
+
+				// remove noise from editable span
+				this.innerHTML = this.innerHTML.trim().replace(/<br[^>]*>/g, "");
 
 				this.save();
 			}
