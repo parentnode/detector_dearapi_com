@@ -9046,16 +9046,16 @@ Util.Objects["testMarkers"] = new function() {
 									}
 								}
 							}
-							this.div.unmatched_actions = u.ae(this.div, "ul", {"class":"actions"});
-							this.div.unmatched_delete_all = u.ae(this.div.unmatched_actions, "li", {"class":"delete", "html":"Delete ALL unmatched useragents"});
-							this.div.unmatched_delete_all.div = this.div;
-							u.e.click(this.div.unmatched_delete_all);
-							this.div.unmatched_delete_all.reset = function() {
+							this.div.not_matched_actions = u.ae(this.div, "ul", {"class":"actions"});
+							this.div.not_matched_delete_all = u.ae(this.div.not_matched_actions, "li", {"class":"delete", "html":"Delete ALL unmatched useragents"});
+							this.div.not_matched_delete_all.div = this.div;
+							u.e.click(this.div.not_matched_delete_all);
+							this.div.not_matched_delete_all.reset = function() {
 								u.t.resetTimer(this.t_confirm);
 								this.innerHTML = this.org_text;
 								this._confirm = false;
 							}
-							this.div.unmatched_delete_all.clicked = function() {
+							this.div.not_matched_delete_all.clicked = function() {
 								u.t.resetTimer(this.t_confirm);
 								if(this._confirm) {
 									u.bug("delete all unmatched")
@@ -9068,7 +9068,7 @@ Util.Objects["testMarkers"] = new function() {
 									this.t_confirm = u.t.setTimer(this, this.reset, 2000);
 								}
 							}
-							this.div.unmatched_delete_all.deleteAll = function(event) {
+							this.div.not_matched_delete_all.deleteAll = function(event) {
 								u.as(this, "display", "none");
 								var nodes = u.qsa("li.result", this.div.not_matched_result);
 								var i, node;
@@ -9178,18 +9178,27 @@ Util.Objects["testMarkers"] = new function() {
 				u.ac(this.div, "loading");
 				if(this.div.not_matched_header) {
 					this.div.not_matched_header.parentNode.removeChild(this.div.not_matched_header);
+					this.div.not_matched_header = null;
 				}
 				if(this.div.not_matched_result) {
 					this.div.not_matched_result.parentNode.removeChild(this.div.not_matched_result);
+					this.div.not_matched_result = null;
+				}
+				if(this.div.not_matched_actions) {
+					this.div.not_matched_actions.parentNode.removeChild(this.div.not_matched_actions);
+					this.div.not_matched_actions = null;
 				}
 				if(this.div.bad_matched_header) {
 					this.div.bad_matched_header.parentNode.removeChild(this.div.bad_matched_header);
+					this.div.bad_matched_header = null;
 				}
 				if(this.div.bad_matched_result) {
 					this.div.bad_matched_result.parentNode.removeChild(this.div.bad_matched_result);
+					this.div.bad_matched_result = null;
 				}
 				if(this.div.bad_match_actions) {
 					this.div.bad_match_actions.parentNode.removeChild(this.div.bad_match_actions);
+					this.div.bad_match_actions = null;
 				}
 				u.request(this, this.div.url_device_test+"/"+this.div.item_id, {"params":"csrf-token="+this.div.csrf_token, "method":"post"})
 		}
