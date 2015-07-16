@@ -8897,7 +8897,6 @@ Util.Objects["editMarkers"] = new function() {
 			if(div.url_marker_update) {
 				div.enableEditing(marker);
 			}
-			div.enableDeletion(marker);
 		}
 	}
 }
