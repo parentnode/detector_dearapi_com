@@ -661,22 +661,24 @@ class TypeDevice extends Itemtype {
 
 			$not_matched_useragents = array();
 
-			// first run test on current device to identify holes in identification
-			foreach($device["useragents"] as $useragent) {
+			if($device["useragents"]) {
+				// first run test on current device to identify holes in identification
+				foreach($device["useragents"] as $useragent) {
 
-				// each UA should match both global and specific marker/exception test
-				if((
-					!(
-						(!$group_regex_pos || preg_match("/(".$group_regex_pos.")/i", $useragent["useragent"])) && 
-						(!$group_regex_neg || !preg_match("/(".$group_regex_neg.")/i", $useragent["useragent"]))
-					)
-					||
-					!(
-						(!$regex_pos || preg_match("/(".$regex_pos.")/i", $useragent["useragent"])) && 
-						(!$regex_neg || !preg_match("/(".$regex_neg.")/i", $useragent["useragent"]))
-					)
-				)) {
-					array_push($not_matched_useragents, array("id" => $useragent["id"], "useragent" => $useragent["useragent"]));
+					// each UA should match both global and specific marker/exception test
+					if((
+						!(
+							(!$group_regex_pos || preg_match("/(".$group_regex_pos.")/i", $useragent["useragent"])) && 
+							(!$group_regex_neg || !preg_match("/(".$group_regex_neg.")/i", $useragent["useragent"]))
+						)
+						||
+						!(
+							(!$regex_pos || preg_match("/(".$regex_pos.")/i", $useragent["useragent"])) && 
+							(!$regex_neg || !preg_match("/(".$regex_neg.")/i", $useragent["useragent"]))
+						)
+					)) {
+						array_push($not_matched_useragents, array("id" => $useragent["id"], "useragent" => $useragent["useragent"]));
+					}
 				}
 			}
 

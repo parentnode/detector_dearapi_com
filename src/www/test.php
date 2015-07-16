@@ -105,10 +105,18 @@ testing regexp
 // 	}
 // }
 
-$useragent = "Mozilla/5.0 (Linux; Android 4.2.2; A1-810 Build/JDQ39) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/35.0.1916.141 Safari/537.36";
+//$useragent = "Mozilla/5.0 (Linux; Android 4.2.2; A1-810 Build/JDQ39) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/35.0.1916.141 Safari/537.36";
+//$useragent = "Mozilla/5.0 (Linux; Android 4.2.2; A1-810 Build/JDQ39) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/35.0.1916.141 Safari/537.36";
+//$reg_exp_pos = "A1-(8)[0-9]{2} b";
+//$reg_exp_neg = "^(?!.*(chrome\/[3-9][0-9]))"; //"msie";
 
-$reg_exp_pos = "A1-(8)[0-9]{2} b";
+$useragent = "Mozilla/5.0 (hp-tablet; Linux; hpwOS/3.0.5; U; en-GB) AppleWebKit/534.6 (KHTML, like Gecko) wOSBrowser/234.83 Safari/534.6 TouchPad/1.0";
+$reg_exp_pos = "hp-tablet[^$]+bkit\/(53[4-9]|600)[^$]+TouchPad";
 $reg_exp_neg = false; //"msie";
+//$reg_exp_neg = "^(?!.*(chrome\/[3-9][0-9]))"; //"msie";
+
+// preg_match("/".$reg_exp_neg."/i", $useragent, $matches);
+// print_r($matches);
 
 if(preg_match("/".$reg_exp_pos."/i", $useragent) && (!$reg_exp_neg || !preg_match("/".$reg_exp_neg."/i", $useragent))) {
 
