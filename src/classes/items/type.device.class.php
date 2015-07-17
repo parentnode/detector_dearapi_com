@@ -1024,11 +1024,11 @@ class TypeDevice extends Itemtype {
 			// individual segment priority
 			$segment_patterns = array();
 
-			// mobile_light
-			$segment_patterns[] = $this->getSegmentPatterns("mobile_light");
-
 			// mobile
 			$segment_patterns[] = $this->getSegmentPatterns("mobile");
+
+			// mobile_light
+			$segment_patterns[] = $this->getSegmentPatterns("mobile_light");
 
 		// add combined group info
 		$groups[] = array("group_patterns" => $group_patterns, "segment_patterns" => $this->cleanSegmentPatterns($segment_patterns));

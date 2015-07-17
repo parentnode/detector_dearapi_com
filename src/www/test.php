@@ -110,6 +110,7 @@ testing regexp
 //$reg_exp_pos = "A1-(8)[0-9]{2} b";
 //$reg_exp_neg = "^(?!.*(chrome\/[3-9][0-9]))"; //"msie";
 
+
 $useragent = "Mozilla/5.0 (hp-tablet; Linux; hpwOS/3.0.5; U; en-GB) AppleWebKit/534.6 (KHTML, like Gecko) wOSBrowser/234.83 Safari/534.6 TouchPad/1.0";
 $reg_exp_pos = "hp-tablet[^$]+bkit\/(53[4-9]|600)[^$]+TouchPad";
 $reg_exp_neg = false; //"msie";
