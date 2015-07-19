@@ -54,7 +54,7 @@ if($search && ($search_string || $tags)) {
 	$all_items = $model->searchDevices($search_parameters);
 }
 else {
-	$all_items = $IC->getItems(array("itemtype" => $itemtype, "order" => "modified_at DESC", "limit" => 50));
+	$all_items = $IC->getItems(array("itemtype" => $itemtype, "order" => "modified_at DESC"));
 
 	session()->reset("device_search");
 	session()->reset("device_search_tags");
