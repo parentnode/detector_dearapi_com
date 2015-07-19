@@ -748,7 +748,8 @@ class TypeDevice extends Itemtype {
 
 
 	// get global patterns for groupings (using nested regex' to improve performance)
-
+	// will also be called when testing markers on device
+	// - then the device segment needs to be converted to valid global pattern
 	function getGlobalPatterns($segment) {
 
 
@@ -803,7 +804,7 @@ class TypeDevice extends Itemtype {
 			$sql .= "devices.item_id IN (SELECT item_id FROM ".$this->db_exceptions.")";
 		$sql .= ")";
 		$sql .= " AND devices.item_id NOT IN (SELECT taggings.item_id FROM ".UT_TAG." as tags, ".UT_TAGGINGS." as taggings WHERE tags.id = taggings.tag_id AND tags.context = 'type' AND tags.value = 'global')";
-		$sql .= " AND devices.item_id NOT IN (SELECT taggings.item_id FROM ".UT_TAG." as tags, ".UT_TAGGINGS." as taggings WHERE tags.id = taggings.tag_id AND tags.context = 'type' AND tags.value = 'fallback')";
+//		$sql .= " AND devices.item_id NOT IN (SELECT taggings.item_id FROM ".UT_TAG." as tags, ".UT_TAGGINGS." as taggings WHERE tags.id = taggings.tag_id AND tags.context = 'type' AND tags.value = 'fallback')";
 
 //		print $sql;
 		$query->sql($sql);
@@ -866,7 +867,7 @@ class TypeDevice extends Itemtype {
 		if($devices_with_patterns) {
 
 			foreach($devices_with_patterns as $device_with_pattern) {
-				
+
 				$device = $IC->getItem(array("id" => $device_with_pattern["item_id"], "extend" => true));
 
 				// forget unnecessary data
@@ -889,9 +890,40 @@ class TypeDevice extends Itemtype {
 
 	}
 
+
+	// get fallback pattern
 	function getFallbackPattern($segment) {
-		return false;
-//		return array("markers" => array(), "exceptions" => array());
+
+		$IC = new Items();
+
+		// $markers = false;
+		// $exceptions = false;
+
+		$fallback_device = $IC->getItems(array("tags" => "segment:".$segment.";type:fallback", "limit" => 1));
+		if($fallback_device) {
+			$device = $IC->getItem(array("id" => $fallback_device[0]["id"], "extend" => true));
+
+			unset($device["useragents"]);
+			unset($device["tags"]);
+
+			$device["segment"] = $segment;
+
+			// if($device["markers"]) {
+			// 	$markers = $device["markers"];
+			// }
+			// if($device["exceptions"]) {
+			// 	$exceptions = $device["exceptions"];
+			// }
+
+			return array($device);
+
+
+//			return $this->get($fallback_device[0]["id"]);
+		}
+
+		return array();
+		// return false;
+		// return array("markers" => $markers, "exceptions" => $exceptions);
 	}
 
 
@@ -1049,44 +1081,23 @@ class TypeDevice extends Itemtype {
 
 
 
-		// fallback
-		$fallback_pattern = $this->getFallbackPattern("desktop_ie9");
-		$groups[] = array("group_patterns" => array(), "segment_patterns" => $fallback_pattern);
+		// fallback patterns
+		$fallback_patterns = array();
 
-		$fallback_pattern = $this->getFallbackPattern("desktop_ie10");
-		$groups[] = array("group_patterns" => array(), "segment_patterns" => $fallback_pattern);
+		$fallback_patterns[] = $this->getFallbackPattern("desktop_ie9");
+		$fallback_patterns[] = $this->getFallbackPattern("desktop_ie10");
+		$fallback_patterns[] = $this->getFallbackPattern("desktop_ie11");
+		$fallback_patterns[] = $this->getFallbackPattern("desktop_edge");
+		$fallback_patterns[] = $this->getFallbackPattern("desktop");
+		$fallback_patterns[] = $this->getFallbackPattern("desktop_light");
+		$fallback_patterns[] = $this->getFallbackPattern("tablet");
+		$fallback_patterns[] = $this->getFallbackPattern("tablet_light");
+		$fallback_patterns[] = $this->getFallbackPattern("smartphone");
+		$fallback_patterns[] = $this->getFallbackPattern("mobile");
+		$fallback_patterns[] = $this->getFallbackPattern("mobile_light");
+		$fallback_patterns[] = $this->getFallbackPattern("seo");
 
-		$fallback_pattern = $this->getFallbackPattern("desktop_ie11");
-		$groups[] = array("group_patterns" => array(), "segment_patterns" => $fallback_pattern);
-
-		$fallback_pattern = $this->getFallbackPattern("desktop_edge");
-		$groups[] = array("group_patterns" => array(), "segment_patterns" => $fallback_pattern);
-
-		$fallback_pattern = $this->getFallbackPattern("desktop");
-		$groups[] = array("group_patterns" => array(), "segment_patterns" => $fallback_pattern);
-
-		$fallback_pattern = $this->getFallbackPattern("desktop_light");
-		$groups[] = array("group_patterns" => array(), "segment_patterns" => $fallback_pattern);
-
-		$fallback_pattern = $this->getFallbackPattern("tablet");
-		$groups[] = array("group_patterns" => array(), "segment_patterns" => $fallback_pattern);
-
-		$fallback_pattern = $this->getFallbackPattern("tablet_light");
-		$groups[] = array("group_patterns" => array(), "segment_patterns" => $fallback_pattern);
-
-		$fallback_pattern = $this->getFallbackPattern("smartphone");
-		$groups[] = array("group_patterns" => array(), "segment_patterns" => $fallback_pattern);
-
-		$fallback_pattern = $this->getFallbackPattern("mobile");
-		$groups[] = array("group_patterns" => array(), "segment_patterns" => $fallback_pattern);
-
-		$fallback_pattern = $this->getFallbackPattern("mobile_light");
-		$groups[] = array("group_patterns" => array(), "segment_patterns" => $fallback_pattern);
-
-		$fallback_pattern = $this->getFallbackPattern("seo");
-		$groups[] = array("group_patterns" => array(), "segment_patterns" => $fallback_pattern);
-
-
+		$groups[] = array("group_patterns" => array(), "segment_patterns" => $this->cleanSegmentPatterns($fallback_patterns));
 
 //		print_r($groups);
 
