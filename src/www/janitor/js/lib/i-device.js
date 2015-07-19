@@ -375,9 +375,10 @@ Util.Objects["editExceptions"] = new function() {
 
 Util.Objects["testMarkers"] = new function() {
 	this.init = function(div) {
-		u.bug("init testMarkers")
+		u.bug("init testMarkers2")
 
 		u.ae(div, "h2", {"html":"Test device markers"});
+		u.ae(div, "p", {"html":"Perform match test on all useragents in the DB (includes group pattern, but not full identification flow)"});
 
 
 		u.toggleHeader(div);
@@ -418,6 +419,11 @@ Util.Objects["testMarkers"] = new function() {
 			//
 				// get search response
 				this.response = function(response) {
+
+					if(this.div.loading) {
+						this.div.loading.parentNode.removeChild(this.div.loading);
+						this.div.loading = null;
+					}
 
 					if(response.cms_status == "success") {
 						var not_matched = response.cms_object[0];
@@ -687,6 +693,8 @@ Util.Objects["testMarkers"] = new function() {
 					this.div.bad_match_actions.parentNode.removeChild(this.div.bad_match_actions);
 					this.div.bad_match_actions = null;
 				}
+
+				this.div.loading = u.ae(this.div, "h3", {"class":"not", "html":"Performing test ... wait"});
 
 
 				// perform search

@@ -6463,6 +6463,7 @@ Util.Objects["login"] = new function() {
 		scene.ready = function() {
 			this._form = u.qs("form", this);
 			u.f.init(this._form);
+			this._form.fields["username"].focus();
 			page.cN.scene = this;
 			page.resized();
 		}
@@ -8995,8 +8996,9 @@ Util.Objects["editExceptions"] = new function() {
 }
 Util.Objects["testMarkers"] = new function() {
 	this.init = function(div) {
-		u.bug("init testMarkers")
+		u.bug("init testMarkers2")
 		u.ae(div, "h2", {"html":"Test device markers"});
+		u.ae(div, "p", {"html":"Perform match test on all useragents in the DB (includes group pattern, but not full identification flow)"});
 		u.toggleHeader(div);
 		div.item_id = u.cv(div, "item_id");
 		div.csrf_token = div.getAttribute("data-csrf-token");
@@ -9013,6 +9015,10 @@ Util.Objects["testMarkers"] = new function() {
 			u.bug("perform test")
 			// 
 				this.response = function(response) {
+					if(this.div.loading) {
+						this.div.loading.parentNode.removeChild(this.div.loading);
+						this.div.loading = null;
+					}
 					if(response.cms_status == "success") {
 						var not_matched = response.cms_object[0];
 						var bad_matched = response.cms_object[1];
@@ -9205,6 +9211,7 @@ Util.Objects["testMarkers"] = new function() {
 					this.div.bad_match_actions.parentNode.removeChild(this.div.bad_match_actions);
 					this.div.bad_match_actions = null;
 				}
+				this.div.loading = u.ae(this.div, "h3", {"class":"not", "html":"Performing test ... wait"});
 				u.request(this, this.div.url_device_test+"/"+this.div.item_id, {"params":"csrf-token="+this.div.csrf_token, "method":"post"})
 		}
 	}
