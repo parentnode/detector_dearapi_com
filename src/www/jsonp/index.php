@@ -8,8 +8,9 @@ include_once($_SERVER["FRAMEWORK_PATH"]."/config/init.php");
 include_once("classes/identify.class.php");
 
 $action = $page->actions();
+$ua = isset($_SERVER["HTTP_USER_AGENT"]) ? $_SERVER["HTTP_USER_AGENT"] : "";
 
-$ua = stringOr(getVar("ua"), $_SERVER["HTTP_USER_AGENT"]);
+$ua = stringOr(getVar("ua"), isset($_SERVER["HTTP_USER_AGENT"]) ? $_SERVER["HTTP_USER_AGENT"] : "Not accessible");
 $callback = stringOr(getVar("callback"), "callback");
 
 $Identify = new Identify();
