@@ -1110,8 +1110,8 @@ class TypeDevice extends Itemtype {
 		$fallback_patterns[] = $this->getFallbackPattern("desktop_edge");
 		$fallback_patterns[] = $this->getFallbackPattern("desktop");
 		$fallback_patterns[] = $this->getFallbackPattern("tv");
-		$fallback_patterns[] = $this->getFallbackPattern("desktop_light");
 		$fallback_patterns[] = $this->getFallbackPattern("desktop_ie_light");
+		$fallback_patterns[] = $this->getFallbackPattern("desktop_light");
 		$fallback_patterns[] = $this->getFallbackPattern("tablet");
 		$fallback_patterns[] = $this->getFallbackPattern("tablet_light");
 		$fallback_patterns[] = $this->getFallbackPattern("smartphone");
