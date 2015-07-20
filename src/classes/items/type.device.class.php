@@ -625,8 +625,8 @@ class TypeDevice extends Itemtype {
 			// }
 
 
-			// don't test group for aliases
-			if($device_alias) {
+			// don't test group for aliases, fallbacks and globals
+			if($device_alias || $device_type) {
 				$group_regex_pos = false;
 				$group_regex_neg = false;
 			} 
@@ -1415,8 +1415,8 @@ class TypeDevice extends Itemtype {
 //		$device_segment = $this->segment($device_id);
 
 
-		// don't include group when looking for alias match
-		if($device_alias) {
+		// don't test group aliases, fallbacks and globals
+		if($device_alias || $device_type) {
 			$group_regex_pos = false;
 			$group_regex_neg = false;
 		} 
