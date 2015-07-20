@@ -899,19 +899,21 @@ class TypeDevice extends Itemtype {
 		// $markers = false;
 		// $exceptions = false;
 
-		$fallback_device = $IC->getItems(array("tags" => "segment:".$segment.";type:fallback", "limit" => 1));
+		if($segment == "desktop_ie_light") {
+			$fallback_device = $IC->getItems(array("tags" => "alias:".$segment.";type:fallback", "limit" => 1));
+			$segment = "desktop_light";
+		}
+		else {
+			$fallback_device = $IC->getItems(array("tags" => "segment:".$segment.";type:fallback", "limit" => 1));
+		}
+
 		if($fallback_device) {
 			$device = $IC->getItem(array("id" => $fallback_device[0]["id"], "extend" => true));
 
 			unset($device["useragents"]);
 			unset($device["tags"]);
 
-			if($segment == "desktop_ie_light") {
-				$device["segment"] = "desktop_light";
-			}
-			else {
-				$device["segment"] = $segment;
-			}
+			$device["segment"] = $segment;
 
 			// if($device["markers"]) {
 			// 	$markers = $device["markers"];
