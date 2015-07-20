@@ -906,7 +906,12 @@ class TypeDevice extends Itemtype {
 			unset($device["useragents"]);
 			unset($device["tags"]);
 
-			$device["segment"] = $segment;
+			if($segment == "desktop_ie_light") {
+				$device["segment"] = "desktop_light";
+			}
+			else {
+				$device["segment"] = $segment;
+			}
 
 			// if($device["markers"]) {
 			// 	$markers = $device["markers"];
@@ -1106,6 +1111,7 @@ class TypeDevice extends Itemtype {
 		$fallback_patterns[] = $this->getFallbackPattern("desktop");
 		$fallback_patterns[] = $this->getFallbackPattern("tv");
 		$fallback_patterns[] = $this->getFallbackPattern("desktop_light");
+		$fallback_patterns[] = $this->getFallbackPattern("desktop_ie_light");
 		$fallback_patterns[] = $this->getFallbackPattern("tablet");
 		$fallback_patterns[] = $this->getFallbackPattern("tablet_light");
 		$fallback_patterns[] = $this->getFallbackPattern("smartphone");
