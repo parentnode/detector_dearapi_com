@@ -586,12 +586,16 @@ class TypeDevice extends Itemtype {
 	
 		if(count($action) == 2) {
 
+			$IC = new Items();
 			$device_id = $action[1];
 			$device = $this->get($device_id);
 
-			// get global grouping
-			$device_segment = $this->segment($device_id);
-			$global_group_device = $this->getGlobalPatterns($device_segment);
+			// get some additional information about device
+			$device_segment = $IC->getTags(array("item_id" => $device_id, "context" => "segment"));
+			$device_alias = $IC->getTags(array("item_id" => $device_id, "context" => "alias"));
+			$device_type = $IC->getTags(array("item_id" => $device_id, "context" => "type"));
+//			$device_segment = $this->segment($device_id);
+
 
 
 			// compile regular expression for specific device
@@ -621,11 +625,22 @@ class TypeDevice extends Itemtype {
 			// }
 
 
-			// compile regular expression for global grouping
-			// $group_regex_pos = "";
-			// $group_regex_neg = "";
-			$group_regex_pos = $this->createRegex($global_group_device, "markers", "marker");
-			$group_regex_neg = $this->createRegex($global_group_device, "exceptions", "exception");
+			// don't test group for aliases
+			if($device_alias) {
+				$group_regex_pos = false;
+				$group_regex_neg = false;
+			} 
+			else {
+				
+				// should we get global grouping (not for fallbacks and globals)
+				$global_group_device = $this->getGlobalPatterns($device_segment[0]["value"]);
+				// compile regular expression for global grouping
+				// $group_regex_pos = "";
+				// $group_regex_neg = "";
+				$group_regex_pos = $this->createRegex($global_group_device, "markers", "marker");
+				$group_regex_neg = $this->createRegex($global_group_device, "exceptions", "exception");
+
+			}
 
 			// if($global_group_device["markers"]) {
 			// 	$markers = array();
@@ -748,13 +763,13 @@ class TypeDevice extends Itemtype {
 
 
 	// get global patterns for groupings (using nested regex' to improve performance)
-	// will also be called when testing markers on device
-	// - then the device segment needs to be converted to valid global pattern
 	function getGlobalPatterns($segment) {
 
 
 		$IC = new Items();
 
+		// will also be called when testing markers on device
+		// - then the device segment needs to be converted to valid global pattern
 		if(preg_match("/desktop_ie/", $segment)) {
 			$global_segment = "desktop_ie";
 		}
@@ -1360,7 +1375,13 @@ class TypeDevice extends Itemtype {
 	// testMarkersOnUnidentified/#device_id#
 	function testMarkersOnUnidentified($device_id) {
 	
+		$IC = new Items();
 		$device = $this->get($device_id);
+
+		// get some additional information about device
+		$device_segment = $IC->getTags(array("item_id" => $device_id, "context" => "segment"));
+		$device_alias = $IC->getTags(array("item_id" => $device_id, "context" => "alias"));
+		$device_type = $IC->getTags(array("item_id" => $device_id, "context" => "type"));
 
 		// compile regular expression for device
 		$regex_pos = $this->createRegex($device, "markers", "marker");
@@ -1391,13 +1412,22 @@ class TypeDevice extends Itemtype {
 		// }
 
 		// get global grouping
-		$device_segment = $this->segment($device_id);
-		$global_group_device = $this->getGlobalPatterns($device_segment);
+//		$device_segment = $this->segment($device_id);
 
 
-		// compile regular expression for global grouping
-		$group_regex_pos = $this->createRegex($global_group_device, "markers", "marker");
-		$group_regex_neg = $this->createRegex($global_group_device, "exceptions", "exception");
+		// don't include group when looking for alias match
+		if($device_alias) {
+			$group_regex_pos = false;
+			$group_regex_neg = false;
+		} 
+		else {
+
+			$global_group_device = $this->getGlobalPatterns($device_segment[0]["value"]);
+
+			// compile regular expression for global grouping
+			$group_regex_pos = $this->createRegex($global_group_device, "markers", "marker");
+			$group_regex_neg = $this->createRegex($global_group_device, "exceptions", "exception");
+		}
 
 		// if(isset($global_group_device["markers"]) && $global_group_device["markers"]) {
 		// 	$markers = array();
