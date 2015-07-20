@@ -1642,7 +1642,7 @@ class TypeDevice extends Itemtype {
 //			print $sql."\n";
 			$query->sql($sql);
 
-			$ua = $query->result(0, "useragent");
+			$ua = prepareForDB($query->result(0, "useragent"));
 //			print $ua."\n";
 
 
