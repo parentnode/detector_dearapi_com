@@ -1122,7 +1122,6 @@ class TypeDevice extends Itemtype {
 
 
 
-
 	// create detections core
 	// used for API detection
 	function createDetectionCore() {
@@ -1422,7 +1421,7 @@ class TypeDevice extends Itemtype {
 			// get all useragents
 			$query = new Query();
 
-			$sql = "SELECT id, useragent FROM ".$this->db_unidentified." GROUP BY useragent";
+			$sql = "SELECT id, useragent FROM ".$this->db_unidentified." GROUP BY useragent ORDER BY useragent";
 //			$sql = "SELECT id, useragent FROM ".$this->db_unidentified." WHERE useragent like '%Chrome%' GROUP BY useragent";
 			$query->sql($sql);
 			$all_useragents = $query->results();
