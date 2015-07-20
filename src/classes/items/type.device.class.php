@@ -1005,6 +1005,21 @@ class TypeDevice extends Itemtype {
 
 
 
+		// TV
+		$group_patterns = $this->getGlobalPatterns("tv");
+
+			// individual segment priority
+			$segment_patterns = array();
+
+			// tv
+			$segment_patterns[] = $this->getSegmentPatterns("tv");
+
+
+		// add combined group info
+		$groups[] = array("group_patterns" => $group_patterns, "segment_patterns" => $this->cleanSegmentPatterns($segment_patterns));
+
+
+
 		// desktop_light
 		$group_patterns = $this->getGlobalPatterns("desktop_light");
 
@@ -1089,6 +1104,7 @@ class TypeDevice extends Itemtype {
 		$fallback_patterns[] = $this->getFallbackPattern("desktop_ie11");
 		$fallback_patterns[] = $this->getFallbackPattern("desktop_edge");
 		$fallback_patterns[] = $this->getFallbackPattern("desktop");
+		$fallback_patterns[] = $this->getFallbackPattern("tv");
 		$fallback_patterns[] = $this->getFallbackPattern("desktop_light");
 		$fallback_patterns[] = $this->getFallbackPattern("tablet");
 		$fallback_patterns[] = $this->getFallbackPattern("tablet_light");
