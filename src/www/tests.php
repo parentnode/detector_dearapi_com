@@ -126,43 +126,13 @@ $ua[] = "Mozilla/5.0 (Windows NT 6.1; Trident/7.0; EIE10;ENU; rv:11.0) like Geck
 //$ua[] = "";
 
 
-print "Direct<br>";
-
-$Identify = new Identify();
-
 
 foreach($ua as $useragent) {
 
-	$device = $Identify->identifyDevice($useragent, false, false);
+//	$device = file_get_contents("http://detector-v3.dearapi.com?ua=".urlencode($useragent)."&site=".urlencode($_SERVER["HTTP_HOST"])."&file=".urlencode($_SERVER["SCRIPT_NAME"]));
+	$segment = file_get_contents("http://detector-v3.api?ua=".urlencode($useragent)."&site=".urlencode($_SERVER["HTTP_HOST"])."&file=".urlencode($_SERVER["SCRIPT_NAME"]));
+	print $useragent."<br>".$segment."<br><br>";
 
-	print $useragent."<br>".$device["segment"]."<br><br>";
 }
-//print $perf->result();
 
-
-// 
-// print "HTTP/xml<br>";
-// 
-// $perf->mark("ID - HTTP/xml", true);
-// 
-// foreach($ua as $useragent) {
-// 
-// 	$device_id = file_get_contents("http://devices.dearapi.com/xml?ua=".urlencode($useragent)."&site=".urlencode($_SERVER["HTTP_HOST"])."&file=".urlencode($_SERVER["SCRIPT_NAME"]));
-// //	$device_id = file_get_contents("http://devices.local/xml?ua=".urlencode($_SERVER["HTTP_USER_AGENT"])."&site=".urlencode($_SERVER["HTTP_HOST"])."&file=".urlencode($_SERVER["SCRIPT_NAME"]));
-// 	$device = simplexml_load_string($device_id);
-// 	if($device) {
-// 		$perf->mark("IDed - $useragent");
-// //		$device["segment"] = (string) $device->segment;
-// 		print $useragent."<br>".$device->brand.", ".$device->model.", ".$device->segment."<br><br>";
-// 
-// 	}
-// 	else {
-// 		$perf->mark("NOT IDed");
-// 		print $useragent."<br><br>";
-// 	}
-// 
-// }
-// print $perf->result();
-
-//print $deviceClass->perf->result();
 ?>

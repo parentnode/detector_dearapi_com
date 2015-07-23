@@ -5,7 +5,7 @@ if(isset($read_access) && $read_access) {
 }
 ?>
 
-testing regexp
+testing specific regexp
 <?
 
 //$useragent = "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/28.1.0.0 Safari/537.36";
@@ -111,9 +111,10 @@ testing regexp
 //$reg_exp_neg = "^(?!.*(chrome\/[3-9][0-9]))"; //"msie";
 
 
-$useragent = "Mozilla/5.0 (hp-tablet; Linux; hpwOS/3.0.5; U; en-GB) AppleWebKit/534.6 (KHTML, like Gecko) wOSBrowser/234.83 Safari/534.6 TouchPad/1.0";
-$reg_exp_pos = "hp-tablet[^$]+bkit\/(53[4-9]|600)[^$]+TouchPad";
-$reg_exp_neg = false; //"msie";
+$useragent = "Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.1; SV1; Maxthon; .NET CLR 2.0.50727; .NET CLR 3.0.04506.30)";
+$reg_exp_pos = "msie[ ]?[0-8]\b";
+$reg_exp_neg = "phone|mobile|windows[ ]?ce|midp|wap|brew|\d\d\dx\d\d\d|opera|nokia|symbian|motorola
+|NetFront|Palm"; //"msie";
 //$reg_exp_neg = "^(?!.*(chrome\/[3-9][0-9]))"; //"msie";
 
 // preg_match("/".$reg_exp_neg."/i", $useragent, $matches);

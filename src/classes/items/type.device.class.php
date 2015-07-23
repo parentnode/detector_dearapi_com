@@ -594,35 +594,11 @@ class TypeDevice extends Itemtype {
 			$device_segment = $IC->getTags(array("item_id" => $device_id, "context" => "segment"));
 			$device_alias = $IC->getTags(array("item_id" => $device_id, "context" => "alias"));
 			$device_type = $IC->getTags(array("item_id" => $device_id, "context" => "type"));
-//			$device_segment = $this->segment($device_id);
-
 
 
 			// compile regular expression for specific device
 			$regex_pos = $this->createRegex($device, "markers", "marker");
 			$regex_neg = $this->createRegex($device, "exceptions", "exception");
-			// $regex_pos = "";
-			// $regex_neg = "";
-			//
-			// if(isset($device["markers"]) && $device["markers"]) {
-			// 	$markers = array();
-			//
-			// 	foreach($device["markers"] as $marker) {
-			// 		array_push($markers, $marker["marker"]);
-			// 	}
-			//
-			// 	$regex_pos = implode($markers, "|");
-			// }
-			//
-			// if(isset($device["exceptions"]) && $device["exceptions"]) {
-			// 	$exceptions = array();
-			//
-			// 	foreach($device["exceptions"] as $exception) {
-			// 		array_push($exceptions, $exception["exception"]);
-			// 	}
-			//
-			// 	$regex_neg = implode($exceptions, "|");
-			// }
 
 
 			// don't test group for aliases, fallbacks and globals
@@ -634,44 +610,15 @@ class TypeDevice extends Itemtype {
 				
 				// should we get global grouping (not for fallbacks and globals)
 				$global_group_device = $this->getGlobalPatterns($device_segment[0]["value"]);
+
 				// compile regular expression for global grouping
-				// $group_regex_pos = "";
-				// $group_regex_neg = "";
 				$group_regex_pos = $this->createRegex($global_group_device, "markers", "marker");
 				$group_regex_neg = $this->createRegex($global_group_device, "exceptions", "exception");
 
 			}
 
-			// if($global_group_device["markers"]) {
-			// 	$markers = array();
-			//
-			// 	foreach($global_group_device["markers"] as $marker) {
-			// 		array_push($markers, $marker["marker"]);
-			// 	}
-			//
-			// 	$group_regex_pos = implode($markers, "|");
-			// }
-			//
-			// if($global_group_device["exceptions"]) {
-			// 	$exceptions = array();
-			//
-			// 	foreach($global_group_device["exceptions"] as $exception) {
-			// 		array_push($exceptions, $exception["exception"]);
-			// 	}
-			//
-			// 	$group_regex_neg = implode($exceptions, "|");
-			// }
-
-
-			// print "preg_match(/".$regex_pos."/i<br>\n";
-			// print "preg_match(/".$regex_neg."/i<br>\n";
-
-			// print "regex_pos:/".preg_replace("/([\/\.])/", "\$1"$regex_pos)."/i<br>\n";
-			// print "regex_neg:/".addcslashes($regex_neg)."/i<br>\n";
-			//
-			// print "regex_pos:/".escape($regex_pos)."/i<br>\n";
-			// print "regex_neg:/".escape($regex_neg)."/i<br>\n";
-
+			// print "regex_pos: preg_match(/".$regex_pos."/i)<br>\n";
+			// print "regex_neg: preg_match(/".$regex_neg."/i)<br>\n";
 
 
 			$not_matched_useragents = array();
@@ -911,9 +858,7 @@ class TypeDevice extends Itemtype {
 
 		$IC = new Items();
 
-		// $markers = false;
-		// $exceptions = false;
-
+		// TODO: make this dynamic (look for alias first, then segment)
 		if($segment == "desktop_ie_light") {
 			$fallback_device = $IC->getItems(array("tags" => "alias:".$segment.";type:fallback", "limit" => 1));
 			$segment = "desktop_light";
@@ -930,22 +875,10 @@ class TypeDevice extends Itemtype {
 
 			$device["segment"] = $segment;
 
-			// if($device["markers"]) {
-			// 	$markers = $device["markers"];
-			// }
-			// if($device["exceptions"]) {
-			// 	$exceptions = $device["exceptions"];
-			// }
-
 			return array($device);
-
-
-//			return $this->get($fallback_device[0]["id"]);
 		}
 
 		return array();
-		// return false;
-		// return array("markers" => $markers, "exceptions" => $exceptions);
 	}
 
 
@@ -959,15 +892,16 @@ class TypeDevice extends Itemtype {
 		return $segment_patterns;
 	}
 
-	function createRegex($array, $i, $j) {
+	// create regular expression string from array values
+	function createRegex($array, $type, $value) {
 
 		// prepare pattern if it exist
-		if(isset($array[$i]) && $array[$i]) {
+		if(isset($array[$type]) && $array[$type]) {
 
 			$matches = array();
 
-			foreach($array[$i] as $marker) {
-				array_push($matches, $marker[$j]);
+			foreach($array[$type] as $marker) {
+				array_push($matches, $marker[$value]);
 			}
 
 			return implode($matches, "|");
@@ -1147,6 +1081,7 @@ class TypeDevice extends Itemtype {
 
 	// create detections core
 	// used for API detection
+	// CONSIDER: arrange positive and negative evaluations based on which has more values
 	function createDetectionCore() {
 
 		$patterns = $this->compileDetectionData();
@@ -1173,41 +1108,10 @@ class TypeDevice extends Itemtype {
 			$segment_patterns = $pattern["segment_patterns"];
 
 
-//			print_r($pattern);
-
 			// create pattern-statement for group
 			$group_regex_pos = $this->createRegex($group_patterns, "markers", "marker");
 			$group_regex_neg = $this->createRegex($group_patterns, "exceptions", "exception");
-//			$group_regex_neg = "";
 
-			// // prepare group pattern markers if they exist
-			// if(isset($group_patterns["markers"]) && $group_patterns["markers"]) {
-			//
-			// 	$markers = array();
-			//
-			// 	foreach($group_patterns["markers"] as $marker) {
-			// 		array_push($markers, $marker["marker"]);
-			// 	}
-			//
-			// 	$group_regex_pos = implode($markers, "|");
-			// }
-
-			// prepare group pattern exceptions if they exist
-			// if(isset($group_patterns["exceptions"]) && $group_patterns["exceptions"]) {
-			// 	$exceptions = array();
-			//
-			// 	foreach($group_patterns["exceptions"] as $exception) {
-			// 		array_push($exceptions, $exception["exception"]);
-			// 	}
-			//
-			// 	$group_regex_neg = implode($exceptions, "|");
-			// }
-
-
-			// if first level grouping is started, add else to statement
-			// if($group_regex_pos || $group_regex_neg || $segment_patterns) {
-			// 	$_ .= $group_add_else ? "else " : "";
-			// }
 
 			// indent segments or keep them on global level
 			if($group_regex_pos || $group_regex_neg) {
@@ -1247,31 +1151,6 @@ class TypeDevice extends Itemtype {
 						// create pattern-statement for device
 						$device_regex_pos = $this->createRegex($device_pattern, "markers", "marker");
 						$device_regex_neg = $this->createRegex($device_pattern, "exceptions", "exception");
-						// $device_regex_pos = "";
-						// $device_regex_neg = "";
-						//
-						// // prepare device pattern markers if they exist
-						// if(isset($device_pattern["markers"]) && $device_pattern["markers"]) {
-						//
-						// 	$markers = array();
-						//
-						// 	foreach($device_pattern["markers"] as $marker) {
-						// 		array_push($markers, $marker["marker"]);
-						// 	}
-						//
-						// 	$device_regex_pos = implode($markers, "|");
-						// }
-						//
-						// // prepare device pattern exceptions if they exist
-						// if(isset($device_pattern["exceptions"]) && $device_pattern["exceptions"]) {
-						// 	$exceptions = array();
-						//
-						// 	foreach($device_pattern["exceptions"] as $exception) {
-						// 		array_push($exceptions, $exception["exception"]);
-						// 	}
-						//
-						// 	$device_regex_neg = implode($exceptions, "|");
-						// }
 
 
 						// if second level statement is started, add else to statement
@@ -1291,7 +1170,7 @@ class TypeDevice extends Itemtype {
 
 
 						$_ .= $group_indent.'	return "'.$device_pattern["segment"].';'.$device_pattern["name"].'";'."\n";
-//						$_ .= $group_indent.'	$device_name = "'.$device_pattern["name"].'";'."\n";
+
 
 						$_ .= $group_indent.'}'."\n";
 
@@ -1337,17 +1216,312 @@ class TypeDevice extends Itemtype {
 
 	}
 
-	function createPHPDetection() {
-		
+	function createPHPDetection($grouping) {
+
+		$patterns = $this->compileDetectionData();
+			
+		$_ = "";
+
+		$group_add_else = false;
+
+		$_ .= '<?php'."\n\n";
+		$_ .= 'class Detector {'."\n\n";
+
+		$_ .= "\t".'function getSegment($ua) {'."\n\n";
+
+			$_ .= "\t\t".'$segment = $this->identify($ua);'."\n";
+
+				if($grouping) {
+					$grouping = json_decode(stripslashes($grouping));
+					foreach($grouping as $group => $segments) {
+						$_ .= "\t\t".'$groups = array();'."\n";
+						foreach($segments as $segment) {
+							$_ .= "\t\t".'$groups["'.$segment.'"] = "'.$group.'";'."\n";
+						}
+					}
+					$_ .= "\n\t\t".'if(isset($groups[$segment])) {'."\n";
+						$_ .= "\t\t\t".'return $groups[$segment];'."\n";
+					$_ .= "\t\t".'}'."\n";
+					$_ .= "\t\t".'else {'."\n";
+						$_ .= "\t\t\t".'return $segment;'."\n";
+					$_ .= "\t\t".'}'."\n";
+
+				}
+				else {
+					$_ .= "\t\t".'return $segment;'."\n";
+				}
+
+		$_ .= "\n\t".'}'."\n\n";
+
+		$_ .= "\t".'function identify($ua) {'."\n\n";
+
+		// loop through all grouping patterns
+		foreach($patterns as $pattern) {
+
+			// get group and segment patterns
+			$group_patterns = $pattern["group_patterns"];
+			$segment_patterns = $pattern["segment_patterns"];
+
+
+			// create pattern-statement for group
+			$group_regex_pos = $this->createRegex($group_patterns, "markers", "marker");
+			$group_regex_neg = $this->createRegex($group_patterns, "exceptions", "exception");
+
+
+			// indent segments or keep them on global level
+			if($group_regex_pos || $group_regex_neg) {
+				$group_indent = "	";
+			}
+			else {
+				$group_indent = "";
+			}
+
+
+			// create regex for patterns for group
+			if($group_regex_neg && $group_regex_pos) {
+				$_ .= "\t\t".'if(!preg_match("/('.$group_regex_neg.')/i", $ua) && preg_match("/('.$group_regex_pos.')/i", $ua)) {'."\n";
+			}
+			else if($group_regex_pos) {
+				$_ .= "\t\t".'if(preg_match("/('.$group_regex_pos.')/i", $ua)) {'."\n";
+			}
+			else if($group_regex_neg) {
+				$_ .= "\t\t".'if(!preg_match("/('.$group_regex_neg.')/i", $ua)) {'."\n";
+			}
+
+
+
+			// create segment patterns
+			$segment_add_else = false;
+
+			// loop through segments
+			if($segment_patterns) {
+				foreach($segment_patterns as $segment_pattern) {
+
+					foreach($segment_pattern as $device_pattern) {
+
+						// create pattern-statement for device
+						$device_regex_pos = $this->createRegex($device_pattern, "markers", "marker");
+						$device_regex_neg = $this->createRegex($device_pattern, "exceptions", "exception");
+
+
+						// if second level statement is started, add else to statement
+						$_ .= $segment_add_else ? "\t\t".$group_indent."else " : "";
+
+
+						// create regex for patterns for device
+						if($device_regex_neg && $device_regex_pos) {
+							$_ .= "\t\t".$group_indent.'if(!preg_match("/('.$device_regex_neg.')/i", $ua) && preg_match("/('.$device_regex_pos.')/i", $ua)) {'."\n";
+						}
+						else if($device_regex_pos) {
+							$_ .= "\t\t".$group_indent.'if(preg_match("/('.$device_regex_pos.')/i", $ua)) {'."\n";
+						}
+						else if($device_regex_neg) {
+							$_ .= "\t\t".$group_indent.'if(!preg_match("/('.$device_regex_neg.')/i", $ua)) {'."\n";
+						}
+
+
+						$_ .= "\t\t".$group_indent.'	return "'.$device_pattern["segment"].'";'."\n";
+
+
+						$_ .= "\t\t".$group_indent.'}'."\n";
+
+
+						// add else statement on next loop
+						$segment_add_else = true;
+
+						// segment could be global
+						// else statement needs to be switched on even if no global marker is available
+						$group_add_else = true;
+
+					}
+
+				}
+			}
+
+
+
+			// only end group pattern if it exists
+			if($group_regex_pos || $group_regex_neg) {
+				$_ .= "\t\t".'}'."\n";
+
+				// grouping statements started
+				$group_add_else = true;
+				$group_indent = "	";
+			}
+			else {
+				$group_indent = "";
+			}
+
+
+
+
+		}
+
+		$_ .= "\t".'}'."\n\n";
+		$_ .= '}'."\n\n";
+
+		$_ .= '?>';
+
+		$_ = preg_replace("/else [\t]+if/", "else if", $_);
+
+		return $_;
 
 	}
 
 
-	function createJavaScriptDetection() {
+	function createJavaScriptDetection($grouping) {
 		
+		$patterns = $this->compileDetectionData();
+			
+		$_ = "";
+
+		$group_add_else = false;
+
+		$_ .= 'Detector = new function() {'."\n\n";
+
+		$_ .= "\t".'this.getSegment = function(ua) {'."\n\n";
+
+			$_ .= "\t\t".'var segment = this.identify(ua);'."\n";
+
+				if($grouping) {
+					$grouping = json_decode(stripslashes($grouping));
+					foreach($grouping as $group => $segments) {
+						$_ .= "\t\t".'var groups = [];'."\n";
+						foreach($segments as $segment) {
+							$_ .= "\t\t".'groups["'.$segment.'"] = "'.$group.'";'."\n";
+						}
+					}
+					$_ .= "\n\t\t".'if(groups[segment]) {'."\n";
+						$_ .= "\t\t\t".'return groups[segment];'."\n";
+					$_ .= "\t\t".'}'."\n";
+					$_ .= "\t\t".'else {'."\n";
+						$_ .= "\t\t\t".'return segment;'."\n";
+					$_ .= "\t\t".'}'."\n";
+
+				}
+				else {
+					$_ .= "\t\t".'return segment;'."\n";
+				}
+
+		$_ .= "\n\t".'}'."\n\n";
+
+		$_ .= "\t".'this.identify = function(ua) {'."\n\n";
+
+		// loop through all grouping patterns
+		foreach($patterns as $pattern) {
+
+			// get group and segment patterns
+			$group_patterns = $pattern["group_patterns"];
+			$segment_patterns = $pattern["segment_patterns"];
+
+
+			// create pattern-statement for group
+			$group_regex_pos = $this->createRegex($group_patterns, "markers", "marker");
+			$group_regex_neg = $this->createRegex($group_patterns, "exceptions", "exception");
+
+
+			// indent segments or keep them on global level
+			if($group_regex_pos || $group_regex_neg) {
+				$group_indent = "	";
+			}
+			else {
+				$group_indent = "";
+			}
+
+
+			// create regex for patterns for group
+			if($group_regex_neg && $group_regex_pos) {
+				$_ .= "\t\t".'if(!ua.match(/('.$group_regex_neg.')/i) && ua.match(/('.$group_regex_pos.')/i)) {'."\n";
+			}
+			else if($group_regex_pos) {
+				$_ .= "\t\t".'if(ua.match(/('.$group_regex_pos.')/i)) {'."\n";
+			}
+			else if($group_regex_neg) {
+				$_ .= "\t\t".'if(!ua.match(/('.$group_regex_neg.')/i)) {'."\n";
+			}
+
+
+
+			// create segment patterns
+			$segment_add_else = false;
+
+			// loop through segments
+			if($segment_patterns) {
+				foreach($segment_patterns as $segment_pattern) {
+
+					foreach($segment_pattern as $device_pattern) {
+
+						// create pattern-statement for device
+						$device_regex_pos = $this->createRegex($device_pattern, "markers", "marker");
+						$device_regex_neg = $this->createRegex($device_pattern, "exceptions", "exception");
+
+
+						// if second level statement is started, add else to statement
+						$_ .= $segment_add_else ? "\t\t".$group_indent."else " : "";
+
+
+						// create regex for patterns for device
+						if($device_regex_neg && $device_regex_pos) {
+							$_ .= "\t\t".$group_indent.'if(!ua.match(/('.$device_regex_neg.')/i) && ua.match(/('.$device_regex_pos.')/i)) {'."\n";
+						}
+						else if($device_regex_pos) {
+							$_ .= "\t\t".$group_indent.'if(ua.match(/('.$device_regex_pos.')/i)) {'."\n";
+						}
+						else if($device_regex_neg) {
+							$_ .= "\t\t".$group_indent.'if(!ua.match(/('.$device_regex_neg.')/i)) {'."\n";
+						}
+
+
+						$_ .= "\t\t".$group_indent.'	return "'.$device_pattern["segment"].'";'."\n";
+
+
+						$_ .= "\t\t".$group_indent.'}'."\n";
+
+
+						// add else statement on next loop
+						$segment_add_else = true;
+
+						// segment could be global
+						// else statement needs to be switched on even if no global marker is available
+						$group_add_else = true;
+
+					}
+
+				}
+			}
+
+
+
+			// only end group pattern if it exists
+			if($group_regex_pos || $group_regex_neg) {
+				$_ .= "\t\t".'}'."\n";
+
+				// grouping statements started
+				$group_add_else = true;
+				$group_indent = "	";
+			}
+			else {
+				$group_indent = "";
+			}
+
+
+
+
+		}
+
+		$_ .= "\t".'}'."\n\n";
+		$_ .= '}'."\n\n";
+
+		$_ = preg_replace("/else [\t]+if/", "else if", $_);
+
+		return $_;
 
 	}
 
+	function createJavaDetection($grouping) {
+		
+
+	}
 
 	// write detection script to library/public
 	function writeDetectionCore($action) {
@@ -1366,9 +1540,6 @@ class TypeDevice extends Itemtype {
 		return false;
 	}
 
-
-
-	// TODO: update test to new standard
 
 
 	// test device markers on unidentified useragents
@@ -1450,11 +1621,11 @@ class TypeDevice extends Itemtype {
 		// }
 
 		if($regex_pos || $regex_neg || $group_regex_pos || $group_regex_neg) {
-			// print "regex_pos: preg_match(/".$regex_pos."/i<br>\n";
-			// print "regex_neg: preg_match(/".$regex_neg."/i<br>\n";
-			//
-			// print "group_regex_pos: preg_match(/".$group_regex_pos."/i<br>\n";
-			// print "group_regex_neg: preg_match(/".$group_regex_neg."/i<br>\n";
+			// print "regex_pos: preg_match(/".$regex_pos."/i)<br>\n";
+			// print "regex_neg: preg_match(/".$regex_neg."/i)<br>\n";
+			// //
+			// print "group_regex_pos: preg_match(/".$group_regex_pos."/i)<br>\n";
+			// print "group_regex_neg: preg_match(/".$group_regex_neg."/i)<br>\n";
 
 			// get all useragents
 			$query = new Query();
@@ -1467,7 +1638,7 @@ class TypeDevice extends Itemtype {
 
 
 
-//			print "count:" .count($all_useragents)."<br>\n";
+			print "count:" .count($all_useragents)."<br>\n";
 			foreach($all_useragents as $useragent) {
 
 				// check group pattern
@@ -1475,7 +1646,10 @@ class TypeDevice extends Itemtype {
 					(!$group_regex_pos || preg_match("/(".$group_regex_pos.")/i", $useragent["useragent"])) && 
 					(!$group_regex_neg || !preg_match("/(".$group_regex_neg.")/i", $useragent["useragent"]))
 				) {
-//					print "passed global test";
+
+					// if(preg_match("/MSIE/", $useragent["useragent"])) {
+					// 	print "passed global test:" . $useragent["useragent"] . "\n";
+					// }
 						// check device pattern
 					if(
 						(!$regex_pos || preg_match("/(".$regex_pos.")/i", $useragent["useragent"])) && 

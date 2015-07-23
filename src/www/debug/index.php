@@ -10,7 +10,7 @@ include_once("classes/identify.class.php");
 
 $action = $page->actions();
 
-$ua = stringOr(getVar("ua"), isset($_SERVER["HTTP_USER_AGENT"]) ? $_SERVER["HTTP_USER_AGENT"] : "Not accessible");
+$ua = stringOr(getVar("ua"), isset($_SERVER["HTTP_USER_AGENT"]) ? $_SERVER["HTTP_USER_AGENT"] : "UA not available");
 
 
 $Identify = new Identify();
@@ -39,7 +39,7 @@ header("Content-type: text/html; charset=UTF-8");
 <div id="device">
 	<div id="useragent" class="proporty">UserAgent: <?= $ua ?></div>
 	<div id="segment" class="proporty">Segment: <?= $device["segment"] ?></div>
-	<div id="model" class="proporty">Model: <?= $device["name"] ?></div>
+	<div id="model" class="proporty">Name: <?= $device["name"] ?></div>
 	<div id="description" class="proporty">Description: <?= $device["description"] ?></div>
 	<div id="published_at" class="proporty">Published at: <?= date("Y-m", strtotime($device["published_at"])) ?></div>
 </div>
