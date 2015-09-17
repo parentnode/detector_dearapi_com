@@ -1233,8 +1233,9 @@ class TypeDevice extends Itemtype {
 
 				if($grouping) {
 					$grouping = json_decode(stripslashes($grouping));
+					$_ .= "\t\t".'$groups = array();'."\n";
 					foreach($grouping as $group => $segments) {
-						$_ .= "\t\t".'$groups = array();'."\n";
+						$_ .= "\n";
 						foreach($segments as $segment) {
 							$_ .= "\t\t".'$groups["'.$segment.'"] = "'.$group.'";'."\n";
 						}
@@ -1385,8 +1386,9 @@ class TypeDevice extends Itemtype {
 
 				if($grouping) {
 					$grouping = json_decode(stripslashes($grouping));
+					$_ .= "\t\t".'var groups = [];'."\n";
 					foreach($grouping as $group => $segments) {
-						$_ .= "\t\t".'var groups = [];'."\n";
+						$_ .= "\n";
 						foreach($segments as $segment) {
 							$_ .= "\t\t".'groups["'.$segment.'"] = "'.$group.'";'."\n";
 						}
@@ -1519,7 +1521,172 @@ class TypeDevice extends Itemtype {
 	}
 
 	function createJavaDetection($grouping) {
-		
+
+		$patterns = $this->compileDetectionData();
+			
+		$_ = "";
+
+		$group_add_else = false;
+
+		$_ .= 'import java.util.Map;'."\n";
+		$_ .= 'import java.util.HashMap;'."\n";
+		$_ .= 'import java.util.regex.Pattern;'."\n";
+		$_ .= 'import java.util.regex.Matcher;'."\n\n";
+
+		$_ .= 'public final class Detector {'."\n\n";
+
+		$_ .= "\t".'public String getSegment(String ua) {'."\n\n";
+
+			$_ .= "\t\t".'String segment = this.identify(ua);'."\n";
+
+				if($grouping) {
+					$grouping = json_decode(stripslashes($grouping));
+					$_ .= "\t\t".'Map<String, String> groups = new HashMap<String, String>();'."\n";
+					foreach($grouping as $group => $segments) {
+						$_ .= "\n";
+						foreach($segments as $segment) {
+							$_ .= "\t\t".'groups.put("'.$segment.'", "'.$group.'");'."\n";
+						}
+					}
+					$_ .= "\n\t\t".'if(groups.containsKey(segment)) {'."\n";
+						$_ .= "\t\t\t".'return groups.get(segment);'."\n";
+					$_ .= "\t\t".'}'."\n";
+					$_ .= "\t\t".'else {'."\n";
+						$_ .= "\t\t\t".'return segment;'."\n";
+					$_ .= "\t\t".'}'."\n";
+
+				}
+				else {
+					$_ .= "\t\t".'return segment;'."\n";
+				}
+
+		$_ .= "\n\t".'}'."\n\n";
+
+		$_ .= "\t".'private String identify(String ua) {'."\n\n";
+
+		// loop through all grouping patterns
+		foreach($patterns as $pattern) {
+
+			// get group and segment patterns
+			$group_patterns = $pattern["group_patterns"];
+			$segment_patterns = $pattern["segment_patterns"];
+
+
+			// create pattern-statement for group
+			$group_regex_pos = preg_replace("/\\\/i", "\\\\\\", $this->createRegex($group_patterns, "markers", "marker"));
+			$group_regex_neg = preg_replace("/\\\/i", "\\\\\\", $this->createRegex($group_patterns, "exceptions", "exception"));
+
+
+			// indent segments or keep them on global level
+			if($group_regex_pos || $group_regex_neg) {
+				$group_indent = "	";
+			}
+			else {
+				$group_indent = "";
+			}
+
+
+			// create regex for patterns for group
+			if($group_regex_neg && $group_regex_pos) {
+				$_ .= "\t\t".'if(!this.match("('.$group_regex_neg.')", ua) && this.match("('.$group_regex_pos.')", ua)) {'."\n";
+			}
+			else if($group_regex_pos) {
+				$_ .= "\t\t".'if(this.match("('.$group_regex_pos.')", ua)) {'."\n";
+			}
+			else if($group_regex_neg) {
+				$_ .= "\t\t".'if(!this.match("('.$group_regex_neg.')", ua)) {'."\n";
+			}
+
+
+
+			// create segment patterns
+			$segment_add_else = false;
+
+			// loop through segments
+			if($segment_patterns) {
+				foreach($segment_patterns as $segment_pattern) {
+
+					foreach($segment_pattern as $device_pattern) {
+
+						// create pattern-statement for device
+						$device_regex_pos = preg_replace("/\\\/i", "\\\\\\", $this->createRegex($device_pattern, "markers", "marker"));
+						$device_regex_neg = preg_replace("/\\\/i", "\\\\\\", $this->createRegex($device_pattern, "exceptions", "exception"));
+
+
+						// if second level statement is started, add else to statement
+						$_ .= $segment_add_else ? "\t\t".$group_indent."else " : "";
+
+
+						// create regex for patterns for device
+						if($device_regex_neg && $device_regex_pos) {
+							$_ .= "\t\t".$group_indent.'if(!this.match("('.$device_regex_neg.')", ua) && this.match("('.$device_regex_pos.')", ua)) {'."\n";
+						}
+						else if($device_regex_pos) {
+							$_ .= "\t\t".$group_indent.'if(this.match("('.$device_regex_pos.')", ua)) {'."\n";
+						}
+						else if($device_regex_neg) {
+							$_ .= "\t\t".$group_indent.'if(!this.match("('.$device_regex_neg.')", ua)) {'."\n";
+						}
+
+
+						$_ .= "\t\t".$group_indent.'	return "'.$device_pattern["segment"].'";'."\n";
+
+
+						$_ .= "\t\t".$group_indent.'}'."\n";
+
+
+						// add else statement on next loop
+						$segment_add_else = true;
+
+						// segment could be global
+						// else statement needs to be switched on even if no global marker is available
+						$group_add_else = true;
+
+					}
+
+				}
+			}
+
+
+
+			// only end group pattern if it exists
+			if($group_regex_pos || $group_regex_neg) {
+				$_ .= "\t\t".'}'."\n";
+
+				// grouping statements started
+				$group_add_else = true;
+				$group_indent = "	";
+			}
+			else {
+				$group_indent = "";
+			}
+
+		}
+		$_ .= "\t\t".'return "desktop";'."\n";
+
+
+		$_ .= "\t".'}'."\n\n";
+
+		// include matcher function
+		$_ .= "\t".'private Boolean match(String pattern, String string) {'."\n";
+
+			$_ .= "\t\t".'Pattern p = Pattern.compile(pattern, Pattern.CASE_INSENSITIVE);'."\n";
+			$_ .= "\t\t".'Matcher m = p.matcher(string);'."\n";
+
+			$_ .= "\t\t".'if(m.find()) {'."\n";
+				$_ .= "\t\t\t".'return true;'."\n";
+			$_ .= "\t\t".'}'."\n";
+			$_ .= "\t\t".'else {'."\n";
+				$_ .= "\t\t\t".'return false;'."\n";
+			$_ .= "\t\t".'}'."\n";
+		$_ .= "\t".'}'."\n";
+
+
+		$_ .= '}'."\n\n";
+
+		$_ = preg_replace("/else [\t]+if/", "else if", $_);
+
+		return $_;
 
 	}
 
