@@ -1,4 +1,4 @@
-This is the source code for http://detector.dearpai.com.
+This is the source code for http://detector.dearapi.com.
 
 #About Detector
 Detector is your one-stop solution to supporting all HTML capable devices on earth and minimizing complexity at the same time.
