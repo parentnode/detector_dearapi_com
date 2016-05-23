@@ -5,7 +5,7 @@ Util.Objects["editUseragents"] = new function() {
 		div.item_id = u.cv(div, "item_id");
 
 
-		u.toggleHeader(div);
+//		u.toggleHeader(div);
 
 
 		div._form = u.qs("form", div);
@@ -104,7 +104,7 @@ Util.Objects["editMarkers"] = new function() {
 
 		div.item_id = u.cv(div, "item_id");
 
-		u.toggleHeader(div);
+//		u.toggleHeader(div);
 
 
 		div._form = u.qs("form", div);
@@ -240,7 +240,7 @@ Util.Objects["editExceptions"] = new function() {
 		div.item_id = u.cv(div, "item_id");
 
 
-		u.toggleHeader(div);
+//		u.toggleHeader(div);
 
 
 		div._form = u.qs("form", div);
@@ -381,7 +381,7 @@ Util.Objects["testMarkers"] = new function() {
 		u.ae(div, "p", {"html":"Perform match test on all useragents in the DB (includes group pattern, but not full identification flow)"});
 
 
-		u.toggleHeader(div);
+//		u.toggleHeader(div);
 
 
 

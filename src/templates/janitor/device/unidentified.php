@@ -44,7 +44,7 @@ else {
 	<?= $model->formEnd() ?>
 
 
-	<div class="testmarkers i:testMarkersOnUnidentified"
+	<div class="testmarkers i:testMarkersOnUnidentified i:collapseHeader"
 		data-csrf-token="<?= session()->value("csrf") ?>"
 		data-device-get="<?= $this->validPath("/janitor/device/getDevicesWithPatterns") ?>"
 		data-device-test="<?= $this->validPath("/janitor/device/unidentified") ?>"

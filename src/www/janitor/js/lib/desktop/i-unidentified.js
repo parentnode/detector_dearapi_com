@@ -287,63 +287,65 @@ Util.Objects["unidentifiedList"] = new function() {
 
 		// add filter to list
 		if(u.hc(div, "filters")) {
+
+			u.defaultFilters(div);
 			
-			div._filter = u.ie(div, "div", {"class":"filter"});
-
-			// index list, to speed up filtering process
-			var i, node;
-			for(i = 0; node = div.nodes[i]; i++) {
-				node._c = node.textContent.toLowerCase();
-			}
-
-			// insert tags filter
-			div._filter._field = u.ae(div._filter, "div", {"class":"field"});
-			u.ae(div._filter._field, "label", {"html":"Filter"});
-
-			div._filter._input = u.ae(div._filter._field, "input", {"class":"filter ignoreinput"});
-			div._filter._input._div = div;
-
-			div._filter._input.onkeydown = function() {
-//				u.bug("reset timer")
-				u.t.resetTimer(this._div.t_filter);
-			}
-			div._filter._input.onkeyup = function() {
-//				u.bug("set timer")
-				this._div.t_filter = u.t.setTimer(this._div, this._div.filter, 1500);
-				u.ac(this._div._filter, "filtering");
-			}
-			div.filter = function() {
-
-				var i, node;
-				if(this._current_filter != this._filter._input.value.toLowerCase()) {
-//					u.bug("filter by:" + this._filter._input.value)
-
-					this._current_filter = this._filter._input.value.toLowerCase();
-					for(i = 0; node = this.nodes[i]; i++) {
-
-						if(node._c.match(this._current_filter)) {
-							node._hidden = false;
-							u.as(node, "display", "block", false);
-							u.rc(node, "hidden", false);
-						}
-						else {
-							node._hidden = true;
-							u.as(node, "display", "none", false);
-							node._checkbox.checked = false;
-							u.ac(node, "hidden", false);
-						}
-					}
-				}
-
-				// update select all state
-				this.bn_all.updateState();
-
-				// leave filtering mode
-				u.rc(this._filter, "filtering");
-
-				// update add to options
-				this.toggleAddToOption();
-			}
+// 			div._filter = u.ie(div, "div", {"class":"filter"});
+//
+// 			// index list, to speed up filtering process
+// 			var i, node;
+// 			for(i = 0; node = div.nodes[i]; i++) {
+// 				node._c = node.textContent.toLowerCase();
+// 			}
+//
+// 			// insert tags filter
+// 			div._filter._field = u.ae(div._filter, "div", {"class":"field"});
+// 			u.ae(div._filter._field, "label", {"html":"Filter"});
+//
+// 			div._filter._input = u.ae(div._filter._field, "input", {"class":"filter ignoreinput"});
+// 			div._filter._input._div = div;
+//
+// 			div._filter._input.onkeydown = function() {
+// //				u.bug("reset timer")
+// 				u.t.resetTimer(this._div.t_filter);
+// 			}
+// 			div._filter._input.onkeyup = function() {
+// //				u.bug("set timer")
+// 				this._div.t_filter = u.t.setTimer(this._div, this._div.filter, 1500);
+// 				u.ac(this._div._filter, "filtering");
+// 			}
+// 			div.filter = function() {
+//
+// 				var i, node;
+// 				if(this._current_filter != this._filter._input.value.toLowerCase()) {
+// //					u.bug("filter by:" + this._filter._input.value)
+//
+// 					this._current_filter = this._filter._input.value.toLowerCase();
+// 					for(i = 0; node = this.nodes[i]; i++) {
+//
+// 						if(node._c.match(this._current_filter)) {
+// 							node._hidden = false;
+// 							u.as(node, "display", "block", false);
+// 							u.rc(node, "hidden", false);
+// 						}
+// 						else {
+// 							node._hidden = true;
+// 							u.as(node, "display", "none", false);
+// 							node._checkbox.checked = false;
+// 							u.ac(node, "hidden", false);
+// 						}
+// 					}
+// 				}
+//
+// 				// update select all state
+// 				this.bn_all.updateState();
+//
+// 				// leave filtering mode
+// 				u.rc(this._filter, "filtering");
+//
+// 				// update add to options
+// 				this.toggleAddToOption();
+// 			}
 		}
 
 
@@ -1080,6 +1082,11 @@ Util.Objects["testMarkersOnUnidentified"] = new function() {
 				this.div_results = u.qs(".all_items");
 				this.div_stats = u.qs(".stats");
 
+
+				// add marker filter
+				this._filter = u.ae(this, "div", {"class":"filter"});
+
+
 				this.markers_ul = u.ae(this, "ul", {"class":"markers"});
 				var i, node, li;
 				for(i = 0; node = response.cms_object[i]; i++) {
@@ -1155,22 +1162,86 @@ Util.Objects["testMarkersOnUnidentified"] = new function() {
 						u.request(this, this.div.url_device_test, {"params":"csrf-token="+this.div.csrf_token+"&test_marker=true&device_id="+this.item_id, "method":"post"});
 					}
 				}
+
+
+				this._markers = u.qsa("li", this.markers_ul);
+
+
+				// index list, to speed up filtering process
+				var i, node;
+				for(i = 0; node = this._markers[i]; i++) {
+					node._c = node.textContent.toLowerCase();
+				}
+
+				// insert tags filter
+				this._filter._field = u.ae(this._filter, "div", {"class":"field"});
+				u.ae(this._filter._field, "label", {"html":"Filter"});
+
+				this._filter._input = u.ae(this._filter._field, "input", {"class":"filter ignoreinput"});
+				this._filter._input._div = this;
+
+				this._filter._input.onkeydown = function() {
+	//				u.bug("reset timer")
+					u.t.resetTimer(this._div.t_filter);
+				}
+				this._filter._input.onkeyup = function() {
+	//				u.bug("set timer")
+					this._div.t_filter = u.t.setTimer(this._div, this._div.filter, 1500);
+					u.ac(this._div._filter, "filtering");
+				}
+				this.filter = function() {
+
+					var i, node;
+					if(this._current_filter != this._filter._input.value.toLowerCase()) {
+	//					u.bug("filter by:" + this._filter._input.value)
+
+						this._current_filter = this._filter._input.value.toLowerCase();
+						for(i = 0; node = this._markers[i]; i++) {
+
+							if(node._c.match(this._current_filter)) {
+								u.as(node, "display", "inline-block", false);
+							}
+							else {
+								u.as(node, "display", "none", false);
+							}
+						}
+					}
+
+					// leave filtering mode
+					u.rc(this._filter, "filtering");
+				}
 			}
 
 		}
 
-		u.e.click(div._header);
-		div._header.clicked = function() {
-			if(this.div._open) {
+		div.headerExpanded = function() {
+//			u.bug("expanded")
 
-				this.div.removeChild(this.div.markers_ul);
-				this.div._open = false;
-			}
-			else {
-				// load markers
-				u.request(this.div, this.div.url_device_get, {"params":"csrf-token="+this.div.csrf_token, "method":"post"})
+			// load markers
+			u.request(this, this.url_device_get, {"params":"csrf-token="+this.csrf_token, "method":"post"})
+		}
+
+		div.headerCollapsed = function() {
+//			u.bug("collapsed")
+
+			if(this.markers_ul) {
+				this.removeChild(this.markers_ul);
 			}
 		}
+
+
+		// u.e.click(div._header);
+		// div._header.clicked = function() {
+		// 	if(this.div._open) {
+		//
+		// 		this.div.removeChild(this.div.markers_ul);
+		// 		this.div._open = false;
+		// 	}
+		// 	else {
+		// 		// load markers
+		// 		u.request(this.div, this.div.url_device_get, {"params":"csrf-token="+this.div.csrf_token, "method":"post"})
+		// 	}
+		// }
 
 
 	}

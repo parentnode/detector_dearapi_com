@@ -1,22 +1,4 @@
 @import url(/janitor/admin/css/lib/seg_desktop_include.css);
 
-@import url(/janitor/css/lib/s-content.css);
-
-
-
-/*
-@import url(/janitor/admin/css/s-fonts.css);
-@import url(/janitor/admin/css/s-page.css);
-@import url(/janitor/admin/css/s-typography.css);
-
-@import url(/janitor/admin/css/s-header.css);
-@import url(/janitor/admin/css/s-content.css);
-@import url(/janitor/admin/css/s-navigation.css);
-@import url(/janitor/admin/css/s-footer.css);
-
-@import url(/janitor/admin/css/s-form.css);
-
-
-@import url(/janitor/css/lib/s-content.css);
-*/
+@import url(/janitor/css/lib/desktop/s-content.css);
 

@@ -46,7 +46,7 @@ $item = $IC->getItem(array("id" => $item_id, "extend" => array("tags" => true, "
 
 
 
-	<div class="markers i:editMarkers item_id:<?= $item["item_id"] ?>"
+	<div class="markers i:editMarkers i:collapseHeader item_id:<?= $item["item_id"] ?>"
 		data-csrf-token="<?= session()->value("csrf") ?>"
 		data-marker-delete="<?= $this->validPath("/janitor/device/deleteMarker/".$item["item_id"]) ?>" 
 		data-marker-update="<?= $this->validPath("/janitor/device/updateMarker/".$item["item_id"]) ?>" 
@@ -74,7 +74,7 @@ $item = $IC->getItem(array("id" => $item_id, "extend" => array("tags" => true, "
 	</div>
 
 
-	<div class="exceptions i:editExceptions item_id:<?= $item["item_id"] ?>"
+	<div class="exceptions i:editExceptions i:collapseHeader item_id:<?= $item["item_id"] ?>"
 		data-csrf-token="<?= session()->value("csrf") ?>"
 		data-exception-delete="<?= $this->validPath("/janitor/device/deleteException/".$item["item_id"]) ?>" 
 		data-exception-update="<?= $this->validPath("/janitor/device/updateException/".$item["item_id"]) ?>" 
@@ -102,7 +102,7 @@ $item = $IC->getItem(array("id" => $item_id, "extend" => array("tags" => true, "
 	</div>
 
 
-	<div class="testmarkers i:testMarkers item_id:<?= $item["item_id"] ?>"
+	<div class="testmarkers i:testMarkers i:collapseHeader item_id:<?= $item["item_id"] ?>"
 		data-csrf-token="<?= session()->value("csrf") ?>"
 		data-device-test="<?= $this->validPath("/janitor/device/testMarkers") ?>"
 		data-device-edit="<?= $this->validPath("/janitor/device/edit") ?>"
@@ -112,7 +112,7 @@ $item = $IC->getItem(array("id" => $item_id, "extend" => array("tags" => true, "
 	</div>
 
 
-	<div class="useragents i:editUseragents item_id:<?= $item["item_id"] ?>"
+	<div class="useragents i:editUseragents i:collapseHeader item_id:<?= $item["item_id"] ?>"
 		data-csrf-token="<?= session()->value("csrf") ?>"
 		data-useragent-delete="<?= $this->validPath("/janitor/device/deleteUseragent/".$item["item_id"]) ?>" 
 		>
@@ -140,7 +140,7 @@ $item = $IC->getItem(array("id" => $item_id, "extend" => array("tags" => true, "
 	</div>
 
 
-	<div class="merge i:mergeDevices item_id:<?= $item["item_id"] ?>"
+	<div class="merge i:mergeDevices i:collapseHeader item_id:<?= $item["item_id"] ?>"
 		data-csrf-token="<?= session()->value("csrf") ?>"
 		data-device-list="<?= $this->validPath("/janitor/device/list") ?>"
 		data-device-edit="<?= $this->validPath("/janitor/device/edit") ?>"

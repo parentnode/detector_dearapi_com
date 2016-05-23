@@ -1,7 +1,7 @@
 
-/*seg_desktop_include.css*/
+/*seg_smartphone_include.css*/
 
-/*seg_desktop_include.css*/
+/*seg_smartphone_include.css*/
 
 /*s-fonts.css*/
 @font-face {
@@ -15,102 +15,106 @@
 
 
 /*s-page.css*/
-* {font-family: "OpenSans", Arial, Verdana, sans-serif; font-size: 13px;
-	-webkit-text-size-adjust: none;
+* {font-family: "OpenSans", Arial, Verdana, sans-serif; font-size: 14px;
+	-webkit-text-size-adjust: 100%;
+	-moz-text-size-adjust: none;
+	-ms-text-size-adjust: 100%;
+	-webkit-font-smoothing: antialiased;
 }
-html {height: 100%;}
-body {margin: 0; min-height: 100%; overflow-y: scroll; background-color: #f5f7f8;}
+html {min-height: 100%;}
+body {margin: 0; min-height: 100%; overflow-y: scroll;  overflow-x: hidden; background-color: #f5f7f8;}
 h1, h2, h3, h4, h5, h6, p, ul, li, dl, dd, dt {color: #313942; padding: 0; margin: 0;}
 h1, h2, h3, h4, h5, h6, p, li, span, a, form, dd, dt {line-height: 1em; font-weight: normal;}
 ul {list-style: none;}
-a {text-decoration: none; cursor: pointer;}
-a:hover {}
+a {text-decoration: none; cursor: pointer;
+	-moz-user-select: none;
+	-webkit-user-select: none;
+	user-select: none;
+}
+a:active {}
 img {border: 0; display: block;}
 form, fieldset, label, input, select, textarea {color: #313942; padding: 0; margin: 0; font-weight: normal;}
 fieldset {border: none;}
 input, select, textarea {font-size: 14px;}
 input, textarea {outline: none;}
 a, span {font-size: inherit; font-family: inherit; font-style: inherit; font-weight: inherit; line-height: inherit; color: inherit; text-transform: inherit;}
-h1 {padding: 20px 30px; text-transform: uppercase; font-size: 26px;}
-h2 {padding: 0 30px 10px; font-size: 17px;}
-h3 {padding: 0 30px 10px; font-size: 14px;}
-h4 {padding: 0 30px;}
-h5 {padding: 0 30px;}
-h6 {padding: 0 30px;}
-p {padding: 0 30px 25px; color: #7d848c; line-height: 1.38em;} 
+h1 {padding: 20px 15px; text-transform: uppercase; font-size: 26px;}
+h2 {padding: 0 15px 10px; font-size: 17px;}
+h3 {padding: 0 15px 10px; font-size: 16px;}
+h4 {padding: 0 15px;}
+h5 {padding: 0 15px;}
+h6 {padding: 0 15px;}
+p {padding: 0 15px 25px; color: #7d848c; line-height: 1.38em;} 
 ul {font-size: 0;}
 li {display: inline-block; vertical-align: top; color: #7d848c; font-size: 12px;}
 dl {font-size: 0;} 
 dd, 
 dt {color: #7d848c; display: inline-block; vertical-align: top; font-size: 12px;}
-#page {position: relative; margin-left: 30px;}
+#page {position: relative;}
 
 
 /*s-header.css*/
-#header {background-color: #313942; position: fixed; z-index: 200; top: 0; left: 0; width: 30px; height: 100%; overflow: hidden;}
-#header .janitor {display: block; background-color: #64ad8e; height: 140px; padding: 0;}
-#header .janitor li.front {display: block; color: #ffffff; padding: 20px; text-transform: uppercase; font-size: 18px;}
-#header .janitor li.front a {white-space: nowrap; opacity: 0;}
-#header .janitor li.front a span {display: inline-block; vertical-align: top;}
-#page > .servicenavigation {display: block; padding: 0; position: absolute; top: 0px; right: 30px;}
-#page > .servicenavigation li.navigation {display: none;}
-#page > .servicenavigation li.help {display: none;}
-#page > .servicenavigation li {display: inline-block; vertical-align: top; color: #8C9399; padding: 10px 0; }
-#page > .servicenavigation li:after {content: "\00a0\00a0|\00a0\00a0";}
-#page > .servicenavigation li:last-child:after {content: "";}
-#page > .servicenavigation li a {display: inline-block; vertical-align: top;}
-#page > .servicenavigation li a:hover {text-decoration: underline;}
+#header {z-index: 100; position: fixed; height: 60px; width: 100%; top: 0; left: 0; background: #ffffff; border-bottom: 1px solid #dedede;
+	-moz-user-select: none;
+	-webkit-user-select: none;
+	user-select: none;
+}
+#header .title {z-index: 10; position: absolute; top: 0; right: 0; text-align: right;}
+#header .title h1 {font-size: 20px; padding-bottom: 0;}
+#header .title.double h1 {font-size: 20px; padding-bottom: 0; padding-top: 12px;}
+#header .title h2 {font-size: 13px; line-height: 0; padding-top: 10px;}
+#header .servicenavigation {display: none;}
+#header div.nav {position: absolute; left: 0; top: 0; width: 30px; height: 39px; padding: 21px 15px 0;}
+#header div.nav div {border-radius: 1px; height: 3px; margin: 0 0 5px; background: #888888;}
+#header div.nav a {display: none;}
+#navigation {position: fixed; width: 100%; overflow: hidden; min-height: 100%; background: #313942; top: 0px; display: none;
+	-moz-user-select: none;
+	-webkit-user-select: none;
+	user-select: none;
+}
 #navigation {opacity: 0;}
+#navigation ul {}
 #navigation ul li {color: #8c9399; display: block; text-transform: uppercase;}
-#navigation ul li:hover {color: #ffffff;}
-#navigation ul li a {display: block; padding: 14px 20px 15px;}
-#navigation > ul.navigation {}
+#navigation ul li:active {color: #ffffff;}
+#navigation ul li a {display: block; padding: 19px 20px 20px; font-size: 15px;}
+#navigation > ul.navigation {padding: 20px 0;}
 #navigation > ul.navigation > li {overflow: hidden; border-bottom: 1px solid #404a56;}
-#navigation > ul.navigation h3 {color: #cccccc; padding: 11px 20px 12px; font-size: 10px; position: relative; }
+#navigation > ul.navigation h3 {color: #cccccc; padding: 19px 20px 20px; font-size: 17px; position: relative;}
 #navigation > ul.navigation h3 svg {position: absolute; top: 11px; right: 20px; stroke: #8c9399; stroke-width: 2px;}
-#navigation > ul.navigation h3:hover {color: #ffffff;}
+#navigation > ul.navigation h3:active {color: #ffffff;}
 #navigation > ul.navigation ul {}
 #navigation > ul.navigation ul li {padding-left: 20px; border-top: 1px solid #404a56;}
 #navigation > ul.navigation > li.empty {display: none;}
-#navigation li.selected a {padding-left: 35px; color: #ffffff;}
+#navigation > ul.navigation li.front {border-bottom: 1px solid #777777;}
+#navigation > ul.navigation li.web {border-top: 1px solid #777777;}
+#navigation .selected {color: #8c9399; background: #f5f7f8;}
 
 
 /*s-content.css*/
-#content {margin-bottom: 50px;}
-#content a {text-decoration: underline;}
+#content {position: relative; padding-top: 60px; padding-bottom: 30px;}
 #content .link {cursor: pointer;}
-#content .scene {position: relative; min-height: 200px;}
-#content .scene > h1 {height: 46px; border-bottom: 1px solid #bbbbbb; padding-bottom: 74px; background: #ffffff;}
-#content .scene > h1 + h2 {height: 24px; padding-bottom: 0; font-size: 14px; height: 90px; margin: -90px 0 0;}
-#content .scene h1 + ul.actions {padding: 0 30px; height: 49px; margin: -49px 0 0;}
-#content .scene h1 + h2 + ul.actions {padding: 0 30px; height: 49px; margin: -49px 0 0;}
-#content .scene h1 + ul.actions li,
-#content .scene h1 + h2 + ul.actions li {padding-bottom: 0;}
-#content .scene > ul.actions li.delete {float: right; padding: 0 0 10px 10px;}
-#content .scene h1 + p,
-#content .scene h1 + h3,
-#content .scene h1 + h2 + p,
-#content .scene h1 + h2 + h3,
-#content .scene h1 + ul.actions + p,
-#content .scene h1 + ul.actions + h3,
-#content .scene h1 + h2 + ul.actions + p,
-#content .scene h1 + h2 + ul.actions + h3 {padding-top: 20px;}
-#content ul.list {padding: 21px 30px;}
+#content a {color: #888888;}
+#content a:active {text-decoration: underline;}
+#content .scene {position: relative;}
+#content .scene > h1,
+#content .scene > h1 + h2 {display: none;}
+#content .scene > ul.actions li.delete {float: right; padding-right: 0;}
+#content ul.list {padding: 21px 15px;}
 #content ul.list li {display: block;}
-#content dl.list {padding: 21px 30px; width: 600px;}
+#content dl.list {padding: 21px 15px; width: 600px;}
 #content dl.list dt,
 #content dl.list dd {padding: 5px 0; border-bottom: 1px solid #dbdfe5; height: 14px;}
 #content dl.list dt {width: 100px;}
 #content dl.list dt:after {content: ":";}
 #content dl.list dd {width: 170px; margin: 0 30px 0 0;}
-#content .scene > ul.actions {padding-bottom: 20px; padding-top: 20px; text-align: left;}
-#content .scene > ul.actions li {padding: 0 10px 10px 0;}
+#content .scene > ul.actions {padding-bottom: 14px; padding-top: 14px; text-align: left; border-bottom: 1px solid #bbbbbb;}
+#content .scene > ul.actions li {padding: 0 5px 0 0;}
 #content .scene ul.tabs {background-color: #dedede; border-top: 1px solid #bbbbbb;}
 #content .scene > ul.tabs {border: none;}
-#content .scene ul.tabs li {padding: 15px 30px; border-right: 1px solid #dedede;}
-#content .scene ul.tabs li a {text-decoration: none;}
+#content .scene ul.tabs li {padding: 15px 12px; border-right: 1px solid #dedede;}
+#content .scene ul.tabs li a {text-decoration: none; font-size: 13px;}
 #content .scene ul.tabs li.selected {background-color: #f5f7f8; color: #313942;}
-#content .scene li.comment ul.info {padding: 0 30px;}
+#content .scene li.comment ul.info {padding: 0 15px;}
 #content .scene li.comment ul.info li {display: inline-block; vertical-align: top;}
 #content .scene li.comment ul.info li.user:after {content: ",\00a0";}
 #content .scene li.comment p.comment {color: #313942; padding-bottom: 10px;}
@@ -120,10 +124,15 @@ dt {color: #7d848c; display: inline-block; vertical-align: top; font-size: 12px;
 #content .system_error, #content .system_error * {color: red !important;}
 #content .scene.login form {padding-top: 30px;}
 
+
 /*s-footer.css*/
-#footer {text-align: right; font-size: 0; padding: 10px 20px; position: fixed; z-index: 100; bottom: 0; right: 0; background-color: rgba(255,255,255,0.5);}
-#footer .servicenavigation {display: none;}
-#footer p {white-space: nowrap; padding: 0;}
+#footer {text-align: center; font-size: 0; border-top: 1px solid #dedede;}
+#footer .servicenavigation {display: block;}
+#footer .servicenavigation li.totop {height: 60px; display: block; background-color: #dedede;}
+#footer .servicenavigation li.totop a {display: none;}
+#footer .servicenavigation li.totop svg {margin-top: 19px; stroke: #313942; stroke-width: 3px;}
+#footer p {padding: 10px 15px;}
+
 
 /*s-login_overlay.css*/
 #login_overlay {position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255, 255, 255, 0.8); z-index: 10000;}
@@ -155,26 +164,29 @@ dt {color: #7d848c; display: inline-block; vertical-align: top; font-size: 12px;
 
 
 /*s-form.css*/
-#content form {}
+#content form {max-width: 600px;}
 #content fieldset {border: none; display: block;}
-#content .field {padding: 0 28px 10px; position: relative; font-size: 0; z-index: 1;}
-#content label {display: none;}
+#content .field {padding: 0 13px 10px; position: relative; font-size: 0; z-index: 1;}
+#content label {
+	font-size: 12px; line-height: 1em; display: block; padding: 0 3px;
+}
 #content .field input,
 #content .field select,
-#content .field textarea {box-shadow: inset 0 1px 2px #dedede; background: #ffffff; border: 1px solid #dcdcdc; display: inline-block; vertical-align: top; border-radius: 3px; margin: 2px; outline: none; position: relative; z-index: 1;}
-#content .field input {width: 366px; height: 24px; padding: 2px 6px;}
-#content .field select {width: 381px; height: 33px; color: #333333; padding: 5px 3px 2px 2px;}
+#content .field textarea {box-shadow: inset 0 1px 2px #dedede; background: #ffffff; border: 1px solid #dcdcdc; 
+	display: inline-block; vertical-align: top; border-radius: 3px; margin: 2px; outline: none; position: relative; z-index: 1;}
+#content .field input {width: calc(100% - 18px); height: 24px; padding: 2px 6px;}
+#content .field select {width: calc(100% - 4px); height: 30px; color: #333333; padding: 5px 3px 2px 2px;}
 #content .field select option {padding: 5px 3px 2px 6px;}
 @media all and (-webkit-min-device-pixel-ratio:0) {
-	#content .field select {width: 380px; height: 31px; padding: 2px 3px 2px 7px;
-		background: #ffffff url(/janitor/admin/img/bg_icons.png) no-repeat 360px -976px;
+	#content .field select {padding: 2px 3px 2px 7px;
+		background: #ffffff url(/janitor/admin/img/bg_icons.png) no-repeat calc(100% + 17px) -977px;
 		-webkit-appearance: none;
 	}
 }
-#content .field textarea {width: 372px; height: 80px; overflow: auto; padding: 6px 0 2px 6px; }
+#content .field textarea {width: calc(100% - 18px); height: 80px; overflow: auto; padding: 6px 6px 2px 6px; }
 #content .field.short textarea {height: 40px;}
 #content .field textarea.autoexpand {width: 366px; padding: 6px 6px 2px; overflow: hidden;}
-#content .field .pseudolabel {position: absolute; font-size: 1.077rem; display: inline-block; padding: 5px 6px; z-index: 2;}
+#content .field .pseudolabel {position: absolute; font-size: 14px; display: inline-block; vertical-align: top; line-height: 1em; padding: 8px 6px; z-index: 2;}
 #content .field.checkbox,
 #content .field.boolean {padding-bottom: 15px;}
 #content .field.checkbox input,
@@ -188,9 +200,7 @@ dt {color: #7d848c; display: inline-block; vertical-align: top; font-size: 12px;
 #content .field.radiobuttons div.item input {width: auto; height: auto; padding: 0; margin: 1px 10px 0 3px; border: 0;}
 #content .field.radiobuttons div.item label {font-size: 1.077rem; line-height: 1em; display: inline-block; vertical-align: top; text-align: left; width: auto;}
 #content .field.files {border: 3px dashed #dedede; width: 374px; display: inline-block; vertical-align: top; border-radius: 5px; position: relative; padding: 0; margin: 2px 30px 20px;}
-#content .field.files input[type="file"] {opacity: 0; width: 374px; border: none; height: 60px; margin: 0; padding: 0;
-	font-size: 130px;
-}
+#content .field.files input[type="file"] {opacity: 0; width: 374px; border: none; height: 60px; margin: 0; padding: 0;}
 #content .field.files label {display: block; position: absolute; width: 120px; left: 50%; padding: 1px 4px 3px; margin: 20px 0 0 -60px; text-align: center; border-radius: 6px; background: #dedede;}
 #content .field.files.loading label {display: none;}
 #content .field.files.loading {background: transparent url(/janitor/admin/img/gx_loader.gif) no-repeat center center;}
@@ -208,7 +218,7 @@ dt {color: #7d848c; display: inline-block; vertical-align: top; font-size: 12px;
 #content .field.location.geolocation div.longitude input {width: 158px;}
 iframe#geolocationmap {width: 300px; height: 300px; position: absolute; top: 0; left: 0; z-index: 100; border: 1px solid #666666; background-color: #ffffff;}
 #content .field.focus input,
-#content .field.focus textarea {margin: 0;}
+#content .field.focus textarea {}
 #content .field.focus select {padding: 4px 3px 1px 0px;}
 @media all and (-webkit-min-device-pixel-ratio:0) {
 	#content .field.focus select {padding: 2px 3px 3px 5px;
@@ -217,7 +227,7 @@ iframe#geolocationmap {width: 300px; height: 300px; position: absolute; top: 0; 
 }
 #content .field.focus input,
 #content .field.focus select,
-#content .field.focus textarea {border: 3px solid #5c5c5c;}
+#content .field.focus textarea {border: 3px solid #5c5c5c; margin: 0;}
 #content .field.radiobuttons.focus input,
 #content .field.checkbox.focus input,
 #content .field.boolean.focus input {margin: 1px 10px 0 3px; border: none;}
@@ -230,23 +240,23 @@ iframe#geolocationmap {width: 300px; height: 300px; position: absolute; top: 0; 
 #content .field select.default,
 #content .field textarea.default,
 #content .field .pseudolabel {color: #aaaaaa;}
-#content .field .indicator {position: absolute; top: 4px; left: 420px; width: 25px; height: 25px;}
+#content .field .indicator { display: inline-block; vertical-align: top; width: 20px; height: 18px;}
 #content .field.required .indicator {
-	background: transparent url(/janitor/admin/img/bg_icons.png) no-repeat 0 -292px;
+	background: transparent url(/janitor/admin/img/bg_icons.png) no-repeat 5px -299px;
 }
-#content .field.text.required .indicator {background-position: 0 -296px;}
+#content .field.text.required .indicator {background-position: 5px -299px;}
 #content .field.radiobuttons .indicator,
 #content .field.checkbox .indicator,
 #content .field.boolean .indicator {top: -5px;}
 #content .field.files .indicator {left: 387px; top: -1px;}
-#content .field.correct .indicator {background-position: 0 -320px;}
-#content .field.text.correct .indicator {background-position: 0 -321px;}
+#content .field.correct .indicator {background-position: 5px -328px;}
+#content .field.text.correct .indicator {background-position: 5px -328px;}
 #content .field.error input,
-#content .field.error textarea {margin: 0;}
+#content .field.error textarea {}
 #content .field.error select {padding: 3px 3px 2px 0px;}
 #content .field.error input,
 #content .field.error select,
-#content .field.error textarea {border: 3px solid #f8c9bb;}
+#content .field.error textarea {border: 3px solid #f8c9bb; margin: 0;}
 @media all and (-webkit-min-device-pixel-ratio:0) {
 	#content .field.error select {padding: 2px 3px 3px 5px;
 		background-position: 358px -979px;
@@ -258,27 +268,27 @@ iframe#geolocationmap {width: 300px; height: 300px; position: absolute; top: 0; 
 #content .field.location.error input {margin: 2px; border: 1px solid #dcdcdc;}
 #content .field.location.error input.error {margin: 0; border: 3px solid #f8c9bb;}
 #content .field.files.error {border-color: #f8c9bb;}
-#content ul.actions {padding: 0 25px;}
-#content ul.actions li {width: auto; height: auto; display: inline-block; padding: 0 5px 10px; vertical-align: top;
+#content ul.actions {padding: 0 15px;}
+#content ul.actions li {width: auto; height: auto; display: inline-block; padding: 0 5px 10px 0; vertical-align: top;
 	-moz-user-select: none;
 	-webkit-user-select: none;
 	user-select: none;
 }
-#content ul.actions input.button {width: auto; height: 26px; padding: 3px 10px;}
+#content ul.actions input.button {width: auto; height: 32px; padding: 8px 7px;}
+#content ul.actions a.button {display: block; text-decoration: none; height: 14px; padding: 9px 10px;}
 @media all and (-webkit-min-device-pixel-ratio:0) {
-	#content ul.actions input.button {padding-bottom: 4px;
+	#content ul.actions input.button {padding-bottom: 9px;
 		-webkit-appearance: none;
 	}
 }
-#content ul.actions a.button {display: block; text-decoration: none; height: 14px; padding: 5px 12px 7px;}
 #content ul.actions input.button,
-#content ul.actions a.button {font-size: 1rem; line-height: 1.2em; background-color: #8c9399; color: #ffffff; border: none; cursor: pointer; border-radius: 3px;}
-#content ul.actions input.button:hover,
-#content ul.actions a.button:hover {background-color: #313942;}
+#content ul.actions a.button {font-size: 14px; line-height: 1em; background-color: #8c9399; color: #ffffff; border: none; cursor: pointer; border-radius: 3px;}
+#content ul.actions input.button:active,
+#content ul.actions a.button:active {background-color: #313942;}
 #content ul.actions input.button.primary,
 #content ul.actions a.button.primary {background-color: #64ad8e;}
-#content ul.actions input.button.primary:hover,
-#content ul.actions a.button.primary:hover {background-color: #313942;}
+#content ul.actions input.button.primary:active,
+#content ul.actions a.button.primary:active {background-color: #313942;}
 #content ul.actions input.button.secondary,
 #content ul.actions a.button.secondary {background-color: #fecd60; color: #9f742c;}
 #content ul.actions input.button.secondary:hover,
@@ -294,18 +304,18 @@ iframe#geolocationmap {width: 300px; height: 300px; position: absolute; top: 0; 
 #content form input.button.delete.confirm:hover {}
 #content form input.button.disabled,
 #content form input.button.disabled:hover {cursor: default !important; color: #aaaaaa !important; background-color: #eeeeee !important;}
-#content .field div.help {position: absolute; left: 455px; top: 0; width: 200px; line-height: 1.2em;}
+#content .field div.help {width: 100%; line-height: 1.2em;}
 #content .field.files div.help {left: 422px;}
 #content .field div.error,
-#content .field div.hint {display: none; padding: 5px; border-radius: 3px; font-size: 12px;}
-#content .field div.error {border: 1px solid #bbbbbb; color: #a27366; background: #f8c9bb; margin-top: -3px;}
+#content .field div.hint {display: none; box-sizing: border-box; padding: 5px; border-radius: 3px; font-size: 12px; margin: 1px 0 0;}
+#content .field div.error {border: 1px solid #bbbbbb; color: #a27366; background: #f8c9bb;}
 #content .field.error div.error {display: block;}
-#content .field div.hint {z-index: 9; border: 1px solid #bbbbbb; color: #5d7731; background: #c8e183;}
-#content .field.focus div.hint,
-#content .field.hover div.hint {display: block;}
+#content .field div.hint {border: 1px solid #bbbbbb; color: #5d7731; background: #c8e183;}
+#content .field.focus div.hint {display: block;}
+#content .field.error div.hint {display: none;}
+#content .field.correct div.hint,
+#content .field.correct div.error {display: none;}
 #content .field.html {border-top: 1px solid #dedede; padding-top: 10px; padding-bottom: 10px; border-bottom: 1px solid #dedede; margin-bottom: 10px; z-index: 3;}
-#content .field.html div.help {left: 555px;}
-#content .field.html.optionsshown {z-index: 60 !important;}
 #content .field.html div.html_editor_hint {width: 383px;}
 #content .field.html div.html_editor_hint_content {display: none;}
 #content .field.html div.html_editor_hint h3,
@@ -316,12 +326,12 @@ iframe#geolocationmap {width: 300px; height: 300px; position: absolute; top: 0; 
 #content .field.html div.html_editor_hint .open,
 #content .field.html div.html_editor_hint .close {font-size: 1rem; line-height: 1em; cursor: pointer; vertical-align: top; margin: 3px 3px 0; border-radius: 13px; background-color: #313942; padding: 6px 10px 7px; color: #ffffff; margin: 10px 0 20px; text-align: center;}
 #content .field.html > textarea {display: none;}
-#content .field.html > textarea.show {display: block; height: 200px; width: 472px;}
-#content .field.html > label {display: block;  width: 477px;}
+#content .field.html > textarea.show {display: block; height: 200px;}
+#content .field.html > label {display: block; width: 377px;}
 #content .field.html > label span {font-size: 0.723em; float: right; padding: 3px 0 0; cursor: pointer;}
 #content .field.html > .indicator {top: 33px;}
 #content .field.html .viewer {display: none;}
-#content .field.html .editor { width: 482px; position: relative; z-index: 3;}
+#content .field.html .editor {width: 382px; position: relative; z-index: 3;}
 #content .field.html ul.options {height: 40px; display: block; vertical-align: top; width: 30px; position: relative; z-index: 1; padding: 0;}
 #content .field.html ul.options li {font-size: 1rem; line-height: 1em; cursor: pointer; vertical-align: top; margin: 3px 3px 0; border-radius: 13px; background-color: #313942; padding: 6px 10px 7px; color: #ffffff; width: 330px; display: none;}
 #content .field.html ul.options li:hover {background-color: #64ad8e;}
@@ -332,7 +342,7 @@ iframe#geolocationmap {width: 300px; height: 300px; position: absolute; top: 0; 
 #content .field.html .editor div.dragged {z-index: 15;}
 #content .field.html .editor div.tag .drag {display: none; position: absolute; top: 0px; left: -20px; border-top-left-radius: 15px; border-bottom-left-radius: 15px; background: #dedede; width: 30px; height: 30px; cursor: move;}
 #content .field.html .editor div.tag:hover .drag {display: block;}
-#content .field.html .editor div.tag .remove {display: none; position: absolute; top: 0px; right: -15px; border-radius: 15px; background: #dedede; width: 30px; height: 30px; cursor: pointer;
+#content .field.html .editor div.tag .remove {display: none; position: absolute; top: 0px; right: -10px; border-radius: 15px; background: #dedede; width: 30px; height: 30px; cursor: pointer;
 	background: #dedede url(/janitor/admin/img/bg_icons.png) no-repeat 8px -42px;
 }
 #content .field.html .editor div.tag:hover .remove {display: block;}
@@ -345,10 +355,8 @@ iframe#geolocationmap {width: 300px; height: 300px; position: absolute; top: 0; 
 #content .field.html .editor div.tag ul.type.open li:hover {background-color: #dedede;}
 #content .field.html .editor div.tag ul.type.open li.selected {background-color: #5c5c5c !important; color: #ffffff !important;}
 #content .field.html .editor div.tag ul.type li.code {font-size: 8px; padding-top: 11px;}
-#content .field.html .editor div.tag ul.type li.media {font-size: 8px; padding-top: 11px;}
-#content .field.html .editor div.tag ul.type li.youtube {font-size: 8px; padding: 7px 5px; max-width: 4.4ch; word-wrap: break-word;}
-#content .field.html .editor div.tag ul.type li.vimeo {font-size: 8px; padding-top: 11px;}
-#content .field.html .editor div.tag div.text {display: inline-block; vertical-align: top; width: 434px; height: auto; padding: 4px 6px; line-height: 1.375em; border-radius: 3px; background-color: #F5F7F8; color: #333333; box-shadow: inset 0 1px 2px #dedede; background: #ffffff; border: 1px solid #dcdcdc; min-height: 20px; outline: none;}
+#content .field.html .editor div.tag ul.type li.youtube {font-size: 8px; padding-top: 11px;}
+#content .field.html .editor div.tag div.text {display: inline-block; vertical-align: top; width: 334px; height: auto; padding: 4px 6px; line-height: 1.375em; border-radius: 3px; background-color: #F5F7F8; color: #333333; box-shadow: inset 0 1px 2px #dedede; background: #ffffff; border: 1px solid #dcdcdc; min-height: 20px;}
 #content .field.html .editor div.tag div.text em,
 #content .field.html .editor div.tag div.text strong,
 #content .field.html .editor div.tag div.text a {background-color: rgba(255, 0, 0, 0.3); cursor: default; font-size: inherit;}
@@ -362,35 +370,14 @@ iframe#geolocationmap {width: 300px; height: 300px; position: absolute; top: 0; 
 #content .field.html .editor div.tag.h4 div.text {font-size: 16px;}
 #content .field.html .editor div.tag.h5 div.text {font-size: 14px;}
 #content .field.html .editor div.tag.p div.text {font-size: 14px;}
-#content .field.html .editor div.tag.code div.text {font-size: 12px; line-height: 1.761em; white-space: pre-wrap;
-	font-family: "Monaco", "Courier New", "Courier";
-	-moz-tab-size: 4;
-	-o-tab-size: 4;
-	tab-size: 4;
-}
 #content .field.html .editor div.tag.ul {padding-left: 50px;}
 #content .field.html .editor div.tag.ol {padding-left: 50px;}
 #content .field.html .editor div.tag div.li {font-size: 14px;}
-#content .field.html .editor div.tag div.li div.text {width: 414px;}
+#content .field.html .editor div.tag div.li div.text {width: 314px;}
 #content .field.html .editor div.tag.file .text {padding: 0 6px; height: 28px;}
-#content .field.html .editor div.tag.file.done .text {color: #aaaaaa; font-size: 13px; padding: 4px 6px; line-height: 1.461em; height: auto; text-decoration: underline;}
-#content .field.html .editor div.tag.file.done.focus .text {color: #333333;}
-#content .field.html .editor div.tag.file .text label {padding: 5px 0 0; display: block; text-align: center; position: absolute; z-index: 1; width: 432px; color: #aaaaaa;}
-#content .field.html .editor div.tag.file input {width: 416px; opacity: 0; height: 18px; position: relative; z-index: 2;
-	font-size: 130px;
-}
-#content .field.html .editor div.tag.media .text {padding: 0 6px; height: 28px;}
-#content .field.html .editor div.tag.media.done .text {color: #aaaaaa; font-size: 13px; padding: 4px 6px; line-height: 1.461em; height: auto;}
-#content .field.html .editor div.tag.media.done.focus .text {color: #333333;}
-#content .field.html .editor div.tag.media .text label {padding: 5px 0 0; display: block; text-align: center; position: absolute; z-index: 1; width: 432px; color: #aaaaaa;}
-#content .field.html .editor div.tag.media input {width: 416px; opacity: 0; height: 18px; position: relative; z-index: 2;
-	font-size: 130px;
-}
-#content .field.html .editor div.tag.media img {width: 444px; margin: 2px;}
-#content .field.html .editor div.tag.vimeo .text,
-#content .field.html .editor div.tag.youtube .text {padding: 0 6px; height: 28px; color: #aaaaaa; font-size: 13px; padding: 4px 6px; line-height: 1.461em; height: auto;}
-#content .field.html .editor div.tag.vimeo.focus .text,
-#content .field.html .editor div.tag.youtube.focus .text {color: #333333;}
+#content .field.html .editor div.tag.file .text label {padding: 5px 0 0; display: block; text-align: center; position: absolute; z-index: 1; width: 332px; color: #aaaaaa;}
+#content .field.html .editor div.tag.file .text label.done {text-align: left; color: #333333;}
+#content .field.html .editor div.tag.file input {width: 316px; opacity: 0; height: 18px; position: relative; z-index: 2;}
 body #selection_options {z-index: 1100; position: absolute; background-color: #F5F7F8; border: 3px solid #5c5c5c; margin: 0px 0 0 10px; padding: 15px; border-radius: 5px;}
 body #selection_options h3 {padding: 10px 0 10px; text-align: left; font-size: 13px; margin-top: 10px; border-top: 1px solid #5c5c5c;}
 body #selection_options li {display: block; font-size: 13px; padding: 5px 0; cursor: pointer;}
@@ -426,11 +413,11 @@ body #selection_options ul.actions a.button:hover {background-color: #313942;}
 
 
 /*s-tags.css*/
-#content ul.tags {padding: 0 125px 4px 30px;}
-#content ul.tags li {display: inline-block; vertical-align: top; margin: 0 6px 6px 0; border-radius: 12px; background-color: #313942; padding: 4px 7px 6px; color: #ffffff; font-size: 0;}
-#content ul.tags li.add {padding: 4px 4px 6px; cursor: pointer; width: 13px; text-align: center;}
+#content ul.tags {padding: 0 15px 4px;}
+#content ul.tags li {display: inline-block; vertical-align: top; margin: 0 6px 6px 0; border-radius: 22px; background-color: #313942; padding: 7px 12px 10px; color: #ffffff; font-size: 0;}
+#content ul.tags li.add {padding: 7px 4px 10px; cursor: pointer; width: 23px; text-align: center;}
 #content ul.tags li.add:hover {background-color: #64ad8e;}
-#content ul.tags li span {font-size: 11px; line-height: 1em; color: #ffffff !important;}
+#content ul.tags li span {font-size: 15px; line-height: 1em; color: #ffffff !important;}
 #content ul.tags li span.context {text-transform: uppercase;}
 #content ul.tags li span.context:after {content: ":";}
 #content ul.tags li span.value {}
@@ -454,6 +441,7 @@ body #selection_options ul.actions a.button:hover {background-color: #313942;}
 #content div.all_items ul.items > li div.tagoptions ul.actions {position: static; right: auto; top: auto;}
 #content div.all_items ul.items > li div.tagoptions ul.actions li {padding-top: 1px;}
 #content div.sortable div.tagoptions .field {padding-left: 48px;}
+#content div.all_items ul.items > li ul.tags {display: none;}
 #content .scene.tagList ul.items > li.unused {background: orange;}
 #content .scene.tagList ul.items > li > h3 > span {font-size: 12px;}
 #content .scene.tagEdit ul.tag_items {padding: 16px 30px;}
@@ -543,6 +531,19 @@ body #selection_options ul.actions a.button:hover {background-color: #313942;}
 #content .scene.profileEdit div.password label {display: block; padding-left: 3px;}
 #content .scene.profileEdit div.password .indicator {top: 20px;}
 
+/*s-user.css*/
+#content .scene.userEdit > div.usernames fieldset {width: calc(75% - 10px);}
+#content .scene.userEdit > div.usernames fieldset .field input {width: calc(100% - 18px);}
+#content .scene.userEdit > div.usernames .actions {width: calc(25% - 10px); padding: 21px 0 9px;}
+#content .scene.userEdit > div.usernames .actions li input.button {height: 28px; padding-top: 6px;}
+#content .scene.userEdit > div.password .actions li {padding: 0 5px 25px 0;}
+#content .scene.userEdit > div.addresses ul.addresses {padding: 0 0 20px; border-top: 1px solid #dedede;}
+#content .scene.userEdit > div.addresses ul.addresses > li {height: auto; width: auto; display: block; margin: 0; padding: 15px 15px 20px;}
+#content .scene.userEdit > div.addresses ul.addresses > li .actions {position: absolute; top: 15px; right: 15px; left: auto; bottom: auto; padding: 0;}
+#content .scene.userEdit > div.newsletters ul.newsletters {padding: 0 15px 10px;}
+#content .scene.userEdit > div.newsletters ul.newsletters > li h3 {padding-top: 8px;}
+
+
 /*s-logs.css*/
 #content .defaultList.logList h1 {padding-bottom: 74px; border-bottom: 1px solid #bbbbbb;}
 #content .defaultList.logList ul.items > li ul.loglines li {padding: 0 30px; display: block;}
@@ -602,68 +603,42 @@ body #selection_options ul.actions a.button:hover {background-color: #313942;}
 /*s-default_list.css*/
 #content div.all_items > h2,
 #content div.enabled_items > h2,
-#content div.disabled_items > h2 {padding: 10px 30px 11px;}
+#content div.disabled_items > h2 {padding: 10px 15px 11px;}
 #content div.all_items > p,
 #content div.enabled_items > p,
-#content div.disabled_items > p {padding: 10px 30px 11px;}
+#content div.disabled_items > p {padding: 10px 15px 11px;}
 #content div.enabled_items,
 #content div.disabled_items {border-bottom: 1px solid #dedede; margin-bottom: 20px;}
 #content div.enabled_items > p,
 #content div.disabled_items > p {padding-top: 20px;}
 #content div.all_items > h2 + ul.items,
 #content div.all_items > p + ul.items {border-top: 1px solid #dedede;}
-#content div.all_items ul.items > li {display: block; position: relative; border-bottom: 1px solid #dedede; overflow: hidden;}
+#content div.all_items ul.items > li {display: block; position: relative; border-bottom: 1px solid #dedede;}
 #content div.all_items ul.items > li:hover {background-color: #edf0f2;}
-#content div.all_items ul.items > li h3 {padding: 10px 250px 10px 30px;}
-#content div.all_items.images ul.items > li {background-repeat: no-repeat; background-position: 0px center;}
-#content div.all_items.audios ul.items > li {}
-#content div.all_items.audios ul.items > li div.audioplayer {z-index: 10; position: absolute; top: 7px; left: 25px; width: 20px; height: 20px; 
-	background: transparent url(/janitor/admin/img/bg_bn_play_small.png) no-repeat 0px 0px;
-}
-#content div.all_items.audios ul.items > li.playing div.audioplayer {background-position: 0px -100px;}
-#content div.all_items.videos ul.items > li {}
-#content div.all_items.videos ul.items > li div.videoplayer {z-index: 10; position: absolute; top: 10px; left: 20px; width: 50px; height: 50px; 
-	background: transparent url(/janitor/admin/img/bg_bn_play_medium.png) no-repeat 0px 0px;
-}
-#content div.all_items.videos ul.items > li.playing div.videoplayer {background-position: 0px -100px;}
-#content div.all_items ul.items > li .description {padding-bottom: 10px; margin-top: -5px; font-size: 12px; line-height: 1em;}
-#content div.all_items ul.items > li dl {overflow: hidden; padding: 0 30px 6px; margin-top: -5px;}
+#content div.all_items ul.items > li h3 {padding: 12px 80px 12px 15px;}
+#content div.all_items ul.items > li .description {padding-bottom: 15px; margin-top: -10px; font-size: 12px; line-height: 1em;}
+#content div.all_items ul.items > li dl {overflow: hidden; padding: 0 15px 6px; margin-top: -10px;}
 #content div.all_items ul.items > li dt {float: left; clear: left;}
 #content div.all_items ul.items > li dt:after {content: ":\00a0";}
 #content div.all_items ul.items > li dd {float: left; clear: right; padding: 0 0 3px;}
-#content div.all_items ul.items > li ul.actions {position: absolute; top: 0px; padding: 0; right: 30px;}
+#content div.all_items ul.items > li ul.actions {position: absolute; top: 2px; padding: 0; right: 15px;}
 #content div.all_items ul.items > li ul.actions li {padding: 5px 0 5px 5px;}
-#content div.all_items ul.items > li ul.actions li a.button {padding: 4px 12px 6px;}
+#content div.all_items ul.items > li ul.actions li a.button {padding: 5px 12px 7px;}
 #content div.all_items ul.items > li ul.actions li input.button {height: 24px;}
+#content div.all_items ul.items > li ul.actions li.delete,
+#content div.all_items ul.items > li ul.actions li.status {display: none;}
 #content div.all_items div.filter {padding: 10px 0 4px; min-height: 28px; background: #f5f7f8; border-bottom: 1px solid #bbbbbb; position: relative; overflow: hidden;}
-#content div.all_items div.filter ul.tags {padding-bottom: 0; padding-right: 150px;}
-#content div.all_items div.filter ul.tags li {font-size: 12px; background-color: #dedede; cursor: pointer;}
+#content div.all_items div.filter ul.tags {padding-right: 15px;}
+#content div.all_items div.filter ul.tags li {font-size: 15px; background-color: #dedede; color: #313942; cursor: pointer;}
 #content div.all_items div.filter ul.tags li.selected,
-#content div.all_items div.filter ul.tags li:hover {background-color: #313942;}
+#content div.all_items div.filter ul.tags li:active {background-color: #313942; color: #ffffff;}
 #content div.all_items div.filter.filtering {background: red;}
-#content div.all_items div.filter form {position: absolute; right: 30px; top: 9px;}
-#content div.all_items div.filter .field {padding: 0 0 6px;}
-#content div.all_items div.filter .field input {width: 100px; height: 16px; font-size: 12px;}
-#content div.all_items.sortable ul.items > li.item div.drag {width: 30px; height: 30px; position: absolute; top: 0px; left: 15px; background: transparent url(/janitor/admin/img//bg_icons2.png) no-repeat 10px -440px; cursor: move;}
-#content div.all_items.sortable ul.items > li.item h3,
-#content div.all_items.sortable ul.items > li.item p,
-#content div.all_items.sortable ul.items > li.item ul.tags,
-#content div.all_items.sortable ul.items > li.item dl {padding-left: 50px;}
-#content div.all_items.sortable.images ul.items > li.item h3,
-#content div.all_items.sortable.images ul.items > li.item p,
-#content div.all_items.sortable.images ul.items > li.item ul.tags,
-#content div.all_items.sortable.images ul.items > li.item dl {padding-left: 55px;}
-#content div.all_items.sortable.audios ul.items > li.item h3,
-#content div.all_items.sortable.audios ul.items > li.item p,
-#content div.all_items.sortable.audios ul.items > li.item ul.tags,
-#content div.all_items.sortable.audios ul.items > li.item dl {padding-left: 35px;}
-#content div.all_items.sortable.videos ul.items > li.item h3,
-#content div.all_items.sortable.videos ul.items > li.item p,
-#content div.all_items.sortable.videos ul.items > li.item ul.tags,
-#content div.all_items.sortable.videos ul.items > li.item dl {padding-left: 55px;}
-#content div.all_items.sortable.images ul.items > li {background-position: 50px center;}
-#content div.all_items.sortable.audios ul.items > li div.audioplayer {left: 55px;}
-#content div.all_items.sortable.videos ul.items > li div.videoplayer {left: 45px;}
+#content div.all_items div.filter form {}
+#content div.all_items div.filter .field {padding: 0 13px 6px;}
+#content div.all_items div.filter .field label {display: none;}
+#content div.all_items div.filter .field input {}
+#content div.all_items.sortable ul.items > li.item div.drag {width: 30px; height: 30px; position: absolute; top: 4px; left: 7px; background: transparent url(/janitor/admin/img//bg_icons2.png) no-repeat 10px -440px; cursor: move;}
+#content div.all_items.sortable ul.items > li.item .text {padding: 0 0 0 25px;}
 
 
 /*s-default_edit.css*/
@@ -766,10 +741,19 @@ body #selection_options ul.actions a.button:hover {background-color: #313942;}
 #content .scene.defaultEdit div.togglable h2 svg {position: absolute; top: 7px; right: 25px; stroke: #313942; stroke-width: 3px;}
 
 
+/*s-default_edit.css*/
+#content .scene.defaultEdit > div.status .actions li.status form {padding-right: 15px;}
+#content .scene.defaultEdit > div.item .actions li {padding: 0 5px 10px 0;}
+
+
 /*s-default_new.css*/
 #content .scene.defaultNew > form {padding-top: 20px;}
 #content .scene.defaultNew > form .actions {text-align: left;}
 #content .scene.defaultNew > form .actions li {padding: 0 5px 10px;}
+
+
+/*s-default_new.css*/
+#content .scene.defaultNew > form .actions li {padding: 0 5px 10px 0;}
 
 
 /*s-itemtypes.css*/
@@ -789,238 +773,4 @@ body #selection_options ul.actions a.button:hover {background-color: #313942;}
 #content .scene.wishList ul.items > li dl dt.reserved {display: none;}
 #content .scene.wishList ul.items > li dl dd.reserved {font-size: 14px;}
 
-
-
-/*s-content.css*/
-#content .scene {}
-#content .deviceList form.options {padding: 16px 0 0; border-bottom: 1px solid #dedede;}
-#content .deviceList form.options fieldset {display: inline-block; vertical-align: top;}
-#content .deviceList form.options fieldset .field {padding-right: 12px; padding-bottom: 5px;}
-#content .deviceList form.options fieldset .field .help {display: none;}
-#content .deviceList form.options .actions {display: inline-block; vertical-align: top; padding-left: 0;}
-#content .deviceList form.options .actions li {padding-left: 0;}
-#content .deviceList form.options .actions li input {margin-top: 4px;}
-#content .deviceList form.options div.tags {padding: 0 30px;}
-#content .deviceList form.options div.tags .field {padding-left: 0;}
-#content .deviceList form.options div.tags ul.tags,
-#content .deviceList form.options div.tags ul.taglist {padding: 0px 0 20px;}
-#content .deviceList form.options div.tags li {width: auto; display: inline-block; vertical-align: top; margin: 3px; border-radius: 13px; background-color: #313942; padding: 7px 10px; color: #ffffff; font-size: 0;}
-#content .deviceList form.options div.tags li.add {font-size: 0.923rem; padding: 6px 7px 7px 8px; cursor: pointer; width: 10px; text-align: center;}
-#content .deviceList form.options div.tags li.add:hover {background-color: #64ad8e;}
-#content .deviceList form.options div.tags li span {font-size: 0.923rem; line-height: 1em;}
-#content .deviceList form.options div.tags li span.context {text-transform: uppercase;}
-#content .deviceList form.options div.tags li span.context:after {content: ":";}
-#content .deviceList form.options div.tags li span.value {}
-#content .deviceList form.options div.tags ul.taglist li {background-color: #dedede;}
-#content .deviceList form.options div.tags.addTags li {cursor: pointer;}
-#content .deviceList form.options div.tags.addTags ul.tags li:hover {background-color: #df0000;}
-#content .deviceList form.options div.tags.addTags ul.taglist li:hover {background-color: #64ad8e;}
-#content .scene.deviceEdit div.markers {padding: 0; border-bottom: 1px solid #aaaaaa; overflow: hidden;}
-#content .scene.deviceEdit div.markers fieldset {display: inline-block; vertical-align: top;}
-#content .scene.deviceEdit div.markers fieldset .field {padding-right: 12px; padding-bottom: 0;}
-#content .scene.deviceEdit div.markers fieldset .field input[type=text] {width: 262px;}
-#content .scene.deviceEdit div.markers .actions {display: inline-block; vertical-align: top; padding: 0;}
-#content .scene.deviceEdit div.markers .actions li {padding-left: 0;}
-#content .scene.deviceEdit div.markers .actions li input {margin-top: 4px;}
-#content .scene.deviceEdit div.markers ul.markers {padding: 10px 0 20px;}
-#content .scene.deviceEdit div.markers ul.markers li {padding: 0 27px; font-size: 11px; position: relative; display: block;}
-#content .scene.deviceEdit div.markers ul.markers li span {padding: 3px; display: inline-block;}
-#content .scene.deviceEdit div.markers ul.markers li span.editable {background-color: #ffffff; border: 1px solid #dcdcdc; padding: 4px; margin: -2px; outline: none; border-radius: 3px; box-shadow: inset 0 1px 2px #dedede;}
-#content .scene.deviceEdit div.markers ul.markers li span.error {color: #fd0000;}
-#content .scene.deviceEdit div.markers ul.markers li:hover {background-color: #cccccc;}
-#content .scene.deviceEdit div.markers ul.markers li .delete {display: none; position: absolute; right: 30px; top: -4px; height: 24px; width: 24px; cursor: pointer; border-radius: 12px; border: 1px solid #fd0000;
-	background: #ffffff url(/janitor/admin/img/bg_icons.png) no-repeat 5px -45px;
-}
-#content .scene.deviceEdit div.markers ul.markers li:hover .delete {display: block;}
-#content .scene.deviceEdit div.exceptions {padding: 0; border-bottom: 1px solid #aaaaaa; overflow: hidden;}
-#content .scene.deviceEdit div.exceptions fieldset {display: inline-block; vertical-align: top;}
-#content .scene.deviceEdit div.exceptions fieldset .field {padding-right: 12px; padding-bottom: 0;}
-#content .scene.deviceEdit div.exceptions fieldset .field input[type=text] {width: 262px;}
-#content .scene.deviceEdit div.exceptions .actions {display: inline-block; vertical-align: top; padding: 0;}
-#content .scene.deviceEdit div.exceptions .actions li {padding-left: 0;}
-#content .scene.deviceEdit div.exceptions .actions li input {margin-top: 4px;}
-#content .scene.deviceEdit div.exceptions ul.exceptions {padding: 10px 0 20px;}
-#content .scene.deviceEdit div.exceptions ul.exceptions li {padding: 0 27px; font-size: 11px; position: relative; display: block;}
-#content .scene.deviceEdit div.exceptions ul.exceptions li span {padding: 3px; display: inline-block;}
-#content .scene.deviceEdit div.exceptions ul.exceptions li span.editable {background-color: #ffffff; border: 1px solid #dcdcdc; padding: 4px; margin: -2px; outline: none; border-radius: 3px; box-shadow: inset 0 1px 2px #dedede;}
-#content .scene.deviceEdit div.exceptions ul.exceptions li span.error {color: #fd0000;}
-#content .scene.deviceEdit div.exceptions ul.exceptions li:hover {background-color: #cccccc;}
-#content .scene.deviceEdit div.exceptions ul.exceptions li .delete {display: none; position: absolute; right: 30px; top: -4px; height: 24px; width: 24px; cursor: pointer; border-radius: 12px; border: 1px solid #fd0000;
-	background: #ffffff url(/janitor/admin/img/bg_icons.png) no-repeat 5px -45px;
-}
-#content .scene.deviceEdit div.exceptions ul.exceptions li:hover .delete {display: block;}
-#content .scene.deviceEdit div.testmarkers {padding: 0; border-bottom: 1px solid #aaaaaa; overflow: hidden;}
-#content .scene.deviceEdit div.testmarkers form {padding-bottom: 20px;}
-#content .scene.deviceEdit div.testmarkers h3 {font-size: 1.1rem; padding-bottom: 10px;}
-#content .scene.deviceEdit div.testmarkers ul.results {}
-#content .scene.deviceEdit div.testmarkers ul.results li {display: block; padding: 0 0 2px;}
-#content .scene.deviceEdit div.testmarkers h3.not {color: orange;}
-#content .scene.deviceEdit div.testmarkers ul.results.not {}
-#content .scene.deviceEdit div.testmarkers ul.results.not li h4 {cursor: pointer;}
-#content .scene.deviceEdit div.testmarkers ul.results.not li h4:hover {text-decoration: underline;}
-#content .scene.deviceEdit div.testmarkers ul.results.not li ul.actions {height: 0; overflow: hidden; padding: 0 30px;}
-#content .scene.deviceEdit div.testmarkers ul.results.not li ul.actions li {display: inline-block; vertical-align: top; padding: 4px 10px; margin: 6px 3px; border-radius: 10px; background: #64ad8e; color: #ffffff;}
-#content .scene.deviceEdit div.testmarkers ul.results.not li ul.actions li a {text-decoration: none;}
-#content .scene.deviceEdit div.testmarkers h3.bad {color: red;}
-#content .scene.deviceEdit div.testmarkers ul.results.bad li h4 {cursor: pointer;}
-#content .scene.deviceEdit div.testmarkers ul.results.bad li h4:hover {text-decoration: underline;}
-#content .scene.deviceEdit div.testmarkers ul.results.bad li ul.actions {height: 0; overflow: hidden; padding: 0 30px;}
-#content .scene.deviceEdit div.testmarkers ul.results.bad li ul.actions li {display: inline-block; vertical-align: top; padding: 4px 10px; margin: 6px 3px; border-radius: 10px; background: #64ad8e; color: #ffffff;}
-#content .scene.deviceEdit div.testmarkers ul.results.bad li ul.actions li a {text-decoration: none;}
-#content .scene.deviceEdit div.testmarkers ul.results.bad li ul.useragents {height: 0; overflow: hidden;}
-#content .scene.deviceEdit div.testmarkers ul.results.bad li ul.useragents li {display: block; padding: 0 35px 3px;}
-#content .scene.deviceEdit div.testmarkers ul.results.bad li ul.useragents li:last-child {padding-bottom: 10px;}
-#content .scene.deviceEdit div.testmarkers ul.results.bad > li.marked h4 {color: orange;}
-#content .scene.deviceEdit div.testmarkers > ul.actions {overflow: hidden; padding: 0 25px;}
-#content .scene.deviceEdit div.testmarkers > ul.actions li {display: inline-block; vertical-align: top; padding: 4px 10px; margin: 10px 3px; border-radius: 10px; background: #64ad8e; color: #ffffff;}
-#content .scene.deviceEdit div.testmarkers > ul.actions li a {text-decoration: none;}
-#content .scene.deviceEdit div.useragents {padding: 0; border-bottom: 1px solid #aaaaaa; overflow: hidden;}
-#content .scene.deviceEdit div.useragents .field textarea {height: 75px;}
-#content .scene.deviceEdit div.useragents .actions {text-align: left;}
-#content .scene.deviceEdit div.useragents .actions li {padding: 0 5px 10px;}
-#content .scene.deviceEdit div.useragents ul.useragents {padding: 10px 0 20px;}
-#content .scene.deviceEdit div.useragents ul.useragents li {padding: 3px 30px; font-size: 11px; position: relative; display: block;}
-#content .scene.deviceEdit div.useragents ul.useragents li:hover {background-color: #cccccc;}
-#content .scene.deviceEdit div.useragents ul.useragents li .delete {position: absolute; right: 30px; top: -3px; height: 24px; width: 24px;
-	cursor: pointer; border-radius: 12px;
-	background: #fd0000 url(/janitor/admin/img/bg_icons.png) no-repeat 5px -45px;
-	display: none;
-}
-#content .scene.deviceEdit div.useragents ul.useragents li:hover .delete {display: block;}
-#content .scene.deviceEdit div.useragents div.filter {text-align: right; padding: 10px 20px; background: #f5f7f8; border-bottom: 1px solid #bbbbbb; border-top: 1px solid #dedede;}
-#content .scene.deviceEdit div.useragents div.filter.filtering {background: red;}
-#content .scene.deviceEdit div.useragents div.filter .field {padding: 0;}
-#content .scene.deviceEdit div.useragents div.filter .field label {display: none;}
-#content .scene.deviceEdit div.useragents div.filter input {width: 200px; height: 16px; font-size: 12px;}
-#content .scene.deviceEdit div.merge {padding: 0; border-bottom: 1px solid #aaaaaa; overflow: hidden;}
-#content .scene.deviceEdit div.merge ul.results {padding-bottom: 20px;}
-#content .scene.deviceEdit div.merge ul.results > li {display: block; border-top: 1px solid #dedede;}
-#content .scene.deviceEdit div.merge ul.results > li h3 {font-size: 13px; padding-top: 10px; display: inline-block; vertical-align: top;}
-#content .scene.deviceEdit div.merge ul.results > li div.mergewith {display: inline-block; vertical-align: top; margin: 6px -15px 0 30px; height: 14px; padding: 3px 12px 4px; border-radius: 3px; color: #ffffff; cursor: pointer; font-size: 0.923rem; line-height: 1em; background-color: #64ad8e;}
-#content .scene.deviceEdit div.merge ul.results ul.tags {display: none;}
-#content .scene.deviceEdit div.merge ul.results ul.actions {display: none;}
-#content .scene.deviceEdit div.merge ul.results div.merge {display: none;}
-#content .scene.deviceList div.merge {margin: 0 0 20px; overflow: hidden;}
-#content .scene.deviceList div.merge h4 {padding-bottom: 3px;}
-#content .scene.deviceList div.merge ul.results > li {display: block; border-top: 1px solid #dedede;}
-#content .scene.deviceList div.merge ul.results > li h3 {font-size: 13px; padding-top: 10px; padding-bottom: 10px; display: inline-block; vertical-align: top;}
-#content .scene.deviceList div.merge ul.results > li div.mergewith {display: inline-block; vertical-align: top; margin: 6px -15px 0 30px; height: 14px; padding: 3px 12px 4px; border-radius: 3px; color: #ffffff; cursor: pointer; font-size: 0.923rem; line-height: 1em; background-color: #64ad8e;}
-#content .scene.deviceList div.merge ul.results ul.tags {display: none;}
-#content .scene.deviceList div.merge ul.results ul.actions {display: none;}
-#content .scene.deviceList div.merge ul.results div.merge {display: none;}
-#content .scene.unidentifiedList form.options {padding: 16px 0 6px; border-bottom: 1px solid #dedede;}
-#content .scene.unidentifiedList form.options fieldset {display: inline-block; vertical-align: top;}
-#content .scene.unidentifiedList form.options fieldset .field {padding-right: 12px; padding-bottom: 5px;}
-#content .scene.unidentifiedList form.options fieldset .field .help {display: none;}
-#content .scene.unidentifiedList form.options .actions {display: inline-block; vertical-align: top; padding-left: 0;}
-#content .scene.unidentifiedList form.options .actions li {padding-left: 0;}
-#content .scene.unidentifiedList form.options .actions li input {margin-top: 4px;}
-#content .scene.unidentifiedList .testmarkers {border-bottom: 1px solid #aaaaaa; overflow: hidden;}
-#content .scene.unidentifiedList .testmarkers h2 {font-size: 0.8em; margin: 0 0 20px; padding-bottom: 10px; padding-top: 7px; text-transform: uppercase; position: relative;}
-#content .scene.unidentifiedList .testmarkers h2 svg {position: absolute; top: 7px; right: 25px; stroke: #313942; stroke-width: 3px;}
-#content .scene.unidentifiedList .testmarkers ul.markers {padding: 0 30px 14px;}
-#content .scene.unidentifiedList .testmarkers ul.markers li {display: inline-block; vertical-align: top; padding: 5px 12px 6px; border-radius: 13px; background-color: #64ad8e; margin: 0 6px 6px 0; color: #ffffff; cursor: pointer;}
-#content .scene.unidentifiedList .testmarkers ul.markers li.loading {
-	padding-left: 35px; background-image: url(/janitor/admin/img/gx_loader.gif); background-position: 10px 6px; background-repeat: no-repeat;
-}
-#content .scene.unidentifiedList .stats {padding: 5px 30px; border-bottom: 1px solid #dedede;}
-#content .scene.unidentifiedList .stats p {padding: 0;}
-#content .scene.unidentifiedList .items > li {padding: 10px 125px 10px 30px; position: relative;}
-#content .scene.unidentifiedList .items > li > input {position: absolute; top: 10px; left: 30px;}
-#content .scene.unidentifiedList .items > li h3 {font-size: 13px; padding: 0 0 0 25px;}
-#content .scene.unidentifiedList .items > li.all {padding-left: 55px;}
-#content .scene.unidentifiedList .items > li.all > input {position: absolute; top: 8px; left: 30px;}
-#content .scene.unidentifiedList .items > li.all.deselect input {opacity: 0.4;}
-#content .scene.unidentifiedList .items > li input.button.delete.confirm {color: #ffffff; background-color: #df0000;}
-#content .scene.unidentifiedList .items > li input.button.delete.confirm:hover {}
-#content .scene.unidentifiedList .items > li.identifying {background: red;}
-#content .scene.unidentifiedList .items > li.mapped {background: #00ff00;}
-#content .scene.unidentifiedList .items > li span.mappedto {position: absolute; display: inline-block; vertical-align: top; padding: 5px 10px; top: -15px; left: 30px; background-color: #00ff00; border-radius: 10px; color: #000000;}
-#content .scene.unidentifiedList .items > li ul.info {padding: 2px 25px;}
-#content .scene.unidentifiedList .items > li ul.info li {padding: 0;}
-#content .scene.unidentifiedList .items > li ul.info li.identified_at:after {content: ",\00a0";}
-#content .scene.unidentifiedList .items > li ul.info li.identified_as:before {content: ",\00a0";}
-#content .scene.unidentifiedList .items > li ul.info li.visits:after {content: "\00a0visits";}
-#content .scene.unidentifiedList .items > li ul.info li.comment {}
-.addToDevice {position: fixed; z-index: 12; top: 0px; right: 0; width: 200px; height: 100%; background: #ffffff; border: 1px solid #dedede; border-top: none; border-right: none; padding: 0 20px 0 10px;}
-.addToDevice.loading {background: red;}
-.addToDevice h2 {text-align: left; padding: 20px 0 10px;}
-.addToDevice div.counter {border-bottom: 1px solid #dedede; padding: 0 0 5px;}
-.addToDevice span.count {padding: 0 0 5px 5px; }
-.addToDevice li {display: block; padding: 3px 0; border-top: 1px solid #dedede;}
-.addToDevice li div.info {color: #aaaaaa; padding: 10px 0;}
-.addToDevice div.search {padding: 10px 0; border-bottom: 1px solid #dedede;}
-.addToDevice div.search input {height: 14px; display: block; width: 194px;}
-.addToDevice div.search input.loading {background: red;}
-.addToDevice div.search input.default {color: #aaaaaa;}
-.addToDevice div.search .results li {padding-left: 10px; cursor: pointer;}
-.addToDevice div.search .results li:first-child {border: none; padding-top: 10px;}
-.addToDevice div.search .results li h3 {font-size: 12px; padding: 2px 0;}
-.addToDevice div.search .results li ul {display: none;}
-.addToDevice div.search .results li div.selected,
-.addToDevice div.search .results li div.addtoclone,
-.addToDevice div.search .results li div.matching {margin-left: -10px;}
-.addToDevice ul.options > li {cursor: pointer; font-size: 12px; border-top: none; border-bottom: 1px solid #dedede; color: #313942;}
-.addToDevice ul.options > li.mappedto {background-color: #00ff00;}
-.addToDevice li div.showselectedonly,
-.addToDevice li div.selected,
-.addToDevice li div.addtoclone,
-.addToDevice li div.matching {font-size: 11px; margin: 3px 0; border-radius: 10px; height: 11px; padding: 5px 10px; background: #64AD8E; text-align: center; color: #ffffff; cursor: pointer;}
-.addToDevice li div.addtoclone {margin-bottom: 10px;}
-.addToDevice li div.selected.confirm,
-.addToDevice li div.addtoclone.confirm,
-.addToDevice li div.matching.confirm {background-color: #df0000;}
-#content .scene.maintenance {}
-#content .scene.maintenance h1 {border-bottom: 1px solid #dedede; padding-bottom: 74px;}
-#content .scene.maintenance ul.tools {padding: 0 30px;}
-#content .scene.maintenance ul.tools li {display: block; font-size: 16px; padding: 10px 0;}
-#content .scene.lostUseragents > .actions li.delete {float: right; padding: 0 0 10px 10px;}
-#content .scene.lostUseragents ul.items > li h3 {padding-bottom: 16px;}
-#content .scene.lostUseragents ul.items > li > h3 > span {font-size: 12px;}
-#content .scene.lostDevices > .actions li.delete {float: right; padding: 0 0 10px 10px;}
-#content .scene.lostDevices ul.items > li h3 {padding-bottom: 16px;}
-#content .scene.lostDevices ul.items > li > h3 > span {font-size: 12px;}
-#content .scene.devicesWithoutUseragents h1 {border-bottom: 1px solid #dedede; padding-bottom: 74px;}
-#content .scene.devicesWithoutUseragents ul.items > li h3 {padding-bottom: 16px;}
-#content .scene.devicesWithoutTags h1 {border-bottom: 1px solid #dedede; padding-bottom: 74px;}
-#content .scene.devicesWithoutTags ul.items > li h3 {padding-bottom: 16px;}
-#content .scene.devicesWithoutBrand h1 {border-bottom: 1px solid #dedede; padding-bottom: 74px;}
-#content .scene.devicesWithoutBrand ul.items > li h3 {padding-bottom: 16px;}
-#content .scene.uniqueMatchList h1 {border-bottom: 1px solid #dedede; padding-bottom: 74px;}
-#content .scene.uniqueMatchList .items > li {padding: 10px 125px 10px 30px;}
-#content .scene.uniqueMatchList .items > li > input {position: absolute; top: 10px; left: 30px;}
-#content .scene.uniqueMatchList .items > li h3 {font-size: 13px; padding: 0 0 0 25px;}
-#content .scene.uniqueMatchList .items > li.all {padding-left: 55px;}
-#content .scene.uniqueMatchList .items > li.all > input {position: absolute; top: 8px; left: 30px;}
-#content .scene.uniqueMatchList .items > li input.button.delete.confirm {color: #ffffff; background-color: #df0000;}
-#content .scene.uniqueMatchList .items > li input.button.delete.confirm:hover {}
-#content .scene.uniqueMatchList .items > li ul.info {padding: 2px 25px;}
-#content .scene.uniqueMatchList .items > li ul.info li {padding: 0;}
-#content .scene.uniqueMatchList .items > li ul.info li.identified_at:after {content: ",\00a0";}
-#content .scene.uniqueMatchList .items > li ul.info li.identified_as:before {content: ",\00a0";}
-#content .scene.uniqueMatchList .items > li ul.info li.visits:after {content: "\00a0visits";}
-#content .scene.uniqueMatchList .items > li ul.info li.comment {}
-.deleteUnique {position: fixed; z-index: 12; top: 0px; right: 0; width: 200px; height: 100%; background: #ffffff; border: 1px solid #dedede; border-top: none; border-right: none; padding: 0 20px 0 10px;}
-.deleteUnique.loading {background: red;}
-.deleteUnique h2 {text-align: left; padding: 20px 0 10px;}
-.deleteUnique div.counter {border-bottom: 1px solid #dedede; padding: 0 0 5px;}
-.deleteUnique span.count {padding: 0 0 5px 5px; }
-.deleteUnique li {display: block; padding: 3px 0; border-top: 1px solid #dedede;}
-.deleteUnique ul.options {padding: 0 0 10px;}
-.deleteUnique ul.options li {font-size: 12px; border-top: none; border-bottom: 1px solid #dedede; color: #313942;}
-.deleteUnique div.delete {font-size: 11px; margin: 3px 0; border-radius: 10px; height: 11px; padding: 5px 10px; line-height: 1em; background: #64AD8E; text-align: center; color: #ffffff; cursor: pointer;}
-.deleteUnique div.delete.confirm {background-color: #df0000;}
-#content .scene.generate {}
-#content .scene.generate h1 {border-bottom: 1px solid #dedede; padding-bottom: 74px;}
-#content .scene.generate div.script {margin: 20px 30px; padding: 10px; background: #ffffff;}
-#content .scene.generate code {white-space: pre-wrap; font-family: "Monaco", "Courier New", "Courier"; font-size: 12px; display: block;
-	tab-size: 4;
-	-webkit-tab-size: 4;
-	-moz-tab-size: 4;
-}
-body.device #navigation .device a,
-body.maintenance #navigation .maintenance a,
-body.generate #navigation .generate a,
-body.unidentified #navigation .unidentified a,
-body.tags #navigation .tags a {padding-left: 35px; color: #ffffff;}
 

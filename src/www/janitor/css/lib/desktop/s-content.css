@@ -35,7 +35,7 @@
 
 
 /* MARKERS */
-#content .scene.deviceEdit div.markers {padding: 0 0 20px; border-bottom: 1px solid #dedede; overflow: hidden;}
+#content .scene.deviceEdit div.markers {padding: 0; border-bottom: 1px solid #aaaaaa; overflow: hidden;}
 #content .scene.deviceEdit div.markers fieldset {display: inline-block; vertical-align: top;}
 #content .scene.deviceEdit div.markers fieldset .field {padding-right: 12px; padding-bottom: 0;}
 #content .scene.deviceEdit div.markers fieldset .field input[type=text] {width: 262px;}
@@ -44,7 +44,7 @@
 #content .scene.deviceEdit div.markers .actions li {padding-left: 0;}
 #content .scene.deviceEdit div.markers .actions li input {margin-top: 4px;}
 
-#content .scene.deviceEdit div.markers ul.markers {padding: 10px 0;}
+#content .scene.deviceEdit div.markers ul.markers {padding: 10px 0 20px;}
 #content .scene.deviceEdit div.markers ul.markers li {padding: 0 27px; font-size: 11px; position: relative; display: block;}
 #content .scene.deviceEdit div.markers ul.markers li span {padding: 3px; display: inline-block;}
 #content .scene.deviceEdit div.markers ul.markers li span.editable {background-color: #ffffff; border: 1px solid #dcdcdc; padding: 4px; margin: -2px; outline: none; border-radius: 3px; box-shadow: inset 0 1px 2px #dedede;}
@@ -57,7 +57,7 @@
 
 
 /* EXCEPTIONS */
-#content .scene.deviceEdit div.exceptions {padding: 0 0 20px; border-bottom: 1px solid #dedede; overflow: hidden;}
+#content .scene.deviceEdit div.exceptions {padding: 0; border-bottom: 1px solid #aaaaaa; overflow: hidden;}
 #content .scene.deviceEdit div.exceptions fieldset {display: inline-block; vertical-align: top;}
 #content .scene.deviceEdit div.exceptions fieldset .field {padding-right: 12px; padding-bottom: 0;}
 #content .scene.deviceEdit div.exceptions fieldset .field input[type=text] {width: 262px;}
@@ -66,7 +66,7 @@
 #content .scene.deviceEdit div.exceptions .actions li {padding-left: 0;}
 #content .scene.deviceEdit div.exceptions .actions li input {margin-top: 4px;}
 
-#content .scene.deviceEdit div.exceptions ul.exceptions {padding: 10px 0;}
+#content .scene.deviceEdit div.exceptions ul.exceptions {padding: 10px 0 20px;}
 #content .scene.deviceEdit div.exceptions ul.exceptions li {padding: 0 27px; font-size: 11px; position: relative; display: block;}
 #content .scene.deviceEdit div.exceptions ul.exceptions li span {padding: 3px; display: inline-block;}
 #content .scene.deviceEdit div.exceptions ul.exceptions li span.editable {background-color: #ffffff; border: 1px solid #dcdcdc; padding: 4px; margin: -2px; outline: none; border-radius: 3px; box-shadow: inset 0 1px 2px #dedede;}
@@ -79,9 +79,10 @@
 
 
 /* TEST MARKERS */
-#content .scene.deviceEdit div.testmarkers {padding: 0 0 20px; border-bottom: 1px solid #dedede; overflow: hidden;}
+#content .scene.deviceEdit div.testmarkers {padding: 0; border-bottom: 1px solid #aaaaaa; overflow: hidden;}
 
-#content .scene.deviceEdit div.testmarkers h3 {font-size: 1.1rem; padding-top: 15px;}
+#content .scene.deviceEdit div.testmarkers form {padding-bottom: 20px;}
+#content .scene.deviceEdit div.testmarkers h3 {font-size: 1.1rem; padding-bottom: 10px;}
 #content .scene.deviceEdit div.testmarkers ul.results {}
 #content .scene.deviceEdit div.testmarkers ul.results li {display: block; padding: 0 0 2px;}
 
@@ -114,11 +115,11 @@
 
 
 /* USERAGENTS */
-#content .scene.deviceEdit div.useragents {padding: 0 0 20px; border-bottom: 1px solid #dedede; overflow: hidden;}
+#content .scene.deviceEdit div.useragents {padding: 0; border-bottom: 1px solid #aaaaaa; overflow: hidden;}
 #content .scene.deviceEdit div.useragents .field textarea {height: 75px;}
 #content .scene.deviceEdit div.useragents .actions {text-align: left;}
 #content .scene.deviceEdit div.useragents .actions li {padding: 0 5px 10px;}
-#content .scene.deviceEdit div.useragents ul.useragents {padding: 10px 0;}
+#content .scene.deviceEdit div.useragents ul.useragents {padding: 10px 0 20px;}
 #content .scene.deviceEdit div.useragents ul.useragents li {padding: 3px 30px; font-size: 11px; position: relative; display: block;}
 #content .scene.deviceEdit div.useragents ul.useragents li:hover {background-color: #cccccc;}
 #content .scene.deviceEdit div.useragents ul.useragents li .delete {position: absolute; right: 30px; top: -3px; height: 24px; width: 24px;
@@ -139,7 +140,8 @@
 
 
 /* MERGE */
-#content .scene.deviceEdit div.merge {padding: 0 0 20px; border-bottom: 1px solid #dedede; overflow: hidden;}
+#content .scene.deviceEdit div.merge {padding: 0; border-bottom: 1px solid #aaaaaa; overflow: hidden;}
+#content .scene.deviceEdit div.merge ul.results {padding-bottom: 20px;}
 #content .scene.deviceEdit div.merge ul.results > li {display: block; border-top: 1px solid #dedede;}
 #content .scene.deviceEdit div.merge ul.results > li h3 {font-size: 13px; padding-top: 10px; display: inline-block; vertical-align: top;}
 #content .scene.deviceEdit div.merge ul.results > li div.mergewith {display: inline-block; vertical-align: top; margin: 6px -15px 0 30px; height: 14px; padding: 3px 12px 4px; border-radius: 3px; color: #ffffff; cursor: pointer; font-size: 0.923rem; line-height: 1em; background-color: #64ad8e;}
@@ -160,7 +162,7 @@
 
 
 /* UNIDENTIFIED LIST - EXTREME DATA SETS, CUSTOM NEEDS */
-#content .scene.unidentifiedList h1 {border-bottom: 1px solid #dedede; padding-bottom: 74px;}
+/*#content .scene.unidentifiedList h1 {border-bottom: 1px solid #dedede; padding-bottom: 74px;}*/
 
 #content .scene.unidentifiedList form.options {padding: 16px 0 6px; border-bottom: 1px solid #dedede;}
 
@@ -173,13 +175,16 @@
 
 
 /* TEST MARKERS */
-#content .scene.unidentifiedList .testmarkers {border-bottom: 1px solid #dedede;}
-#content .scene.unidentifiedList .testmarkers h2 {font-size: 12px; text-transform: uppercase;}
-#content .scene.unidentifiedList .testmarkers ul.markers {padding: 10px 30px;}
+#content .scene.unidentifiedList .testmarkers {border-bottom: 1px solid #aaaaaa; overflow: hidden;}
+#content .scene.unidentifiedList .testmarkers h2 {font-size: 0.8em; margin: 0 0 20px; padding-bottom: 10px; padding-top: 7px; text-transform: uppercase; position: relative;}
+#content .scene.unidentifiedList .testmarkers h2 svg {position: absolute; top: 7px; right: 25px; stroke: #313942; stroke-width: 3px;}
+
+#content .scene.unidentifiedList .testmarkers ul.markers {padding: 0 30px 14px;}
 #content .scene.unidentifiedList .testmarkers ul.markers li {display: inline-block; vertical-align: top; padding: 5px 12px 6px; border-radius: 13px; background-color: #64ad8e; margin: 0 6px 6px 0; color: #ffffff; cursor: pointer;}
 #content .scene.unidentifiedList .testmarkers ul.markers li.loading {
 	padding-left: 35px; background-image: url(/janitor/admin/img/gx_loader.gif); background-position: 10px 6px; background-repeat: no-repeat;
 }
+
 
 /* STATS */
 #content .scene.unidentifiedList .stats {padding: 5px 30px; border-bottom: 1px solid #dedede;}
