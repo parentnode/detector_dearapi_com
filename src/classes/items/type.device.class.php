@@ -586,6 +586,8 @@ class TypeDevice extends Itemtype {
 	
 		if(count($action) == 2) {
 
+			set_time_limit(0);
+
 			$IC = new Items();
 			$device_id = $action[1];
 			$device = $this->get($device_id);
