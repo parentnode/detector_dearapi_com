@@ -11323,6 +11323,11 @@ Util.Objects["testMarkersOnUnidentified"] = new function() {
 					li.item_id = node.item_id;
 					u.e.click(li);
 					li.clicked = function() {
+						var i, node;
+						for(i = 0; node = this.div._markers[i]; i++) {
+							u.rc(node, "selected");
+						}
+						u.ac(this, "selected");
 						var existing_filter = u.qs("div.filter", this.div.div_results);
 						if(existing_filter) {
 							existing_filter.parentNode.removeChild(existing_filter);

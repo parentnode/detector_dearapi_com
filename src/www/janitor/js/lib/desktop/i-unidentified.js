@@ -1097,6 +1097,12 @@ Util.Objects["testMarkersOnUnidentified"] = new function() {
 					u.e.click(li);
 					li.clicked = function() {
 
+						var i, node;
+						for(i = 0; node = this.div._markers[i]; i++) {
+							u.rc(node, "selected");
+						}
+						u.ac(this, "selected");
+
 
 						// clean up existing values
 						// remove filter

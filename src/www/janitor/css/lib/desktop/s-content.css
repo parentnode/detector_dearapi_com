@@ -184,7 +184,9 @@
 #content .scene.unidentifiedList .testmarkers ul.markers li.loading {
 	padding-left: 35px; background-image: url(/janitor/admin/img/gx_loader.gif); background-position: 10px 6px; background-repeat: no-repeat;
 }
-
+#content .scene.unidentifiedList .testmarkers ul.markers li.selected {
+	background-color: #313942;
+}
 
 /* STATS */
 #content .scene.unidentifiedList .stats {padding: 5px 30px; border-bottom: 1px solid #dedede;}

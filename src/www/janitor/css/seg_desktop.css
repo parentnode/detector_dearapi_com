@@ -923,6 +923,9 @@ body #selection_options ul.actions a.button:hover {background-color: #313942;}
 #content .scene.unidentifiedList .testmarkers ul.markers li.loading {
 	padding-left: 35px; background-image: url(/janitor/admin/img/gx_loader.gif); background-position: 10px 6px; background-repeat: no-repeat;
 }
+#content .scene.unidentifiedList .testmarkers ul.markers li.selected {
+	background-color: #313942;
+}
 #content .scene.unidentifiedList .stats {padding: 5px 30px; border-bottom: 1px solid #dedede;}
 #content .scene.unidentifiedList .stats p {padding: 0;}
 #content .scene.unidentifiedList .items > li {padding: 10px 125px 10px 30px; position: relative;}
