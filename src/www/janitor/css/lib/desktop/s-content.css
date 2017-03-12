@@ -194,9 +194,9 @@
 
 
 
-#content .scene.unidentifiedList .items > li {padding: 10px 125px 10px 30px; position: relative;}
+#content .scene.unidentifiedList .items > li {padding: 10px 125px 10px 30px; position: relative; overflow: visible;}
 #content .scene.unidentifiedList .items > li > input {position: absolute; top: 10px; left: 30px;}
-#content .scene.unidentifiedList .items > li h3 {font-size: 13px; padding: 0 0 0 25px;}
+#content .scene.unidentifiedList .items > li h3 {font-size: 13px; padding: 0 0 0 25px; overflow: hidden;}
 
 #content .scene.unidentifiedList .items > li.all {padding-left: 55px;}
 #content .scene.unidentifiedList .items > li.all > input {position: absolute; top: 8px; left: 30px;}

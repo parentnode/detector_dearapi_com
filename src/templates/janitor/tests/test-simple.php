@@ -1,11 +1,15 @@
 <?php
-$access_item = false;
-if(isset($read_access) && $read_access) {
-	return;
-}
-?>
+global $action;
+global $IC;
+global $itemtype;
+global $model;
 
-testing specific regexp
+//print_r($all_items);
+?>
+<div class="scene defaultList tests">
+	<h1>Testing specific regexp</h1>
+
+
 <?
 
 //$useragent = "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/28.1.0.0 Safari/537.36";
@@ -111,10 +115,17 @@ testing specific regexp
 //$reg_exp_neg = "^(?!.*(chrome\/[3-9][0-9]))"; //"msie";
 
 
-$useragent = "Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.1; SV1; Maxthon; .NET CLR 2.0.50727; .NET CLR 3.0.04506.30)";
-$reg_exp_pos = "msie[ ]?[0-8]\b";
-$reg_exp_neg = "phone|mobile|windows[ ]?ce|midp|wap|brew|\d\d\dx\d\d\d|opera|nokia|symbian|motorola
-|NetFront|Palm"; //"msie";
+// $useragent = "Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.1; SV1; Maxthon; .NET CLR 2.0.50727; .NET CLR 3.0.04506.30)";
+// $reg_exp_pos = "msie[ ]?[0-8]\b";
+// $reg_exp_neg = "phone|mobile|windows[ ]?ce|midp|wap|brew|\d\d\dx\d\d\d|opera|nokia|symbian|motorola|NetFront|Palm";
+
+//hp-tablet[^$]+bkit\/                              (53(7\.[3-9]|[8-9]))[^$]+TouchPad
+//Linux; U; (?!Android)[^$]+(; KF[A-Z]+ )[^$]+bkit\/(53([0-6]|7\.[0-2]))[^$]+(silk)
+$useragent = "Mozilla/5.0 (Linux; Android 5.1; Vodafone Tab grand 6 Build/LMY47I) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.89 Safari/537.36";
+$reg_exp_pos = "Linux[^$]+Android[^$]+Vodafone Tab grand[^$]+bkit\/(53(7\.[3-9]|[8-9]))";
+$reg_exp_neg = false; 
+
+//"msie";
 //$reg_exp_neg = "^(?!.*(chrome\/[3-9][0-9]))"; //"msie";
 
 // preg_match("/".$reg_exp_neg."/i", $useragent, $matches);
@@ -122,13 +133,13 @@ $reg_exp_neg = "phone|mobile|windows[ ]?ce|midp|wap|brew|\d\d\dx\d\d\d|opera|nok
 
 if(preg_match("/".$reg_exp_pos."/i", $useragent) && (!$reg_exp_neg || !preg_match("/".$reg_exp_neg."/i", $useragent))) {
 
-	print "passed";
+	print "<p>passed</p>";
 }
 else {
 
-	print "failed";
+	print "<p>failed</p>";
 }
  ?>
 
-
+</div>
 

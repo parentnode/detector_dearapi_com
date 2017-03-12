@@ -364,7 +364,7 @@ class TypeDevice extends Itemtype {
 			$item_id = $action[1];
 
 			$query = new Query();
-			$query->checkDbExistance($this->db_markers);
+			$query->checkDbExistence($this->db_markers);
 
 			if($query->sql("INSERT INTO ".$this->db_markers." VALUES(DEFAULT, ".$item_id.", '".$marker."')")) {
 
@@ -448,7 +448,7 @@ class TypeDevice extends Itemtype {
 			$item_id = $action[1];
 
 			$query = new Query();
-			$query->checkDbExistance($this->db_exceptions);
+			$query->checkDbExistence($this->db_exceptions);
 
 			if($query->sql("INSERT INTO ".$this->db_exceptions." VALUES(DEFAULT, ".$item_id.", '".$exception."')")) {
 

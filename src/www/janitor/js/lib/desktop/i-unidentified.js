@@ -21,6 +21,8 @@ Util.Objects["unidentifiedList"] = new function() {
 	this.init = function(div) {
 //		u.bug("init unidentifiedList")
 
+//		u.bug_force = true;
+
 		var i, node;
 
 		div.list = u.qs("ul.items", div);
@@ -109,7 +111,7 @@ Util.Objects["unidentifiedList"] = new function() {
 		// node is unselected - update option_node references
 		div.unselectNode = function(node) {
 
-			u.bug("REMOVE option reference for:" + u.nodeId(node) + ", has option:" + node.option_node)
+//			console.log("REMOVE option reference for:" + u.nodeId(node) + ", has option:" + node.option_node)
 
 			// interrupt response handling in case it has not finished
 			node.response = null;
@@ -165,6 +167,7 @@ Util.Objects["unidentifiedList"] = new function() {
 
 				// end multi de/selection
 				document.body.onmouseup = function(event) {
+//					console.log("selection end")
 
 					this.onmouseup = null;
 					this._multiselection = false;
@@ -289,75 +292,19 @@ Util.Objects["unidentifiedList"] = new function() {
 		if(u.hc(div, "filters")) {
 
 			u.defaultFilters(div);
-			
-// 			div._filter = u.ie(div, "div", {"class":"filter"});
-//
-// 			// index list, to speed up filtering process
-// 			var i, node;
-// 			for(i = 0; node = div.nodes[i]; i++) {
-// 				node._c = node.textContent.toLowerCase();
-// 			}
-//
-// 			// insert tags filter
-// 			div._filter._field = u.ae(div._filter, "div", {"class":"field"});
-// 			u.ae(div._filter._field, "label", {"html":"Filter"});
-//
-// 			div._filter._input = u.ae(div._filter._field, "input", {"class":"filter ignoreinput"});
-// 			div._filter._input._div = div;
-//
-// 			div._filter._input.onkeydown = function() {
-// //				u.bug("reset timer")
-// 				u.t.resetTimer(this._div.t_filter);
-// 			}
-// 			div._filter._input.onkeyup = function() {
-// //				u.bug("set timer")
-// 				this._div.t_filter = u.t.setTimer(this._div, this._div.filter, 1500);
-// 				u.ac(this._div._filter, "filtering");
-// 			}
-// 			div.filter = function() {
-//
-// 				var i, node;
-// 				if(this._current_filter != this._filter._input.value.toLowerCase()) {
-// //					u.bug("filter by:" + this._filter._input.value)
-//
-// 					this._current_filter = this._filter._input.value.toLowerCase();
-// 					for(i = 0; node = this.nodes[i]; i++) {
-//
-// 						if(node._c.match(this._current_filter)) {
-// 							node._hidden = false;
-// 							u.as(node, "display", "block", false);
-// 							u.rc(node, "hidden", false);
-// 						}
-// 						else {
-// 							node._hidden = true;
-// 							u.as(node, "display", "none", false);
-// 							node._checkbox.checked = false;
-// 							u.ac(node, "hidden", false);
-// 						}
-// 					}
-// 				}
-//
-// 				// update select all state
-// 				this.bn_all.updateState();
-//
-// 				// leave filtering mode
-// 				u.rc(this._filter, "filtering");
-//
-// 				// update add to options
-// 				this.toggleAddToOption();
-// 			}
+
 		}
 
 
 		// add option to options list
 		div.addOption = function(option, ua_node) {
-//			u.bug("## addOption:" + u.nodeId(ua_node) + ", " + option)
+//			console.log("## addOption:" + u.nodeId(ua_node) + ", " + option)
 
 			// check options index for current option
 			// add if it does not already exist
 			if(this._add_to.identified_options.indexOf(option.id) == -1) {
 
-//				u.bug("new option:" + option.id)
+//				console.log("new option:" + option.id)
 
 				// create new option
 				var option_node = u.ae(this._add_to._list, "li", {"html":option.name + " (<span>1</span>)", "class":"device_id:"+option.id});
@@ -501,25 +448,47 @@ Util.Objects["unidentifiedList"] = new function() {
 
 								if(this.t_execute) {
 
-									var inputs = u.qsa("li:not(.all) input:checked", this.option.div.list);
+									this.inputs = u.qsa("li:not(.all) input:checked", this.option.div.list);
+									this.inputs_i = 0;
 
-									// selected items in list?
-									for(i = 0; input = inputs[i]; i++) {
+									// recursive iteration handler (to control the number of simultaneous requests)
+									this.iterateSelections = function() {
 
-										input.node.response = function(response) {
+										// console.log("this.inputs.length:" + this.inputs.length);
+										// console.log("this.input_i:" + this.inputs_i);
+										if(this.inputs_i < this.inputs.length) {
 
-											if(this.option_node) {
-												// remove node from option_node array
-												this.option_node.ua_nodes.splice(this.option_node.ua_nodes.indexOf(this), 1);
+											var input = this.inputs[this.inputs_i++];
+											// console.log("input exists:" + input)
+											// console.log(input)
+
+											input._selected = this;
+
+											// UA was added
+											input.response = function(response) {
+//													console.log("node loaded:" + this.node.ua_id);
+
+												// update ua list
+												if(this.node.option_node) {
+													// remove node from option_node array
+													this.node.option_node.ua_nodes.splice(this.node.option_node.ua_nodes.indexOf(this.node), 1);
+												}
+
+												// and remove node
+												this.node.parentNode.removeChild(this.node);
+												this.node.div.toggleAddToOption();
+
+												// process next selected
+												this._selected.iterateSelections();
 											}
+											// make request
+											u.request(input, input.node.div.useragent_add+"/"+this.option.device_id+"/"+input.node.ua_id, {"method":"post", "params":"csrf-token="+input.node.div.csrf_token});
 
-											// and remove node
-											this.parentNode.removeChild(this);
-											this.div.toggleAddToOption();
 										}
-										u.request(input.node, input.node.div.useragent_add+"/"+this.option.device_id+"/"+input.node.ua_id, {"method":"post", "params":"csrf-token="+input.node.div.csrf_token});
 
 									}
+									this.iterateSelections();
+
 								}
 								else {
 									this.t_execute = u.t.setTimer(this, this.not_confirmed, 1500);
@@ -537,26 +506,62 @@ Util.Objects["unidentifiedList"] = new function() {
 
 								if(this.t_execute) {
 
-									var inputs = u.qsa("li:not(.all) input:checked", this.option.div.list);
+									this.inputs = u.qsa("li:not(.all) input:checked", this.option.div.list);
+									this.inputs_i = 0;
 
-									// selected items in list?
-									for(i = 0; input = inputs[i]; i++) {
-										if(input.node._identified.id == this.option.device_id) {
+									// recursive iteration handler (to control the number of simultaneous requests)
+									this.iterateSelections = function() {
 
-											input.node.response = function(response) {
+										// console.log("this.inputs.length:" + this.inputs.length);
+										// console.log("this.input_i:" + this.inputs_i);
+										if(this.inputs_i < this.inputs.length) {
 
-												if(this.option_node) {
-													// remove node from option_node array
-													this.option_node.ua_nodes.splice(this.option_node.ua_nodes.indexOf(this), 1);
+											var input = this.inputs[this.inputs_i++];
+											// console.log("input exists:" + input)
+											// console.log(input)
+
+											// continue to look for next input matching this device
+											while(input.node._identified.id != this.option.device_id) {
+//												console.log("not matching: ("+this.inputs_i+")");
+												if(this.inputs_i < this.inputs.length) {
+													input = this.inputs[this.inputs_i++];
 												}
-
-												// and remove node
-												this.parentNode.removeChild(this);
-												this.div.toggleAddToOption();
+												else {
+													break;
+												}
 											}
-											u.request(input.node, input.node.div.useragent_add+"/"+this.option.device_id+"/"+input.node.ua_id, {"method":"post", "params":"csrf-token="+input.node.div.csrf_token});
+
+											// if input was found, make request
+											if(input && input.node._identified.id == this.option.device_id) {
+//												console.log("load node:" + input.node.ua_id);
+												input._matching = this;
+
+												// UA was added
+												input.response = function(response) {
+//													console.log("node loaded:" + this.node.ua_id);
+
+													// update ua list
+													if(this.node.option_node) {
+														// remove node from option_node array
+														this.node.option_node.ua_nodes.splice(this.node.option_node.ua_nodes.indexOf(this.node), 1);
+													}
+
+													// and remove node
+													this.node.parentNode.removeChild(this.node);
+													this.node.div.toggleAddToOption();
+
+													// process next selected
+													this._matching.iterateSelections();
+												}
+												// make request
+												u.request(input, input.node.div.useragent_add+"/"+this.option.device_id+"/"+input.node.ua_id, {"method":"post", "params":"csrf-token="+input.node.div.csrf_token});
+											}
+
 										}
+
 									}
+									this.iterateSelections();
+
 								}
 								else {
 									this.t_execute = u.t.setTimer(this, this.not_confirmed, 1500);
@@ -648,13 +653,18 @@ Util.Objects["unidentifiedList"] = new function() {
 			// device option already exists
 			else {
 
+//				console.log("option exists")
+
 				// get references to option_li
 				var option_index = this._add_to.identified_options.indexOf(option.id);
 				var option_node = this._add_to.identified_options_lis[option_index];
 
 //				u.bug("ua_node matches:" + u.nodeId(option_node))
-
+//				u.xInObject(option_node.ua_nodes)
 				// ua_node is newly selected
+
+//				console.log(option_node.ua_nodes.indexOf(ua_node));
+
 				if(option_node.ua_nodes.indexOf(ua_node) == -1) {
 
 					// store matching ua_nodes on option
@@ -677,8 +687,7 @@ Util.Objects["unidentifiedList"] = new function() {
 		// - updates count
 		// - removes options with no matches
 		div.updateOptions = function() {
-
-//			u.bug("updateOptions")
+//			console.log("updateOptions")
 
 			var i, option_node, checkbox;
 
@@ -686,6 +695,7 @@ Util.Objects["unidentifiedList"] = new function() {
 			if(this._add_to) {
 				for(i = 0; option_node = this._add_to.identified_options_lis[i]; i++) {
 					// update option count
+//					console.log("option_node.ua_nodes.length:" + option_node.ua_nodes.length)
 					if(option_node.ua_nodes.length) {
 						option_node.span.innerHTML = option_node.ua_nodes.length;
 					}
@@ -716,7 +726,7 @@ Util.Objects["unidentifiedList"] = new function() {
 
 		// show or hide "Add To" options, depending on whether useragents are selected or not
 		div.toggleAddToOption = function() {
-			u.bug("----- toggle add to options")
+//			console.log("----- toggle add to options")
 
 
 			// update select all label
@@ -955,85 +965,180 @@ Util.Objects["unidentifiedList"] = new function() {
 				this.wait_for_uas = this.checked_inputs.length;
 				u.ac(this._add_to, "loading");
 
+				this.checked_inputs_i = 0;
+				this.iterateSelections = function() {
+					// console.log("this.iterateSelections");
+					// console.log("this.checked_inputs.length:" + this.checked_inputs.length);
+					// console.log("this.checked_inputs_i:" + this.checked_inputs_i);
 
-				// loop through all nodes
-				for(i = 0; ua = this.checked_inputs[i]; i++) {
+					if(this.checked_inputs_i < this.checked_inputs.length) {
 
-					// node is in identification mode
-					u.ac(ua.node, "identifying");
-					ua.node._is_identifying = true;
+						var input = this.checked_inputs[this.checked_inputs_i++];
+
+						// node is in identification mode
+						u.ac(input.node, "identifying");
+						input.node._is_identifying = true;
 
 
-					// useragent has not been identified yet
-					if(!ua.node._identified) {
-//						u.bug("not id'ed yet:" + u.nodeId(ua.node))
+						// useragent has not been identified yet
+						if(!input.node._identified) {
+//							console.log("not id'ed yet:" + u.nodeId(input.node))
 
-						// device identification response
-						ua.node.response = function(response) {
-//							u.bug("node identified:" + u.nodeId(this))
+							// device identification response
+							input.response = function(response) {
+//								console.log("node identified:" + u.nodeId(this.node))
 
+
+								// leave identification mode
+								u.rc(this.node, "identifying");
+								this.node._is_identifying = false;
+
+								// id details object
+								this.node._identified = {};
+
+								// identification was successful
+								if(response.cms_status == "success" && response.cms_object.id) {
+
+									this.node._identified.id = response.cms_object.id;
+									this.node._identified.name = response.cms_object.name;
+									this.node._identified.tags = response.cms_object.tags;
+									this.node._identified.method = response.cms_object.method;
+									this.node._identified.guess = response.cms_object.guess;
+
+								}
+
+								// bad result - device not identified
+								else {
+									this.node._identified.id = "unknown";
+									this.node._identified.name = "unknown";
+									this.node._identified.tags = [];
+									this.node._identified.method = "unknown";
+									this.node._identified.guess = "unknown";
+
+								}
+
+								// add option to the options list (will audo detect existance)
+								this.node.div.addOption(this.node._identified, this.node);
+
+
+								// check load status
+								this.node.div.wait_for_uas--;
+								if(!this.node.div.wait_for_uas && this.node.div._add_to) {
+									u.rc(this.node.div._add_to, "loading");
+								}
+
+								this.node.div.iterateSelections();
+							}
+							// request identification
+							u.request(input, input.node.div.useragent_identify+"/"+input.node.ua_id, {"method":"post", "params":"csrf-token="+input.node.div.csrf_token});
+						}
+
+						// already identified
+						else {
+//							console.log("id'ed already:" + u.nodeId(input.node))
 
 							// leave identification mode
-							u.rc(this, "identifying");
-							this._is_identifying = false;
+							u.rc(input.node, "identifying");
+							input.node._is_identifying = false;
 
-							// id details object
-							this._identified = {};
-
-							// identification was successful
-							if(response.cms_status == "success" && response.cms_object.id) {
-
-								this._identified.id = response.cms_object.id;
-								this._identified.name = response.cms_object.name;
-								this._identified.tags = response.cms_object.tags;
-								this._identified.method = response.cms_object.method;
-								this._identified.guess = response.cms_object.guess;
-
-							}
-
-							// bad result - device not identified
-							else {
-								this._identified.id = "unknown";
-								this._identified.name = "unknown";
-								this._identified.tags = [];
-								this._identified.method = "unknown";
-								this._identified.guess = "unknown";
-
-							}
-
-							// add option to the options list (will audo detect existance)
-							this.div.addOption(this._identified, this);
-
+							// add option to the options list (will audo detect existence)
+							this.addOption(input.node._identified, input.node);
 
 							// check load status
-							this.div.wait_for_uas--;
-							if(!this.div.wait_for_uas && this.div._add_to) {
-								u.rc(this.div._add_to, "loading");
+							this.wait_for_uas--;
+							if(!this.wait_for_uas) {
+								u.rc(this._add_to, "loading");
 							}
 
+							this.iterateSelections();
 						}
-						// request identification
-						u.request(ua.node, ua.node.div.useragent_identify+"/"+ua.node.ua_id, {"method":"post", "params":"csrf-token="+ua.node.div.csrf_token});
-					}
 
-					// already identified
+					}
 					else {
-//						u.bug("id'ed already:" + u.nodeId(ua.node))
-
-						// leave identification mode
-						u.rc(ua.node, "identifying");
-						ua.node._is_identifying = false;
-
-						// add option to the options list (will audo detect existance)
-						this.addOption(ua.node._identified, ua.node);
-
-						// check load status
-						this.wait_for_uas--;
-						if(!this.wait_for_uas) {
-							u.rc(this._add_to, "loading");
-						}
+//						console.log("done");
 					}
+
 				}
+				this.iterateSelections();
+
+// 				// loop through all nodes
+// 				for(i = 0; ua = this.checked_inputs[i]; i++) {
+//
+// 					// node is in identification mode
+// 					u.ac(ua.node, "identifying");
+// 					ua.node._is_identifying = true;
+//
+//
+// 					// useragent has not been identified yet
+// 					if(!ua.node._identified) {
+// //						u.bug("not id'ed yet:" + u.nodeId(ua.node))
+//
+// 						// device identification response
+// 						ua.node.response = function(response) {
+// //							u.bug("node identified:" + u.nodeId(this))
+//
+//
+// 							// leave identification mode
+// 							u.rc(this, "identifying");
+// 							this._is_identifying = false;
+//
+// 							// id details object
+// 							this._identified = {};
+//
+// 							// identification was successful
+// 							if(response.cms_status == "success" && response.cms_object.id) {
+//
+// 								this._identified.id = response.cms_object.id;
+// 								this._identified.name = response.cms_object.name;
+// 								this._identified.tags = response.cms_object.tags;
+// 								this._identified.method = response.cms_object.method;
+// 								this._identified.guess = response.cms_object.guess;
+//
+// 							}
+//
+// 							// bad result - device not identified
+// 							else {
+// 								this._identified.id = "unknown";
+// 								this._identified.name = "unknown";
+// 								this._identified.tags = [];
+// 								this._identified.method = "unknown";
+// 								this._identified.guess = "unknown";
+//
+// 							}
+//
+// 							// add option to the options list (will audo detect existance)
+// 							this.div.addOption(this._identified, this);
+//
+//
+// 							// check load status
+// 							this.div.wait_for_uas--;
+// 							if(!this.div.wait_for_uas && this.div._add_to) {
+// 								u.rc(this.div._add_to, "loading");
+// 							}
+//
+// 						}
+// 						// request identification
+// 						u.request(ua.node, ua.node.div.useragent_identify+"/"+ua.node.ua_id, {"method":"post", "params":"csrf-token="+ua.node.div.csrf_token});
+// 					}
+//
+// 					// already identified
+// 					else {
+// //						u.bug("id'ed already:" + u.nodeId(ua.node))
+//
+// 						// leave identification mode
+// 						u.rc(ua.node, "identifying");
+// 						ua.node._is_identifying = false;
+//
+// 						// add option to the options list (will audo detect existance)
+// 						this.addOption(ua.node._identified, ua.node);
+//
+// 						// check load status
+// 						this.wait_for_uas--;
+// 						if(!this.wait_for_uas) {
+// 							u.rc(this._add_to, "loading");
+// 						}
+// 					}
+// 				}
 
 			}
 

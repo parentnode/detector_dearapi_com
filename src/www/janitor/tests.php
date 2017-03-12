@@ -21,18 +21,18 @@ $model = $IC->typeObject($itemtype);
 //$output = new Output();
 
 
-$page->bodyClass("maintenance");
-$page->pageTitle("Maintenance");
+$page->bodyClass("tests");
+$page->pageTitle("Tests");
 
 
 if(is_array($action) && count($action)) {
 
 	// Allowed templates
-	if(preg_match("/^(lost-useragents|lost-devices|devices-without-useragents|devices-without-tags|devices-without-brand)$/", $action[0])) {
+	if(preg_match("/^(test-script|test-simple|test-sample)$/", $action[0])) {
 
 		$page->page(array(
 			"type" => "janitor",
-			"templates" => "janitor/maintenance/".$action[0].".php"
+			"templates" => "janitor/tests/".$action[0].".php"
 		));
 		exit();
 	}
@@ -54,7 +54,7 @@ if(is_array($action) && count($action)) {
 // STATISTICS FRONT
 $page->page(array(
 	"type" => "janitor",
-	"templates" => "janitor/maintenance/index.php"
+	"templates" => "janitor/tests/index.php"
 ));
 
 ?>

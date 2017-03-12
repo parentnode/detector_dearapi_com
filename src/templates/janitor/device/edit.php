@@ -16,7 +16,12 @@ $item = $IC->getItem(array("id" => $item_id, "extend" => array("tags" => true, "
 		>
 		<?= $HTML->link("List", "/janitor/".$itemtype."/list", array("class" => "button", "wrapper" => "li.cancel")) ?>
 		<?= $HTML->link("Clone", "/janitor/".$itemtype."/cloneDevice/".$item["item_id"], array("class" => "button primary", "wrapper" => "li.clone.i:cloneDevice")) ?>
-		<?= $JML->deleteButton("Delete", "/janitor/".$itemtype."/delete/".$item["item_id"]) ?>
+
+		<?= $JML->oneButtonForm("Delete", "/janitor/".$itemtype."/delete/".$item["item_id"], array(
+			"wrapper" => "li.delete",
+			"success-location" => "/janitor/".$itemtype."/list"
+		)); ?>
+		<?//= $JML->deleteButton("Delete", "/janitor/".$itemtype."/delete/".$item["item_id"]) ?>
 	</ul>
 
 	<div class="status i:defaultEditStatus item_id:<?= $item["item_id"] ?>"

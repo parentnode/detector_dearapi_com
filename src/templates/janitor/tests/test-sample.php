@@ -1,16 +1,17 @@
 <?php
-header("Content-type: text/html; charset=UTF-8");
+global $action;
+global $IC;
+global $itemtype;
+global $model;
 
-$access_item = false;
-if(isset($read_access) && $read_access) {
-	return;
-}
+//print_r($all_items);
+?>
+<div class="scene defaultList tests">
+	<h1>Testing specific regexp</h1>
 
+<?
 
-include_once($_SERVER["FRAMEWORK_PATH"]."/config/init.php");
 include_once("classes/identify.class.php");
-
-$action = $page->actions();
 
 
 $ua = array();
@@ -130,9 +131,10 @@ $ua[] = "Mozilla/5.0 (Windows NT 6.1; Trident/7.0; EIE10;ENU; rv:11.0) like Geck
 foreach($ua as $useragent) {
 
 //	$device = file_get_contents("http://detector-v3.dearapi.com?ua=".urlencode($useragent)."&site=".urlencode($_SERVER["HTTP_HOST"])."&file=".urlencode($_SERVER["SCRIPT_NAME"]));
-	$segment = file_get_contents("http://detector-v3.api?ua=".urlencode($useragent)."&site=".urlencode($_SERVER["HTTP_HOST"])."&file=".urlencode($_SERVER["SCRIPT_NAME"]));
-	print $useragent."<br>".$segment."<br><br>";
+	$segment = file_get_contents("http://detector-v3.api/text?ua=".urlencode($useragent)."&site=".urlencode($_SERVER["HTTP_HOST"])."&file=".urlencode($_SERVER["SCRIPT_NAME"]));
+	print "<p>".$useragent."<br><strong>".$segment."</strong></p>";
 
 }
 
 ?>
+</div>
