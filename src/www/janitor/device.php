@@ -53,6 +53,14 @@ if(is_array($action) && count($action)) {
 	
 	}
 
+	// keepAlive for indexing process
+	else if(preg_match("/^(keepAlive)$/", $action[0])) {
+
+		print 1;
+		exit();
+
+	}
+
 	// Class interface
 	else if($page->validateCsrfToken() && preg_match("/[a-zA-Z]+/", $action[0])) {
 

@@ -19,7 +19,7 @@ Util.Objects["searchUnidentified"] = new function() {
 
 Util.Objects["unidentifiedList"] = new function() {
 	this.init = function(div) {
-//		u.bug("init unidentifiedList")
+//		console.log("init unidentifiedList")
 
 //		u.bug_force = true;
 
@@ -1158,6 +1158,15 @@ Util.Objects["unidentifiedList"] = new function() {
 			this.updateOptions();
 
 		}
+
+
+		this.keepAlive = function() {
+			u.request(this, "/janitor/device/keepAlive");
+		}
+
+		u.t.setInterval(this, "keepAlive", 60000);
+
+
 
 	}
 }

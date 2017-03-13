@@ -11375,6 +11375,10 @@ Util.Objects["unidentifiedList"] = new function() {
 			}
 			this.updateOptions();
 		}
+		this.keepAlive = function() {
+			u.request(this, "/janitor/device/keepAlive");
+		}
+		u.t.setInterval(this, "keepAlive", 60000);
 	}
 }
 Util.Objects["testMarkersOnUnidentified"] = new function() {
