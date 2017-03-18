@@ -32,6 +32,13 @@ class Identify {
 		}
 
 
+		// Experiment with trimming UA before doing analysis
+		// The goal is to remove non-identifying fragments to make regex process faster
+//		$useragent = preg_replace("/\[FB[^\]]+\]/", "", $useragent);
+
+//		Mozilla/5.0 (iPhone; CPU iPhone OS 10_2_1 like Mac OS X) AppleWebKit/602.4.6 (KHTML, like Gecko) Mobile/14D27 Instagram 10.12.0 (iPhone7,2; iOS 10_2_1; en_GB; en-GB; scale=2.00; gamut=normal; 750x1334)
+
+
 		// Include static detection script for initial test
 		$detection_script = PUBLIC_FILE_PATH."/detection_script.php";
 		if(file_exists($detection_script)) {

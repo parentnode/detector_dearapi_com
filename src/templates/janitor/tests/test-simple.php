@@ -121,9 +121,17 @@ global $model;
 
 //hp-tablet[^$]+bkit\/                              (53(7\.[3-9]|[8-9]))[^$]+TouchPad
 //Linux; U; (?!Android)[^$]+(; KF[A-Z]+ )[^$]+bkit\/(53([0-6]|7\.[0-2]))[^$]+(silk)
+
+//$useragent = "Mozilla/5.0 (Linux; Android 5.1; Vodafone Tab grand 6 Build/LMY47I) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.89 Safari/537.36";
+//$reg_exp_pos = "Linux[^$]+Android[^$]+Vodafone Tab grand[^$]+bkit\/(53(7\.[3-9]|[8-9]))";
+//$reg_exp_neg = false; 
+
+
+
 $useragent = "Mozilla/5.0 (Linux; Android 5.1; Vodafone Tab grand 6 Build/LMY47I) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.89 Safari/537.36";
 $reg_exp_pos = "Linux[^$]+Android[^$]+Vodafone Tab grand[^$]+bkit\/(53(7\.[3-9]|[8-9]))";
 $reg_exp_neg = false; 
+
 
 //"msie";
 //$reg_exp_neg = "^(?!.*(chrome\/[3-9][0-9]))"; //"msie";

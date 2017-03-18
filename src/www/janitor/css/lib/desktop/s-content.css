@@ -15,8 +15,6 @@
 #content .deviceList form.options div.tags .field {padding-left: 0;}
 #content .deviceList form.options div.tags ul.tags,
 #content .deviceList form.options div.tags ul.taglist {padding: 0px 0 20px;}
-
-
 #content .deviceList form.options div.tags li {width: auto; display: inline-block; vertical-align: top; margin: 3px; border-radius: 13px; background-color: #313942; padding: 7px 10px; color: #ffffff; font-size: 0;}
 #content .deviceList form.options div.tags li.add {font-size: 0.923rem; padding: 6px 7px 7px 8px; cursor: pointer; width: 10px; text-align: center;}
 #content .deviceList form.options div.tags li.add:hover {background-color: #64ad8e;}
@@ -26,12 +24,10 @@
 #content .deviceList form.options div.tags li span.context:after {content: ":";}
 #content .deviceList form.options div.tags li span.value {}
 
-#content .deviceList form.options div.tags ul.taglist li {background-color: #dedede;}
-
+#content .deviceList form.options div.tags ul.taglist li {background-color: #dedede; color: #333333;}
 #content .deviceList form.options div.tags.addTags li {cursor: pointer;}
-#content .deviceList form.options div.tags.addTags ul.tags li:hover {background-color: #df0000;}
-#content .deviceList form.options div.tags.addTags ul.taglist li:hover {background-color: #64ad8e;}
-
+#content .deviceList form.options div.tags.addTags ul.tags li:hover {background-color: #df0000; color: #ffffff;}
+#content .deviceList form.options div.tags.addTags ul.taglist li:hover {background-color: #64ad8e; color: #ffffff;}
 
 
 /* MARKERS */
@@ -197,6 +193,20 @@
 #content .scene.unidentifiedList .items > li {padding: 10px 125px 10px 30px; position: relative; overflow: visible;}
 #content .scene.unidentifiedList .items > li > input {position: absolute; top: 10px; left: 30px;}
 #content .scene.unidentifiedList .items > li h3 {font-size: 13px; padding: 0 0 0 25px; overflow: hidden; word-wrap: break-word;}
+#content .scene.unidentifiedList .items > li h4 {font-size: 12px; font-weight: 700; padding: 7px 0 0 25px; overflow: hidden; word-wrap: break-word;}
+#content .scene.unidentifiedList .items > li h5 {font-size: 12px; font-weight: 500; color: #df0000; padding: 0 0 4px;}
+#content .scene.unidentifiedList .items > li h4.mismatches {color: #df0000;}
+#content .scene.unidentifiedList .items > li > ul.matches > li,
+#content .scene.unidentifiedList .items > li > ul.mismatches > li {font-size: 13px; padding: 0 0 0 25px; overflow: hidden; word-wrap: break-word;}
+#content .scene.unidentifiedList .items > li > ul.matches > li {display: none;}
+#content .scene.unidentifiedList .items > li > ul.matches > li:first-child {display: block;}
+#content .scene.unidentifiedList .items > li > ul.matches.show > li {display: block;}
+#content .scene.unidentifiedList .items > li > ul.mismatches > li {color: #df0000; display: block;}
+
+#content .scene.unidentifiedList .items > li > ul.mismatches > li ul li {display: none;}
+#content .scene.unidentifiedList .items > li > ul.mismatches > li ul li:first-child {display: block;}
+#content .scene.unidentifiedList .items > li > ul.mismatches.show > li ul li {display: block;}
+
 
 #content .scene.unidentifiedList .items > li.all {padding-left: 55px;}
 #content .scene.unidentifiedList .items > li.all > input {position: absolute; top: 8px; left: 30px;}

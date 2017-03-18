@@ -4597,9 +4597,13 @@ u.defaultFilters = function(div) {
 			this.current_filter = query + "," + this.selected_tags.join(",");
 			for(i = 0; node = this.div.nodes[i]; i++) {
 				if(node._c.match(query) && this.checkTags(node)) {
+					node._hidden = false;
+					u.rc(node, "hidden");
 					u.as(node, "display", "block", false);
 				}
 				else {
+					node._hidden = true;
+					u.ac(node, "hidden");
 					u.as(node, "display", "none", false);
 				}
 			}
@@ -9692,6 +9696,8 @@ u.toggleHeader = function(div, header) {
 }
 Util.Objects["searchDevice"] = new function() {
 	this.init = function(div) {
+		u.bug_force = true;
+		u.bug("searchDevice");
 		var form = u.qs("form", div);
 		form.div = div;
 		div.csrf_token = div.getAttribute("data-csrf-token");
@@ -9804,6 +9810,7 @@ Util.Objects["searchDevice"] = new function() {
 				tag_node._id = this._tags._alltags[tag].id;
  				u.e.click(tag_node);
  				tag_node.clicked = function() {
+					u.bug("tag clicked:" + tag_node._context+":"+tag_node._value);
 						if(u.hc(this.parentNode, "tags")) {
 							u.ae(this._tags._taglist, this);
 						}
@@ -10945,12 +10952,30 @@ Util.Objects["unidentifiedList"] = new function() {
 					u.request(this, this.div.useragent_details+"/"+this.ua_id, {"method":"post","params":"csrf-token=" + this.div.csrf_token});
 				}
 				else {
-					var uls = u.qsa("ul", this);
+					var uls = u.qsa("ul.info", this);
 					var i, ul;
 					for(i = 0; ul = uls[i]; i++) {
 						this.removeChild(ul);
 					}
 					this._ul = false;
+				}
+			}
+			node.h4_matches = u.qs("h4.matches", node);
+			node.ul_matches = u.qs("ul.matches", node);
+			if(node.h4_matches && node.ul_matches) {
+				node.h4_matches.node = node;
+				u.ce(node.h4_matches);
+				node.h4_matches.clicked = function() {
+					u.toggleClass(this.node.ul_matches, "show");
+				}
+			}
+			node.h4_mismatches = u.qs("h4.mismatches", node);
+			node.ul_mismatches = u.qs("ul.mismatches", node);
+			if(node.h4_mismatches && node.ul_mismatches) {
+				node.h4_mismatches.node = node;
+				u.ce(node.h4_mismatches);
+				node.h4_mismatches.clicked = function() {
+					u.toggleClass(this.node.ul_mismatches, "show");
 				}
 			}
 		}
@@ -11378,7 +11403,7 @@ Util.Objects["unidentifiedList"] = new function() {
 		this.keepAlive = function() {
 			u.request(this, "/janitor/device/keepAlive");
 		}
-		u.t.setInterval(this, "keepAlive", 60000);
+		u.t.setInterval(this, "keepAlive", 300000);
 	}
 }
 Util.Objects["testMarkersOnUnidentified"] = new function() {
@@ -11402,8 +11427,10 @@ Util.Objects["testMarkersOnUnidentified"] = new function() {
 					li = u.ae(this.markers_ul, "li", {"html":node.name});
 					li.div = this;
 					li.item_id = node.item_id;
+					li.marker_name = node.name;
 					u.e.click(li);
 					li.clicked = function() {
+						u.qs("title", document.head).innerHTML = this.marker_name;
 						var i, node;
 						for(i = 0; node = this.div._markers[i]; i++) {
 							u.rc(node, "selected");
@@ -11431,7 +11458,7 @@ Util.Objects["testMarkersOnUnidentified"] = new function() {
 							page.notify(response);
 							if(response.isHTML) {
 								this.div.div_stats.innerHTML = u.qs(".stats", response).innerHTML;
-								var new_items = u.qsa(".all_items ul.items li", response);
+								var new_items = u.qsa(".all_items ul.items li.item", response);
 								if(new_items) {
 									var i, node;
 									for(i = 0; node = new_items[i]; i++) {
@@ -11489,8 +11516,127 @@ Util.Objects["testMarkersOnUnidentified"] = new function() {
 			if(this.markers_ul) {
 				this.removeChild(this.markers_ul);
 			}
+			if(this._filter) {
+				this.removeChild(this._filter);
+			}
 		}
-		// 		
+	}
+}
+Util.Objects["crossreferenceUnidentified"] = new function() {
+	this.init = function(div) {
+		u.bug("init crossreferenceUnidentified")
+		div._header = u.ae(div, "h2", {"html":"Crossreference device markers"});
+		u.ae(div, "p", {"html":"Crossreferencing takes time and server resources - use with caution."});
+		div._header.div = div;
+		div.csrf_token = div.getAttribute("data-csrf-token");
+		div.url_device_test = div.getAttribute("data-device-test");
+		div.url_device_get = div.getAttribute("data-device-get");
+		div.response = function(response) {
+			page.notify(response);
+			if(response.cms_status == "success") {
+				this._open = true;
+				this.div_results = u.qs(".all_items");
+				this.div_stats = u.qs(".stats");
+				this._filter = u.ae(this, "div", {"class":"filter"});
+				this.markers_ul = u.ae(this, "ul", {"class":"markers"});
+				var i, node, li;
+				for(i = 0; node = response.cms_object[i]; i++) {
+					li = u.ae(this.markers_ul, "li", {"html":node.name});
+					li.div = this;
+					li.item_id = node.item_id;
+					u.e.click(li);
+					li.clicked = function() {
+						var i, node;
+						for(i = 0; node = this.div._markers[i]; i++) {
+							u.rc(node, "selected");
+						}
+						u.ac(this, "selected");
+						var existing_filter = u.qs("div.filter", this.div.div_results);
+						if(existing_filter) {
+							existing_filter.parentNode.removeChild(existing_filter);
+						}
+						this.existing_results = u.qs("ul.items", this.div.div_results);
+						if(this.existing_results) {
+							this.existing_results.innerHTML = "";
+						}
+						else {
+							this.existing_results = u.ae(this.div.div_results, "ul", {"class":"items"});
+						}
+						var existing_no_results = u.qs("p", this.div.div_results);
+						if(existing_no_results) {
+							existing_no_results.parentNode.removeChild(existing_no_results);
+						}
+						this.div.div_stats.innerHTML = "Loading ...";
+						this.div.div_results.toggleAddToOption();
+						u.bug("crossreference device markers")
+						this.response = function(response) {
+							page.notify(response);
+							if(response.isHTML) {
+								this.div.div_stats.innerHTML = u.qs(".stats", response).innerHTML;
+								var new_items = u.qsa(".all_items ul.items li.item", response);
+								if(new_items) {
+									var i, node;
+									for(i = 0; node = new_items[i]; i++) {
+										u.ae(this.existing_results, node);
+									}
+									u.o.unidentifiedList.init(this.div.div_results);
+								}
+								else {
+									u.ae(this.existing_results, u.qs(".all_items p", response));
+								}
+								u.rc(this, "loading");
+							}
+						}
+						u.ac(this, "loading");
+						u.request(this, this.div.url_device_test, {"params":"csrf-token="+this.div.csrf_token+"&crossreference_marker=true&device_id="+this.item_id, "method":"post"});
+					}
+				}
+				this._markers = u.qsa("li", this.markers_ul);
+				var i, node;
+				for(i = 0; node = this._markers[i]; i++) {
+					node._c = node.textContent.toLowerCase();
+				}
+				this._filter._field = u.ae(this._filter, "div", {"class":"field"});
+				u.ae(this._filter._field, "label", {"html":"Filter"});
+				this._filter._input = u.ae(this._filter._field, "input", {"class":"filter ignoreinput"});
+				this._filter._input._div = this;
+				this._filter._input.onkeydown = function() {
+					u.t.resetTimer(this._div.t_filter);
+				}
+				this._filter._input.onkeyup = function() {
+					this._div.t_filter = u.t.setTimer(this._div, this._div.filter, 1500);
+					u.ac(this._div._filter, "filtering");
+				}
+				this.filter = function() {
+					var i, node;
+					if(this._current_filter != this._filter._input.value.toLowerCase()) {
+						this._current_filter = this._filter._input.value.toLowerCase();
+						for(i = 0; node = this._markers[i]; i++) {
+							if(node._c.match(this._current_filter)) {
+								u.as(node, "display", "inline-block", false);
+							}
+							else {
+								u.as(node, "display", "none", false);
+							}
+						}
+					}
+					u.rc(this._filter, "filtering");
+				}
+			}
+		}
+		div.headerExpanded = function() {
+			u.request(this, this.url_device_get, {"params":"csrf-token="+this.csrf_token, "method":"post"})
+		}
+		div.headerCollapsed = function() {
+			if(this.markers_ul) {
+				this.removeChild(this.markers_ul);
+				delete this.markers_ul;
+			}
+			if(this._filter) {
+				this.removeChild(this._filter);
+				delete this._filter;
+			}
+		}
 	}
 }
 

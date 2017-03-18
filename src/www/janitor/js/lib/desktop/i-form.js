@@ -36,8 +36,8 @@ u.toggleHeader = function(div, header) {
 // device search 
 Util.Objects["searchDevice"] = new function() {
 	this.init = function(div) {
-
-//		u.bug("searchDevice");
+		u.bug_force = true;
+		u.bug("searchDevice");
 
 		var form = u.qs("form", div);
 		form.div = div;
@@ -216,7 +216,7 @@ Util.Objects["searchDevice"] = new function() {
 // 
  				u.e.click(tag_node);
  				tag_node.clicked = function() {
-// 					u.bug("tag clicked:" + tag_node._context+":"+tag_node._value);
+					u.bug("tag clicked:" + tag_node._context+":"+tag_node._value);
 
 						// tag is in existing tags list
 						// remove tag

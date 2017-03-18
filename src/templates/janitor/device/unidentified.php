@@ -11,19 +11,25 @@ $search_string = getPost("search_string");
 $test_marker = getPost("test_marker");
 $device_id = getPost("device_id");
 
+$crossreference_marker = getPost("crossreference_marker");
+
+
 // old search stored?
 if(!$search && session()->value("unidentified_search")) {
 	$search_string = session()->value("unidentified_search");
 	$search = 1;
 }
 
-
-if($test_marker && $device_id) {
+if($crossreference_marker && $device_id) {
+	$all_items = $model->crossreferenceMarkersOnUnidentified($device_id);
+}
+else if($test_marker && $device_id) {
 	$all_items = $model->testMarkersOnUnidentified($device_id);
 }
 else if($search) {
 	$all_items = $model->unidentifiedUseragents($search_string);
 	session()->value("unidentified_search", $search_string);
+	$this->pageTitle($search_string);
 }
 else {
 	$all_items = $model->unidentifiedUseragents();
@@ -51,9 +57,16 @@ else {
 		>
 	</div>
 
+	<div class="testmarkers crossreference i:crossreferenceUnidentified i:collapseHeader"
+		data-csrf-token="<?= session()->value("csrf") ?>"
+		data-device-get="<?= $this->validPath("/janitor/device/getDevicesWithPatterns") ?>"
+		data-device-test="<?= $this->validPath("/janitor/device/unidentified") ?>"
+		>
+	</div>
+
 
 	<div class="stats">
-		<p>A total of unidentified <?= pluralize(count($all_items), "useragent", "useragents")?> were returned by the server</p>
+		<p>A total of <?= pluralize(count($all_items), "unidentified useragent", "unidentified useragents")?> were returned by the server</p>
 	</div>
 
 	<div class="all_items i:unidentifiedList filters"
@@ -68,7 +81,34 @@ else {
 <?		if($all_items): ?>
 		<ul class="items">
 <?			foreach($all_items as $item): ?>
-			<li class="item ua_id:<?= $item["id"] ?>"><h3><?= stringOr($item["useragent"], "&nbsp;") ?></h3></li>
+			<li class="item ua_id:<?= $item["id"] ?>">
+				<h3><?= stringOr($item["useragent"], "&nbsp;") ?></h3>
+
+				<? if(isset($item["matches"])): ?>
+				<h4 class="matches"><em><?= $item["marker"] ?></em> matches:</h4>
+				<ul class="matches">
+				<? foreach($item["matches"] as $match): ?>
+					<li><em><?= $match["name"] ?></em>, <?= $match["useragent"] ?></li>
+				<? endforeach; ?>
+				</ul>
+				<? endif; ?>
+
+				<? if(isset($item["mismatches"])): ?>
+				<h4 class="mismatches">Also found in these segments:</h4>
+				<ul class="mismatches">
+				<? foreach($item["mismatches"] as $segment => $mismatch): ?>
+					<li>
+						<h5><?= $segment ?></h5>
+						<ul>
+						<? foreach($mismatch as $match): ?>
+							<li><?= $match["name"] ?>, <?= $match["useragent"] ?></li>
+						<? endforeach; ?>
+						</ul>
+					</li>
+				<? endforeach; ?>
+				</ul>
+				<? endif; ?>
+			</li>
 <?			endforeach; ?>
 		</ul>
 <?		else: ?>

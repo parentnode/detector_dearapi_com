@@ -1709,7 +1709,97 @@ class TypeDevice extends Itemtype {
 		return false;
 	}
 
+	// cross reference existing useragent markers and device markers against unidentified useragents
+	// crossreferenceMarkersOnUnidentified/#device_id#
+	function crossreferenceMarkersOnUnidentified($device_id) {
 
+		$IC = new Items();
+		$query = new Query();
+
+		$potential_items = [];
+
+		// segment of the device markers
+		$device_segment = $IC->getTags(["item_id" => $device_id, "context" => "segment"]);
+//		print_r($device_segment);
+
+		// get all the items matching the markers 
+		$uas = $this->testMarkersOnUnidentified($device_id);
+
+		// loop the matches
+		foreach($uas as $ua) {
+			$marker = "";
+			$similar_items = [];
+			$mismatches = [];
+
+			// look for potential unique markers
+			if(preg_match("/Android[ 0-9._a-zA-Z\-]*;[ ]?([A-Za-z]{2}[-_][A-Za-z]{2}|[A-Za-z]{2}[-_]|[A-Za-z]{2})[; ]+([A-Za-z0-9 \-_]+)/i", $ua["useragent"], $matches)) {
+				$marker = $matches[2];
+			}
+			else if(preg_match("/Android[ 0-9._a-zA-Z\-]*;[ ]*([A-Za-z0-9 \-_]+)/i", $ua["useragent"], $matches)) {
+				$marker = $matches[2];
+			}
+			else if(!preg_match("/^Mozilla/i", $ua["useragent"]) && preg_match("/^([A-Za-z0-9 \-_]+)/i", $ua["useragent"], $matches)) {
+				$marker = $matches[1];
+			}
+			else if(preg_match("/compatible;[ ]*([A-Za-z0-9 \-_]+)/i", $ua["useragent"], $matches)) {
+				$marker = $matches[1];
+			}
+
+			// TODO: filter more values after testing
+			$marker = trim(preg_replace("/build|mozilla|uweb|android/i", "", $marker));
+
+			// if marker apears to be valid
+			if($marker && strlen($marker) > 2) {
+
+				$ua["marker"] = $marker;
+				// find any existing devices with the marker
+				$sql = "SELECT devices.name, devices.item_id, tags.value as segment, ua.useragent FROM ".$this->db." as devices, ".$this->db_useragents." AS ua, ".UT_TAG." as tags, ".UT_TAGGINGS." WHERE devices.item_id = taggings.item_id AND taggings.tag_id = tags.id AND tags.context = 'segment' AND ua.item_id = devices.item_id AND ua.useragent LIKE '%$marker%'";
+//				print $sql."<br>\n";
+				if($query->sql($sql)) {
+					$similar_items = $query->results();
+				}
+
+
+				foreach($similar_items as $item) {
+//					print $ua["useragent"] . " =? " . $item["useragent"]."<br>\n";
+
+					if($item["segment"] == $device_segment[0]["value"]) {
+//						print "\n<br>###Potential marker: " . $marker . "<br>\n";
+
+						if(!isset($ua["matches"])) {
+							$ua["matches"] = [];
+						}
+
+						array_push($ua["matches"], ["useragent" => $item["useragent"], "name" => $item["name"], "item_id" => $item["item_id"]]);
+					}
+					else {
+///						print "\n<br>###Skipped marker: " . $marker . ", ". $segment.", " . $ua["useragent"] . "<br>\n";
+
+						if(!isset($ua["mismatches"])) {
+							$ua["mismatches"] = [];
+						}
+						if(!isset($ua["mismatches"][$item["segment"]])) {
+							$ua["mismatches"][$item["segment"]] = [];
+						}
+
+						array_push($ua["mismatches"][$item["segment"]], ["name" => $item["name"], "useragent" => $item["useragent"], "item_id" => $item["item_id"]]);
+					}
+
+				}
+
+				if(isset($ua["matches"])) {
+					array_push($potential_items, $ua);
+				}
+				else if(isset($ua["mismatches"])){
+					unset($ua["mismatches"]);
+				}
+
+			}
+
+		}
+
+		return $potential_items;
+	}
 
 	// test device markers on unidentified useragents
 	// testMarkersOnUnidentified/#device_id#
@@ -1807,7 +1897,7 @@ class TypeDevice extends Itemtype {
 
 
 
-			print "count:" .count($all_useragents)."<br>\n";
+//			print "count:" .count($all_useragents)."<br>\n";
 			foreach($all_useragents as $useragent) {
 
 				// check group pattern
@@ -1871,7 +1961,7 @@ class TypeDevice extends Itemtype {
 		$SELECT[] = "items.sindex";
 		$SELECT[] = "items.status";
 		$SELECT[] = "items.published_at";
-
+		
 	 	$FROM[] = UT_ITEMS." as items";
 
 
@@ -1947,6 +2037,8 @@ class TypeDevice extends Itemtype {
 		// TODO: TEST IMPLEMENTING THIS IN GLOBAL getItems for extended search
 		if(isset($search_string) && $search_string) {
 
+			$SELECT[] = "ua.useragent";
+
 			$LEFTJOIN[] = $this->db." as device ON device.item_id = items.id";
 			$LEFTJOIN[] = $this->db_useragents." as ua ON ua.item_id = items.id";
 
@@ -1975,6 +2067,10 @@ class TypeDevice extends Itemtype {
 			$item["sindex"] = $query->result($i, "sindex");
 			$item["status"] = $query->result($i, "status");
 			$item["published_at"] = $query->result($i, "published_at");
+
+			if(isset($search_string) && $search_string) {
+				$item["useragent"] = $query->result($i, "useragent");
+			}
 
 			$items[] = $item;
 		}
