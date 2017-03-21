@@ -16,7 +16,14 @@ class Identify {
 		$this->db_useragents = SITE_DB.".device_useragents";
 		$this->db_unidentified = SITE_DB.".unidentified_useragents";
 
+		$this->trimming_patterns = [
+			"[ ]+\[FB[^\]]+\]$",
+			"[ ]+\(iPhone[^\)]+scale[^\)]+gamut[^\)]+\)$",
+			"[ ]+[a-zA-Z]{2}[-_][a-zA-Z]{2}( ;|;)"
+		];
+
 	}
+
 
 	// TODO: update ipad identification - look at version/mobile/webkit inconsistencies
 
@@ -33,9 +40,65 @@ class Identify {
 //			return "basic";
 		}
 
+
+		// Experiment with trimming UA before doing analysis
+		// The goal is to remove non-identifying fragments to make regex process faster
+		foreach($this->trimming_patterns as $pattern) {
+			$useragent = preg_replace("/".$pattern."/", "", $useragent);
+		}
+
+
+
+		$detection_script = "/srv/sites/parentnode/detector_dearapi_com_v3/src/library/public/detection_script.php";
+		$detection_script_local = "/srv/sites/parentnode/detector_dearapi_com/src/library/public/detection_script.php";
+		if(file_exists($detection_script)) {
+			include($detection_script);
+		}
+		else if(file_exists($detection_script_local)) {
+			include($detection_script_local);
+		}
+
+
 		$IC = new Items();
 		$query = new Query();
 		$DC = $IC->typeObject("device");
+
+
+		// did static test return match
+		if(isset($device_name) && isset($device_segment)) {
+
+			// if log is true, use fastest method to return segment
+			if($log) {
+
+				// add to general id log
+				$this->logString("UA MARKER", $useragent, $device_segment, "marker");
+
+				// return segment
+				return array("segment" => $DC->translateNewSegments($device_segment));
+//				return array("segment" => $device_segment);
+			}
+
+			// if details are required
+			if($details) {
+
+				// get additional information
+				if($query->sql("SELECT item_id FROM ".$this->db." WHERE name = '$device_name'")) {
+					$device_id = $query->result(0, "item_id");
+
+					// get complete device
+					$device = $IC->getItem(array("id" => $device_id, "extend" => array("tags" => true)));
+					$device["method"] = "marker";
+					return $device;
+				}
+			}
+		}
+
+		//
+		// if(isset($device_segment) && $device_segment) {
+		// 	return array("segment" => $DC->translateNewSegments($device_segment));
+		// }
+
+
 
 //		$this->perf->mark("identify", true);
 
@@ -625,9 +688,9 @@ class Identify {
 
 			// Still unidentified
 			// register device for manual indexing
-			if($log) {
-				$this->saveForIdentification($useragent);
-			}
+			// if($log) {
+			// 	$this->saveForIdentification($useragent);
+			// }
 
 //			$this->perf->mark("guessing - logged");
 
@@ -943,7 +1006,7 @@ class Identify {
 			$this->logString("UA UNIQUE TEST", $useragent, $segment, "uniquetest");
 
 			// save useragent for manuel indexing
-			$this->saveForIdentification($useragent);
+//			$this->saveForIdentification($useragent);
 
 			// save for email notification
 			$this->notificationString("UNIQUE-TEST", $useragent, $segment, $collection);
@@ -992,14 +1055,20 @@ class Identify {
 	function saveForIdentification($useragent, $device_id = "") {
 		$query = new Query();
 
-		$comment = stringOr(getVar("site"), SITE_UID).stringOr(getVar("file"), "?")."\n";
-		$headers = apache_request_headers();
-		foreach($headers as $key => $value) {
-			$comment .= "$key: $value\n";
-		}
+		// only save if this exact ua hasn't already been identified
+		$sql = "SELECT id FROM ".$this->db_useragents." WHERE useragent = '$useragent'";
+		if(!$query->sql($sql)) {
 
-		// TODO: update insert
-		$query->sql("INSERT INTO ".$this->db_unidentified." VALUES(DEFAULT, '$useragent', '$comment', '$device_id', DEFAULT)");
+			$comment = stringOr(getVar("site"), SITE_UID).stringOr(getVar("file"), "?")."\n";
+			$headers = apache_request_headers();
+			foreach($headers as $key => $value) {
+				$comment .= "$key: $value\n";
+			}
+
+			// TODO: update insert
+			$query->sql("INSERT INTO ".$this->db_unidentified." VALUES(DEFAULT, '$useragent', '$comment', '$device_id', DEFAULT)");
+
+		}
 	}
 
 
@@ -1026,6 +1095,8 @@ class Identify {
 	*/
 	function logString($status, $useragent, $segment, $collection) {
 		global $page;
+
+		$this->saveForIdentification($useragent, $segment);
 
 		$string = "$status: " . $segment . "; UA: ".$useragent;
 		$page->addLog($string, $collection);
