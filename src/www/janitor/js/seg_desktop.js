@@ -10793,6 +10793,7 @@ Util.Objects["searchUnidentified"] = new function() {
 }
 Util.Objects["unidentifiedList"] = new function() {
 	this.init = function(div) {
+		console.log("init unidentifiedList")
 		var i, node;
 		div.list = u.qs("ul.items", div);
 		div.nodes = u.qsa("li.item", div.list);
@@ -11400,10 +11401,13 @@ Util.Objects["unidentifiedList"] = new function() {
 			}
 			this.updateOptions();
 		}
+		if(div.i_keepalive) {
+			u.t.resetInterval(div.i_keepalive);
+		}
 		this.keepAlive = function() {
 			u.request(this, "/janitor/device/keepAlive");
 		}
-		u.t.setInterval(this, "keepAlive", 300000);
+		div.i_keepalive = u.t.setInterval(this, "keepAlive", 300000);
 	}
 }
 Util.Objects["testMarkersOnUnidentified"] = new function() {

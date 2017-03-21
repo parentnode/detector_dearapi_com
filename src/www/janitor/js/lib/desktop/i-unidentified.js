@@ -19,7 +19,7 @@ Util.Objects["searchUnidentified"] = new function() {
 
 Util.Objects["unidentifiedList"] = new function() {
 	this.init = function(div) {
-//		console.log("init unidentifiedList")
+		console.log("init unidentifiedList")
 
 //		u.bug_force = true;
 
@@ -27,7 +27,7 @@ Util.Objects["unidentifiedList"] = new function() {
 
 		div.list = u.qs("ul.items", div);
 		div.nodes = u.qsa("li.item", div.list);
-		
+	
 		// get all data urls
 		div.csrf_token = div.getAttribute("data-csrf-token");
 		div.useragent_delete = div.getAttribute("data-useragent-delete");
@@ -129,7 +129,7 @@ Util.Objects["unidentifiedList"] = new function() {
 
 				// remove mapping class
 				u.rc(node, "mapped");
-				
+			
 				// delete option_node reference
 				node.option_node = false;
 			}
@@ -229,7 +229,7 @@ Util.Objects["unidentifiedList"] = new function() {
 								this.value = "Delete";
 								u.rc(this, "confirm");
 							}
-			
+		
 							this._delete.clicked = function(event) {
 								u.e.kill(event);
 
@@ -242,7 +242,7 @@ Util.Objects["unidentifiedList"] = new function() {
 								// confirm click
 								else {
 									u.t.resetTimer(this.t_confirm);
-	
+
 									this.response = function(response) {
 
 										page.notify(response);
@@ -841,7 +841,7 @@ Util.Objects["unidentifiedList"] = new function() {
 
 												var i, info_string;
 												var brand = u.qs("ul.tags li.brand .value", this);
-												
+											
 												if(brand) {
 													info_string = brand.innerHTML;
 												}
@@ -861,7 +861,7 @@ Util.Objects["unidentifiedList"] = new function() {
 
 													// confirm mechanism in action
 													if(this.t_execute) {
-							
+						
 														var inputs = u.qsa("li:not(.all) input:checked", this.option.div.list);
 														var i, input;
 														// selected items in list?
@@ -1179,13 +1179,17 @@ Util.Objects["unidentifiedList"] = new function() {
 			this.updateOptions();
 
 		}
+		
 
+		if(div.i_keepalive) {
+			u.t.resetInterval(div.i_keepalive);
+		}
 
 		this.keepAlive = function() {
 			u.request(this, "/janitor/device/keepAlive");
 		}
 
-		u.t.setInterval(this, "keepAlive", 300000);
+		div.i_keepalive = u.t.setInterval(this, "keepAlive", 300000);
 
 
 

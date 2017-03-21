@@ -123,6 +123,7 @@ else {
 		</ul>
 <?		else: ?>
 		<p>No unidentified useragents.</p>
+		<ul class="items"></ul>
 <?		endif; ?>
 	</div>
 
