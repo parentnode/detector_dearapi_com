@@ -4,6 +4,7 @@
 	<h2>Tools for advanced system improvement.</h2>
 
 	<ul class="tools">
+		<li><a href="/janitor/maintenance/purge-useragent-regex">Remove all ignore-patterns from existing useragents</a></li>
 		<li><a href="/janitor/maintenance/lost-useragents">Lost useragents (useragents without device)</a></li>
 		<li><a href="/janitor/maintenance/lost-devices">Lost devices (items without device)</a></li>
 		<li><a href="/janitor/maintenance/devices-without-useragents">Devices without useragents</a></li>

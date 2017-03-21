@@ -85,7 +85,7 @@ else {
 				<h3><?= stringOr($item["useragent"], "&nbsp;") ?></h3>
 
 				<? if(isset($item["matches"])): ?>
-				<h4 class="matches"><em><?= $item["marker"] ?></em> matches:</h4>
+				<h4 class="matches"><em><?= $item["marker"] ?></em> matches (<?= count($item["matches"]) ?>):</h4>
 				<ul class="matches">
 				<? foreach($item["matches"] as $match): ?>
 					<li><em><?= $match["name"] ?></em>, <?= $match["useragent"] ?></li>
@@ -109,6 +109,16 @@ else {
 				</ul>
 				<? endif; ?>
 			</li>
+
+			<? if(isset($item["unid"])): ?>
+				<? foreach($item["unid"] as $unid): ?>
+			<li class="item secondary ua_id:<?= $unid["id"] ?>">
+				<h3><?= stringOr($unid["useragent"], "&nbsp;") ?></h3>
+			</li>
+				<? endforeach; ?>
+			<? endif; ?>
+
+
 <?			endforeach; ?>
 		</ul>
 <?		else: ?>

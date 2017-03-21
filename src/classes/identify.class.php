@@ -16,8 +16,21 @@ class Identify {
 		$this->db_useragents = SITE_DB.".device_useragents";
 		$this->db_unidentified = SITE_DB.".unidentified_useragents";
 
-	}
+		$this->trimming_patterns = [
+			"[ ]+\[FB[^\]]+\]$",
+			"[ ]+\(iPhone[^\)]+scale[^\)]+gamut[^\)]+\)$",
+			"[ ]+[a-zA-Z]{2}[-_][a-zA-Z]{2}( ;|;)"
+		];
 
+
+		//		Mozilla/5.0 (iPhone; CPU iPhone OS 10_2_1 like Mac OS X) AppleWebKit/602.4.6 (KHTML, like Gecko) Mobile/14D27 [FBAN/FBIOS;FBAV/83.0.0.38.70;FBBV/51754296;FBDV/iPhone8,4;FBMD/iPhone;FBSN/iOS;FBSV/10.2.1;FBSS/2;FBCR/TELIA;FBID/phone;FBLC/da_DK;FBOP/5;FBRV/52433023]
+
+		//		Mozilla/5.0 (Linux; Android 6.0.1; SM-G920F Build/MMB29K; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/56.0.2924.87 Mobile Safari/537.36 [FB_IAB/MESSENGER;FBAV/109.0.0.23.70;]
+
+		//		Mozilla/5.0 (iPhone; CPU iPhone OS 10_2_1 like Mac OS X) AppleWebKit/602.4.6 (KHTML, like Gecko) Mobile/14D27 Instagram 10.12.0 (iPhone7,2; iOS 10_2_1; en_GB; en-GB; scale=2.00; gamut=normal; 750x1334)
+
+
+	}
 
 	// added optional logging - now function can be used for manual identification work
 	function identifyDevice($useragent, $log=true, $mail=true, $details=true) {
@@ -32,11 +45,13 @@ class Identify {
 		}
 
 
+
 		// Experiment with trimming UA before doing analysis
 		// The goal is to remove non-identifying fragments to make regex process faster
-//		$useragent = preg_replace("/\[FB[^\]]+\]/", "", $useragent);
+		foreach($this->trimming_patterns as $pattern) {
+			$useragent = preg_replace("/".$pattern."/", "", $useragent);
+		}
 
-//		Mozilla/5.0 (iPhone; CPU iPhone OS 10_2_1 like Mac OS X) AppleWebKit/602.4.6 (KHTML, like Gecko) Mobile/14D27 Instagram 10.12.0 (iPhone7,2; iOS 10_2_1; en_GB; en-GB; scale=2.00; gamut=normal; 750x1334)
 
 
 		// Include static detection script for initial test
@@ -44,6 +59,9 @@ class Identify {
 		if(file_exists($detection_script)) {
 			include($detection_script);
 		}
+//		print $device_name;
+
+
 
 
 		// did static test return match
@@ -51,6 +69,7 @@ class Identify {
 
 			// if log is true, use fastest method to return segment
 			if($log) {
+
 				// add to general id log
 				$this->logString("UA MARKER", $useragent, $device_segment, "marker");
 
@@ -76,14 +95,15 @@ class Identify {
 		}
 
 
+		$IC = new Items();
+		$query = new Query();
+		$DC = $IC->typeObject("device");
+
 
 		// continue with old match patterns
 
 
 
-		$IC = new Items();
-		$query = new Query();
-		$DC = $IC->typeObject("device");
 
 //		$this->perf->mark("identify", true);
 
@@ -126,9 +146,9 @@ class Identify {
 
 
 			// register device for manual indexing
-			if($log) {
-				$this->saveForIdentification($useragent);
-			}
+			// if($log) {
+			// 	$this->saveForIdentification($useragent);
+			// }
 
 //			$this->perf->mark("guessing - logged");
 
@@ -361,126 +381,23 @@ class Identify {
 	}
 
 
-	// TODO: explore option to save these directly on device
-	// identified by Unique ID
-// 	function uniqueId($useragent, $device, $segment, $log, $mail, $details) {
-// 		global $page;
-//
-// //		print "UNIQUE:" . $ua_id . ", " . $log;
-//
-// 		// if log is true, use fastest method to return segment
-// 		if($log) {
-// 			// add to general id log
-// 			$this->logString("UA UNIQUE", $useragent, $segment, "unique");
-//
-// 			// return segment
-// 			return array("segment" => $segment);
-// 		}
-//
-// 		if($details) {
-// 			// else manual indexing, return additional information
-// 			$query = new Query();
-// 			if($query->sql("SELECT item_id FROM ".$this->db_useragents." WHERE useragent = '$device'")) {
-// 				$device_id = $query->result(0, "item_id");
-//
-// 				// get complete device
-// 				$IC = new Items();
-// 				$device = $IC->getItem(array("id" => $device_id, "extend" => array("tags" => true)));
-// 				$device["method"] = "unique_id";
-// 				return $device;
-// 			}
-// 			else if($query->sql("SELECT item_id FROM ".$this->db." WHERE name = '$device'")) {
-// 				$device_id = $query->result(0, "item_id");
-//
-// 				// get complete device
-// 				$IC = new Items();
-// 				$device = $IC->getItem(array("id" => $device_id, "extend" => array("tags" => true)));
-// 				$device["method"] = "unique_id";
-// 				return $device;
-// 			}
-// 		}
-//
-// 		// FATAL ERROR
-// 		// missing ID - notify imediately
-// 		if($mail) {
-// 			global $page;
-// 			$page->mail(array("subject" => "MISSING UNIQUE ID: $device (".SITE_URL.")", "message" => $device.", ".$useragent));
-// 		}
-//
-// 		// no match - return false to continue identification
-// 		return array("segment" => $segment, "name" => $device, "id" => "unknown", "method" => "unique_id - missing id");
-// 	}
-
-	// Unique ID - still in test phase
-// 	function uniqueIdTest($useragent, $device, $segment, $log, $mail, $details, $collection = "unique-test") {
-//
-// //		print "UNIQUE TEST:" . $useragent . ", " . $device . ", " . $log;
-//
-// 		// if log is true, use fastest method to return segment
-// 		if($log) {
-// 			// add to general id log
-// 			$this->logString("UA UNIQUE TEST", $useragent, $segment, "uniquetest");
-//
-// 			// save useragent for manuel indexing
-// 			$this->saveForIdentification($useragent, $segment);
-//
-// 			// save for email notification
-// 			$this->notificationString("UNIQUE-TEST", $useragent, $segment, $collection);
-//
-// 			// return segment
-// 			return array("segment" => $segment);
-// 		}
-//
-// 		if($details) {
-// 			// else manual indexing, return additional information
-// 			$query = new Query();
-// 			$sql = "SELECT item_id FROM ".$this->db_useragents." WHERE useragent = '$device'";
-//
-// 			// TODO: stop looking for useragent match when
-// 			if($query->sql($sql)) {
-// 				$device_id = $query->result(0, "item_id");
-//
-// 				// get complete device
-// 				$IC = new Items();
-// 				$device = $IC->getItem(array("id" => $device_id, "extend" => array("tags" => true)));
-// 				$device["method"] = "unique_id";
-// 				return $device;
-// 			}
-// 			else if($query->sql("SELECT item_id FROM ".$this->db." WHERE name = '$device'")) {
-// 				$device_id = $query->result(0, "item_id");
-//
-// 				// get complete device
-// 				$IC = new Items();
-// 				$device = $IC->getItem(array("id" => $device_id, "extend" => array("tags" => true)));
-// 				$device["method"] = "unique_id";
-// 				return $device;
-// 			}
-// 		}
-//
-// 		// FATAL ERROR
-// 		// missing ID - notify imediately
-// 		if($mail) {
-// 			global $page;
-// 			$page->mail(array("subject" => "MISSING UNIQUE ID: $device (".SITE_URL.")", "message" => $device.", ".$useragent));
-// 		}
-//
-// 		// no match - return false to continue identification
-// 		return array("segment" => $segment, "name" => $device, "id" => "unknown", "method" => "unique_id test - missing id");
-// 	}
-
 
 	// log useragent for manual indexing
+	// only logs unidentified useragents
 	function saveForIdentification($useragent, $segment = "") {
 		$query = new Query();
 
-		$comment = stringOr(getVar("site"), SITE_UID).stringOr(getVar("file"), "?")."\n";
-		$headers = apache_request_headers();
-		foreach($headers as $key => $value) {
-			$comment .= "$key: $value\n";
-		}
+		// only save if this exact ua hasn't already been identified
+		$sql = "SELECT id FROM ".$this->db_useragents." WHERE useragent = '$useragent'";
+		if(!$query->sql($sql)) {
 
-		// TODO: update insert
-		$query->sql("INSERT INTO ".$this->db_unidentified." VALUES(DEFAULT, '$useragent', '$comment', '$segment', DEFAULT)");
+			$comment = stringOr(getVar("site"), SITE_UID).stringOr(getVar("file"), "?")."\n";
+			$headers = apache_request_headers();
+			foreach($headers as $key => $value) {
+				$comment .= "$key: $value\n";
+			}
+			$query->sql("INSERT INTO ".$this->db_unidentified." VALUES(DEFAULT, '$useragent', '$comment', '$segment', DEFAULT)");
+		}
 	}
 
 
@@ -507,6 +424,9 @@ class Identify {
 	*/
 	function logString($status, $useragent, $segment, $collection) {
 		global $page;
+		
+		$this->saveForIdentification($useragent, $segment);
+
 
 		$string = "$status: " . $segment . "; UA: ".$useragent;
 		$page->addLog($string, $collection);

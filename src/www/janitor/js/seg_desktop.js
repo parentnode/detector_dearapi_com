@@ -10952,7 +10952,7 @@ Util.Objects["unidentifiedList"] = new function() {
 					u.request(this, this.div.useragent_details+"/"+this.ua_id, {"method":"post","params":"csrf-token=" + this.div.csrf_token});
 				}
 				else {
-					var uls = u.qsa("ul.info", this);
+					var uls = u.qsa("ul.info,ul.actions", this);
 					var i, ul;
 					for(i = 0; ul = uls[i]; i++) {
 						this.removeChild(ul);

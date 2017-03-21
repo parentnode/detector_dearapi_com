@@ -1713,17 +1713,24 @@ class TypeDevice extends Itemtype {
 	// crossreferenceMarkersOnUnidentified/#device_id#
 	function crossreferenceMarkersOnUnidentified($device_id) {
 
+		set_time_limit(0);
+
+		// $s_t = time();
+		// $s_i = 0;
 		$IC = new Items();
 		$query = new Query();
 
 		$potential_items = [];
-
+		$used_markers = [];
 		// segment of the device markers
 		$device_segment = $IC->getTags(["item_id" => $device_id, "context" => "segment"]);
 //		print_r($device_segment);
 
 		// get all the items matching the markers 
 		$uas = $this->testMarkersOnUnidentified($device_id);
+//		$uas = array_slice($uas, 0, 200);
+
+//		$_ts["before foreach ".$s_i++] = time();
 
 		// loop the matches
 		foreach($uas as $ua) {
@@ -1732,11 +1739,11 @@ class TypeDevice extends Itemtype {
 			$mismatches = [];
 
 			// look for potential unique markers
-			if(preg_match("/Android[ 0-9._a-zA-Z\-]*;[ ]?([A-Za-z]{2}[-_][A-Za-z]{2}|[A-Za-z]{2}[-_]|[A-Za-z]{2})[; ]+([A-Za-z0-9 \-_]+)/i", $ua["useragent"], $matches)) {
+			if(preg_match("/Android[ 0-9._a-zA-Z\-]*;[ ]?([A-Za-z]{2}[-_][A-Za-z]{2}|[A-Za-z]{2}[-_]|[A-Za-z]{2})[ ;]+([A-Za-z0-9 \-_]+)/i", $ua["useragent"], $matches)) {
 				$marker = $matches[2];
 			}
 			else if(preg_match("/Android[ 0-9._a-zA-Z\-]*;[ ]*([A-Za-z0-9 \-_]+)/i", $ua["useragent"], $matches)) {
-				$marker = $matches[2];
+				$marker = $matches[1];
 			}
 			else if(!preg_match("/^Mozilla/i", $ua["useragent"]) && preg_match("/^([A-Za-z0-9 \-_]+)/i", $ua["useragent"], $matches)) {
 				$marker = $matches[1];
@@ -1745,13 +1752,17 @@ class TypeDevice extends Itemtype {
 				$marker = $matches[1];
 			}
 
+//			$_ts["ua after regexp ".$s_i++] = time();
+
 			// TODO: filter more values after testing
 			$marker = trim(preg_replace("/build|mozilla|uweb|android/i", "", $marker));
-
+//			print $marker."<br>\n";
 			// if marker apears to be valid
-			if($marker && strlen($marker) > 2) {
+			if($marker && strlen($marker) > 2 && array_search($marker, $used_markers) === false) {
 
+				array_push($used_markers, $marker);
 				$ua["marker"] = $marker;
+
 				// find any existing devices with the marker
 				$sql = "SELECT devices.name, devices.item_id, tags.value as segment, ua.useragent FROM ".$this->db." as devices, ".$this->db_useragents." AS ua, ".UT_TAG." as tags, ".UT_TAGGINGS." WHERE devices.item_id = taggings.item_id AND taggings.tag_id = tags.id AND tags.context = 'segment' AND ua.item_id = devices.item_id AND ua.useragent LIKE '%$marker%'";
 //				print $sql."<br>\n";
@@ -1759,12 +1770,20 @@ class TypeDevice extends Itemtype {
 					$similar_items = $query->results();
 				}
 
+//				$_ts["ua after similar_items ".$s_i++] = time();
+
+
+//				$i = 0;
 
 				foreach($similar_items as $item) {
 //					print $ua["useragent"] . " =? " . $item["useragent"]."<br>\n";
 
 					if($item["segment"] == $device_segment[0]["value"]) {
 //						print "\n<br>###Potential marker: " . $marker . "<br>\n";
+
+
+						$ua["unid"] = $this->unidentifiedUseragents($marker);
+
 
 						if(!isset($ua["matches"])) {
 							$ua["matches"] = [];
@@ -1784,11 +1803,17 @@ class TypeDevice extends Itemtype {
 
 						array_push($ua["mismatches"][$item["segment"]], ["name" => $item["name"], "useragent" => $item["useragent"], "item_id" => $item["item_id"]]);
 					}
+//					$_ts["ua after similar_item ".$s_i++] = time();
+
 
 				}
 
 				if(isset($ua["matches"])) {
-					array_push($potential_items, $ua);
+					$i = array_push($potential_items, $ua);
+//					$i++;
+					if($i == 10) {
+						break;
+					}
 				}
 				else if(isset($ua["mismatches"])){
 					unset($ua["mismatches"]);
@@ -1797,6 +1822,10 @@ class TypeDevice extends Itemtype {
 			}
 
 		}
+
+		// foreach($_ts as $t => $time) {
+		// 	print "$t: ".($time-$s_t)."<br>\n";
+		// }
 
 		return $potential_items;
 	}
@@ -2215,6 +2244,57 @@ class TypeDevice extends Itemtype {
 
 	// ADVANCED MAINTENANCE TOOLS
 
+	// Remove all patterns from existing useragents and 
+	function purgeUseragentRegex($action) {
+
+		set_time_limit(0);
+
+		$query = new Query();
+		$results = false;
+		$all_results = [];
+		$Identify = new Identify();
+
+
+		foreach($Identify->trimming_patterns as $pattern) {
+
+//			print $pattern."<br>\n";
+
+			// limit query to 200 to keep load on server bareable
+			$sql = "SELECT id, item_id, useragent FROM ".$this->db_useragents." AS ua WHERE ua.useragent REGEXP '".(preg_replace("/(\\\\\(|\\\\\[)/", "\\\\$1", $pattern))."' LIMIT 200";
+//			print $sql;
+			if($query->sql($sql)) {
+
+				$results = $query->results();
+				foreach($results as $i => $result) {
+
+					$device_id = $result["id"];
+					$useragent = preg_replace("/".$pattern."/", "", $result["useragent"]);
+
+					$result["useragent"] = preg_replace("/(".$pattern.")/", "<span class=\"trimmed\">$1</span>", $result["useragent"]);
+
+					$sql = "SELECT id FROM ".$this->db_useragents." AS ua WHERE ua.useragent = '$useragent'";
+	//				print $sql;
+					if($query->sql($sql)) {
+						$sql = "DELETE FROM ".$this->db_useragents." WHERE id = $device_id";
+						$query->sql($sql);
+						$result["status"] = "Deleted";
+					}
+					else {
+						$sql = "UPDATE ".$this->db_useragents." SET useragent = '$useragent' WHERE id = $device_id";
+						$query->sql($sql);
+						$result["status"] = "Updated";
+					}
+
+					array_push($all_results, $result);
+				}
+
+			}
+
+		}
+
+		return $all_results;
+
+	}
 
 	// All devices without useragents
 	function listEmptyDevices($_options = false) {

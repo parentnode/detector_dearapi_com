@@ -215,6 +215,7 @@
 #content .scene.unidentifiedList .items > li input.button.delete.confirm {color: #ffffff; background-color: #df0000;}
 #content .scene.unidentifiedList .items > li input.button.delete.confirm:hover {}
 
+#content .scene.unidentifiedList .items > li.secondary h3 {font-size: 12px; color: #aaaaaa;}
 #content .scene.unidentifiedList .items > li.identifying {background: red;}
 #content .scene.unidentifiedList .items > li.mapped {background: #00ff00;}
 #content .scene.unidentifiedList .items > li span.mappedto {position: absolute; display: inline-block; vertical-align: top; padding: 5px 10px; top: -15px; left: 30px; background-color: #00ff00; border-radius: 10px; color: #000000;}
@@ -353,6 +354,11 @@
 	-webkit-tab-size: 4;
 	-moz-tab-size: 4;
 }
+
+
+
+#content .scene.purgeUseragentRegex li h3 span.trimmed {background-color: #df0000; color: #ffffff;}
+
 
 
 /* NAVIGATION */

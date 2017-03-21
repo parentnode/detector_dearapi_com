@@ -1,5 +1,6 @@
 <?php
 $access_item["/"] = true;
+$access_item["/purge-useragent-regex"] = true;
 if(isset($read_access) && $read_access) {
 	return;
 }
@@ -28,7 +29,7 @@ $page->pageTitle("Maintenance");
 if(is_array($action) && count($action)) {
 
 	// Allowed templates
-	if(preg_match("/^(lost-useragents|lost-devices|devices-without-useragents|devices-without-tags|devices-without-brand)$/", $action[0])) {
+	if(preg_match("/^(lost-useragents|lost-devices|devices-without-useragents|devices-without-tags|devices-without-brand|purge-useragent-regex)$/", $action[0])) {
 
 		$page->page(array(
 			"type" => "janitor",
