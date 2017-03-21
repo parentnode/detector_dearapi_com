@@ -1783,6 +1783,11 @@ class TypeDevice extends Itemtype {
 
 
 						$ua["unid"] = $this->unidentifiedUseragents($marker);
+						foreach($ua["unid"] as $i => $unid) {
+							if($unid["useragent"] == $ua["useragent"]) {
+								array_splice($ua["unid"], $i, 1);
+							}
+						}
 
 
 						if(!isset($ua["matches"])) {
