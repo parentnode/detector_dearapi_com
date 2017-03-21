@@ -19,7 +19,7 @@ Util.Objects["searchUnidentified"] = new function() {
 
 Util.Objects["unidentifiedList"] = new function() {
 	this.init = function(div) {
-		console.log("init unidentifiedList")
+//		console.log("init unidentifiedList")
 
 //		u.bug_force = true;
 

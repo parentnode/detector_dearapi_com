@@ -10793,7 +10793,6 @@ Util.Objects["searchUnidentified"] = new function() {
 }
 Util.Objects["unidentifiedList"] = new function() {
 	this.init = function(div) {
-		console.log("init unidentifiedList")
 		var i, node;
 		div.list = u.qs("ul.items", div);
 		div.nodes = u.qsa("li.item", div.list);
