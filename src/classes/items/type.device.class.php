@@ -1756,7 +1756,7 @@ class TypeDevice extends Itemtype {
 
 			// TODO: filter more values after testing
 			$marker = trim(preg_replace("/build|mozilla|uweb|android/i", "", $marker));
-//			print $marker."<br>\n";
+			print $marker."<br>\n";
 			// if marker apears to be valid
 			if($marker && strlen($marker) > 2 && array_search($marker, $used_markers) === false) {
 
@@ -1965,6 +1965,63 @@ class TypeDevice extends Itemtype {
 		return false;
 
 	}
+
+	// cross reference existing useragent markers and device markers against unidentified useragents
+	// crossreferenceMarkersOnUnidentified/#device_id#
+	function findMarkersOnUnidentified($device_id) {
+
+//		print $device_id;
+
+		set_time_limit(0);
+
+		$IC = new Items();
+		$query = new Query();
+
+		$used_markers = [];
+
+		// get all the items matching the markers 
+		$uas = $this->testMarkersOnUnidentified($device_id);
+
+		
+
+		// loop the matches
+		foreach($uas as $ua) {
+			$marker = "";
+
+			// look for potential unique markers
+			if(preg_match("/Android[ 0-9._a-zA-Z\-]*;[ ]?([A-Za-z]{2}[-_][A-Za-z]{2}|[A-Za-z]{2}[-_]|[A-Za-z]{2})[ ;]+([A-Za-z0-9 \-_]+)/i", $ua["useragent"], $matches)) {
+				$marker = $matches[2];
+			}
+			else if(preg_match("/Android[ 0-9._a-zA-Z\-]*;[ ]*([A-Za-z0-9 \-_]+)/i", $ua["useragent"], $matches)) {
+				$marker = $matches[1];
+			}
+			else if(!preg_match("/^Mozilla/i", $ua["useragent"]) && preg_match("/^([A-Za-z0-9 \-_]+)/i", $ua["useragent"], $matches)) {
+				$marker = $matches[1];
+			}
+			else if(preg_match("/compatible;[ ]*([A-Za-z0-9 \-_]+)/i", $ua["useragent"], $matches)) {
+				$marker = $matches[1];
+			}
+
+
+			// TODO: filter more values after testing
+			$marker = trim(preg_replace("/build|mozilla|uweb|android/i", "", $marker));
+
+			// if marker apears to be valid
+			if($marker && strlen($marker) > 2 && array_search($marker, $used_markers) === false) {
+
+				if(!isset($used_markers[$marker])) {
+					$used_markers[$marker] = 0;	
+				}
+				$used_markers[$marker]++;
+			}
+		}
+
+		arsort($used_markers);
+//		asort($used_markers);
+
+		return $used_markers;
+	}
+
 
 
 	// full LIKE search on name, description and useragent
