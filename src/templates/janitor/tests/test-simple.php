@@ -128,8 +128,8 @@ global $model;
 
 
 
-$useragent = "Mozilla/5.0 (Linux; Android 5.1; Vodafone Tab grand 6 Build/LMY47I) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.89 Safari/537.36";
-$reg_exp_pos = "Linux[^$]+Android[^$]+Vodafone Tab grand[^$]+bkit\/(53(7\.[3-9]|[8-9]))";
+$useragent = "Mozilla/5.0 (Linux; Android 6.0.1; P1050X Build/MMB29M) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36";
+$reg_exp_pos = "(lifetab|S10[035]{2}X)";
 $reg_exp_neg = false; 
 
 

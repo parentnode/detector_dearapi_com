@@ -2332,22 +2332,28 @@ class TypeDevice extends Itemtype {
 					$device_id = $result["id"];
 					$useragent = preg_replace("/".$pattern."/", "", $result["useragent"]);
 
-					$result["useragent"] = preg_replace("/(".$pattern.")/", "<span class=\"trimmed\">$1</span>", $result["useragent"]);
+					// only do something is useragent still contains something
+					if($useragent) {
 
-					$sql = "SELECT id FROM ".$this->db_useragents." AS ua WHERE ua.useragent = '$useragent'";
-	//				print $sql;
-					if($query->sql($sql)) {
-						$sql = "DELETE FROM ".$this->db_useragents." WHERE id = $device_id";
-						$query->sql($sql);
-						$result["status"] = "Deleted";
-					}
-					else {
-						$sql = "UPDATE ".$this->db_useragents." SET useragent = '$useragent' WHERE id = $device_id";
-						$query->sql($sql);
-						$result["status"] = "Updated";
+						$result["useragent"] = preg_replace("/(".$pattern.")/", "<span class=\"trimmed\">$1</span>", $result["useragent"]);
+
+						$sql = "SELECT id FROM ".$this->db_useragents." AS ua WHERE ua.useragent = '$useragent'";
+		//				print $sql;
+						if($query->sql($sql)) {
+							$sql = "DELETE FROM ".$this->db_useragents." WHERE id = $device_id";
+							$query->sql($sql);
+							$result["status"] = "Deleted";
+						}
+						else {
+							$sql = "UPDATE ".$this->db_useragents." SET useragent = '$useragent' WHERE id = $device_id";
+							$query->sql($sql);
+							$result["status"] = "Updated";
+						}
+
+						array_push($all_results, $result);
+
 					}
 
-					array_push($all_results, $result);
 				}
 
 			}
