@@ -128,8 +128,12 @@ global $model;
 
 
 
-$useragent = "Mozilla/5.0 (Linux; Android 6.0.1; P1050X Build/MMB29M) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36";
-$reg_exp_pos = "(lifetab|S10[035]{2}X)";
+$useragent = "Mozilla/5.0 (compatible; Linux x86_64)";
+$useragent = "Mozilla/5.0 (compatible; Dataprovider.com;)";
+//$useragent = "Mozilla/4.0 (compatible; MS FrontPage 12.0)";
+//$useragent = "Mozilla/4.0 (compatible; Getleft 1.2)";
+$useragent = "Mozilla/5.0 (compatible; CsQuery/1.3)";
+$reg_exp_pos = "^Mozilla\/[\d]\.[\d]+ \(compatible[;]?[ a-zA-Z0-9\-_\/\.]*[;]?\)$";
 $reg_exp_neg = false; 
 
 
