@@ -19,6 +19,6 @@ https://github.com/parentnode/detector_dearapi_com/blob/master/MIT-LICENSE.md
 
 
 # Contributing to Detector
-Wanna join? Any help is welcome, be it in developement, indexing new devices (there is a smart UI, so you don't need to code to help with that). 
+Wanna join an Open source project? Any help is welcome, be it in developement, concept and design or indexing new devices (there is a smart UI, so you don't need to know how to code to help with that). 
 
 Please contact us at [contribute@parentnode.dk](mailto:contribute@parentnode.dk), or join our next parentNode event at [think.dk](https://think.dk/events).
