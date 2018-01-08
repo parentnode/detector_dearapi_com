@@ -6,10 +6,12 @@ global $model;
 
 $item_id = $action[1];
 $item = $IC->getItem(array("id" => $item_id, "extend" => array("tags" => true, "mediae" => true)));
+
+$this->pageTitle($item["name"]);
 ?>
 <div class="scene defaultEdit <?= $itemtype ?>Edit">
 	<h1>Edit <?= $itemtype ?></h1>
-
+	<h2><?= strip_tags($item["name"]) ?></h2>
 
 	<ul class="actions i:defaultEditActions item_id:<?= $item["item_id"] ?>"
 		data-csrf-token="<?= session()->value("csrf") ?>"
