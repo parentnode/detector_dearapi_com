@@ -4597,13 +4597,9 @@ u.defaultFilters = function(div) {
 			this.current_filter = query + "," + this.selected_tags.join(",");
 			for(i = 0; node = this.div.nodes[i]; i++) {
 				if(node._c.match(query) && this.checkTags(node)) {
-					node._hidden = false;
-					u.rc(node, "hidden");
 					u.as(node, "display", "block", false);
 				}
 				else {
-					node._hidden = true;
-					u.ac(node, "hidden");
 					u.as(node, "display", "none", false);
 				}
 			}
@@ -10815,7 +10811,8 @@ Util.Objects["unidentifiedList"] = new function() {
 			var i, node;
 			u.e.kill(event);
 			var inputs = u.qsa("li:not(.all) input:checked", this.div.list);
-			for(i = 0; node = this.div.nodes[i]; i++) {
+			for(i = 0; i < this.div.nodes.length; i++) {
+				node = this.div.nodes[i];
 				if(inputs.length) {
 					node._checkbox.checked = false;
 				}
@@ -10854,7 +10851,8 @@ Util.Objects["unidentifiedList"] = new function() {
 				node.option_node = false;
 			}
 		}
-		for(i = 0; node = div.nodes[i]; i++) {
+		for(i = 0; i < div.nodes.length; i++) {
+			node = div.nodes[i];
 			node.ua_id = u.cv(node, "ua_id");
 			node.div = div;
 			node._checkbox = u.ie(node, "input", {"type":"checkbox"});
@@ -10939,7 +10937,8 @@ Util.Objects["unidentifiedList"] = new function() {
 							u.ae(this._ul, "li", {"class":"visits", "html":response.cms_object.length})
 							u.ae(this._ul, "li", {"class":"identified_as", "html":(response.cms_object[0].identified_as_device ? response.cms_object[0].identified_as_device : "unidentified")})
 							var i, node;
-							for(i = 0; node = response.cms_object[i]; i++) {
+							for(i = 0; i < response.cms_object.length; i++) {
+								node = response.cms_object[i];
 								var ul = u.ae(this, "ul", {"class":"info"});
 								u.ae(ul, "li", {"class":"identified_at", "html":node.identified_at})
 								u.ae(ul, "li", {"class":"comment", "html":node.comment})
@@ -10954,7 +10953,8 @@ Util.Objects["unidentifiedList"] = new function() {
 				else {
 					var uls = u.qsa("ul.info,ul.actions", this);
 					var i, ul;
-					for(i = 0; ul = uls[i]; i++) {
+					for(i = 0; i < uls.length; i++) {
+						ul = uls[i];
 						this.removeChild(ul);
 					}
 					this._ul = false;
@@ -11016,19 +11016,22 @@ Util.Objects["unidentifiedList"] = new function() {
 						this._addtoclone = false;
 					}
 					var i, node;
-					for(i = 0; node = this.ua_nodes[i]; i++) {
+					for(i = 0; node < this.ua_nodes.length; i++) {
+						node = this.ua_nodes[i];
 						u.rc(node, "mapped");
 					}
 				}
 				option_node.clicked = function() {
 					if(!this._info) {
-						for(i = 0; li = this.div._add_to.identified_options_lis[i]; i++) {
+						for(i = 0; i < this.div._add_to.identified_options_lis.length; i++) {
+							li = this.div._add_to.identified_options_lis[i];
 							if(li != this) {
 								li.closeOption();
 							}
 						}
 						var i, node;
-						for(i = 0; node = this.ua_nodes[i]; i++) {
+						for(i = 0; i < this.ua_nodes.length; i++) {
+							node = this.ua_nodes[i];
 							u.ac(node, "mapped");
 						}
 						if(this.device_id != "unknown") {
@@ -11126,7 +11129,8 @@ Util.Objects["unidentifiedList"] = new function() {
 										if(response.cms_status == "success" && response.cms_object.id) {
 											var inputs = u.qsa("li:not(.all) input:checked", this.option.div.list);
 											var i, input;
-											for(i = 0; input = inputs[i]; i++) {
+											for(i = 0; i < inputs.length; i++) {
+												input = inputs[i];
 												input.node.response = function(response) {
 													if(this.option_node) {
 														this.option_node.ua_nodes.splice(this.option_node.ua_nodes.indexOf(this), 1);
@@ -11178,7 +11182,8 @@ Util.Objects["unidentifiedList"] = new function() {
 		div.updateOptions = function() {
 			var i, option_node, checkbox;
 			if(this._add_to) {
-				for(i = 0; option_node = this._add_to.identified_options_lis[i]; i++) {
+				for(i = 0; i < this._add_to.identified_options_lis.length; i++) {
+					option_node = this._add_to.identified_options_lis[i];
 					if(option_node.ua_nodes.length) {
 						option_node.span.innerHTML = option_node.ua_nodes.length;
 					}
@@ -11191,7 +11196,8 @@ Util.Objects["unidentifiedList"] = new function() {
 				}
 			}
 			else {
-				for(i = 0; checkbox = this.visible_inputs[i]; i++) {
+				for(i = 0; i < this.visible_inputs.length; i++) {
+					checkbox = this.visible_inputs[i];
 					u.rc(checkbox.node, "mapped", false);
 					checkbox.node.option_node = false;
 				}
@@ -11239,7 +11245,8 @@ Util.Objects["unidentifiedList"] = new function() {
 								var items = u.qsa(".all_items li.item", response);
 								if(items.length) {
 									var i, node;
-									for(i = 0; node = items[i]; i++) {
+									for(i = 0; i < items.length; i++) {
+										node = items[i];
 										node = this.search_result.appendChild(node);
 										node.div = this.div;
 										node.device_id = u.cv(node, "item_id");
@@ -11261,7 +11268,8 @@ Util.Objects["unidentifiedList"] = new function() {
 													if(this.t_execute) {
 														var inputs = u.qsa("li:not(.all) input:checked", this.option.div.list);
 														var i, input;
-														for(i = 0; input = inputs[i]; i++) {
+														for(i = 0; i < inputs.length; i++) {
+															input = inputs[i];
 															input.node.response = function(response) {
 																this.parentNode.removeChild(this);
 																this.div.toggleAddToOption();
@@ -11283,7 +11291,8 @@ Util.Objects["unidentifiedList"] = new function() {
 															if(response.cms_status == "success" && response.cms_object.id) {
 																var inputs = u.qsa("li:not(.all) input:checked", this.option.div.list);
 																var i, input;
-																for(i = 0; input = inputs[i]; i++) {
+																for(i = 0; i < inputs.length; i++) {
+																	input = inputs[i];
 																	input.node.response = function(response) {
 																		this.parentNode.removeChild(this);
 																		this.div.toggleAddToOption();
@@ -11426,7 +11435,8 @@ Util.Objects["testMarkersOnUnidentified"] = new function() {
 				this._filter = u.ae(this, "div", {"class":"filter"});
 				this.markers_ul = u.ae(this, "ul", {"class":"markers"});
 				var i, node, li;
-				for(i = 0; node = response.cms_object[i]; i++) {
+				for(i = 0; i < response.cms_object.length; i++) {
+					node = response.cms_object[i];
 					li = u.ae(this.markers_ul, "li", {"html":node.name});
 					li.div = this;
 					li.item_id = node.item_id;
@@ -11481,7 +11491,8 @@ Util.Objects["testMarkersOnUnidentified"] = new function() {
 				}
 				this._markers = u.qsa("li", this.markers_ul);
 				var i, node;
-				for(i = 0; node = this._markers[i]; i++) {
+				for(i = 0; i < this._markers.length; i++) {
+					node = this._markers[i];
 					node._c = node.textContent.toLowerCase();
 				}
 				this._filter._field = u.ae(this._filter, "div", {"class":"field"});
@@ -11499,7 +11510,8 @@ Util.Objects["testMarkersOnUnidentified"] = new function() {
 					var i, node;
 					if(this._current_filter != this._filter._input.value.toLowerCase()) {
 						this._current_filter = this._filter._input.value.toLowerCase();
-						for(i = 0; node = this._markers[i]; i++) {
+						for(i = 0; i < this._markers.length; i++) {
+							node = this._markers[i];
 							if(node._c.match(this._current_filter)) {
 								u.as(node, "display", "inline-block", false);
 							}
@@ -11543,14 +11555,16 @@ Util.Objects["crossreferenceUnidentified"] = new function() {
 				this._filter = u.ae(this, "div", {"class":"filter"});
 				this.markers_ul = u.ae(this, "ul", {"class":"markers"});
 				var i, node, li;
-				for(i = 0; node = response.cms_object[i]; i++) {
+				for(i = 0; i < response.cms_object.length; i++) {
+					node = response.cms_object[i];
 					li = u.ae(this.markers_ul, "li", {"html":node.name});
 					li.div = this;
 					li.item_id = node.item_id;
 					u.e.click(li);
 					li.clicked = function() {
 						var i, node;
-						for(i = 0; node = this.div._markers[i]; i++) {
+						for(i = 0; i < this.div._markers.length; i++) {
+							node = this.div._markers[i];
 							u.rc(node, "selected");
 						}
 						u.ac(this, "selected");
@@ -11579,7 +11593,8 @@ Util.Objects["crossreferenceUnidentified"] = new function() {
 								var new_items = u.qsa(".all_items ul.items li.item", response);
 								if(new_items) {
 									var i, node;
-									for(i = 0; node = new_items[i]; i++) {
+									for(i = 0; i < new_items.length; i++) {
+										node = new_items[i];
 										u.ae(this.existing_results, node);
 									}
 									u.o.unidentifiedList.init(this.div.div_results);
@@ -11596,7 +11611,8 @@ Util.Objects["crossreferenceUnidentified"] = new function() {
 				}
 				this._markers = u.qsa("li", this.markers_ul);
 				var i, node;
-				for(i = 0; node = this._markers[i]; i++) {
+				for(i = 0; i < this._markers.length; i++) {
+					node = this._markers[i];
 					node._c = node.textContent.toLowerCase();
 				}
 				this._filter._field = u.ae(this._filter, "div", {"class":"field"});
@@ -11614,7 +11630,8 @@ Util.Objects["crossreferenceUnidentified"] = new function() {
 					var i, node;
 					if(this._current_filter != this._filter._input.value.toLowerCase()) {
 						this._current_filter = this._filter._input.value.toLowerCase();
-						for(i = 0; node = this._markers[i]; i++) {
+						for(i = 0; i < this._markers.length; i++) {
+							node = this._markers[i];
 							if(node._c.match(this._current_filter)) {
 								u.as(node, "display", "inline-block", false);
 							}

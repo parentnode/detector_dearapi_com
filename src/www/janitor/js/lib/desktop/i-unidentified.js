@@ -61,7 +61,9 @@ Util.Objects["unidentifiedList"] = new function() {
 			// figure out wether to select or deselect (if one is selected, de-select all)
 			var inputs = u.qsa("li:not(.all) input:checked", this.div.list);
 
-			for(i = 0; node = this.div.nodes[i]; i++) {
+//			for(i = 0; node = this.div.nodes[i]; i++) {
+			for(i = 0; i < this.div.nodes.length; i++) {
+				node = this.div.nodes[i];
 				if(inputs.length) {
 					node._checkbox.checked = false;
 				}
@@ -138,7 +140,9 @@ Util.Objects["unidentifiedList"] = new function() {
 
 
 		// add checkboxes and handlers to all rows
-		for(i = 0; node = div.nodes[i]; i++) {
+//		for(i = 0; node = div.nodes[i]; i++) {
+		for(i = 0; i < div.nodes.length; i++) {
+			node = div.nodes[i];
 			node.ua_id = u.cv(node, "ua_id");
 			node.div = div;
 
@@ -264,7 +268,9 @@ Util.Objects["unidentifiedList"] = new function() {
 							u.ae(this._ul, "li", {"class":"identified_as", "html":(response.cms_object[0].identified_as_device ? response.cms_object[0].identified_as_device : "unidentified")})
 
 							var i, node;
-							for(i = 0; node = response.cms_object[i]; i++) {
+//							for(i = 0; node = response.cms_object[i]; i++) {
+							for(i = 0; i < response.cms_object.length; i++) {
+								node = response.cms_object[i];
 								var ul = u.ae(this, "ul", {"class":"info"});
 								u.ae(ul, "li", {"class":"identified_at", "html":node.identified_at})
 								u.ae(ul, "li", {"class":"comment", "html":node.comment})
@@ -279,7 +285,9 @@ Util.Objects["unidentifiedList"] = new function() {
 				else {
 					var uls = u.qsa("ul.info,ul.actions", this);
 					var i, ul;
-					for(i = 0; ul = uls[i]; i++) {
+//					for(i = 0; ul = uls[i]; i++) {
+					for(i = 0; i < uls.length; i++) {
+						ul = uls[i];
 						this.removeChild(ul);
 					}
 					this._ul = false;
@@ -376,7 +384,9 @@ Util.Objects["unidentifiedList"] = new function() {
 
 					// remove highlighting of matching nodes
 					var i, node;
-					for(i = 0; node = this.ua_nodes[i]; i++) {
+//					for(i = 0; node = this.ua_nodes[i]; i++) {
+					for(i = 0; node < this.ua_nodes.length; i++) {
+						node = this.ua_nodes[i];
 						u.rc(node, "mapped");
 //						node.option_node = false;
 					}
@@ -397,7 +407,9 @@ Util.Objects["unidentifiedList"] = new function() {
 
 						// close other options 
 						// (only one can be open at the time, because MATCHING options will be highlighted)
-						for(i = 0; li = this.div._add_to.identified_options_lis[i]; i++) {
+//						for(i = 0; li = this.div._add_to.identified_options_lis[i]; i++) {
+						for(i = 0; i < this.div._add_to.identified_options_lis.length; i++) {
+							li = this.div._add_to.identified_options_lis[i];
 							if(li != this) {
 								li.closeOption();
 							}
@@ -406,7 +418,9 @@ Util.Objects["unidentifiedList"] = new function() {
 
 						// highlight all matching ua_nodes
 						var i, node;
-						for(i = 0; node = this.ua_nodes[i]; i++) {
+//						for(i = 0; node = this.ua_nodes[i]; i++) {
+						for(i = 0; i < this.ua_nodes.length; i++) {
+							node = this.ua_nodes[i];
 							u.ac(node, "mapped");
 						}
 
@@ -608,7 +622,9 @@ Util.Objects["unidentifiedList"] = new function() {
 											var inputs = u.qsa("li:not(.all) input:checked", this.option.div.list);
 											var i, input;
 											// selected items in list?
-											for(i = 0; input = inputs[i]; i++) {
+//											for(i = 0; input = inputs[i]; i++) {
+											for(i = 0; i < inputs.length; i++) {
+												input = inputs[i];
 												// add response
 												input.node.response = function(response) {
 													// remove node from list
@@ -714,7 +730,9 @@ Util.Objects["unidentifiedList"] = new function() {
 
 			// is add_to still open
 			if(this._add_to) {
-				for(i = 0; option_node = this._add_to.identified_options_lis[i]; i++) {
+//				for(i = 0; option_node = this._add_to.identified_options_lis[i]; i++) {
+				for(i = 0; i < this._add_to.identified_options_lis.length; i++) {
+					option_node = this._add_to.identified_options_lis[i];
 					// update option count
 //					console.log("option_node.ua_nodes.length:" + option_node.ua_nodes.length)
 					if(option_node.ua_nodes.length) {
@@ -736,7 +754,9 @@ Util.Objects["unidentifiedList"] = new function() {
 			// options has been removed - reset all nodes
 			else {
 
-				for(i = 0; checkbox = this.visible_inputs[i]; i++) {
+//				for(i = 0; checkbox = this.visible_inputs[i]; i++) {
+				for(i = 0; i < this.visible_inputs.length; i++) {
+					checkbox = this.visible_inputs[i];
 					u.rc(checkbox.node, "mapped", false);
 					checkbox.node.option_node = false;
 				}
@@ -826,7 +846,9 @@ Util.Objects["unidentifiedList"] = new function() {
 								if(items.length) {
 
 									var i, node;
-									for(i = 0; node = items[i]; i++) {
+//									for(i = 0; node = items[i]; i++) {
+									for(i = 0; i < items.length; i++) {
+										node = items[i];
 										node = this.search_result.appendChild(node);
 										node.div = this.div;
 										node.device_id = u.cv(node, "item_id");
@@ -865,7 +887,9 @@ Util.Objects["unidentifiedList"] = new function() {
 														var inputs = u.qsa("li:not(.all) input:checked", this.option.div.list);
 														var i, input;
 														// selected items in list?
-														for(i = 0; input = inputs[i]; i++) {
+//														for(i = 0; input = inputs[i]; i++) {
+														for(i = 0; i < inputs.length; i++) {
+															input = inputs[i];
 															// add response
 															input.node.response = function(response) {
 																// remove node from list
@@ -902,7 +926,9 @@ Util.Objects["unidentifiedList"] = new function() {
 																var inputs = u.qsa("li:not(.all) input:checked", this.option.div.list);
 																var i, input;
 																// selected items in list?
-																for(i = 0; input = inputs[i]; i++) {
+//																for(i = 0; input = inputs[i]; i++) {
+																for(i = 0; i < inputs.length; i++) {
+																	input = inputs[i];
 																	// add response
 																	input.node.response = function(response) {
 																		// remove node from list
@@ -1228,7 +1254,9 @@ Util.Objects["testMarkersOnUnidentified"] = new function() {
 
 				this.markers_ul = u.ae(this, "ul", {"class":"markers"});
 				var i, node, li;
-				for(i = 0; node = response.cms_object[i]; i++) {
+//				for(i = 0; node = response.cms_object[i]; i++) {
+				for(i = 0; i < response.cms_object.length; i++) {
+					node = response.cms_object[i];
 					li = u.ae(this.markers_ul, "li", {"html":node.name});
 					li.div = this;
 					li.item_id = node.item_id;
@@ -1318,7 +1346,9 @@ Util.Objects["testMarkersOnUnidentified"] = new function() {
 
 				// index list, to speed up filtering process
 				var i, node;
-				for(i = 0; node = this._markers[i]; i++) {
+//				for(i = 0; node = this._markers[i]; i++) {
+				for(i = 0; i < this._markers.length; i++) {
+					node = this._markers[i];
 					node._c = node.textContent.toLowerCase();
 				}
 
@@ -1345,7 +1375,9 @@ Util.Objects["testMarkersOnUnidentified"] = new function() {
 	//					u.bug("filter by:" + this._filter._input.value)
 
 						this._current_filter = this._filter._input.value.toLowerCase();
-						for(i = 0; node = this._markers[i]; i++) {
+//						for(i = 0; node = this._markers[i]; i++) {
+						for(i = 0; i < this._markers.length; i++) {
+							node = this._markers[i];
 
 							if(node._c.match(this._current_filter)) {
 								u.as(node, "display", "inline-block", false);
@@ -1418,7 +1450,9 @@ Util.Objects["crossreferenceUnidentified"] = new function() {
 
 				this.markers_ul = u.ae(this, "ul", {"class":"markers"});
 				var i, node, li;
-				for(i = 0; node = response.cms_object[i]; i++) {
+//				for(i = 0; node = response.cms_object[i]; i++) {
+				for(i = 0; i < response.cms_object.length; i++) {
+					node = response.cms_object[i];
 					li = u.ae(this.markers_ul, "li", {"html":node.name});
 					li.div = this;
 					li.item_id = node.item_id;
@@ -1427,7 +1461,9 @@ Util.Objects["crossreferenceUnidentified"] = new function() {
 					li.clicked = function() {
 
 						var i, node;
-						for(i = 0; node = this.div._markers[i]; i++) {
+//						for(i = 0; node = this.div._markers[i]; i++) {
+						for(i = 0; i < this.div._markers.length; i++) {
+							node = this.div._markers[i];
 							u.rc(node, "selected");
 						}
 						u.ac(this, "selected");
@@ -1479,7 +1515,9 @@ Util.Objects["crossreferenceUnidentified"] = new function() {
 								if(new_items) {
 									
 									var i, node;
-									for(i = 0; node = new_items[i]; i++) {
+//									for(i = 0; node = new_items[i]; i++) {
+									for(i = 0; i < new_items.length; i++) {
+										node = new_items[i];
 										u.ae(this.existing_results, node);
 									}
 									u.o.unidentifiedList.init(this.div.div_results);
@@ -1504,7 +1542,9 @@ Util.Objects["crossreferenceUnidentified"] = new function() {
 
 				// index list, to speed up filtering process
 				var i, node;
-				for(i = 0; node = this._markers[i]; i++) {
+//				for(i = 0; node = this._markers[i]; i++) {
+				for(i = 0; i < this._markers.length; i++) {
+					node = this._markers[i];
 					node._c = node.textContent.toLowerCase();
 				}
 
@@ -1531,7 +1571,9 @@ Util.Objects["crossreferenceUnidentified"] = new function() {
 	//					u.bug("filter by:" + this._filter._input.value)
 
 						this._current_filter = this._filter._input.value.toLowerCase();
-						for(i = 0; node = this._markers[i]; i++) {
+//						for(i = 0; node = this._markers[i]; i++) {
+						for(i = 0; i < this._markers.length; i++) {
+							node = this._markers[i];
 
 							if(node._c.match(this._current_filter)) {
 								u.as(node, "display", "inline-block", false);

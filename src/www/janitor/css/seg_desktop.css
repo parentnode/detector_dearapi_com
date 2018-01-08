@@ -484,7 +484,7 @@ body #selection_options ul.actions a.button:hover {background-color: #313942;}
 #content ul.tags li {display: inline-block; vertical-align: top; margin: 0 6px 6px 0; border-radius: 12px; background-color: #313942; padding: 4px 7px 6px; color: #ffffff; font-size: 0;}
 #content ul.tags li.add {padding: 4px 4px 6px; cursor: pointer; width: 13px; text-align: center;}
 #content ul.tags li.add:hover {background-color: #64ad8e;}
-#content ul.tags li span {font-size: 11px; line-height: 1em; color: #ffffff;}
+#content ul.tags li span {font-size: 11px; line-height: 1em; color: #ffffff !important;}
 #content ul.tags li span.context {text-transform: uppercase;}
 #content ul.tags li span.context:after {content: ":";}
 #content ul.tags li span.value {}
@@ -499,13 +499,11 @@ body #selection_options ul.actions a.button:hover {background-color: #313942;}
 #content div.tagoptions ul.actions li input {margin-top: 4px;}
 #content .edittags ul.tags li {cursor: pointer;}
 #content .edittags ul.tags li:hover,
-#content .edittags ul.tags li.add:hover {background-color: #df0000; color: #ffffff;}
+#content .edittags ul.tags li.add:hover {background-color: #df0000;}
 #content .edittags div.tagoptions ul.tags {display: block;}
 #content div.tagoptions ul.tags {position: relative; z-index: 10; display: none;}
-#content div.tagoptions ul.tags li {background-color: #dedede;}
-#content div.tagoptions ul.tags li span {color: #333333;}
+#content div.tagoptions ul.tags li {background-color: #313942;}
 #content div.tagoptions ul.tags li:hover {background-color: #64ad8e;}
-#content div.tagoptions ul.tags li:hover span {color: #ffffff;}
 #content div.all_items div.tagoptions {padding-top: 8px;}
 #content div.all_items ul.items > li div.tagoptions ul.actions {position: static; right: auto; top: auto;}
 #content div.all_items ul.items > li div.tagoptions ul.actions li {padding-top: 1px;}
@@ -761,9 +759,9 @@ body #selection_options ul.actions a.button:hover {background-color: #313942;}
 #content div.all_items ul.items > li ul.actions li input.button {height: 24px;}
 #content div.all_items div.filter {padding: 10px 0 4px; min-height: 28px; background: #f5f7f8; border-bottom: 1px solid #bbbbbb; position: relative; overflow: hidden;}
 #content div.all_items div.filter ul.tags {padding-bottom: 0; padding-right: 150px;}
-#content div.all_items div.filter ul.tags li {font-size: 12px; background-color: #dedede; color: #333333; cursor: pointer;}
+#content div.all_items div.filter ul.tags li {font-size: 12px; background-color: #dedede; cursor: pointer;}
 #content div.all_items div.filter ul.tags li.selected,
-#content div.all_items div.filter ul.tags li:hover {background-color: #313942; color: #ffffff;}
+#content div.all_items div.filter ul.tags li:hover {background-color: #313942;}
 #content div.all_items div.filter.filtering {background: red;}
 #content div.all_items div.filter form {position: absolute; right: 30px; top: 9px;}
 #content div.all_items div.filter .field {padding: 0 0 6px;}

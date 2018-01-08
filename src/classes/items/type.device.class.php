@@ -1234,7 +1234,7 @@ class TypeDevice extends Itemtype {
 			$_ .= "\t\t".'$segment = $this->identify($ua);'."\n";
 
 				if($grouping) {
-					$grouping = json_decode(stripslashes($grouping));
+					$grouping = json_decode(urldecode($grouping));
 					$_ .= "\t\t".'$groups = array();'."\n";
 					foreach($grouping as $group => $segments) {
 						$_ .= "\n";
@@ -1387,7 +1387,7 @@ class TypeDevice extends Itemtype {
 			$_ .= "\t\t".'var segment = this.identify(ua);'."\n";
 
 				if($grouping) {
-					$grouping = json_decode(stripslashes($grouping));
+					$grouping = json_decode(urldecode($grouping));
 					$_ .= "\t\t".'var groups = [];'."\n";
 					foreach($grouping as $group => $segments) {
 						$_ .= "\n";
@@ -1542,7 +1542,7 @@ class TypeDevice extends Itemtype {
 			$_ .= "\t\t".'String segment = this.identify(ua);'."\n";
 
 				if($grouping) {
-					$grouping = json_decode(stripslashes($grouping));
+					$grouping = json_decode(urldecode($grouping));
 					$_ .= "\t\t".'Map<String, String> groups = new HashMap<String, String>();'."\n";
 					foreach($grouping as $group => $segments) {
 						$_ .= "\n";

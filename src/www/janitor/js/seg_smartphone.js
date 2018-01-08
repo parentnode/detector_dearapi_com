@@ -4543,13 +4543,9 @@ u.defaultFilters = function(div) {
 			this.current_filter = query + "," + this.selected_tags.join(",");
 			for(i = 0; node = this.div.nodes[i]; i++) {
 				if(node._c.match(query) && this.checkTags(node)) {
-					node._hidden = false;
-					u.rc(node, "hidden");
 					u.as(node, "display", "block", false);
 				}
 				else {
-					node._hidden = true;
-					u.ac(node, "hidden");
 					u.as(node, "display", "none", false);
 				}
 			}
