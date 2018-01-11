@@ -28,7 +28,7 @@ $page->pageTitle("Tests");
 if(is_array($action) && count($action)) {
 
 	// Allowed templates
-	if(preg_match("/^(test-script|test-simple|test-sample)$/", $action[0])) {
+	if(preg_match("/^(test-script|test-simple|test-sample|test-trimpattern)$/", $action[0])) {
 
 		$page->page(array(
 			"type" => "janitor",

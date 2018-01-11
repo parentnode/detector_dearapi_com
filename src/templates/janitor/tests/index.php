@@ -7,5 +7,6 @@
 		<li><a href="/janitor/tests/test-script">Test standalone detector class</a></li>
 		<li><a href="/janitor/tests/test-simple">Test regular expression</a></li>
 		<li><a href="/janitor/tests/test-sample">Test detector against a sample of devices</a></li>
+		<li><a href="/janitor/tests/test-trimpattern">Test trimpatterns against a sample of devices</a></li>
 	</ul>
 </div>

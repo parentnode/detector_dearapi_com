@@ -131,7 +131,7 @@ $ua[] = "Mozilla/5.0 (Windows NT 6.1; Trident/7.0; EIE10;ENU; rv:11.0) like Geck
 foreach($ua as $useragent) {
 
 //	$device = file_get_contents("http://detector-v3.dearapi.com?ua=".urlencode($useragent)."&site=".urlencode($_SERVER["HTTP_HOST"])."&file=".urlencode($_SERVER["SCRIPT_NAME"]));
-	$segment = file_get_contents("http://detector-v3.api/text?ua=".urlencode($useragent)."&site=".urlencode($_SERVER["HTTP_HOST"])."&file=".urlencode($_SERVER["SCRIPT_NAME"]));
+	$segment = file_get_contents("http://detector.api/text?ua=".urlencode($useragent)."&site=".urlencode($_SERVER["HTTP_HOST"])."&file=".urlencode($_SERVER["SCRIPT_NAME"]));
 	print "<p>".$useragent."<br><strong>".$segment."</strong></p>";
 
 }

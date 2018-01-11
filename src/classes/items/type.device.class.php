@@ -2371,44 +2371,69 @@ class TypeDevice extends Itemtype {
 		$all_results = [];
 		$Identify = new Identify();
 
-		foreach($Identify->trimming_patterns as $pattern) {
+		// first find some UAs which match trim pattern
+		foreach($Identify->trimming_patterns as $check_pattern) {
 
 //			print $pattern."<br>\n";
 
 			// limit query to 200 to keep load on server bareable
-			$sql = "SELECT id, item_id, useragent FROM ".$this->db_useragents." AS ua WHERE ua.useragent REGEXP '".(preg_replace("/(\\\\\(|\\\\\[)/", "\\\\$1", $pattern))."' LIMIT 200";
+			$sql = "SELECT id, item_id, useragent FROM ".$this->db_useragents." AS ua WHERE ua.useragent REGEXP '".(preg_replace("/(\\\\\(|\\\\\[)/", "\\\\$1", $check_pattern))."' LIMIT 200";
 //			print $sql;
 			if($query->sql($sql)) {
 
 				$results = $query->results();
 				foreach($results as $i => $result) {
 
-					$device_id = $result["id"];
-					$useragent = preg_replace("/".$pattern."/", "", $result["useragent"]);
+					$ua_id = $result["id"];
+
+					$result["trimmed_useragent"] = $result["useragent"];
+					$result["diff_useragent"] = $result["useragent"];
+
+					// Also check other trim patterns on this useragent while we're at it
+					foreach($Identify->trimming_patterns as $pattern) {
+
+
+						//$useragent = preg_replace("/".$pattern."/", "", $result["useragent"]);
+
+						$result["diff_useragent"] = preg_replace("/(".$pattern.")/", "<span class=\"trimmed\">$1</span>", $result["diff_useragent"]);
+						$result["trimmed_useragent"] = preg_replace("/".$pattern."/", "", $result["trimmed_useragent"]);
+
+					}
+
+					// remove any whitespace
+					$result["trimmed_useragent"] = trim($result["trimmed_useragent"]);
 
 					// only do something if useragent still contains something
-					if($useragent) {
+					if($result["trimmed_useragent"]) {
 
-						$result["useragent"] = preg_replace("/(".$pattern.")/", "<span class=\"trimmed\">$1</span>", $result["useragent"]);
+//							$result["useragent"] = preg_replace("/(".$pattern.")/", "<span class=\"trimmed\">$1</span>", $result["useragent"]);
 
-						$sql = "SELECT id FROM ".$this->db_useragents." AS ua WHERE ua.useragent = '$useragent'";
+						// check if trimmed version already exists
+						$sql = "SELECT id FROM ".$this->db_useragents." WHERE useragent = '".$result["trimmed_useragent"]."'";
 		//				print $sql;
+						// if it already exists, delete it
 						if($query->sql($sql)) {
-							$sql = "DELETE FROM ".$this->db_useragents." WHERE id = $device_id";
+							$sql = "DELETE FROM ".$this->db_useragents." WHERE id = $ua_id";
 							$query->sql($sql);
 							$result["status"] = "Deleted:";
 
 						}
+						// otherwise update it to trimmed version
 						else {
-							$sql = "UPDATE ".$this->db_useragents." SET useragent = '$useragent' WHERE id = $device_id";
+							$sql = "UPDATE ".$this->db_useragents." SET useragent = '".$result["trimmed_useragent"]."' WHERE id = $ua_id";
 							$query->sql($sql);
 							$result["status"] = "Updated";
 						}
 
-						array_push($all_results, $result);
+					}
+					// trimmed to oblivion
+					else {
+
+						$result["status"] = "Trimmed to death";
 
 					}
 
+					array_push($all_results, $result);
 				}
 
 			}
