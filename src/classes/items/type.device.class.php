@@ -2415,7 +2415,7 @@ class TypeDevice extends Itemtype {
 						if($query->sql($sql)) {
 							$sql = "DELETE FROM ".$this->db_useragents." WHERE id = $ua_id";
 							$query->sql($sql);
-							$result["status"] = "Deleted:";
+							$result["status"] = "Deleted";
 
 						}
 						// otherwise update it to trimmed version

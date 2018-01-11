@@ -17,7 +17,7 @@ $all_items = $model->purgeUseragentRegex($action);
 		<ul class="items">
 <?			foreach($all_items as $item): ?>
 			<li class="item ua_id:<?= $item["id"] ?>">
-				<h3 class="<?= superNormalize($item["status"]) ?>"><strong><?= $item["status"] ?>:</strong></h3>
+				<h3 class="<?= superNormalize($item["status"]) ?>"><strong><?= $item["status"] ?></strong></h3>
 				<h4><strong>BEFORE:</strong><br /><?= $item["useragent"] ?></h4>
 				<h4><strong>TRIMMED:</strong><br /><?= $item["trimmed_useragent"] ?></h4>
 				<h4><strong>DIFF:</strong><br /><?= $item["diff_useragent"] ?></h4>
