@@ -44,7 +44,7 @@ Util.Objects["unidentifiedList"] = new function() {
 
 		// add select all option
 		div.bn_all = u.ie(div.list, "li", {"class":"all"});
-		div.bn_all._text = u.ae(div.bn_all, "span", {"html":"Select all"})
+		div.bn_all._text = u.ae(div.bn_all, "span", {"html":"Select all"});
 		div.bn_all._checkbox = u.ie(div.bn_all, "input", {"type":"checkbox"});
 
 		// disable regular onclick event
@@ -54,8 +54,8 @@ Util.Objects["unidentifiedList"] = new function() {
 		div.bn_all._checkbox.div = div;
 
 		// handle clicking
-		u.e.click(div.bn_all);
-		div.bn_all.clicked = function(event) {
+		u.e.click(div.bn_all._checkbox);
+		div.bn_all._checkbox.clicked = function(event) {
 			var i, node;
 			u.e.kill(event);
 			// figure out wether to select or deselect (if one is selected, de-select all)
@@ -75,13 +75,17 @@ Util.Objects["unidentifiedList"] = new function() {
 				}
 			}
 
+			// update range inputs
+			this.div.bn_range._from.value = "";
+			this.div.bn_range._to.value = "";
+
 			// update options
 			this.div.toggleAddToOption();
 		}
 
-
 		// update select all state
 		div.bn_all.updateState = function() {
+			u.bug("updateState");
 
 			// figure out what the current state is and deal with it
 			this.div.checked_inputs = u.qsa("li:not(.all) input:checked", this.div.list);
@@ -109,6 +113,128 @@ Util.Objects["unidentifiedList"] = new function() {
 		}
 
 
+		// add select range option
+		div.bn_range = u.ae(div.bn_all, "div", {class:"range"});
+		div.bn_range._text = u.ae(div.bn_range, "span", {html:"Select range:"});
+		div.bn_range._from = u.ae(div.bn_range, "input", {type:"text", name:"range_from", maxlength:4});
+		div.bn_range._text = u.ae(div.bn_range, "span", {html:"to"});
+		div.bn_range._to = u.ae(div.bn_range, "input", {type:"text", name:"range_to", maxlength:4});
+
+
+		div.bn_range.div = div;
+		div.bn_range._from.bn_range = div.bn_range;
+		div.bn_range._to.bn_range = div.bn_range;
+
+		// attached to inputs
+		div.bn_range._updated = function(event) {
+
+
+//			console.log(event)
+			var key = event.key;
+			// console.log(key);
+			// console.log(event.code)
+
+//			return;
+			// increment
+			if(key == "ArrowUp" && event.shiftKey) {
+				u.e.kill(event);
+
+				this.value = this.value > 0 ? Number(this.value)+10 : 10;
+			}
+			else if(key == "ArrowUp") {
+				u.e.kill(event);
+
+				this.value = this.value > 0 ? Number(this.value)+1 : 1;
+			}
+
+			// decrement
+			else if(key == "ArrowDown" && event.shiftKey) {
+				u.e.kill(event);
+
+				this.value = this.value > 10 ? Number(this.value)-10 : 1;
+			}
+			else if(key == "ArrowDown") {
+				u.e.kill(event);
+
+				this.value = this.value > 1 ? Number(this.value)-1 : 1;
+			}
+
+// 			// kill non-numeric keys
+			else if((parseInt(key) != key) && (key != "Backspace" && key != "Delete" && key != "Tab" && key != "ArrowLeft" && key != "ArrowRight" && !event.metaKey && !event.ctrlKey)) {
+				u.e.kill(event);
+			}
+
+			var value = false;
+			var to, from;
+
+			// figure out what the value will be after keyup
+			if(parseInt(key) == key) {
+				value = this.value.length < 4 ? this.value + key : this.value;
+			}
+			else if(key == "Backspace") {
+				value = this.value.substring(0, this.value.length-1);
+			}
+			else if(key == "Delete") {
+				value = this.value.substring(1);
+			}
+			else if(key == "ArrowUp" || key == "ArrowDown") {
+				value = this.value;
+			}
+
+			if(value !== false) {
+
+				value = Number(value);
+
+				// add updated values and correct "sister" values
+				if(this.name == "range_from") {
+
+					if(Number(this.bn_range._to.value) < value) {
+						this.bn_range._to.value = value;
+					}
+
+					from = value;
+					to = Number(this.bn_range._to.value);
+				}
+				else if(this.name == "range_to") {
+
+					if(!this.bn_range._from.value) {
+						this.bn_range._from.value = 1;
+					}
+					else if(Number(this.bn_range._from.value) > value) {
+						this.bn_range._from.value = value;
+					}
+
+					to = value;
+					from = Number(this.bn_range._from.value);
+				}
+
+				// input indecies to select between
+				to = to-1;
+				from = from-1;
+
+				if(!isNaN(from && !isNaN(to))) {
+					var inputs = u.qsa("li:not(.all):not(.hidden) input", this.bn_range.div.list);
+					var i, input;
+					for(i = 0; i < inputs.length; i++) {
+						input = inputs[i];
+						if(i >= from && i <= to) {
+							input.checked = true;
+						}
+						else {
+							input.checked = false;
+						}
+					}
+
+					// update options
+					this.bn_range.div.toggleAddToOption();
+				}
+
+			}
+
+		}
+
+		u.e.addEvent(div.bn_range._from, "keypress", div.bn_range._updated);
+		u.e.addEvent(div.bn_range._to, "keypress", div.bn_range._updated);
 
 		// node is unselected - update option_node references
 		div.unselectNode = function(node) {
@@ -116,11 +242,12 @@ Util.Objects["unidentifiedList"] = new function() {
 //			console.log("REMOVE option reference for:" + u.nodeId(node) + ", has option:" + node.option_node)
 
 			// interrupt response handling in case it has not finished
-			node.response = null;
-
-			// leave identification mode
-			u.rc(node, "identifying");
-			node._is_identifying = false;
+//			node.response = null;
+			// delete node.response;
+			//
+			// // leave identification mode
+			// u.rc(node, "identifying", false);
+			// node._is_identifying = false;
 
 
 			// remove option_node references
@@ -130,11 +257,16 @@ Util.Objects["unidentifiedList"] = new function() {
 				node.option_node.ua_nodes.splice(node.option_node.ua_nodes.indexOf(node), 1);
 
 				// remove mapping class
-				u.rc(node, "mapped");
-			
+				u.rc(node, "mapped", false);
+
 				// delete option_node reference
-				node.option_node = false;
+//				node.option_node = false;
+				delete node.option_node;
 			}
+
+			// // update range inputs
+			// this.bn_range._from.value = "";
+			// this.bn_range._to.value = "";
 		}
 
 
@@ -177,7 +309,7 @@ Util.Objects["unidentifiedList"] = new function() {
 					this._multiselection = false;
 					this._multideselection = false;
 
-					// show or no-show add option
+					// this will potentially start multiple
 					this.unidentified_div.toggleAddToOption();
 				}
 
@@ -225,7 +357,7 @@ Util.Objects["unidentifiedList"] = new function() {
 							// add delete button
 							var action = u.ae(this, "ul", {"class":"actions"});
 							var li = u.ae(action, "li", {"class":"delete"});
-							this._delete = u.ae(li, "input", {"class":"button delete", "type":"button", "value":"delete"})
+							this._delete = u.ae(li, "input", {"class":"button delete", "type":"button", "value":"Delete", title:"This will delete this useragent permanently"})
 
 							this._delete.node = this;
 							u.e.click(this._delete);
@@ -322,12 +454,233 @@ Util.Objects["unidentifiedList"] = new function() {
 
 			u.defaultFilters(div);
 
+			// callback from list filter
+			div.filtered = function() {
+				this.bn_all.updateState();
+				this.bn_range._to.value = "";
+				this.bn_range._from.value = "";
+			}
+
+		}
+
+
+
+
+		// Mapped to ADD SELECTED TO buttons
+		div._selected_clicked = function() {
+
+			if(this.t_execute) {
+
+				// show that it is working
+				u.ac(this.option.div._add_to, "adding");
+
+				// recursive iteration handler (to control the number of simultaneous requests)
+				this.iterateSelections = function() {
+
+					// get next option
+					var input = u.qs("li:not(.all):not(.hidden) input:checked", this.option.div.list);
+					if(input) {
+
+						// map the method/button for iteration
+						input._selected = this;
+
+						// UA was added
+						input.response = function(response) {
+
+							// update ua list
+							if(this.node.option_node) {
+								// remove node from option_node array
+								this.node.option_node.ua_nodes.splice(this.node.option_node.ua_nodes.indexOf(this.node), 1);
+							}
+
+							// and remove node
+							this.node.parentNode.removeChild(this.node);
+
+							// adding UA to device was not 100% successful (could be timeout issue)
+							if(!response.cms_status) {
+								page.notify({"cms_message":{"errors":["The request failed. The UA may reappear in your list after you refresh."]}, "isJSON":true})
+							}
+
+							// maybe that was the last element?
+							this.node.div.toggleAddToOption();
+
+							// process next selected
+							this._selected.iterateSelections();
+
+						}
+						// make request
+						u.request(input, input.node.div.useragent_add+"/"+this.option.device_id+"/"+input.node.ua_id, {method:"post", timeout:3000, data:"csrf-token="+input.node.div.csrf_token});
+//											u.request(input, "/temp", {"method":"post", timeout:3000, "params":"csrf-token="+input.node.div.csrf_token});
+
+					}
+					else {
+						// done
+						u.rc(this.option.div._add_to, "adding");
+					}
+
+				}
+				this.iterateSelections();
+
+			}
+			else {
+				this.t_execute = u.t.setTimer(this, this.option.div._not_confirmed, 1500);
+
+				this._content = this.innerHTML;	
+				this.innerHTML = "Sure?";
+				u.ac(this, "confirm");
+			}
+		}
+
+		// Mapped to ADD MATCHING TO buttons
+		div._matching_clicked = function() {
+
+			if(this.t_execute) {
+
+				// show that it is working
+				u.ac(this.option.div._add_to, "adding");
+
+				// recursive iteration handler (to control the number of simultaneous requests)
+				this.iterateSelections = function() {
+
+					var node = this.option.ua_nodes.shift();
+					if(node) {
+						var input = node._checkbox;
+
+						// if input was found, make request
+						if(input && input.node._identified.id == this.option.device_id) {
+//												console.log("load node:" + input.node.ua_id);
+							input._matching = this;
+
+							// UA was added
+							input.response = function(response) {
+
+								// and remove node
+								this.node.parentNode.removeChild(this.node);
+
+								// adding UA to device was not 100% successful (could be timeout issue)
+								if(!response.cms_status) {
+									page.notify({"cms_message":{"errors":["The request failed. The UA may reappear in your list after you refresh."]}, "isJSON":true})
+								}
+
+								this.node.div.toggleAddToOption();
+
+								// process next selected
+								this._matching.iterateSelections();
+							}
+							// make request
+							u.request(input, input.node.div.useragent_add+"/"+this.option.device_id+"/"+input.node.ua_id, {method:"post", timeout:3000, data:"csrf-token="+input.node.div.csrf_token});
+//												u.request(input, "/temp", {"method":"post", timeout:3000, "params":"csrf-token="+input.node.div.csrf_token});
+						}
+
+					}
+					else {
+						// done
+						u.rc(this.option.div._add_to, "adding");
+					}
+
+				}
+				this.iterateSelections();
+
+			}
+			else {
+				this.t_execute = u.t.setTimer(this, this.option.div._not_confirmed, 1500);
+
+				this._content = this.innerHTML;	
+				this.innerHTML = "Sure?";
+				u.ac(this, "confirm");
+			}
+		}
+
+		// Mapped to ADD SELECTED TO CLONE buttons
+		div._addtoclone_clicked = function() {
+
+			// confirm mechanism in action
+			if(this.t_execute) {
+
+				// show that it is working
+				u.ac(this.option.div._add_to, "adding");
+
+
+				// clone device response
+				this.response = function(response) {
+
+					if(response.cms_status == "success" && response.cms_object.id) {
+
+						this.cloned_device_id = response.cms_object.id;
+
+						this.iterateSelections = function() {
+
+							var input = u.qs("li:not(.all):not(.hidden) input:checked", this.option.div.list);
+
+							// if input was found, make request
+							if(input) {
+
+								input._clone = this;
+
+								// add response
+								input.response = function(response) {
+									// remove node from list
+
+									this.node.parentNode.removeChild(this.node);
+
+									// adding UA to device was not 100% successful
+									// (could be timeout issue)
+									if(!response.cms_status) {
+										page.notify({"cms_message":{"errors":["The request failed. The UA may reappear in your list after you refresh."]}, "isJSON":true})
+									}
+
+
+									this.node.div.toggleAddToOption();
+								
+									// process next selected
+									this._clone.iterateSelections();
+								
+								}
+								// add useragent to device
+								u.request(input, input.node.div.useragent_add+"/"+input._clone.cloned_device_id+"/"+input.node.ua_id, {method:"post", timeout: 3000, data:"csrf-token="+input.node.div.csrf_token});
+
+							}
+							else {
+								// done
+								u.rc(this.option.div._add_to, "adding");
+							}
+
+						}
+						this.iterateSelections();
+
+					}
+					else {
+						page.notify(response);
+					}
+				}
+
+				// clone device
+				u.request(this, this.option.div.device_clone+"/"+this.option.device_id, {method:"post", data:"csrf-token="+this.option.div.csrf_token});
+
+			}
+			// activate confirm mechanism
+			else {
+				this.t_execute = u.t.setTimer(this, this.option.div._not_confirmed, 1500);
+
+				this._content = this.innerHTML;	
+				this.innerHTML = "Sure?";
+				u.ac(this, "confirm");
+			}
+		}
+
+
+		// confirm timeout handler for add buttons 
+		div._not_confirmed = function() {
+			u.rc(this, "confirm");
+			this.innerHTML = this._content;
+			this.t_execute = false;
 		}
 
 
 		// add option to options list
 		div.addOption = function(option, ua_node) {
-//			console.log("## addOption:" + u.nodeId(ua_node) + ", " + option)
+			// console.log("## addOption:" + u.nodeId(ua_node) + ", " + option)
+			// console.log(option)
 
 			// check options index for current option
 			// add if it does not already exist
@@ -359,35 +712,40 @@ Util.Objects["unidentifiedList"] = new function() {
 
 				u.e.click(option_node);
 				option_node.closeOption = function() {
-//					u.bug("closeOption");
 
 					if(this._info) {
 						this._info.parentNode.removeChild(this._info);
-						this._info = false;
+//						this._info = false;
+						delete this._info;
 					}
 					if(this._show_selected_only) {
 						this._show_selected_only.parentNode.removeChild(this._show_selected_only);
-						this._show_selected_only = false;
+//						this._show_selected_only = false;
+						delete this._info;
 					}
 					if(this._selected) {
 						this._selected.parentNode.removeChild(this._selected);
-						this._selected = false;
+//						this._selected = false;
+						delete this._info;
 					}
 					if(this._matching) {
 						this._matching.parentNode.removeChild(this._matching);
-						this._matching = false;
+//						this._matching = false;
+						delete this._info;
 					}
 					if(this._addtoclone) {
 						this._addtoclone.parentNode.removeChild(this._addtoclone);
-						this._addtoclone = false;
+//						this._addtoclone = false;
+						delete this._info;
 					}
 
 					// remove highlighting of matching nodes
 					var i, node;
 //					for(i = 0; node = this.ua_nodes[i]; i++) {
-					for(i = 0; node < this.ua_nodes.length; i++) {
+//					console.log(this.ua_nodes)
+					for(i = 0; i < this.ua_nodes.length; i++) {
 						node = this.ua_nodes[i];
-						u.rc(node, "mapped");
+						u.rc(node, "mapped", false);
 //						node.option_node = false;
 					}
 
@@ -395,7 +753,6 @@ Util.Objects["unidentifiedList"] = new function() {
 
 				//
 				option_node.clicked = function() {
-
 					// show advanced options menu if not already present 
 					// (else close it)
 
@@ -405,19 +762,20 @@ Util.Objects["unidentifiedList"] = new function() {
 					// add SELECTED to CLONE
 					if(!this._info) {
 
+						var i, node, li;
+
 						// close other options 
 						// (only one can be open at the time, because MATCHING options will be highlighted)
 //						for(i = 0; li = this.div._add_to.identified_options_lis[i]; i++) {
 						for(i = 0; i < this.div._add_to.identified_options_lis.length; i++) {
 							li = this.div._add_to.identified_options_lis[i];
+							// close other options
 							if(li != this) {
 								li.closeOption();
 							}
 						}
 
-
 						// highlight all matching ua_nodes
-						var i, node;
 //						for(i = 0; node = this.ua_nodes[i]; i++) {
 						for(i = 0; i < this.ua_nodes.length; i++) {
 							node = this.ua_nodes[i];
@@ -426,7 +784,7 @@ Util.Objects["unidentifiedList"] = new function() {
 
 
 						// option matches device
-						if(this.device_id != "unknown") {
+						if(this.device_id && this.device_id != "unknown") {
 
 							// collect info about device
 							var info_array = [];
@@ -444,237 +802,33 @@ Util.Objects["unidentifiedList"] = new function() {
 							// add info to option
 							this._info = u.ae(this, "div", {"class":"info", "html":info_array.join(", ")});
 
-							// add filter options
-							// this._show_selected_only = u.ae(this, "div", {"class":"showselectedonly", "html":"ONLY SHOW MATCHING"});
-							// this._show_selected_only.option = this;
-
 							// add indexing options
-							this._selected = u.ae(this, "div", {"class":"selected", "html":"Add all SELECTED"});
+							this._selected = u.ae(this, "div", {class:"selected", html:"Add all SELECTED", title:"Not including hidden UAs"});
 							this._selected.option = this;
-							this._matching = u.ae(this, "div", {"class":"matching", "html":"Add all MATCHING"});
+							this._matching = u.ae(this, "div", {class:"matching", html:"Add all MATCHING", title:"Not including hidden UAs"});
 							this._matching.option = this;
-							this._addtoclone = u.ae(this, "div", {"class":"addtoclone", "html":"Add SELECTED to CLONE"});
+							this._addtoclone = u.ae(this, "div", {class:"addtoclone", html:"Add SELECTED to CLONE", title:"Not including hidden UAs"});
 							this._addtoclone.option = this;
 
-							// u.e.click(this._show_selected_only);
-							// this._show_selected_only.clicked = function() {
-							//
-							// 	// TODO: show selected only
-							//
-							// 	if(!this._filtered) {
-							// 		this.innerHTML
-							// 		u.as(this.option._selected, "display", "none");
-							// 		u.as(this.option._addtoclone, "display", "none");
-							// 		// TODO: hide selected ua_nodes if not a match
-							// 	}
-							// 	else {
-							//
-							// 		u.as(this.option._selected, "display", "block");
-							// 		u.as(this.option._addtoclone, "display", "block");
-							//
-							// 		// TODO: show all selected ua_nodes
-							// 	}
-							//
-							// }
 
 							// ADD SELECTED handler
 							u.e.click(this._selected);
-							this._selected.clicked = function() {
-
-								if(this.t_execute) {
-
-									this.inputs = u.qsa("li:not(.all) input:checked", this.option.div.list);
-									this.inputs_i = 0;
-
-									// recursive iteration handler (to control the number of simultaneous requests)
-									this.iterateSelections = function() {
-
-										// console.log("this.inputs.length:" + this.inputs.length);
-										// console.log("this.input_i:" + this.inputs_i);
-										if(this.inputs_i < this.inputs.length) {
-
-											var input = this.inputs[this.inputs_i++];
-											// console.log("input exists:" + input)
-											// console.log(input)
-
-											input._selected = this;
-
-											// UA was added
-											input.response = function(response) {
-//													console.log("node loaded:" + this.node.ua_id);
-
-												// update ua list
-												if(this.node.option_node) {
-													// remove node from option_node array
-													this.node.option_node.ua_nodes.splice(this.node.option_node.ua_nodes.indexOf(this.node), 1);
-												}
-
-												// and remove node
-												this.node.parentNode.removeChild(this.node);
-												this.node.div.toggleAddToOption();
-
-												// process next selected
-												this._selected.iterateSelections();
-											}
-											// make request
-											u.request(input, input.node.div.useragent_add+"/"+this.option.device_id+"/"+input.node.ua_id, {"method":"post", "params":"csrf-token="+input.node.div.csrf_token});
-
-										}
-
-									}
-									this.iterateSelections();
-
-								}
-								else {
-									this.t_execute = u.t.setTimer(this, this.not_confirmed, 1500);
-
-									this._content = this.innerHTML;	
-									this.innerHTML = "Sure?";
-									u.ac(this, "confirm");
-								}
-							}
-
+							this._selected.clicked = this.div._selected_clicked;
 
 							// ADD MATCHING handler
 							u.e.click(this._matching);
-							this._matching.clicked = function() {
-
-								if(this.t_execute) {
-
-									this.inputs = u.qsa("li:not(.all) input:checked", this.option.div.list);
-									this.inputs_i = 0;
-
-									// recursive iteration handler (to control the number of simultaneous requests)
-									this.iterateSelections = function() {
-
-										// console.log("this.inputs.length:" + this.inputs.length);
-										// console.log("this.input_i:" + this.inputs_i);
-										if(this.inputs_i < this.inputs.length) {
-
-											var input = this.inputs[this.inputs_i++];
-											// console.log("input exists:" + input)
-											// console.log(input)
-
-											// continue to look for next input matching this device
-											while(input.node._identified.id != this.option.device_id) {
-//												console.log("not matching: ("+this.inputs_i+")");
-												if(this.inputs_i < this.inputs.length) {
-													input = this.inputs[this.inputs_i++];
-												}
-												else {
-													break;
-												}
-											}
-
-											// if input was found, make request
-											if(input && input.node._identified.id == this.option.device_id) {
-//												console.log("load node:" + input.node.ua_id);
-												input._matching = this;
-
-												// UA was added
-												input.response = function(response) {
-//													console.log("node loaded:" + this.node.ua_id);
-
-													// update ua list
-													if(this.node.option_node) {
-														// remove node from option_node array
-														this.node.option_node.ua_nodes.splice(this.node.option_node.ua_nodes.indexOf(this.node), 1);
-													}
-
-													// and remove node
-													this.node.parentNode.removeChild(this.node);
-													this.node.div.toggleAddToOption();
-
-													// process next selected
-													this._matching.iterateSelections();
-												}
-												// make request
-												u.request(input, input.node.div.useragent_add+"/"+this.option.device_id+"/"+input.node.ua_id, {"method":"post", "params":"csrf-token="+input.node.div.csrf_token});
-											}
-
-										}
-
-									}
-									this.iterateSelections();
-
-								}
-								else {
-									this.t_execute = u.t.setTimer(this, this.not_confirmed, 1500);
-
-									this._content = this.innerHTML;	
-									this.innerHTML = "Sure?";
-									u.ac(this, "confirm");
-								}
-							}
-
+							this._matching.clicked = this.div._matching_clicked;
 
 							// ADD SELECTED TO CLONE handler
 							u.e.click(this._addtoclone);
-							this._addtoclone.clicked = function() {
+							this._addtoclone.clicked = this.div._addtoclone_clicked;
 
-								// confirm mechanism in action
-								if(this.t_execute) {
-
-									// clone device response
-									this.response = function(response) {
-										if(response.cms_status == "success" && response.cms_object.id) {
-
-											var inputs = u.qsa("li:not(.all) input:checked", this.option.div.list);
-											var i, input;
-											// selected items in list?
-//											for(i = 0; input = inputs[i]; i++) {
-											for(i = 0; i < inputs.length; i++) {
-												input = inputs[i];
-												// add response
-												input.node.response = function(response) {
-													// remove node from list
-
-													if(this.option_node) {
-														// remove node from option_node array
-														this.option_node.ua_nodes.splice(this.option_node.ua_nodes.indexOf(this), 1);
-													}
-
-													this.parentNode.removeChild(this);
-													this.div.toggleAddToOption();
-												}
-												// add useragent to device
-												u.request(input.node, input.node.div.useragent_add+"/"+response.cms_object.id+"/"+input.node.ua_id, {"method":"post", "params":"csrf-token="+input.node.div.csrf_token});
-											}
-
-										}
-										else {
-											page.notify(response);
-										}
-									}
-									// clone device
-									u.request(this, this.option.div.device_clone+"/"+this.option.device_id, {"method":"post", "params":"csrf-token="+this.option.div.csrf_token});
-
-								}
-								// activate confirm mechanism
-								else {
-									this.t_execute = u.t.setTimer(this, this.not_confirmed, 1500);
-
-									this._content = this.innerHTML;	
-									this.innerHTML = "Sure?";
-									u.ac(this, "confirm");
-								}
-							}
-
-
-							// confirm timeout handler
-							this._matching.not_confirmed = this._addtoclone.not_confirmed = this._selected.not_confirmed = function() {
-								u.rc(this, "confirm");
-								this.innerHTML = this._content;
-								this.t_execute = false;
-							}
 						}
-
 
 						// option does not match device
 						else {
-							this._info = u.ae(this, "div", {"class":"info", "html":"identification did not return a valid device id"});
+							this._info = u.ae(this, "div", {class:"info", html:this.details.guess ? this.details.guess : "Unknown error"});
 						}
-
 
 					}
 
@@ -724,7 +878,7 @@ Util.Objects["unidentifiedList"] = new function() {
 		// - updates count
 		// - removes options with no matches
 		div.updateOptions = function() {
-//			console.log("updateOptions")
+//			u.bug("updateOptions");
 
 			var i, option_node, checkbox;
 
@@ -753,7 +907,6 @@ Util.Objects["unidentifiedList"] = new function() {
 
 			// options has been removed - reset all nodes
 			else {
-
 //				for(i = 0; checkbox = this.visible_inputs[i]; i++) {
 				for(i = 0; i < this.visible_inputs.length; i++) {
 					checkbox = this.visible_inputs[i];
@@ -788,7 +941,6 @@ Util.Objects["unidentifiedList"] = new function() {
 					u.ae(this._add_to, "h2", {"html":"Add to device"});
 					var count_div = u.ae(this._add_to, "div", {"html":"Selected useragents:", "class":"counter"});
 					this._add_to._count = u.ae(count_div, "span", {"class":"count"});
-
 
 					// adjust page width
 					u.as(page, "width", parseInt(u.gcs(page, "width")) - this._add_to.offsetWidth + "px");
@@ -829,7 +981,7 @@ Util.Objects["unidentifiedList"] = new function() {
 						u.t.resetTimer(this.t_search);
 					}
 
-					// perform search
+					// perform search for other device than the matched one
 					search_input.search = function() {
 
 						// empty result list
@@ -841,17 +993,25 @@ Util.Objects["unidentifiedList"] = new function() {
 							// get search response
 							search_input.response = function(response) {
 
+								this.options = [];
 								// get items from result
 								var items = u.qsa(".all_items li.item", response);
 								if(items.length) {
 
 									var i, node;
 //									for(i = 0; node = items[i]; i++) {
+//									console.log(items.length);
+
 									for(i = 0; i < items.length; i++) {
-										node = items[i];
-										node = this.search_result.appendChild(node);
+										
+//										console.log(i + ", " + items.length);
+
+//										node = ;
+										node = this.search_result.appendChild(items[i]);
 										node.div = this.div;
+										node.search_input = this;
 										node.device_id = u.cv(node, "item_id");
+										this.options.push(node);
 
 										u.e.click(node);
 										node.clicked = function() {
@@ -861,130 +1021,74 @@ Util.Objects["unidentifiedList"] = new function() {
 											// add SELECTED to CLONE
 											if(!this._info) {
 
-												var i, info_string;
-												var brand = u.qs("ul.tags li.brand .value", this);
-											
-												if(brand) {
-													info_string = brand.innerHTML;
+												var i, node, li;
+
+												for(i = 0; i < this.search_input.options.length; i++) {
+													li = this.search_input.options[i];
+													// close other options
+													if(li != this) {
+														li.closeOption();
+													}
 												}
-												//info_string += ", " + this.details["description"];
-												this._info = u.ae(this, "div", {"class":"info", "html":info_string});
+
+												// collect info about device
+												var info_array = [];
+												
+												var tags = u.qsa("ul.tags li .value", this);
+												for(i  = 0; i < tags.length; i++) {
+													info_array.push(tags[i].innerHTML);
+												}
+
+												// add info to option
+												this._info = u.ae(this, "div", {"class":"info", "html":info_array.join(", ")});
 
 
-												this._selected = u.ae(this, "div", {"class":"selected", "html":"Add all SELECTED"});
+												this._selected = u.ae(this, "div", {class:"selected", html:"Add all SELECTED", title:"Not including hidden UAs"});
 												this._selected.option = this;
-												this._addtoclone = u.ae(this, "div", {"class":"addtoclone", "html":"Add SELECTED to CLONE"});
+												this._addtoclone = u.ae(this, "div", {class:"addtoclone", html:"Add SELECTED to CLONE", title:"Not including hidden UAs"});
 												this._addtoclone.option = this;
 
 
 												// ADD SELECTED handler
 												u.e.click(this._selected);
-												this._selected.clicked = function() {
-
-													// confirm mechanism in action
-													if(this.t_execute) {
-						
-														var inputs = u.qsa("li:not(.all) input:checked", this.option.div.list);
-														var i, input;
-														// selected items in list?
-//														for(i = 0; input = inputs[i]; i++) {
-														for(i = 0; i < inputs.length; i++) {
-															input = inputs[i];
-															// add response
-															input.node.response = function(response) {
-																// remove node from list
-																this.parentNode.removeChild(this);
-																this.div.toggleAddToOption();
-															}
-															// add useragent to device
-															u.request(input.node, input.node.div.useragent_add+"/"+this.option.device_id+"/"+input.node.ua_id, {"method":"post", "params":"csrf-token="+input.node.div.csrf_token});
-
-														}
-													}
-													// activate confirm mechanism
-													else {
-														this.t_execute = u.t.setTimer(this, this.not_confirmed, 1500);
-
-														this._content = this.innerHTML;	
-														this.innerHTML = "Sure?";
-														u.ac(this, "confirm");
-													}
-												}
-
+												this._selected.clicked = this.div._selected_clicked;
 
 												// ADD SELECTED TO CLONE handler
 												u.e.click(this._addtoclone);
-												this._addtoclone.clicked = function() {
-
-													// confirm mechanism in action
-													if(this.t_execute) {
-
-														// clone device response
-														this.response = function(response) {
-															if(response.cms_status == "success" && response.cms_object.id) {
-
-																var inputs = u.qsa("li:not(.all) input:checked", this.option.div.list);
-																var i, input;
-																// selected items in list?
-//																for(i = 0; input = inputs[i]; i++) {
-																for(i = 0; i < inputs.length; i++) {
-																	input = inputs[i];
-																	// add response
-																	input.node.response = function(response) {
-																		// remove node from list
-																		this.parentNode.removeChild(this);
-																		this.div.toggleAddToOption();
-																	}
-																	// add useragent to device
-																	u.request(input.node, input.node.div.useragent_add+"/"+response.cms_object.id+"/"+input.node.ua_id, {"method":"post", "params":"csrf-token="+input.node.div.csrf_token});
-																}
-
-															}
-															else {
-																page.notify(response);
-															}
-														}
-														// clone device
-														u.request(this, this.option.div.device_clone+"/"+this.option.device_id, {"method":"post", "params":"csrf-token="+this.option.div.csrf_token});
-
-													}
-													// activate confirm mechanism
-													else {
-														this.t_execute = u.t.setTimer(this, this.not_confirmed, 1500);
-
-														this._content = this.innerHTML;	
-														this.innerHTML = "Sure?";
-														u.ac(this, "confirm");
-													}
-												}
-
-
-												// confirm timeout handler
-												this._selected.not_confirmed = this._addtoclone.not_confirmed = function() {
-													u.rc(this, "confirm");
-													this.innerHTML = this._content;
-													this.t_execute = false;
-												}
+												this._addtoclone.clicked = this.div._addtoclone_clicked;
 
 											}
 											// remove advanced menu
 											else {
-												if(this._info) {
-													this._info.parentNode.removeChild(this._info);
-													this._info = false;
-												}
-												if(this._selected) {
-													this._selected.parentNode.removeChild(this._selected);
-													this._selected = false;
-												}
-												if(this._addtoclone) {
-													this._addtoclone.parentNode.removeChild(this._addtoclone);
-													this._addtoclone = false;
-												}
+												this.closeOption();
 											}
 
 										}
+										// close option
+										node.closeOption = function() {
+
+											if(this._info) {
+												this._info.parentNode.removeChild(this._info);
+//												this._info = false;
+												delete this._info;
+											}
+											if(this._selected) {
+												this._selected.parentNode.removeChild(this._selected);
+//												this._selected = false;
+												delete this._selected;
+											}
+											if(this._addtoclone) {
+												this._addtoclone.parentNode.removeChild(this._addtoclone);
+//												this._addtoclone = false;
+												delete this._addtoclone;
+											}
+											
+										}
 		 							}
+								}
+								// no results
+								else {
+									u.ae(this.search_result, "li", {html:"No results"});
 								}
 
 								u.rc(this, "loading");
@@ -1013,11 +1117,16 @@ Util.Objects["unidentifiedList"] = new function() {
 				u.ac(this._add_to, "loading");
 
 				this.checked_inputs_i = 0;
+
+				// start identification process
 				this.iterateSelections = function() {
-					// console.log("this.iterateSelections");
+//					console.log("this.iterateSelections for id");
 					// console.log("this.checked_inputs.length:" + this.checked_inputs.length);
 					// console.log("this.checked_inputs_i:" + this.checked_inputs_i);
 
+					this.is_identifying = true;
+
+					// more selected uas?
 					if(this.checked_inputs_i < this.checked_inputs.length) {
 
 						var input = this.checked_inputs[this.checked_inputs_i++];
@@ -1032,9 +1141,11 @@ Util.Objects["unidentifiedList"] = new function() {
 //							console.log("not id'ed yet:" + u.nodeId(input.node))
 
 							// device identification response
-							input.response = function(response) {
+							input.response = function(response, request_id) {
 //								console.log("node identified:" + u.nodeId(this.node))
 
+								// get rid of response handler
+								delete this.response;
 
 								// leave identification mode
 								u.rc(this.node, "identifying");
@@ -1055,29 +1166,47 @@ Util.Objects["unidentifiedList"] = new function() {
 								}
 
 								// bad result - device not identified
-								else {
+								else if(!response.error) {
+
 									this.node._identified.id = "unknown";
-									this.node._identified.name = "unknown";
+									this.node._identified.name = "Unknown device";
 									this.node._identified.tags = [];
-									this.node._identified.method = "unknown";
-									this.node._identified.guess = "unknown";
+									this.node._identified.method = "N/A";
+									this.node._identified.guess = "Device could not be identified";
 
 								}
 
-								// add option to the options list (will audo detect existance)
-								this.node.div.addOption(this.node._identified, this.node);
+								// request timeout
+								else if(this[request_id].status == 0) {
 
+									this.node._identified.id = "unknown";
+									this.node._identified.name = "Request timeout";
+									this.node._identified.tags = [];
+									this.node._identified.method = "N/A";
+									this.node._identified.guess = "Request timeout";
+
+								}
 
 								// check load status
 								this.node.div.wait_for_uas--;
-								if(!this.node.div.wait_for_uas && this.node.div._add_to) {
-									u.rc(this.node.div._add_to, "loading");
+								// if(!this.node.div.wait_for_uas && this.node.div._add_to) {
+								// 	u.rc(this.node.div._add_to, "loading");
+								// }
+
+								// is add_to still open (and us still clicked)
+								if(this.node.div._add_to && this.checked) {
+									// add option to the options list (will audo detect existance)
+									this.node.div.addOption(this.node._identified, this.node);
 								}
 
+								// continue
 								this.node.div.iterateSelections();
+
 							}
 							// request identification
-							u.request(input, input.node.div.useragent_identify+"/"+input.node.ua_id, {"method":"post", "params":"csrf-token="+input.node.div.csrf_token});
+							u.request(input, input.node.div.useragent_identify+"/"+input.node.ua_id, {method:"post", timeout:3000, data:"csrf-token="+input.node.div.csrf_token});
+//							u.request(input, "/temp", {method:"post", timeout:8000, data:"csrf-token="+input.node.div.csrf_token});
+
 						}
 
 						// already identified
@@ -1088,104 +1217,42 @@ Util.Objects["unidentifiedList"] = new function() {
 							u.rc(input.node, "identifying");
 							input.node._is_identifying = false;
 
-							// add option to the options list (will audo detect existence)
-							this.addOption(input.node._identified, input.node);
-
 							// check load status
 							this.wait_for_uas--;
-							if(!this.wait_for_uas) {
-								u.rc(this._add_to, "loading");
-							}
+							// if(!this.wait_for_uas) {
+							// 	u.rc(this._add_to, "loading");
+							// }
 
-							this.iterateSelections();
+
+							// is add_to still open
+							if(this._add_to) {
+
+								// add option to the options list (will audo detect existence)
+								this.addOption(input.node._identified, input.node);
+								/// continue
+								this.iterateSelections();
+
+							}
 						}
 
 					}
 					else {
+
+						if(!this.wait_for_uas && this._add_to) {
+							u.rc(this._add_to, "loading");
+						}
+
+						this.is_identifying = false;
+
 //						console.log("done");
 					}
 
 				}
-				this.iterateSelections();
 
-// 				// loop through all nodes
-// 				for(i = 0; ua = this.checked_inputs[i]; i++) {
-//
-// 					// node is in identification mode
-// 					u.ac(ua.node, "identifying");
-// 					ua.node._is_identifying = true;
-//
-//
-// 					// useragent has not been identified yet
-// 					if(!ua.node._identified) {
-// //						u.bug("not id'ed yet:" + u.nodeId(ua.node))
-//
-// 						// device identification response
-// 						ua.node.response = function(response) {
-// //							u.bug("node identified:" + u.nodeId(this))
-//
-//
-// 							// leave identification mode
-// 							u.rc(this, "identifying");
-// 							this._is_identifying = false;
-//
-// 							// id details object
-// 							this._identified = {};
-//
-// 							// identification was successful
-// 							if(response.cms_status == "success" && response.cms_object.id) {
-//
-// 								this._identified.id = response.cms_object.id;
-// 								this._identified.name = response.cms_object.name;
-// 								this._identified.tags = response.cms_object.tags;
-// 								this._identified.method = response.cms_object.method;
-// 								this._identified.guess = response.cms_object.guess;
-//
-// 							}
-//
-// 							// bad result - device not identified
-// 							else {
-// 								this._identified.id = "unknown";
-// 								this._identified.name = "unknown";
-// 								this._identified.tags = [];
-// 								this._identified.method = "unknown";
-// 								this._identified.guess = "unknown";
-//
-// 							}
-//
-// 							// add option to the options list (will audo detect existance)
-// 							this.div.addOption(this._identified, this);
-//
-//
-// 							// check load status
-// 							this.div.wait_for_uas--;
-// 							if(!this.div.wait_for_uas && this.div._add_to) {
-// 								u.rc(this.div._add_to, "loading");
-// 							}
-//
-// 						}
-// 						// request identification
-// 						u.request(ua.node, ua.node.div.useragent_identify+"/"+ua.node.ua_id, {"method":"post", "params":"csrf-token="+ua.node.div.csrf_token});
-// 					}
-//
-// 					// already identified
-// 					else {
-// //						u.bug("id'ed already:" + u.nodeId(ua.node))
-//
-// 						// leave identification mode
-// 						u.rc(ua.node, "identifying");
-// 						ua.node._is_identifying = false;
-//
-// 						// add option to the options list (will audo detect existance)
-// 						this.addOption(ua.node._identified, ua.node);
-//
-// 						// check load status
-// 						this.wait_for_uas--;
-// 						if(!this.wait_for_uas) {
-// 							u.rc(this._add_to, "loading");
-// 						}
-// 					}
-// 				}
+				// start identification of selected uas (if not already running)
+				if(!this.is_identifying) {
+					this.iterateSelections();
+				}
 
 			}
 
@@ -1195,7 +1262,8 @@ Util.Objects["unidentifiedList"] = new function() {
 				// remove "Add to" if it exists
 				if(this._add_to) {
 					this._add_to.parentNode.removeChild(this._add_to);
-					this._add_to = false;
+					// this._add_to = false;
+					delete this._add_to;
 
 					// adjust page width
 					u.as(page, "width", "auto");

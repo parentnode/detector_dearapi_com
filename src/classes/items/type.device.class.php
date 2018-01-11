@@ -27,7 +27,7 @@ class TypeDevice extends Itemtype {
 		$this->addToModel("published_at", array(
 			"type" => "datetime",
 			"label" => "Released (yyyy-mm)",
-			"pattern" => "^[\d]{4}-[\d]{2}[0-9\-\/ \:]*$",
+			"pattern" => "^[\d]{4}-[\d]{2}[0-9\-\/ :]*$",
 			"hint_message" => "Date device was first release to the market", 
 			"error_message" => "Date must be of format (yyyy-mm)"
 		));
@@ -298,51 +298,55 @@ class TypeDevice extends Itemtype {
 
 			// add comments to new device
 			$dest_device = $this->get($device_id_destination);
-			$updated_comment = $dest_device["description"]."\n\n".$device["name"]."\n".$device["description"];
-			$sql = "UPDATE ".$this->db." SET description = '$updated_comment' WHERE item_id = ".$device_id_destination;
-			$query->sql($sql);
+			
+			if($device && $dest_device) {
+				$updated_comment = $dest_device["description"]."\n\n".$device["name"]."\n".$device["description"];
+				$sql = "UPDATE ".$this->db." SET description = '$updated_comment' WHERE item_id = ".$device_id_destination;
+				$query->sql($sql);
 
 
-			// switch useragent to new device
-			if($device["useragents"]) {
-				// copy useragents
-				foreach($device["useragents"] as $useragent) {
+				// switch useragent to new device
+				if($device["useragents"]) {
+					// copy useragents
+					foreach($device["useragents"] as $useragent) {
 
-					$sql = "UPDATE ".$this->db_useragents." SET item_id = $device_id_destination WHERE id = ".$useragent["id"];
-					$query->sql($sql);
+						$sql = "UPDATE ".$this->db_useragents." SET item_id = $device_id_destination WHERE id = ".$useragent["id"];
+						$query->sql($sql);
 
+					}
 				}
-			}
 
-			// switch markers to new device
-			if($device["markers"]) {
-				// copy useragents
-				foreach($device["markers"] as $marker) {
+				// switch markers to new device
+				if($device["markers"]) {
+					// copy useragents
+					foreach($device["markers"] as $marker) {
 
-					$sql = "UPDATE ".$this->db_markers." SET item_id = $device_id_destination WHERE id = ".$marker["id"];
-					$query->sql($sql);
+						$sql = "UPDATE ".$this->db_markers." SET item_id = $device_id_destination WHERE id = ".$marker["id"];
+						$query->sql($sql);
 
+					}
 				}
-			}
 
-			// switch exceptions to new device
-			if($device["exceptions"]) {
-				// copy useragents
-				foreach($device["exceptions"] as $exception) {
+				// switch exceptions to new device
+				if($device["exceptions"]) {
+					// copy useragents
+					foreach($device["exceptions"] as $exception) {
 
-					$sql = "UPDATE ".$this->db_exceptions." SET item_id = $device_id_destination WHERE id = ".$exception["id"];
-					$query->sql($sql);
+						$sql = "UPDATE ".$this->db_exceptions." SET item_id = $device_id_destination WHERE id = ".$exception["id"];
+						$query->sql($sql);
 
+					}
 				}
+
+
+				// delete source device
+				$this->delete(array("delete", $device_id_source));
+
+
+				message()->addMessage("Devices merged");
+				return $device_id_destination;
+				
 			}
-
-
-			// delete source device
-			$this->delete(array("delete", $device_id_source));
-
-
-			message()->addMessage("Devices merged");
-			return $device_id_destination;
 
 		}
 
@@ -2208,29 +2212,80 @@ class TypeDevice extends Itemtype {
 
 			$sql = "SELECT useragent FROM ".$this->db_unidentified." WHERE id = ".$action[2];
 //			print $sql."\n";
-			$query->sql($sql);
-
-			$ua = prepareForDB($query->result(0, "useragent"));
-//			print $ua."\n";
-
-
-			$sql = "INSERT INTO ".$this->db_useragents." VALUES(DEFAULT, ".$action[1].", '$ua')";
-//			print $sql."\n";
 			if($query->sql($sql)) {
 
-				$sql = "DELETE FROM ".$this->db_unidentified." WHERE useragent = '$ua'";
-//				print $sql."\n";
-				$query->sql($sql);
+				$ua = prepareForDB($query->result(0, "useragent"));
+	//			print $ua."\n";
 
-				// update modified time of device
-				$query->sql("UPDATE ".UT_ITEMS." SET modified_at=CURRENT_TIMESTAMP WHERE id = ".$action[1]);
+				if($ua) {
+					$sql = "INSERT INTO ".$this->db_useragents." VALUES(DEFAULT, ".$action[1].", '$ua')";
+		//			print $sql."\n";
+					if($query->sql($sql)) {
 
-				message()->addMessage("Useragent ".$action[2].", added to ".$action[1]);
-				return true;
+						$sql = "DELETE FROM ".$this->db_unidentified." WHERE useragent = '$ua'";
+		//				print $sql."\n";
+						$query->sql($sql);
+
+						// update modified time of device
+						$query->sql("UPDATE ".UT_ITEMS." SET modified_at=CURRENT_TIMESTAMP WHERE id = ".$action[1]);
+
+						message()->addMessage("Useragent ".$action[2].", added to ".$action[1]);
+						return true;
+
+					}
+		
+				}
+
 			}
+
 		}
 
 		message()->addMessage("Useragent ".$action[2].", could not be added to ".$action[1], array("type" => "error"));
+		return false;
+	}
+
+	// add unidentified useragent to device
+	// /janitor/device/moveUseragentToDevice/#useragent_id#/#device_id#
+	function moveUseragentToDevice($action) {
+
+		$useragent_id = $action[1];
+		$device_id = $action[2];
+
+		// check parameter count
+		if(count($action) == 3) {
+			$query = new Query();
+
+			// does the useragent exist
+			$sql = "SELECT id FROM ".$this->db_useragents." WHERE id = ".$useragent_id;
+//			print $sql."\n";
+			if($query->sql($sql)) {
+
+				// does device exist
+				$sql = "SELECT name FROM ".$this->db." WHERE item_id = ".$device_id;
+//				print $sql."\n";
+				if($query->sql($sql)) {
+
+					$name = $query->result(0, "name");
+					$sql = "UPDATE ".$this->db_useragents." SET item_id = $device_id WHERE id = $useragent_id";
+//					print $sql."\n";
+					if($query->sql($sql)) {
+
+						// update modified time of device
+						$query->sql("UPDATE ".UT_ITEMS." SET modified_at=CURRENT_TIMESTAMP WHERE id = ".$device_id);
+
+						message()->addMessage("Useragent $useragent_id moved to $name");
+						return true;
+
+					}
+		
+				}
+
+			}
+
+		}
+
+
+		message()->addMessage("Useragent $useragent_id, could not be added to $device_id", array("type" => "error"));
 		return false;
 	}
 
@@ -2316,7 +2371,6 @@ class TypeDevice extends Itemtype {
 		$all_results = [];
 		$Identify = new Identify();
 
-
 		foreach($Identify->trimming_patterns as $pattern) {
 
 //			print $pattern."<br>\n";
@@ -2332,7 +2386,7 @@ class TypeDevice extends Itemtype {
 					$device_id = $result["id"];
 					$useragent = preg_replace("/".$pattern."/", "", $result["useragent"]);
 
-					// only do something is useragent still contains something
+					// only do something if useragent still contains something
 					if($useragent) {
 
 						$result["useragent"] = preg_replace("/(".$pattern.")/", "<span class=\"trimmed\">$1</span>", $result["useragent"]);
@@ -2342,7 +2396,8 @@ class TypeDevice extends Itemtype {
 						if($query->sql($sql)) {
 							$sql = "DELETE FROM ".$this->db_useragents." WHERE id = $device_id";
 							$query->sql($sql);
-							$result["status"] = "Deleted";
+							$result["status"] = "Deleted:";
+
 						}
 						else {
 							$sql = "UPDATE ".$this->db_useragents." SET useragent = '$useragent' WHERE id = $device_id";

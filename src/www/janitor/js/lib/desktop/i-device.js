@@ -391,8 +391,10 @@ Util.Objects["testMarkers"] = new function() {
 
 		div.url_device_test = div.getAttribute("data-device-test");
 		div.url_device_edit = div.getAttribute("data-device-edit");
+		div.url_device_list = div.getAttribute("data-device-list");
 		div.url_device_merge = div.getAttribute("data-device-merge");
 		div.url_useragent_delete = div.getAttribute("data-useragent-delete");
+		div.url_useragent_move = div.getAttribute("data-useragent-move");
 
 
 
@@ -435,14 +437,17 @@ Util.Objects["testMarkers"] = new function() {
 
 						// add list for not matched results
 						if(not_matched.length) {
-							this.div.not_matched_header = u.ae(this.div, "h3", {"class":"not", "html":"The markers did NOT match these useragents ("+not_matched.length+")"});
-							this.div.not_matched_result = u.ae(this.div, "ul", {"class":"results not"});
+
+							this.div.not_matched_div = u.ae(this.div, "div", {class:"not"});
+							this.div.not_matched_header = u.ae(this.div.not_matched_div, "h3", {class:"not", html:"The markers did NOT match these useragents ("+not_matched.length+")"});
+							this.div.not_matched_result = u.ae(this.div.not_matched_div, "ul", {class:"results not"});
 
 							for(i = 0; node = not_matched[i]; i++) {
 
 								n_node = u.ae(this.div.not_matched_result, "li", {"class":"result"});
+								// prevent any flawed empty useragents from hiding
 								n_node._device = u.ae(n_node, "h4", {"html":(node.useragent ? node.useragent : "--BLANK--")})
-
+								n_node._ua_id = node.id;
 								n_node.actions = u.ae(n_node, "ul", {"class":"actions"});
 								n_node._delete_ua = u.ae(n_node.actions, "li", {"class":"delete", "html":"Delete"});
 								n_node._delete_ua.url = this.div.url_useragent_delete+"/"+node.id;
@@ -483,7 +488,7 @@ Util.Objects["testMarkers"] = new function() {
 
 							// add option to delete all unmatched 
 							// (needed when shifting a lot of useragents from one device to another)
-							this.div.not_matched_actions = u.ae(this.div, "ul", {"class":"actions"});
+							this.div.not_matched_actions = u.ae(this.div.not_matched_div, "ul", {"class":"actions"});
 							this.div.not_matched_delete_all = u.ae(this.div.not_matched_actions, "li", {"class":"delete", "html":"Delete ALL unmatched useragents"});
 							this.div.not_matched_delete_all.div = this.div;
 
@@ -521,9 +526,154 @@ Util.Objects["testMarkers"] = new function() {
 									u.bug("delete node:" + node._device.innerHTML)
 									node._delete_ua.clicked();
 								}
-							}
-							
 
+							}
+
+							// add option to delete all unmatched 
+							// (needed when shifting a lot of useragents from one device to another)
+							this.div.not_matched_merge_all = u.ae(this.div.not_matched_actions, "li", {"class":"merge", "html":"Merge ALL unmatched useragents"});
+							this.div.not_matched_merge_all.div = this.div;
+
+							u.e.click(this.div.not_matched_merge_all);
+							// this.div.not_matched_merge_all.reset = function() {
+							// 	u.t.resetTimer(this.t_confirm);
+							//
+							// 	this.innerHTML = this.org_text;
+							// 	this._confirm = false;
+							// }
+							this.div.not_matched_merge_all.clicked = function() {
+
+								if(!this.search_option) {
+
+									// add search option
+									this.search_option = u.ae(this.div.not_matched_div, "div", {"class":"field search"});
+									this.search_option.div = this.div;
+
+									var search_input = u.ae(this.search_option, "input", {"class":"search default ignoreinput"});
+									search_input.div = this.div;
+
+									// add list for search results
+									search_input.search_result = u.ae(this.div.not_matched_div, "ul", {"class":"search results"});
+									this.search_option.search_result = search_input.search_result;
+
+									// initialize search field
+									search_input._default_value = "Search for device";
+									search_input.value = search_input._default_value;
+
+									search_input.onfocus = function() {
+										u.rc(this, "default");
+										if(this.value == this._default_value) {
+											this.value = "";
+										}
+									}
+									search_input.onblur = function() {
+										if(this.value == "") {
+											u.ac(this, "default");
+											this.value = this._default_value;
+										}
+									}
+
+									search_input.onkeyup = function() {
+										u.t.resetTimer(this.t_search);
+										this.t_search = u.t.setTimer(this, this.search, 1000);
+									}
+									search_input.onkeydown = function() {
+										u.t.resetTimer(this.t_search);
+									}
+
+									// perform search for other device than the matched one
+									search_input.search = function() {
+
+										// empty result list
+										search_input.search_result.innerHTML = "";
+
+										// only do search with valid search string
+										if(this.value && this.value != this._default_value) {
+
+											// get search response
+											search_input.response = function(response) {
+
+												this.options = [];
+												// get items from result
+												var items = u.qsa(".all_items li.item", response);
+												if(items.length) {
+
+													var i, node;
+				//									for(i = 0; node = items[i]; i++) {
+				//									console.log(items.length);
+
+													for(i = 0; i < items.length; i++) {
+										
+				//										console.log(i + ", " + items.length);
+
+				//										node = ;
+														node = this.search_result.appendChild(items[i]);
+														node.div = this.div;
+														node.search_input = this;
+														node.device_id = u.cv(node, "item_id");
+														this.options.push(node);
+
+														u.e.click(node);
+														node.clicked = function() {
+
+															if(!this.bn_merge) {
+
+																this.bn_merge = u.ie(this, "div", {"class":"mergewith", "html":"Merge"});
+																this.bn_merge.node = this;
+
+																u.e.click(this.bn_merge);
+																this.bn_merge.clicked = function() {
+
+
+																	this.iterateSelections = function() {
+
+																		this.ua_to_move = u.qs("li.result", this.node.div.not_matched_result);
+																		if(this.ua_to_move) {
+																			this.response = function(response) {
+
+																				page.notify(response);
+
+																				this.node.div.not_matched_result.removeChild(this.ua_to_move);
+																				this.iterateSelections();
+																			}
+																			u.request(this, this.node.div.url_useragent_move+"/"+this.ua_to_move._ua_id+"/"+this.node.device_id, {method:"post", timeout:3000, data:"csrf-token="+this.node.div.csrf_token});
+																		}
+																	}
+																	this.iterateSelections();
+																}
+
+															}
+															else {
+																this.removeChild(this.bn_merge);
+																this.bn_merge = false;
+															}
+
+
+														}
+
+						 							}
+												}
+												// no results
+												else {
+													u.ae(this.search_result, "li", {html:"<h3>No results</h3>"});
+												}
+
+												u.rc(this, "loading");
+											}
+
+											u.ac(search_input, "loading");
+											// perform search
+											u.request(search_input, this.div.url_device_list, {"params":"search=1&search_string="+this.value, "method":"post"})
+										}
+									}
+								}
+								else {
+									this.div.not_matched_div.removeChild(this.search_option);
+									this.div.not_matched_div.removeChild(this.search_option.search_result);
+									delete this.search_option;
+								}
+
+							}
 						}
 						else {
 
@@ -533,12 +683,13 @@ Util.Objects["testMarkers"] = new function() {
 
 						// add list for badly matched results
 						if(Object.keys(bad_matched).length) {
-							this.div.bad_matched_header = u.ae(this.div, "h3", {"class":"bad", "html":"The markers also matched these devices"});
-							this.div.bad_matched_result = u.ae(this.div, "ul", {"class":"results bad"});
+							this.div.bad_matched_div = u.ae(this.div, "div", {class:"bad"});
+							this.div.bad_matched_header = u.ae(this.div.bad_matched_div, "h3", {class:"bad", html:"The markers also matched these devices"});
+							this.div.bad_matched_result = u.ae(this.div.bad_matched_div, "ul", {class:"results bad"});
 
 							for(x in bad_matched) {
 
-								node = u.ae(this.div.bad_matched_result, "li", {"class":"device device_id:"+x+(bad_matched[x].marked ? " marked" : "")});
+								node = u.ae(this.div.bad_matched_result, "li", {class:"device device_id:"+x+(bad_matched[x].marked ? " marked" : "")});
 
 								// does matched device already have markers
 								node._marked = bad_matched[x].marked;
@@ -552,7 +703,7 @@ Util.Objects["testMarkers"] = new function() {
 //								u.ce(node._device_link, {"type":"link"});
 
 								// add merge link
-								node._device_merge = u.ae(node.actions, "li", {"class":"merge", "html":"Merge"});
+								node._device_merge = u.ae(node.actions, "li", {"class":"merge", "html":"Merge "+bad_matched[x].name+" into current"});
 								node._device_merge.url = this.div.url_device_merge+"/"+bad_matched[x].id+"/"+this.div.item_id;
 								node._device_merge.div = this.div;
 								node._device_merge.node = node;
@@ -613,8 +764,8 @@ Util.Objects["testMarkers"] = new function() {
 								}
 							}
 
-							this.div.bad_match_actions = u.ae(this.div, "ul", {"class":"actions"});
-							this.div.bad_match_merge = u.ae(this.div.bad_match_actions, "li", {"class":"merge", "html":"Merge all NON-MARKED devices"});
+							this.div.bad_match_actions = u.ae(this.div.bad_matched_div, "ul", {"class":"actions"});
+							this.div.bad_match_merge = u.ae(this.div.bad_match_actions, "li", {"class":"merge", "html":"Merge all NON-MARKED devices", title:"Only merge devices above which does not have markers already."});
 							this.div.bad_match_merge.div = this.div;
 
 							u.e.click(this.div.bad_match_merge);
@@ -638,6 +789,8 @@ Util.Objects["testMarkers"] = new function() {
 										}
 									}
 
+									// restore button to show operation is done
+									this.reset();
 								}
 								else {
 
@@ -669,29 +822,35 @@ Util.Objects["testMarkers"] = new function() {
 				// empty result list
 				if(this.div.not_matched_header) {
 					this.div.not_matched_header.parentNode.removeChild(this.div.not_matched_header);
-					this.div.not_matched_header = null;
+//					this.div.not_matched_header = null;
+					delete this.div.not_matched_header;
 				}
 				if(this.div.not_matched_result) {
 					this.div.not_matched_result.parentNode.removeChild(this.div.not_matched_result);
-					this.div.not_matched_result = null;
+//					this.div.not_matched_result = null;
+					delete this.div.not_matched_result;
 				}
 				if(this.div.not_matched_actions) {
 					this.div.not_matched_actions.parentNode.removeChild(this.div.not_matched_actions);
-					this.div.not_matched_actions = null;
+//					this.div.not_matched_actions = null;
+					delete this.div.not_matched_actions;
 				}
 
 
 				if(this.div.bad_matched_header) {
 					this.div.bad_matched_header.parentNode.removeChild(this.div.bad_matched_header);
-					this.div.bad_matched_header = null;
+//					this.div.bad_matched_header = null;
+					delete this.div.not_matched_header;
 				}
 				if(this.div.bad_matched_result) {
 					this.div.bad_matched_result.parentNode.removeChild(this.div.bad_matched_result);
-					this.div.bad_matched_result = null;
+//					this.div.bad_matched_result = null;
+					delete this.div.bad_matched_result;
 				}
 				if(this.div.bad_match_actions) {
 					this.div.bad_match_actions.parentNode.removeChild(this.div.bad_match_actions);
-					this.div.bad_match_actions = null;
+//					this.div.bad_match_actions = null;
+					delete this.div.bad_match_actions;
 				}
 
 				this.div.loading = u.ae(this.div, "h3", {"class":"not", "html":"Performing test ... wait"});

@@ -10,7 +10,7 @@ global $model;
 	<h1>Testing specific regexp</h1>
 
 <?
-$useragent = "Mozilla/5.0 (Linux; Android 4.4.3; Nexus 5 Build/KTU84M) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/35.0.1916.138 Mobile Safari/537.36";
+$useragent = 'Mozilla/5.0 (Mobile; $LYF/$F30C/$LYF_F30C-000-09-05-131117; rv:48.0) Gecko/48.0 Firefox/48.0 KAIOS/2.0';
 
 $starttime = microtime();
 

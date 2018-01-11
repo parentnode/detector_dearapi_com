@@ -325,14 +325,25 @@ Util.Animation = u.a = new function() {
 Util.saveCookie = function(name, value, _options) {
 	var expires = true;
 	var path = false;
+	var force = false;
 	if(typeof(_options) == "object") {
 		var _argument;
 		for(_argument in _options) {
 			switch(_argument) {
 				case "expires"	: expires	= _options[_argument]; break;
 				case "path"		: path		= _options[_argument]; break;
+				case "force"	: force		= _options[_argument]; break;
 			}
 		}
+	}
+	if(!force && typeof(window.localStorage) == "object" && typeof(window.sessionStorage) == "object") {
+		if(expires === false) {
+			window.sessionStorage.setItem(name, value);
+		}
+		else {
+			window.localStorage.setItem(name, value);
+		}
+		return;
 	}
 	if(expires === false) {
 		expires = ";expires=Mon, 04-Apr-2020 05:00:00 GMT";
@@ -353,6 +364,12 @@ Util.saveCookie = function(name, value, _options) {
 }
 Util.getCookie = function(name) {
 	var matches;
+	if(typeof(window.sessionStorage) == "object" && window.sessionStorage.getItem(name)) {
+		return window.sessionStorage.getItem(name)
+	}
+	else if(typeof(window.localStorage) == "object" && window.localStorage.getItem(name)) {
+		return window.localStorage.getItem(name)
+	}
 	return (matches = document.cookie.match(encodeURIComponent(name) + "=([^;]+)")) ? decodeURIComponent(matches[1]) : false;
 }
 Util.deleteCookie = function(name, _options) {
@@ -364,6 +381,12 @@ Util.deleteCookie = function(name, _options) {
 				case "path"	: path	= _options[_argument]; break;
 			}
 		}
+	}
+	if(typeof(window.sessionStorage) == "object") {
+		window.sessionStorage.removeItem(name);
+	}
+	if(typeof(window.localStorage) == "object") {
+		window.localStorage.removeItem(name);
 	}
 	if(typeof(path) === "string") {
 		path = ";path="+path;
@@ -626,15 +649,6 @@ Util.insertElement = u.ie = function(_parent, node_type, attributes) {
 	}
 	return false;
 }
-Util.insertAfter = u.ia = function(after_node, insert_node) {
-	var next_node = u.ns(after_node);
-	if(next_node) {
-		after_node.parentNode.insertBefore(next_node, insert_node);
-	}
-	else {
-		after_node.parentNode.appendChild(insert_node);
-	}
-}
 Util.wrapElement = u.we = function(node, node_type, attributes) {
 	try {
 		var wrapper_node = node.parentNode.insertBefore(document.createElement(node_type), node);
@@ -849,6 +863,15 @@ Util.hasFixedParent = u.hfp = function(node) {
 	}
 	return false;
 }
+Util.insertAfter = u.ia = function(after_node, insert_node) {
+	var next_node = u.ns(after_node);
+	if(next_node) {
+		after_node.parentNode.insertBefore(next_node, insert_node);
+	}
+	else {
+		after_node.parentNode.appendChild(insert_node);
+	}
+}
 Util.selectText = function(node) {
 	var selection = window.getSelection();
 	var range = document.createRange();
@@ -902,7 +925,7 @@ u.easings = new function() {
 Util.Events = u.e = new function() {
 	this.event_pref = typeof(document.ontouchmove) == "undefined" || (navigator.maxTouchPoints > 1 && navigator.userAgent.match(/Windows/i)) ? "mouse" : "touch";
 	if(navigator.maxTouchPoints > 1) {
-		if(typeof(document.ontouchmove) == "undefined" && typeof(document.onmousemove) == "undefined") {
+		if((typeof(document.ontouchmove) == "undefined" && typeof(document.onmousemove) == "undefined") || (document.ontouchmove === null && document.onmousemove === null)) {
 			this.event_support = "multi";
 		}
 	}
@@ -1198,6 +1221,7 @@ Util.Events = u.e = new function() {
 	}
 	this.hover = function(node, _options) {
 		node._hover_out_delay = 100;
+		node._hover_over_delay = 0;
 		node._callback_out = "out";
 		node._callback_over = "over";
 		if(typeof(_options) == "object") {
@@ -1206,6 +1230,7 @@ Util.Events = u.e = new function() {
 				switch(argument) {
 					case "over"				: node._callback_over		= _options[argument]; break;
 					case "out"				: node._callback_out		= _options[argument]; break;
+					case "delay_over"		: node._hover_over_delay	= _options[argument]; break;
 					case "delay"			: node._hover_out_delay		= _options[argument]; break;
 				}
 			}
@@ -1216,16 +1241,33 @@ Util.Events = u.e = new function() {
 	}
 	this._over = function(event) {
 		u.t.resetTimer(this.t_out);
-		if(typeof(this[this._callback_over]) == "function" && !this.is_hovered) {
-			this[this._callback_over](event);
+		if(!this._hover_over_delay) {
+			u.e.__over.call(this, event);
 		}
-		this.is_hovered = true;
+		else if(!u.t.valid(this.t_over)) {
+			this.t_over = u.t.setTimer(this, u.e.__over, this._hover_over_delay, event);
+		}
+	}
+	this.__over = function(event) {
+		u.t.resetTimer(this.t_out);
+		if(!this.is_hovered) {
+			this.is_hovered = true;
+			u.e.removeOverEvent(this, u.e._over);
+			u.e.addOverEvent(this, u.e.__over);
+			if(typeof(this[this._callback_over]) == "function") {
+				this[this._callback_over](event);
+			}
+		}
 	}
 	this._out = function(event) {
+		u.t.resetTimer(this.t_over);
+		u.t.resetTimer(this.t_out);
 		this.t_out = u.t.setTimer(this, u.e.__out, this._hover_out_delay, event);
 	}
 	this.__out = function(event) {
 		this.is_hovered = false;
+		u.e.removeOverEvent(this, u.e.__over);
+		u.e.addOverEvent(this, u.e._over);
 		if(typeof(this[this._callback_out]) == "function") {
 			this[this._callback_out](event);
 		}
@@ -2004,6 +2046,9 @@ Util.Form = u.f = new function() {
 			}
 		}
 		if(!Object.keys(this.error_fields).length) {
+			if(typeof(this.preSubmitted) == "function") {
+				this.preSubmitted(iN);
+			}
 			if(typeof(this.submitted) == "function") {
 				this.submitted(iN);
 			}
@@ -3569,20 +3614,25 @@ Util.request = function(node, url, _options) {
 	node[request_id].request_url = url;
 	node[request_id].request_method = "GET";
 	node[request_id].request_async = true;
-	node[request_id].request_params = "";
+	node[request_id].request_data = "";
 	node[request_id].request_headers = false;
+	node[request_id].response_type = false;
 	node[request_id].callback_response = "response";
+	node[request_id].callback_error = "responseError";
 	node[request_id].jsonp_callback = "callback";
 	if(typeof(_options) == "object") {
 		var argument;
 		for(argument in _options) {
 			switch(argument) {
-				case "method"				: node[request_id].request_method		= _options[argument]; break;
-				case "params"				: node[request_id].request_params		= _options[argument]; break;
-				case "async"				: node[request_id].request_async		= _options[argument]; break;
-				case "headers"				: node[request_id].request_headers		= _options[argument]; break;
-				case "callback"				: node[request_id].callback_response	= _options[argument]; break;
-				case "jsonp_callback"		: node[request_id].jsonp_callback		= _options[argument]; break;
+				case "method"				: node[request_id].request_method			= _options[argument]; break;
+				case "params"				: node[request_id].request_data				= _options[argument]; break;
+				case "data"					: node[request_id].request_data				= _options[argument]; break;
+				case "async"				: node[request_id].request_async			= _options[argument]; break;
+				case "headers"				: node[request_id].request_headers			= _options[argument]; break;
+				case "responseType"			: node[request_id].response_type			= _options[argument]; break;
+				case "callback"				: node[request_id].callback_response		= _options[argument]; break;
+				case "error_callback"		: node[request_id].callback_error			= _options[argument]; break;
+				case "jsonp_callback"		: node[request_id].jsonp_callback			= _options[argument]; break;
 			}
 		}
 	}
@@ -3590,6 +3640,9 @@ Util.request = function(node, url, _options) {
 		node[request_id].HTTPRequest = this.createRequestObject();
 		node[request_id].HTTPRequest.node = node;
 		node[request_id].HTTPRequest.request_id = request_id;
+		if(node[request_id].response_type) {
+			node[request_id].HTTPRequest.responseType = node[request_id].response_type;
+		}
 		if(node[request_id].request_async) {
 			node[request_id].HTTPRequest.statechanged = function() {
 				if(this.readyState == 4 || this.IEreadyState) {
@@ -3602,13 +3655,11 @@ Util.request = function(node, url, _options) {
 		}
 		try {
 			if(node[request_id].request_method.match(/GET/i)) {
-				var params = u.JSONtoParams(node[request_id].request_params);
+				var params = u.JSONtoParams(node[request_id].request_data);
 				node[request_id].request_url += params ? ((!node[request_id].request_url.match(/\?/g) ? "?" : "&") + params) : "";
 				node[request_id].HTTPRequest.open(node[request_id].request_method, node[request_id].request_url, node[request_id].request_async);
-				node[request_id].HTTPRequest.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
-				var csfr_field = u.qs('meta[name="csrf-token"]');
-				if(csfr_field && csfr_field.content) {
-					node[request_id].HTTPRequest.setRequestHeader("X-CSRF-Token", csfr_field.content);
+				if(typeof(node[request_id].request_headers) != "object" || (!node[request_id].request_headers["Content-Type"] && !node[request_id].request_headers["content-type"])) {
+					node[request_id].HTTPRequest.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
 				}
 				if(typeof(node[request_id].request_headers) == "object") {
 					var header;
@@ -3620,19 +3671,15 @@ Util.request = function(node, url, _options) {
 			}
 			else if(node[request_id].request_method.match(/POST|PUT|PATCH/i)) {
 				var params;
-				if(typeof(node[request_id].request_params) == "object" && node[request_id].request_params.constructor.toString().match(/function Object/i)) {
-					params = JSON.stringify(node[request_id].request_params);
+				if(typeof(node[request_id].request_data) == "object" && node[request_id].request_data.constructor.toString().match(/function Object/i)) {
+					params = JSON.stringify(node[request_id].request_data);
 				}
 				else {
-					params = node[request_id].request_params;
+					params = node[request_id].request_data;
 				}
 				node[request_id].HTTPRequest.open(node[request_id].request_method, node[request_id].request_url, node[request_id].request_async);
-				if(!params.constructor.toString().match(/FormData/i)) {
+				if(!params.constructor.toString().match(/FormData/i) && (typeof(node[request_id].request_headers) != "object" || (!node[request_id].request_headers["Content-Type"] && !node[request_id].request_headers["content-type"]))) {
 					node[request_id].HTTPRequest.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
-				}
-				var csfr_field = u.qs('meta[name="csrf-token"]');
-				if(csfr_field && csfr_field.content) {
-					node[request_id].HTTPRequest.setRequestHeader("X-CSRF-Token", csfr_field.content);
 				}
 				if(typeof(node[request_id].request_headers) == "object") {
 					var header;
@@ -3664,7 +3711,7 @@ Util.request = function(node, url, _options) {
 			response_object.responseText = response;
 			u.validateResponse(response_object);
 		}
-		var params = u.JSONtoParams(node[request_id].request_params);
+		var params = u.JSONtoParams(node[request_id].request_data);
 		node[request_id].request_url += params ? ((!node[request_id].request_url.match(/\?/g) ? "?" : "&") + params) : "";
 		node[request_id].request_url += (!node[request_id].request_url.match(/\?/g) ? "?" : "&") + node[request_id].jsonp_callback + "=document."+key+".responder";
 		u.ae(u.qs("head"), "script", ({"type":"text/javascript", "src":node[request_id].request_url}));
@@ -3757,13 +3804,22 @@ Util.validateResponse = function(response){
 		}
 	}
 	if(object) {
-		if(typeof(response.node[response.node[response.request_id].callback_response]) == "function") {
+		if(typeof(response.node[response.request_id].callback_response) == "function") {
+			response.node[response.request_id].callback_response(object, response.request_id);
+		}
+		else if(typeof(response.node[response.node[response.request_id].callback_response]) == "function") {
 			response.node[response.node[response.request_id].callback_response](object, response.request_id);
 		}
 	}
 	else {
-		if(typeof(response.node.responseError) == "function") {
-			response.node.responseError(response);
+		if(typeof(response.node[response.request_id].callback_error) == "function") {
+			response.node[response.request_id].callback_error(response, response.request_id);
+		}
+		else if(typeof(response.node[response.node[response.request_id].callback_error]) == "function") {
+			response.node[response.node[response.request_id].callback_error](response, response.request_id);
+		}
+		else if(typeof(response.node[response.request_id].callback_response) == "function") {
+			response.node[response.request_id].callback_response(response, response.request_id);
 		}
 		else if(typeof(response.node[response.node[response.request_id].callback_response]) == "function") {
 			response.node[response.node[response.request_id].callback_response](response, response.request_id);
@@ -3950,6 +4006,12 @@ Util.normalize = function(string) {
 	string = string.replace(/^-|-$/g, '');
 	return string;
 }
+Util.pluralize = function(count, singular, plural) {
+	if(count != 1) {
+		return count + " " + plural;
+	}
+	return count + " " + singular;
+}
 Util.svg = function(svg_object) {
 	var svg, shape, svg_shape;
 	if(svg_object.name && u._svg_cache && u._svg_cache[svg_object.name]) {
@@ -3970,8 +4032,8 @@ Util.svg = function(svg_object) {
 	if(svg_object.title) {
 		svg.setAttributeNS(null, "title", svg_object.title);
 	}
-	if(svg_object.class) {
-		svg.setAttributeNS(null, "class", svg_object.class);
+	if(svg_object["class"]) {
+		svg.setAttributeNS(null, "class", svg_object["class"]);
 	}
 	if(svg_object.width) {
 		svg.setAttributeNS(null, "width", svg_object.width);
@@ -4483,30 +4545,34 @@ Util.Objects["collapseHeader"] = new function() {
 		u.e.click(div._toggle_header);
 		div._toggle_header.clicked = function() {
 			if(this.div._toggle_is_closed) {
+				u.ac(this.div, "open");
 				u.as(this.div, "height", "auto");
 				this.div._toggle_is_closed = false;
-				u.saveNodeCookie(this.div, "open", 1, {"ignore_classvars":true});
+				u.saveNodeCookie(this.div, "open", 1, {"ignore_classvars":true, "ignore_classnames":"open"});
 				u.addCollapseArrow(this);
 				if(typeof(this.div.headerExpanded) == "function") {
 					this.div.headerExpanded();
 				}
 			}
 			else {
+				u.rc(this.div, "open");
 				u.as(this.div, "height", this.offsetHeight+"px");
 				this.div._toggle_is_closed = true;
-				u.saveNodeCookie(this.div, "open", 0, {"ignore_classvars":true});
+				u.saveNodeCookie(this.div, "open", 0, {"ignore_classvars":true, "ignore_classnames":"open"});
 				u.addExpandArrow(this);
 				if(typeof(this.div.headerCollapsed) == "function") {
 					this.div.headerCollapsed();
 				}
 			}
 		}
-		var state = u.getNodeCookie(div, "open", {"ignore_classvars":true});
+		var state = u.getNodeCookie(div, "open", {"ignore_classvars":true, "ignore_classnames":"open"});
+		console.log("state:" + state + ", " + typeof(state));
 		if(!state) {
 			div._toggle_header.clicked();
 		}
 		else {
 			u.addCollapseArrow(div._toggle_header);
+			u.ac(div, "open");
 			if(typeof(div.headerExpanded) == "function") {
 				div.headerExpanded();
 			}
@@ -4517,7 +4583,7 @@ u.addExpandArrow = function(node) {
 	if(node.collapsearrow) {
 		u.bug("remove collapsearrow");
 		node.collapsearrow.parentNode.removeChild(node.collapsearrow);
-		node.collapsearrow = false;
+		delete node.collapsearrow;
 	}
 	node.expandarrow = u.svgIcons("expandarrow", node);
 }
@@ -4525,18 +4591,20 @@ u.addCollapseArrow = function(node) {
 	if(node.expandarrow) {
 		u.bug("remove expandarrow");
 		node.expandarrow.parentNode.removeChild(node.expandarrow);
-		node.expandarrow = false;
+		delete node.expandarrow;
 	}
 	node.collapsearrow = u.svgIcons("collapsearrow", node);
 }
 u.defaultFilters = function(div) {
 	div._filter = u.ie(div, "div", {"class":"filter"});
 	div._filter.div = div;
-	var i, node;
-	for(i = 0; node = div.nodes[i]; i++) {
+	var i, node, j, text_node;
+	for(i = 0; i < div.nodes.length; i++) {
+		node = div.nodes[i];
 		node._c = "";
 		var text_nodes = u.qsa("h2,h3,h4,h5,p,ul.info,dl,li.tag", node);
-		for(j = 0; text_node = text_nodes[j]; j++) {
+		for(j = 0; j < text_nodes.length; j++) {
+			text_node = text_nodes[j];
 			node._c += u.text(text_node).toLowerCase() + ";"; 
 		}
 	}
@@ -4544,14 +4612,16 @@ u.defaultFilters = function(div) {
 	if(tags) {
 		var tag, li, used_tags = [];
 		div._filter._tags = u.ie(div._filter, "ul", {"class":"tags"});
-		for(i = 0; node = tags[i]; i++) {
+		for(i = 0; i < tags.length; i++) {
+			node = tags[i];
 			tag = u.text(node);
 			if(used_tags.indexOf(tag) == -1) {
 				used_tags.push(tag);
 			}
 		}
 		used_tags.sort();
-		for(i = 0; tag = used_tags[i]; i++) {
+		for(i = 0; i < used_tags.length; i++) {
+			tag = used_tags[i];
 			li = u.ae(div._filter._tags, "li", {"html":tag});
 			li.tag = tag.toLowerCase();
 			li._filter = div._filter;
@@ -4595,16 +4665,24 @@ u.defaultFilters = function(div) {
 		var query = this._input.val().toLowerCase();
 		if(this.current_filter != query+","+this.selected_tags.join(",")) {
 			this.current_filter = query + "," + this.selected_tags.join(",");
-			for(i = 0; node = this.div.nodes[i]; i++) {
+			for(i = 0; i < this.div.nodes.length; i++) {
+				node = this.div.nodes[i];
 				if(node._c.match(query) && this.checkTags(node)) {
+					node._hidden = false;
+					u.rc(node, "hidden", false);
 					u.as(node, "display", "block", false);
 				}
 				else {
+					node._hidden = true;
+					u.ac(node, "hidden", false);
 					u.as(node, "display", "none", false);
 				}
 			}
 		}
 		u.rc(this, "filtering");
+		if(typeof(this.div.filtered) == "function") {
+			this.div.filtered();
+		}
 	}
 }
 u.defaultSortableList = function(list) {
@@ -4843,6 +4921,360 @@ u.svgIcons = function(icon, node) {
 			]
 		});
 	}
+}
+
+
+/*u-request.js*/
+Util.createRequestObject = function() {
+	return new XMLHttpRequest();
+}
+Util.request = function(node, url, _options) {
+	var request_id = u.randomString(6);
+	node[request_id] = {};
+	node[request_id].request_url = url;
+	node[request_id].request_method = "GET";
+	node[request_id].request_async = true;
+	node[request_id].request_data = "";
+	node[request_id].request_headers = false;
+	node[request_id].request_credentials = false;
+	node[request_id].response_type = false;
+	node[request_id].callback_response = "response";
+	node[request_id].callback_error = "responseError";
+	node[request_id].jsonp_callback = "callback";
+	node[request_id].request_timeout = false;
+	if(typeof(_options) == "object") {
+		var argument;
+		for(argument in _options) {
+			switch(argument) {
+				case "method"				: node[request_id].request_method			= _options[argument]; break;
+				case "params"				: node[request_id].request_data				= _options[argument]; break;
+				case "data"					: node[request_id].request_data				= _options[argument]; break;
+				case "async"				: node[request_id].request_async			= _options[argument]; break;
+				case "headers"				: node[request_id].request_headers			= _options[argument]; break;
+				case "credentials"			: node[request_id].request_credentials		= _options[argument]; break;
+				case "responseType"			: node[request_id].response_type			= _options[argument]; break;
+				case "callback"				: node[request_id].callback_response		= _options[argument]; break;
+				case "error_callback"		: node[request_id].callback_error			= _options[argument]; break;
+				case "jsonp_callback"		: node[request_id].jsonp_callback			= _options[argument]; break;
+				case "timeout"				: node[request_id].request_timeout			= _options[argument]; break;
+			}
+		}
+	}
+	if(node[request_id].request_method.match(/GET|POST|PUT|PATCH/i)) {
+		node[request_id].HTTPRequest = this.createRequestObject();
+		node[request_id].HTTPRequest.node = node;
+		node[request_id].HTTPRequest.request_id = request_id;
+		if(node[request_id].response_type) {
+			node[request_id].HTTPRequest.responseType = node[request_id].response_type;
+		}
+		if(node[request_id].request_async) {
+			node[request_id].HTTPRequest.statechanged = function() {
+				if(this.readyState == 4 || this.IEreadyState) {
+					u.validateResponse(this);
+				}
+			}
+			if(typeof(node[request_id].HTTPRequest.addEventListener) == "function") {
+				u.e.addEvent(node[request_id].HTTPRequest, "readystatechange", node[request_id].HTTPRequest.statechanged);
+			}
+		}
+		try {
+			if(node[request_id].request_method.match(/GET/i)) {
+				var params = u.JSONtoParams(node[request_id].request_data);
+				node[request_id].request_url += params ? ((!node[request_id].request_url.match(/\?/g) ? "?" : "&") + params) : "";
+				node[request_id].HTTPRequest.open(node[request_id].request_method, node[request_id].request_url, node[request_id].request_async);
+				if(node[request_id].request_timeout) {
+					node[request_id].HTTPRequest.timeout = node[request_id].request_timeout;
+				}
+				if(node[request_id].request_credentials) {
+					node[request_id].HTTPRequest.withCredentials = true;
+				}
+				if(typeof(node[request_id].request_headers) != "object" || (!node[request_id].request_headers["Content-Type"] && !node[request_id].request_headers["content-type"])) {
+					node[request_id].HTTPRequest.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
+				}
+				if(typeof(node[request_id].request_headers) == "object") {
+					var header;
+					for(header in node[request_id].request_headers) {
+						node[request_id].HTTPRequest.setRequestHeader(header, node[request_id].request_headers[header]);
+					}
+				}
+				node[request_id].HTTPRequest.send("");
+			}
+			else if(node[request_id].request_method.match(/POST|PUT|PATCH/i)) {
+				var params;
+				if(typeof(node[request_id].request_data) == "object" && node[request_id].request_data.constructor.toString().match(/function Object/i)) {
+					params = JSON.stringify(node[request_id].request_data);
+				}
+				else {
+					params = node[request_id].request_data;
+				}
+				node[request_id].HTTPRequest.open(node[request_id].request_method, node[request_id].request_url, node[request_id].request_async);
+				if(node[request_id].request_timeout) {
+					node[request_id].HTTPRequest.timeout = node[request_id].request_timeout;
+				}
+				if(node[request_id].request_credentials) {
+					node[request_id].HTTPRequest.withCredentials = true;
+				}
+				if(!params.constructor.toString().match(/FormData/i) && (typeof(node[request_id].request_headers) != "object" || (!node[request_id].request_headers["Content-Type"] && !node[request_id].request_headers["content-type"]))) {
+					node[request_id].HTTPRequest.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
+				}
+				if(typeof(node[request_id].request_headers) == "object") {
+					var header;
+					for(header in node[request_id].request_headers) {
+						node[request_id].HTTPRequest.setRequestHeader(header, node[request_id].request_headers[header]);
+					}
+				}
+				node[request_id].HTTPRequest.send(params);
+			}
+		}
+		catch(exception) {
+			node[request_id].HTTPRequest.exception = exception;
+			u.validateResponse(node[request_id].HTTPRequest);
+			return;
+		}
+		if(!node[request_id].request_async) {
+			u.validateResponse(node[request_id].HTTPRequest);
+		}
+	}
+	else if(node[request_id].request_method.match(/SCRIPT/i)) {
+		if(node[request_id].request_timeout) {
+			node[request_id].timedOut = function(requestee) {
+				this.status = 0;
+				delete this.timedOut;
+				delete this.t_timeout;
+				Util.validateResponse({node: requestee.node, request_id: requestee.request_id});
+			}
+			node[request_id].t_timeout = u.t.setTimer(node[request_id], "timedOut", node[request_id].request_timeout, {node: node, request_id: request_id});
+		}
+		var key = u.randomString();
+		document[key] = new Object();
+		document[key].key = key;
+		document[key].node = node;
+		document[key].request_id = request_id;
+		document[key].responder = function(response) {
+			var response_object = new Object();
+			response_object.node = this.node;
+			response_object.request_id = this.request_id;
+			response_object.responseText = response;
+			u.t.resetTimer(this.node[this.request_id].t_timeout);
+			delete this.node[this.request_id].timedOut;
+			delete this.node[this.request_id].t_timeout;
+			u.qs("head").removeChild(this.node[this.request_id].script_tag);
+			delete this.node[this.request_id].script_tag;
+			delete document[this.key];
+			u.validateResponse(response_object);
+		}
+		var params = u.JSONtoParams(node[request_id].request_data);
+		node[request_id].request_url += params ? ((!node[request_id].request_url.match(/\?/g) ? "?" : "&") + params) : "";
+		node[request_id].request_url += (!node[request_id].request_url.match(/\?/g) ? "?" : "&") + node[request_id].jsonp_callback + "=document."+key+".responder";
+		node[request_id].script_tag = u.ae(u.qs("head"), "script", ({"type":"text/javascript", "src":node[request_id].request_url}));
+	}
+	return request_id;
+}
+Util.JSONtoParams = function(json) {
+	if(typeof(json) == "object") {
+		var params = "", param;
+		for(param in json) {
+			params += (params ? "&" : "") + param + "=" + json[param];
+		}
+		return params
+	}
+	var object = u.isStringJSON(json);
+	if(object) {
+		return u.JSONtoParams(object);
+	}
+	return json;
+}
+Util.evaluateResponseText = function(responseText) {
+	var object;
+	if(typeof(responseText) == "object") {
+		responseText.isJSON = true;
+		return responseText;
+	}
+	else {
+		var response_string;
+		if(responseText.trim().substr(0, 1).match(/[\"\']/i) && responseText.trim().substr(-1, 1).match(/[\"\']/i)) {
+			response_string = responseText.trim().substr(1, responseText.trim().length-2);
+		}
+		else {
+			response_string = responseText;
+		}
+		var json = u.isStringJSON(response_string);
+		if(json) {
+			return json;
+		}
+		var html = u.isStringHTML(response_string);
+		if(html) {
+			return html;
+		}
+		return responseText;
+	}
+}
+Util.validateResponse = function(HTTPRequest){
+	var object = false;
+	if(HTTPRequest) {
+		var node = HTTPRequest.node;
+		var request_id = HTTPRequest.request_id;
+		var request = node[request_id];
+		delete request.HTTPRequest;
+		if(request.finished) {
+			return;
+		}
+		request.finished = true;
+		try {
+			request.status = HTTPRequest.status;
+			if(HTTPRequest.status && !HTTPRequest.status.toString().match(/403|404|500/)) {
+				object = u.evaluateResponseText(HTTPRequest.responseText);
+			}
+			else if(HTTPRequest.responseText) {
+				object = u.evaluateResponseText(HTTPRequest.responseText);
+			}
+		}
+		catch(exception) {
+			request.exception = exception;
+		}
+	}
+	else {
+		console.log("Lost track of this request. There is no way of routing it back to requestee.")
+		return;
+	}
+	if(object !== false) {
+		if(typeof(request.callback_response) == "function") {
+			request.callback_response(object, request_id);
+		}
+		else if(typeof(node[request.callback_response]) == "function") {
+			node[request.callback_response](object, request_id);
+		}
+	}
+	else {
+		if(typeof(request.callback_error) == "function") {
+			request.callback_error({error:true}, request_id);
+		}
+		else if(typeof(node[request.callback_error]) == "function") {
+			node[request.callback_error]({error:true}, request_id);
+		}
+		else if(typeof(request.callback_response) == "function") {
+			request.callback_response({error:true}, request_id);
+		}
+		else if(typeof(node[request.callback_response]) == "function") {
+			node[request.callback_response]({error:true}, request_id);
+		}
+	}
+}
+
+
+/*u-string.js*/
+Util.cutString = function(string, length) {
+	var matches, match, i;
+	if(string.length <= length) {
+		return string;
+	}
+	else {
+		length = length-3;
+	}
+	matches = string.match(/\&[\w\d]+\;/g);
+	if(matches) {
+		for(i = 0; match = matches[i]; i++){
+			if(string.indexOf(match) < length){
+				length += match.length-1;
+			}
+		}
+	}
+	return string.substring(0, length) + (string.length > length ? "..." : "");
+}
+Util.prefix = function(string, length, prefix) {
+	string = string.toString();
+	prefix = prefix ? prefix : "0";
+	while(string.length < length) {
+		string = prefix + string;
+	}
+	return string;
+}
+Util.randomString = function(length) {
+	var key = "", i;
+	length = length ? length : 8;
+	var pattern = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ".split('');
+	for(i = 0; i < length; i++) {
+		key += pattern[u.random(0,35)];
+	}
+	return key;
+}
+Util.uuid = function() {
+	var chars = '0123456789abcdef'.split('');
+	var uuid = [], rnd = Math.random, r, i;
+	uuid[8] = uuid[13] = uuid[18] = uuid[23] = '-';
+	uuid[14] = '4';
+	for(i = 0; i < 36; i++) {
+		if(!uuid[i]) {
+			r = 0 | rnd()*16;
+			uuid[i] = chars[(i == 19) ? (r & 0x3) | 0x8 : r & 0xf];
+		}
+ 	}
+	return uuid.join('');
+}
+Util.stringOr = u.eitherOr = function(value, replacement) {
+	if(value !== undefined && value !== null) {
+		return value;
+	}
+	else {
+		return replacement ? replacement : "";
+	}	
+}
+Util.getMatches = function(string, regex) {
+	var match, matches = [];
+	while(match = regex.exec(string)) {
+		matches.push(match[1]);
+	}
+	return matches;
+}
+Util.upperCaseFirst = u.ucfirst = function(string) {
+	return string.replace(/^(.){1}/, function($1) {return $1.toUpperCase()});
+}
+Util.lowerCaseFirst = u.lcfirst = function(string) {
+	return string.replace(/^(.){1}/, function($1) {return $1.toLowerCase()});
+}
+Util.normalize = function(string) {
+	string = string.toLowerCase();
+	string = string.replace(/[^a-z0-9\_]/g, '-');
+	string = string.replace(/-+/g, '-');
+	string = string.replace(/^-|-$/g, '');
+	return string;
+}
+Util.pluralize = function(count, singular, plural) {
+	if(count != 1) {
+		return count + " " + plural;
+	}
+	return count + " " + singular;
+}
+Util.isStringJSON = function(string) {
+	if(string.trim().substr(0, 1).match(/[\{\[]/i) && string.trim().substr(-1, 1).match(/[\}\]]/i)) {
+		try {
+			var test = JSON.parse(string);
+			if(typeof(test) == "object") {
+				test.isJSON = true;
+				return test;
+			}
+		}
+		catch(exception) {}
+	}
+	return false;
+}
+Util.isStringHTML = function(string) {
+	if(string.trim().substr(0, 1).match(/[\<]/i) && string.trim().substr(-1, 1).match(/[\>]/i)) {
+		try {
+			var test = document.createElement("div");
+			test.innerHTML = string;
+			if(test.childNodes.length) {
+				var body_class = string.match(/<body class="([a-z0-9A-Z_: ]+)"/);
+				test.body_class = body_class ? body_class[1] : "";
+				var head_title = string.match(/<title>([^$]+)<\/title>/);
+				test.head_title = head_title ? head_title[1] : "";
+				test.isHTML = true;
+				return test;
+			}
+		}
+		catch(exception) {}
+	}
+	return false;
 }
 
 
@@ -6565,6 +6997,18 @@ u.f.textEditor = function(field) {
 			u.e.kill(event);
 			this.field.addStrongTag(this.selection, this.tag);
 		}
+		this.selection_options._sup = u.ae(ul, "li", {"class":"sup", "html":"Superscript"});
+		this.selection_options._sup.field = this;
+		this.selection_options._sup.tag = node;
+		this.selection_options._sup.selection = selection;
+		u.ce(this.selection_options._sup);
+		this.selection_options._sup.inputStarted = function(event) {
+			u.e.kill(event);
+		}
+		this.selection_options._sup.clicked = function(event) {
+			u.e.kill(event);
+			this.field.addSupTag(this.selection, this.tag);
+		}
 		this.selection_options._span = u.ae(ul, "li", {"class":"span", "html":"CSS class"});
 		this.selection_options._span.field = this;
 		this.selection_options._span.tag = node;
@@ -6728,6 +7172,24 @@ u.f.textEditor = function(field) {
 			range.surroundContents(em);
 			selection.removeAllRanges();
 			this.deleteOrEditOption(em);
+			this.hideSelectionOptions();
+		}
+		catch(exception) {
+			selection.removeAllRanges();
+			this.hideSelectionOptions();
+			alert("You cannot cross the boundaries of another selection. Yet.");
+		}
+	}
+	field.addSupTag = function(selection, tag) {
+		var range, a, url, target;
+		var sup = document.createElement("sup");
+		sup.field = this;
+		sup.tag = tag;
+		range = selection.getRangeAt(0);
+		try {
+			range.surroundContents(sup);
+			selection.removeAllRanges();
+			this.deleteOrEditOption(sup);
 			this.hideSelectionOptions();
 		}
 		catch(exception) {
@@ -7102,6 +7564,101 @@ Util.Form.geoLocation = function(field) {
 }
 
 
+/*beta-u-form-onebuttonform.js*/
+Util.Objects["oneButtonForm"] = new function() {
+	this.init = function(node) {
+		if(!node.childNodes.length) {
+			var csrf_token = node.getAttribute("data-csrf-token");
+			var form_action = node.getAttribute("data-form-action");
+			var button_value = node.getAttribute("data-button-value");
+			var button_name = node.getAttribute("data-button-name");
+			var button_class = node.getAttribute("data-button-class");
+			var inputs = node.getAttribute("data-inputs");
+			if(csrf_token && form_action && button_value) {
+				node.form = u.f.addForm(node, {"action":form_action, "class":"confirm_action_form"});
+				node.form.node = node;
+				u.ae(node.form, "input", {"type":"hidden","name":"csrf-token", "value":csrf_token});
+				if(inputs) {
+					for(input_name in inputs)
+					u.ae(node.form, "input", {"type":"hidden","name":input_name, "value":inputs[input_name]});
+				}
+				u.f.addAction(node.form, {"value":button_value, "class":"button" + (button_class ? " "+button_class : ""), "name":u.stringOr(button_name, "save")});
+			}
+		}
+		else {
+			node.form = u.qs("form", node);
+		}
+		if(node.form) {
+			u.f.init(node.form);
+			node.form.node = node;
+			node.form.confirm_submit_button = u.qs("input[type=submit]", node.form);
+			node.form.confirm_submit_button.org_value = node.form.confirm_submit_button.value;
+			node.form.confirm_submit_button.confirm_value = node.getAttribute("data-confirm-value");
+			node.form.confirm_submit_button.wait_value = node.getAttribute("data-wait-value");
+			node.form.success_function = node.getAttribute("data-success-function");
+			node.form.success_location = node.getAttribute("data-success-location");
+			node.form.dom_submit = node.getAttribute("data-dom-submit");
+			node.form.restore = function(event) {
+				u.t.resetTimer(this.t_confirm);
+				this.confirm_submit_button.value = this.confirm_submit_button.org_value;
+				u.rc(this.confirm_submit_button, "confirm");
+			}
+			node.form.submitted = function() {
+				u.bug("submitted")
+				if(!u.hc(this.confirm_submit_button, "confirm") && this.confirm_submit_button.confirm_value) {
+					u.ac(this.confirm_submit_button, "confirm");
+					this.confirm_submit_button.value = this.confirm_submit_button.confirm_value;
+					this.t_confirm = u.t.setTimer(this, this.restore, 3000);
+				}
+				else {
+					u.t.resetTimer(this.t_confirm);
+					this.response = function(response) {
+						u.rc(this, "submitting");
+						u.rc(this.confirm_submit_button, "disabled");
+						page.notify(response);
+						if(response.cms_status == "success") {
+							if(response.cms_object && response.cms_object.constraint_error) {
+								this.confirm_submit_button.value = this.confirm_submit_button.org_value;
+								u.ac(this, "disabled");
+							}
+							else {
+								if(this.success_location) {
+									u.bug("location:" + this.success_location)
+									u.ass(this.confirm_submit_button, {
+										"display": "none"
+									});
+									location.href = this.success_location;
+								}
+								else if(this.success_function) {
+									if(typeof(this.node[this.success_function]) == "function") {
+										this.node[this.success_function](response);
+									}
+								}
+								else if(typeof(this.node.confirmed) == "function") {
+									this.node.confirmed(response);
+								}
+								else {
+									u.bug("default return handling" + this.success_location)
+								}
+							}
+						}
+						this.restore();
+					}
+					u.ac(this.confirm_submit_button, "disabled");
+					u.ac(this, "submitting");
+					this.confirm_submit_button.value = u.stringOr(this.confirm_submit_button.wait_value, "Wait");
+					if(this.dom_submit) {
+						this.DOMsubmit();
+					}
+					else {
+						u.request(this, this.action, {"method":"post", "params":u.f.getParams(this)});
+					}
+				}
+			}
+		}
+	}
+}
+
 /*beta-u-notifier.js*/
 u.notifier = function(node) {
 	var notifications = u.qs("div.notifications", node);
@@ -7148,9 +7705,11 @@ u.notifier = function(node) {
 			}
 		}
 		else if(typeof(response) == "object" && response.isHTML) {
-			var login = u.qs(".scene.login", response);
+			var login = u.qs(".scene.login form", response);
 			var messages = u.qsa(".scene div.messages p", response);
 			if(login && !u.qs("#login_overlay")) {
+				// 
+				// 
 				this.autosave_disabled = true;
 				if(page.t_autosave) {
 					u.t.resetTimer(page.t_autosave);
@@ -7159,14 +7718,134 @@ u.notifier = function(node) {
 				overlay.node = this;
 				u.ae(overlay, login);
 				u.as(document.body, "overflow", "hidden");
-				var form = u.qs("form", overlay);
-				var relogin = u.ae(login, "p", {"class":"relogin", "html":(u.txt["relogin"] ? u.txt["relogin"] : "Your session expired")});
-				login.insertBefore(relogin, form);
-				form.overlay = overlay;
-				u.ae(form, "input", {"type":"hidden", "name":"ajaxlogin", "value":"true"})
-				u.f.init(form);
-				form.fields["username"].focus();
-				form.submitted = function() {
+				var relogin = u.ie(login, "h1", {"class":"relogin", "html":(u.txt["relogin"] ? u.txt["relogin"] : "Your session expired")});
+				login.overlay = overlay;
+				u.ae(login, "input", {"type":"hidden", "name":"ajaxlogin", "value":"true"})
+				u.f.init(login);
+				login.fields["username"].focus();
+				login.submitted = function() {
+					this.response = function(response) {
+						if(response.isJSON && response.cms_status == "success") {
+							var csrf_token = response.cms_object["csrf-token"];
+							var data_vars = u.qsa("[data-csrf-token]", page);
+							var input_vars = u.qsa("[name=csrf-token]", page);
+							var dom_vars = u.qsa("*", page);
+							var i, node;
+							for(i = 0; node = data_vars[i]; i++) {
+								node.setAttribute("data-csrf-token", csrf_token);
+							}
+							for(i = 0; node = input_vars[i]; i++) {
+								node.value = csrf_token;
+							}
+							for(i = 0; node = dom_vars[i]; i++) {
+								if(node.csrf_token) {
+									node.csrf_token = csrf_token;
+								}
+							}
+							this.overlay.parentNode.removeChild(this.overlay);
+							var multiple_overlays = u.qsa("#login_overlay");
+							if(multiple_overlays) {
+								for(i = 0; overlay = multiple_overlays[i]; i++) {
+									overlay.parentNode.removeChild(overlay);
+								}
+							}
+							u.as(document.body, "overflow", "auto");
+							this.overlay.node.autosave_disabled = false;
+							if(this.overlay.node._autosave_node && this.overlay.node._autosave_interval) {
+								u.t.setTimer(this.overlay.node._autosave_node, "autosave", this.overlay.node._autosave_interval);
+							}
+						}
+						else {
+							this.fields["username"].focus();
+							this.fields["password"].val("");
+							var error_message = u.qs(".errormessage", response);
+							if(error_message) {
+								this.overlay.node.notify({"isJSON":true, "cms_status":"error", "cms_message":error_message.innerHTML});
+							}
+							else {
+								this.overlay.node.notify({"isJSON":true, "cms_status":"error", "cms_message":"An error occured"});
+							}
+						}
+					}
+					u.request(this, this.action, {"method":this.method, "params":u.f.getParams(this)});
+				}
+			}
+			else if(messages) {
+				for(i = 0; message = messages[i]; i++) {
+					output = u.ae(this.notifications, "div", {"class":message.className, "html":message.innerHTML});
+				}
+			}
+		}
+		u.t.setTimer(this.notifications, this.notifications.hide, this.notifications.hide_delay);
+	}
+}
+
+
+/*beta-u-notifier.js*/
+u.notifier = function(node) {
+	var notifications = u.qs("div.notifications", node);
+	if(!notifications) {
+		node.notifications = u.ae(node, "div", {"id":"notifications"});
+	}
+	node.notifications.hide_delay = 4500;
+	node.notifications.hide = function() {
+		u.a.transition(this, "all 0.5s ease-in-out");
+		u.a.translate(this, 0, -this.offsetHeight);
+	}
+	node.notify = function(response, _options) {
+		var class_name = "message";
+		if(typeof(_options) == "object") {
+			var argument;
+			for(argument in _options) {
+				switch(argument) {
+					case "class"	: class_name	= _options[argument]; break;
+				}
+			}
+		}
+		var output;
+		if(typeof(response) == "object" && response.isJSON) {
+			var message = response.cms_message;
+			var cms_status = typeof(response.cms_status) != "undefined" ? response.cms_status : "";
+			if(typeof(message) == "object") {
+				for(type in message) {
+					if(typeof(message[type]) == "string") {
+						output = u.ae(this.notifications, "div", {"class":class_name+" "+cms_status+" "+type, "html":message[type]});
+					}
+					else if(typeof(message[type]) == "object" && message[type].length) {
+						var node, i;
+						for(i = 0; _message = message[type][i]; i++) {
+							output = u.ae(this.notifications, "div", {"class":class_name+" "+cms_status+" "+type, "html":_message});
+						}
+					}
+				}
+			}
+			else if(typeof(message) == "string") {
+				output = u.ae(this.notifications, "div", {"class":class_name+" "+cms_status, "html":message});
+			}
+			if(typeof(this.notifications.show) == "function") {
+				this.notifications.show();
+			}
+		}
+		else if(typeof(response) == "object" && response.isHTML) {
+			var login = u.qs(".scene.login form", response);
+			var messages = u.qsa(".scene div.messages p", response);
+			if(login && !u.qs("#login_overlay")) {
+				// 
+				// 
+				this.autosave_disabled = true;
+				if(page.t_autosave) {
+					u.t.resetTimer(page.t_autosave);
+				}
+				var overlay = u.ae(document.body, "div", {"id":"login_overlay"});
+				overlay.node = this;
+				u.ae(overlay, login);
+				u.as(document.body, "overflow", "hidden");
+				var relogin = u.ie(login, "h1", {"class":"relogin", "html":(u.txt["relogin"] ? u.txt["relogin"] : "Your session expired")});
+				login.overlay = overlay;
+				u.ae(login, "input", {"type":"hidden", "name":"ajaxlogin", "value":"true"})
+				u.f.init(login);
+				login.fields["username"].focus();
+				login.submitted = function() {
 					this.response = function(response) {
 						if(response.isJSON && response.cms_status == "success") {
 							var csrf_token = response.cms_object["csrf-token"];
@@ -7232,8 +7911,7 @@ Util.Objects["page"] = new function() {
 		window.page = page;
 		u.bug_force = true;
 		u.bug("This site is built using Manipulator, Janitor and Detector");
-		u.bug("Visit http://parentnode.dk for more information");
-		u.bug("Free lunch for new contributers ;-)");
+		u.bug("Visit https://parentnode.dk for more information");
 		u.bug_force = false;
 		var i, node;
 		page.hN = u.qs("#header", page);
@@ -7359,7 +8037,7 @@ Util.Objects["page"] = new function() {
 			});
 			if(sections.length && janitor_text) {
 				if(u.e.event_support == "mouse") {
-					u.e.hover(page.hN);
+					u.e.hover(page.hN, {"delay_over":300});
 				}
 				else {
 					u.e.click(page.hN);
@@ -7677,6 +8355,9 @@ Util.Objects["defaultList"] = new function() {
 		}
 		if(u.hc(div, "filters")) {
 			u.defaultFilters(div);
+			div.filtered = function() {
+				this.scrolled();
+			}
 		}
 		if(u.hc(div, "sortable")) {
 			u.defaultSortableList(div.list);
@@ -7692,6 +8373,10 @@ Util.Objects["defaultEdit"] = new function() {
 		div._item_id = u.cv(div, "item_id");
 		var form = u.qs("form", div);
 		form.div = div;
+		var autosave_setting = u.cv(div, "autosave");
+		if(autosave_setting == "off") {
+			page.autosave_disabled = true;
+		}
 		u.f.init(form);
 		form.submitted = function(iN) {
 			u.t.resetTimer(page.t_autosave);
@@ -7741,10 +8426,25 @@ Util.Objects["defaultEdit"] = new function() {
 		u.e.addEvent(document.body, "keydown", form.cancelBackspace);
 	}
 }
+Util.Objects["defaultMessage"] = new function() {
+	this.init = function(div) {
+		div._item_id = u.cv(div, "item_id");
+		var form = u.qs("form", div);
+		form.div = div;
+		u.f.init(form);
+		form.submitted = function(iN) {
+			this.response = function(response) {
+				page.notify(response);
+			}
+			u.request(this, this.action, {"method":"post", "params" : u.f.getParams(this, {"send_as":"formdata"})});
+		}
+	}
+}
 
 /*i-default_new.js*/
 Util.Objects["defaultNew"] = new function() {
 	this.init = function(form) {
+		u.bug("defaultNew:" + u.nodeId(form));
 		u.f.init(form);
 		if(form.actions["cancel"]) {
 			form.actions["cancel"].clicked = function(event) {
@@ -7753,12 +8453,25 @@ Util.Objects["defaultNew"] = new function() {
 		}
 		form.submitted = function(iN) {
 			this.response = function(response) {
+				u.rc(this, "submitting");
 				if(response.cms_status == "success" && response.cms_object) {
-					if(this.action.match(/\/save$/)) {
+					console.log(response)
+					if(response.return_to) {
+						if(response.cms_object.item_id) {
+							location.href = response.return_to + response.cms_object.item_id;
+						}
+						else if(response.cms_object.id) {
+							location.href = response.return_to + response.cms_object.id;
+						}
+						else {
+							location.href = response.return_to;
+						}
+					}
+					else if(this.action.match(/\/save$/)) {
 						location.href = this.action.replace(/\/save/, "/edit/")+response.cms_object.item_id;
 					}
 					else if(location.href.match(/\/new$/)) {
-						location.href = location.href.replace(/\/new/, "/edit/")+response.cms_object.item_id;
+						location.href = location.href.replace(/\/new$/, "/edit/")+response.cms_object.item_id;
 					}
 					else if(this.actions["cancel"]) {
 						this.actions["cancel"].clicked();
@@ -7768,6 +8481,7 @@ Util.Objects["defaultNew"] = new function() {
 					page.notify(response);
 				}
 			}
+			u.ac(this, "submitting");
 			u.request(this, this.action, {"method":"post", "params" : u.f.getParams(this, {"send_as":"formdata"})});
 		}
 	}
@@ -7835,88 +8549,7 @@ Util.Objects["defaultEditActions"] = new function() {
 		}
 	}
 }
-Util.Objects["oneButtonForm"] = new function() {
-	this.init = function(node) {
-		if(!node.childNodes.length) {
-			var csrf_token = node.getAttribute("data-csrf-token");
-			var form_action = node.getAttribute("data-form-action");
-			var button_value = node.getAttribute("data-button-value");
-			var button_name = node.getAttribute("data-button-name");
-			var button_class = node.getAttribute("data-button-class");
-			var inputs = node.getAttribute("data-inputs");
-			if(csrf_token && form_action && button_value) {
-				node.form = u.f.addForm(node, {"action":form_action, "class":"confirm_action_form"});
-				node.form.node = node;
-				u.ae(node.form, "input", {"type":"hidden","name":"csrf-token", "value":csrf_token});
-				if(inputs) {
-					for(input_name in inputs)
-					u.ae(node.form, "input", {"type":"hidden","name":input_name, "value":inputs[input_name]});
-				}
-				u.f.addAction(node.form, {"value":button_value, "class":"button" + (button_class ? " "+button_class : ""), "name":u.stringOr(button_name, "save")});
-			}
-		}
-		else {
-			node.form = u.qs("form", node);
-		}
-		if(node.form) {
-			u.f.init(node.form);
-			node.form.node = node;
-			node.form.confirm_submit_button = u.qs("input[type=submit]", node.form);
-			node.form.confirm_submit_button.org_value = node.form.confirm_submit_button.value;
-			node.form.confirm_submit_button.confirm_value = node.getAttribute("data-confirm-value");
-			node.form.success_function = node.getAttribute("data-success-function");
-			node.form.success_location = node.getAttribute("data-success-location");
-			node.form.restore = function(event) {
-				u.t.resetTimer(this.t_confirm);
-				this.confirm_submit_button.value = this.confirm_submit_button.org_value;
-				u.rc(this.confirm_submit_button, "confirm");
-			}
-			node.form.submitted = function() {
-				if(!u.hc(this.confirm_submit_button, "confirm")) {
-					u.ac(this.confirm_submit_button, "confirm");
-					this.confirm_submit_button.value = this.confirm_submit_button.confirm_value;
-					this.t_confirm = u.t.setTimer(this, this.restore, 3000);
-				}
-				else {
-					u.t.resetTimer(this.t_confirm);
-					this.response = function(response) {
-						u.rc(this.confirm_submit_button, "loading");
-						page.notify(response);
-						if(response.cms_status == "success") {
-							if(response.cms_object && response.cms_object.constraint_error) {
-								this.value = this.confirm_submit_button.org_value;
-								u.ac(this, "disabled");
-							}
-							else {
-								if(this.success_location) {
-									u.bug("location:" + this.success_location)
-									u.ass(this.confirm_submit_button, {
-										"display": "none"
-									});
-									location.href = this.success_location;
-								}
-								else if(this.success_function) {
-									if(typeof(this.node[this.success_function]) == "function") {
-										this.node[this.success_function](response);
-									}
-								}
-								else if(typeof(this.node.confirmed) == "function") {
-									this.node.confirmed(response);
-								}
-								else {
-									u.bug("default return handling" + this.success_location)
-								}
-							}
-						}
-						this.restore();
-					}
-					u.ac(this.confirm_submit_button, "loading");
-					u.request(this, this.action, {"method":"post", "params":u.f.getParams(this)});
-				}
-			}
-		}
-	}
-}
+
 
 /*i-default_tags.js*/
 Util.Objects["defaultTags"] = new function() {
@@ -9024,11 +9657,11 @@ Util.Objects["editAddress"] = new function() {
 		}
 	}
 }
-Util.Objects["newsletters"] = new function() {
+Util.Objects["maillists"] = new function() {
 	this.init = function(div) {
 		var i, node;
-		div.newsletters = u.qsa("ul.newsletters > li", div);
-		for(i = 0; node = div.newsletters[i]; i++) {
+		div.maillists = u.qsa("ul.maillists > li", div);
+		for(i = 0; node = div.maillists[i]; i++) {
 			node.li_unsubscribe = u.qs("li.unsubscribe", node);
 			node.li_subscribe = u.qs("li.subscribe", node);
 			if(node.li_unsubscribe) {
@@ -9138,9 +9771,9 @@ Util.Objects["unconfirmedAccounts"] = new function() {
 					var reminded_at = u.qs("dd.reminded_at", this.node);
 					var total_reminders = u.qs("dd.total_reminders", this.node);
 					reminded_at.innerHTML = response.cms_object[0]["reminded_at"] + " (just now)";
-					u.ac(reminded_at, "warning");
+					u.ac(reminded_at, "system_warning");
 					total_reminders.innerHTML = response.cms_object[0]["total_reminders"];
-					u.ac(total_reminders, "warning");
+					u.ac(total_reminders, "system_warning");
 				}
 				else {
 					page.notify({"cms_status":"error", "cms_message":{"error":["Could not send message"]}, "isJSON":true});
@@ -9206,7 +9839,7 @@ Util.Objects["newOrderFromCart"] = new function() {
 		if(bn_convert) {
 			bn_convert.confirmed = function(response) {
 				u.bug("confirmed checkout")
-				if(response.cms_status == "success") {
+				if(response.cms_status == "success" && response.cms_object) {
 					location.href = location.href.replace(/\/cart\/edit\/.+/, "/order/edit/"+response.cms_object["id"]);
 				}
 			}
@@ -9335,30 +9968,7 @@ Util.Objects["orderItemsList"] = new function() {
 		}
 	}
 }
-Util.Objects["defaultPayment"] = new function() {
-	this.init = function(form) {
-		u.bug("defaultPayment:" + u.nodeId(form));
-		u.f.init(form);
-		if(form.actions["cancel"]) {
-			form.actions["cancel"].clicked = function(event) {
-				location.href = this.url;
-			}
-		}
-		form.submitted = function(iN) {
-			this.response = function(response) {
-				if(response.cms_status == "success" && response.cms_object) {
-					if(this.actions["cancel"]) {
-						this.actions["cancel"].clicked();
-					}
-				}
-				else {
-					page.notify(response);
-				}
-			}
-			u.request(this, this.action, {"method":"post", "params" : u.f.getParams(this, {"send_as":"formdata"})});
-		}
-	}
-}
+
 
 /*i-system.js*/
 Util.Objects["cacheList"] = new function() {
@@ -9548,18 +10158,18 @@ Util.Objects["addressProfile"] = new function() {
 		}
 	}
 }
-Util.Objects["newslettersProfile"] = new function() {
+Util.Objects["maillistsProfile"] = new function() {
 	this.init = function(div) {
 		var i, node;
-		div.newsletters = u.qsa("ul.newsletters > li", div);
-		for(i = 0; node = div.newsletters[i]; i++) {
+		div.maillists = u.qsa("ul.maillists > li", div);
+		for(i = 0; node = div.maillists[i]; i++) {
 			node.li_unsubscribe = u.qs("li.unsubscribe", node);
 			node.li_subscribe = u.qs("li.subscribe", node);
 			if(node.li_unsubscribe) {
 				node.li_unsubscribe.node = node;
 				node.li_unsubscribe.confirmed = function(response) {
 					if(response.cms_status == "success") {
-						page.notify({"isJSON":true, "cms_status":"success", "cms_message":"Unsubscribed from newsletter"});
+						page.notify({"isJSON":true, "cms_status":"success", "cms_message":"Unsubscribed from maillist"});
 						u.rc(this.node, "subscribed");
 					}
 					else {
@@ -9572,10 +10182,10 @@ Util.Objects["newslettersProfile"] = new function() {
 				node.li_subscribe.confirmed = function(response) {
 					if(response.cms_status == "success") {
 						u.ac(this.node, "subscribed");
-						page.notify({"isJSON":true, "cms_status":"success", "cms_message":"Subscribed to newsletter"});
+						page.notify({"isJSON":true, "cms_status":"success", "cms_message":"Subscribed to maillist"});
 					}
 					else {
-						page.notify({"isJSON":true, "cms_status":"error", "cms_message":"Could not subscribe to newsletter"});
+						page.notify({"isJSON":true, "cms_status":"error", "cms_message":"Could not subscribe to maillist"});
 					}
 				}
 			}
@@ -9603,66 +10213,425 @@ Util.Objects["cancellationProfile"] = new function() {
 		u.bug("init cancellationProfile")
 		div.password = u.qs("div.field.password", div);
 		div.form = u.qs("form.cancelaccount", div);
-		div.form.div = div;
-		u.f.init(div.form);
-		div.form.actions["cancelaccount"].org_value = div.form.actions["cancelaccount"].value;
-		div.form.actions["cancelaccount"].confirm_value = "Cancelling you account cannot be undone. OK?";
-		div.form.actions["cancelaccount"].submit_value = "Confirm";
-		div.form.fields["password"].updated = function() {
-			u.bug("typing password")
-			u.t.resetTimer(this._form.t_confirm);
-		}
-		div.form.restore = function(event) {
-			u.t.resetTimer(this.t_confirm);
-			this.actions["cancelaccount"].value = this.actions["cancelaccount"].org_value;
-			u.rc(this.actions["cancelaccount"], "confirm");
-			u.rc(this.actions["cancelaccount"], "signup");
-			u.ass(this.div.password, {
-				"display": "none"
-			})
-		}
-		div.form.actions["cancelaccount"].clicked = function() {
-			if(!u.hc(this, "confirm")) {
-				u.ac(this, "confirm");
-				this.value = this.confirm_value;
-				this._form.t_confirm = u.t.setTimer(this._form, this._form.restore, 3000);
-			}
-			else if(!u.hc(this, "signup")) {
-				u.ac(this, "signup");
+		if(div.form) {
+			div.form.div = div;
+			u.f.init(div.form);
+			div.form.actions["cancelaccount"].org_value = div.form.actions["cancelaccount"].value;
+			div.form.actions["cancelaccount"].confirm_value = "Cancelling you account cannot be undone. OK?";
+			div.form.actions["cancelaccount"].submit_value = "Confirm";
+			div.form.fields["password"].updated = function() {
+				u.bug("typing password")
 				u.t.resetTimer(this._form.t_confirm);
-				u.ass(this._form.div.password, {
-					"display": "block"
-				});
-				this.value = this.submit_value;
-				this._form.t_confirm = u.t.setTimer(this._form, this._form.restore, 5000);
 			}
-			else {
-				this._form.submit();
+			div.form.restore = function(event) {
+				u.t.resetTimer(this.t_confirm);
+				this.actions["cancelaccount"].value = this.actions["cancelaccount"].org_value;
+				u.rc(this.actions["cancelaccount"], "confirm");
+				u.rc(this.actions["cancelaccount"], "signup");
+				u.ass(this.div.password, {
+					"display": "none"
+				})
 			}
-		}
-		div.form.submitted = function() {
-			this.response = function(response) {
-				if(response.cms_status == "success" && !response.cms_object.error) {
-					page.notify({"isJSON":true, "cms_status":"success", "cms_message":"Your account has been cancelled"});
-					u.t.setTimer(this, function() {location.href = "/";}, 2000);
+			div.form.actions["cancelaccount"].clicked = function() {
+				if(!u.hc(this, "confirm")) {
+					u.ac(this, "confirm");
+					this.value = this.confirm_value;
+					this._form.t_confirm = u.t.setTimer(this._form, this._form.restore, 3000);
+				}
+				else if(!u.hc(this, "signup")) {
+					u.ac(this, "signup");
+					u.t.resetTimer(this._form.t_confirm);
+					u.ass(this._form.div.password, {
+						"display": "block"
+					});
+					this.value = this.submit_value;
+					this._form.t_confirm = u.t.setTimer(this._form, this._form.restore, 5000);
 				}
 				else {
-					if(response.cms_object.error == "missing_values") {
-						page.notify({"isJSON":true, "cms_status":"error", "cms_message":"Some information is missing."});
-					}
-					else if(response.cms_object.error == "wrong_password") {
-						page.notify({"isJSON":true, "cms_status":"error", "cms_message":"The password is not correct."});
-					}
-					else {
-						page.notify({"isJSON":true, "cms_status":"error", "cms_message":"An unknown error occured."});
-					}
+					this._form.submit();
 				}
 			}
-			u.request(this, this.action, {"method":"post", "params":u.f.getParams(this)});
+			div.form.submitted = function() {
+				this.response = function(response) {
+					if(response.cms_status == "success" && !response.cms_object.error) {
+						page.notify({"isJSON":true, "cms_status":"success", "cms_message":"Your account has been cancelled"});
+						u.t.setTimer(this, function() {location.href = "/";}, 2000);
+					}
+					else {
+						if(response.cms_object.error == "missing_values") {
+							page.notify({"isJSON":true, "cms_status":"error", "cms_message":"Some information is missing."});
+						}
+						else if(response.cms_object.error == "wrong_password") {
+							page.notify({"isJSON":true, "cms_status":"error", "cms_message":"The password is not correct."});
+						}
+						else if(response.cms_object.error == "unpaid_orders") {
+							page.notify({"isJSON":true, "cms_status":"error", "cms_message":"You have unpaid orders.."});
+						}
+						else {
+							page.notify({"isJSON":true, "cms_status":"error", "cms_message":"An unknown error occured."});
+						}
+					}
+				}
+				u.request(this, this.action, {"method":"post", "params":u.f.getParams(this)});
+			}
 		}
 	}
 }
 
+
+
+/*u-request.js*/
+Util.createRequestObject = function() {
+	return new XMLHttpRequest();
+}
+Util.request = function(node, url, _options) {
+	var request_id = u.randomString(6);
+	node[request_id] = {};
+	node[request_id].request_url = url;
+	node[request_id].request_method = "GET";
+	node[request_id].request_async = true;
+	node[request_id].request_data = "";
+	node[request_id].request_headers = false;
+	node[request_id].request_credentials = false;
+	node[request_id].response_type = false;
+	node[request_id].callback_response = "response";
+	node[request_id].callback_error = "responseError";
+	node[request_id].jsonp_callback = "callback";
+	node[request_id].request_timeout = false;
+	if(typeof(_options) == "object") {
+		var argument;
+		for(argument in _options) {
+			switch(argument) {
+				case "method"				: node[request_id].request_method			= _options[argument]; break;
+				case "params"				: node[request_id].request_data				= _options[argument]; break;
+				case "data"					: node[request_id].request_data				= _options[argument]; break;
+				case "async"				: node[request_id].request_async			= _options[argument]; break;
+				case "headers"				: node[request_id].request_headers			= _options[argument]; break;
+				case "credentials"			: node[request_id].request_credentials		= _options[argument]; break;
+				case "responseType"			: node[request_id].response_type			= _options[argument]; break;
+				case "callback"				: node[request_id].callback_response		= _options[argument]; break;
+				case "error_callback"		: node[request_id].callback_error			= _options[argument]; break;
+				case "jsonp_callback"		: node[request_id].jsonp_callback			= _options[argument]; break;
+				case "timeout"				: node[request_id].request_timeout			= _options[argument]; break;
+			}
+		}
+	}
+	if(node[request_id].request_method.match(/GET|POST|PUT|PATCH/i)) {
+		node[request_id].HTTPRequest = this.createRequestObject();
+		node[request_id].HTTPRequest.node = node;
+		node[request_id].HTTPRequest.request_id = request_id;
+		if(node[request_id].response_type) {
+			node[request_id].HTTPRequest.responseType = node[request_id].response_type;
+		}
+		if(node[request_id].request_async) {
+			node[request_id].HTTPRequest.statechanged = function() {
+				if(this.readyState == 4 || this.IEreadyState) {
+					u.validateResponse(this);
+				}
+			}
+			if(typeof(node[request_id].HTTPRequest.addEventListener) == "function") {
+				u.e.addEvent(node[request_id].HTTPRequest, "readystatechange", node[request_id].HTTPRequest.statechanged);
+			}
+		}
+		try {
+			if(node[request_id].request_method.match(/GET/i)) {
+				var params = u.JSONtoParams(node[request_id].request_data);
+				node[request_id].request_url += params ? ((!node[request_id].request_url.match(/\?/g) ? "?" : "&") + params) : "";
+				node[request_id].HTTPRequest.open(node[request_id].request_method, node[request_id].request_url, node[request_id].request_async);
+				if(node[request_id].request_timeout) {
+					node[request_id].HTTPRequest.timeout = node[request_id].request_timeout;
+				}
+				if(node[request_id].request_credentials) {
+					node[request_id].HTTPRequest.withCredentials = true;
+				}
+				if(typeof(node[request_id].request_headers) != "object" || (!node[request_id].request_headers["Content-Type"] && !node[request_id].request_headers["content-type"])) {
+					node[request_id].HTTPRequest.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
+				}
+				if(typeof(node[request_id].request_headers) == "object") {
+					var header;
+					for(header in node[request_id].request_headers) {
+						node[request_id].HTTPRequest.setRequestHeader(header, node[request_id].request_headers[header]);
+					}
+				}
+				node[request_id].HTTPRequest.send("");
+			}
+			else if(node[request_id].request_method.match(/POST|PUT|PATCH/i)) {
+				var params;
+				if(typeof(node[request_id].request_data) == "object" && node[request_id].request_data.constructor.toString().match(/function Object/i)) {
+					params = JSON.stringify(node[request_id].request_data);
+				}
+				else {
+					params = node[request_id].request_data;
+				}
+				node[request_id].HTTPRequest.open(node[request_id].request_method, node[request_id].request_url, node[request_id].request_async);
+				if(node[request_id].request_timeout) {
+					node[request_id].HTTPRequest.timeout = node[request_id].request_timeout;
+				}
+				if(node[request_id].request_credentials) {
+					node[request_id].HTTPRequest.withCredentials = true;
+				}
+				if(!params.constructor.toString().match(/FormData/i) && (typeof(node[request_id].request_headers) != "object" || (!node[request_id].request_headers["Content-Type"] && !node[request_id].request_headers["content-type"]))) {
+					node[request_id].HTTPRequest.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
+				}
+				if(typeof(node[request_id].request_headers) == "object") {
+					var header;
+					for(header in node[request_id].request_headers) {
+						node[request_id].HTTPRequest.setRequestHeader(header, node[request_id].request_headers[header]);
+					}
+				}
+				node[request_id].HTTPRequest.send(params);
+			}
+		}
+		catch(exception) {
+			node[request_id].HTTPRequest.exception = exception;
+			u.validateResponse(node[request_id].HTTPRequest);
+			return;
+		}
+		if(!node[request_id].request_async) {
+			u.validateResponse(node[request_id].HTTPRequest);
+		}
+	}
+	else if(node[request_id].request_method.match(/SCRIPT/i)) {
+		if(node[request_id].request_timeout) {
+			node[request_id].timedOut = function(requestee) {
+				this.status = 0;
+				delete this.timedOut;
+				delete this.t_timeout;
+				Util.validateResponse({node: requestee.node, request_id: requestee.request_id});
+			}
+			node[request_id].t_timeout = u.t.setTimer(node[request_id], "timedOut", node[request_id].request_timeout, {node: node, request_id: request_id});
+		}
+		var key = u.randomString();
+		document[key] = new Object();
+		document[key].key = key;
+		document[key].node = node;
+		document[key].request_id = request_id;
+		document[key].responder = function(response) {
+			var response_object = new Object();
+			response_object.node = this.node;
+			response_object.request_id = this.request_id;
+			response_object.responseText = response;
+			u.t.resetTimer(this.node[this.request_id].t_timeout);
+			delete this.node[this.request_id].timedOut;
+			delete this.node[this.request_id].t_timeout;
+			u.qs("head").removeChild(this.node[this.request_id].script_tag);
+			delete this.node[this.request_id].script_tag;
+			delete document[this.key];
+			u.validateResponse(response_object);
+		}
+		var params = u.JSONtoParams(node[request_id].request_data);
+		node[request_id].request_url += params ? ((!node[request_id].request_url.match(/\?/g) ? "?" : "&") + params) : "";
+		node[request_id].request_url += (!node[request_id].request_url.match(/\?/g) ? "?" : "&") + node[request_id].jsonp_callback + "=document."+key+".responder";
+		node[request_id].script_tag = u.ae(u.qs("head"), "script", ({"type":"text/javascript", "src":node[request_id].request_url}));
+	}
+	return request_id;
+}
+Util.JSONtoParams = function(json) {
+	if(typeof(json) == "object") {
+		var params = "", param;
+		for(param in json) {
+			params += (params ? "&" : "") + param + "=" + json[param];
+		}
+		return params
+	}
+	var object = u.isStringJSON(json);
+	if(object) {
+		return u.JSONtoParams(object);
+	}
+	return json;
+}
+Util.evaluateResponseText = function(responseText) {
+	var object;
+	if(typeof(responseText) == "object") {
+		responseText.isJSON = true;
+		return responseText;
+	}
+	else {
+		var response_string;
+		if(responseText.trim().substr(0, 1).match(/[\"\']/i) && responseText.trim().substr(-1, 1).match(/[\"\']/i)) {
+			response_string = responseText.trim().substr(1, responseText.trim().length-2);
+		}
+		else {
+			response_string = responseText;
+		}
+		var json = u.isStringJSON(response_string);
+		if(json) {
+			return json;
+		}
+		var html = u.isStringHTML(response_string);
+		if(html) {
+			return html;
+		}
+		return responseText;
+	}
+}
+Util.validateResponse = function(HTTPRequest){
+	var object = false;
+	if(HTTPRequest) {
+		var node = HTTPRequest.node;
+		var request_id = HTTPRequest.request_id;
+		var request = node[request_id];
+		delete request.HTTPRequest;
+		if(request.finished) {
+			return;
+		}
+		request.finished = true;
+		try {
+			request.status = HTTPRequest.status;
+			if(HTTPRequest.status && !HTTPRequest.status.toString().match(/403|404|500/)) {
+				object = u.evaluateResponseText(HTTPRequest.responseText);
+			}
+			else if(HTTPRequest.responseText) {
+				object = u.evaluateResponseText(HTTPRequest.responseText);
+			}
+		}
+		catch(exception) {
+			request.exception = exception;
+		}
+	}
+	else {
+		console.log("Lost track of this request. There is no way of routing it back to requestee.")
+		return;
+	}
+	if(object !== false) {
+		if(typeof(request.callback_response) == "function") {
+			request.callback_response(object, request_id);
+		}
+		else if(typeof(node[request.callback_response]) == "function") {
+			node[request.callback_response](object, request_id);
+		}
+	}
+	else {
+		if(typeof(request.callback_error) == "function") {
+			request.callback_error({error:true}, request_id);
+		}
+		else if(typeof(node[request.callback_error]) == "function") {
+			node[request.callback_error]({error:true}, request_id);
+		}
+		else if(typeof(request.callback_response) == "function") {
+			request.callback_response({error:true}, request_id);
+		}
+		else if(typeof(node[request.callback_response]) == "function") {
+			node[request.callback_response]({error:true}, request_id);
+		}
+	}
+}
+
+
+/*u-string.js*/
+Util.cutString = function(string, length) {
+	var matches, match, i;
+	if(string.length <= length) {
+		return string;
+	}
+	else {
+		length = length-3;
+	}
+	matches = string.match(/\&[\w\d]+\;/g);
+	if(matches) {
+		for(i = 0; match = matches[i]; i++){
+			if(string.indexOf(match) < length){
+				length += match.length-1;
+			}
+		}
+	}
+	return string.substring(0, length) + (string.length > length ? "..." : "");
+}
+Util.prefix = function(string, length, prefix) {
+	string = string.toString();
+	prefix = prefix ? prefix : "0";
+	while(string.length < length) {
+		string = prefix + string;
+	}
+	return string;
+}
+Util.randomString = function(length) {
+	var key = "", i;
+	length = length ? length : 8;
+	var pattern = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ".split('');
+	for(i = 0; i < length; i++) {
+		key += pattern[u.random(0,35)];
+	}
+	return key;
+}
+Util.uuid = function() {
+	var chars = '0123456789abcdef'.split('');
+	var uuid = [], rnd = Math.random, r, i;
+	uuid[8] = uuid[13] = uuid[18] = uuid[23] = '-';
+	uuid[14] = '4';
+	for(i = 0; i < 36; i++) {
+		if(!uuid[i]) {
+			r = 0 | rnd()*16;
+			uuid[i] = chars[(i == 19) ? (r & 0x3) | 0x8 : r & 0xf];
+		}
+ 	}
+	return uuid.join('');
+}
+Util.stringOr = u.eitherOr = function(value, replacement) {
+	if(value !== undefined && value !== null) {
+		return value;
+	}
+	else {
+		return replacement ? replacement : "";
+	}	
+}
+Util.getMatches = function(string, regex) {
+	var match, matches = [];
+	while(match = regex.exec(string)) {
+		matches.push(match[1]);
+	}
+	return matches;
+}
+Util.upperCaseFirst = u.ucfirst = function(string) {
+	return string.replace(/^(.){1}/, function($1) {return $1.toUpperCase()});
+}
+Util.lowerCaseFirst = u.lcfirst = function(string) {
+	return string.replace(/^(.){1}/, function($1) {return $1.toLowerCase()});
+}
+Util.normalize = function(string) {
+	string = string.toLowerCase();
+	string = string.replace(/[^a-z0-9\_]/g, '-');
+	string = string.replace(/-+/g, '-');
+	string = string.replace(/^-|-$/g, '');
+	return string;
+}
+Util.pluralize = function(count, singular, plural) {
+	if(count != 1) {
+		return count + " " + plural;
+	}
+	return count + " " + singular;
+}
+Util.isStringJSON = function(string) {
+	if(string.trim().substr(0, 1).match(/[\{\[]/i) && string.trim().substr(-1, 1).match(/[\}\]]/i)) {
+		try {
+			var test = JSON.parse(string);
+			if(typeof(test) == "object") {
+				test.isJSON = true;
+				return test;
+			}
+		}
+		catch(exception) {}
+	}
+	return false;
+}
+Util.isStringHTML = function(string) {
+	if(string.trim().substr(0, 1).match(/[\<]/i) && string.trim().substr(-1, 1).match(/[\>]/i)) {
+		try {
+			var test = document.createElement("div");
+			test.innerHTML = string;
+			if(test.childNodes.length) {
+				var body_class = string.match(/<body class="([a-z0-9A-Z_: ]+)"/);
+				test.body_class = body_class ? body_class[1] : "";
+				var head_title = string.match(/<title>([^$]+)<\/title>/);
+				test.head_title = head_title ? head_title[1] : "";
+				test.isHTML = true;
+				return test;
+			}
+		}
+		catch(exception) {}
+	}
+	return false;
+}
 
 
 /*i-form.js*/
@@ -10285,8 +11254,10 @@ Util.Objects["testMarkers"] = new function() {
 		div.csrf_token = div.getAttribute("data-csrf-token");
 		div.url_device_test = div.getAttribute("data-device-test");
 		div.url_device_edit = div.getAttribute("data-device-edit");
+		div.url_device_list = div.getAttribute("data-device-list");
 		div.url_device_merge = div.getAttribute("data-device-merge");
 		div.url_useragent_delete = div.getAttribute("data-useragent-delete");
+		div.url_useragent_move = div.getAttribute("data-useragent-move");
 		div.test_form = u.f.addForm(div, {"class":"labelstyle:inject"});
 		div.test_form.div = div;
 		div.bn_test = u.f.addAction(div.test_form, {"value":"Test markers", "class":"button primary"});
@@ -10305,11 +11276,13 @@ Util.Objects["testMarkers"] = new function() {
 						var bad_matched = response.cms_object[1];
 						var i, node, n_node, li, actions;
 						if(not_matched.length) {
-							this.div.not_matched_header = u.ae(this.div, "h3", {"class":"not", "html":"The markers did NOT match these useragents ("+not_matched.length+")"});
-							this.div.not_matched_result = u.ae(this.div, "ul", {"class":"results not"});
+							this.div.not_matched_div = u.ae(this.div, "div", {class:"not"});
+							this.div.not_matched_header = u.ae(this.div.not_matched_div, "h3", {class:"not", html:"The markers did NOT match these useragents ("+not_matched.length+")"});
+							this.div.not_matched_result = u.ae(this.div.not_matched_div, "ul", {class:"results not"});
 							for(i = 0; node = not_matched[i]; i++) {
 								n_node = u.ae(this.div.not_matched_result, "li", {"class":"result"});
 								n_node._device = u.ae(n_node, "h4", {"html":(node.useragent ? node.useragent : "--BLANK--")})
+								n_node._ua_id = node.id;
 								n_node.actions = u.ae(n_node, "ul", {"class":"actions"});
 								n_node._delete_ua = u.ae(n_node.actions, "li", {"class":"delete", "html":"Delete"});
 								n_node._delete_ua.url = this.div.url_useragent_delete+"/"+node.id;
@@ -10338,7 +11311,7 @@ Util.Objects["testMarkers"] = new function() {
 									}
 								}
 							}
-							this.div.not_matched_actions = u.ae(this.div, "ul", {"class":"actions"});
+							this.div.not_matched_actions = u.ae(this.div.not_matched_div, "ul", {"class":"actions"});
 							this.div.not_matched_delete_all = u.ae(this.div.not_matched_actions, "li", {"class":"delete", "html":"Delete ALL unmatched useragents"});
 							this.div.not_matched_delete_all.div = this.div;
 							u.e.click(this.div.not_matched_delete_all);
@@ -10369,21 +11342,112 @@ Util.Objects["testMarkers"] = new function() {
 									node._delete_ua.clicked();
 								}
 							}
+							this.div.not_matched_merge_all = u.ae(this.div.not_matched_actions, "li", {"class":"merge", "html":"Merge ALL unmatched useragents"});
+							this.div.not_matched_merge_all.div = this.div;
+							u.e.click(this.div.not_matched_merge_all);
+							this.div.not_matched_merge_all.clicked = function() {
+								if(!this.search_option) {
+									this.search_option = u.ae(this.div.not_matched_div, "div", {"class":"field search"});
+									this.search_option.div = this.div;
+									var search_input = u.ae(this.search_option, "input", {"class":"search default ignoreinput"});
+									search_input.div = this.div;
+									search_input.search_result = u.ae(this.div.not_matched_div, "ul", {"class":"search results"});
+									this.search_option.search_result = search_input.search_result;
+									search_input._default_value = "Search for device";
+									search_input.value = search_input._default_value;
+									search_input.onfocus = function() {
+										u.rc(this, "default");
+										if(this.value == this._default_value) {
+											this.value = "";
+										}
+									}
+									search_input.onblur = function() {
+										if(this.value == "") {
+											u.ac(this, "default");
+											this.value = this._default_value;
+										}
+									}
+									search_input.onkeyup = function() {
+										u.t.resetTimer(this.t_search);
+										this.t_search = u.t.setTimer(this, this.search, 1000);
+									}
+									search_input.onkeydown = function() {
+										u.t.resetTimer(this.t_search);
+									}
+									search_input.search = function() {
+										search_input.search_result.innerHTML = "";
+										if(this.value && this.value != this._default_value) {
+											search_input.response = function(response) {
+												this.options = [];
+												var items = u.qsa(".all_items li.item", response);
+												if(items.length) {
+													var i, node;
+													for(i = 0; i < items.length; i++) {
+														node = this.search_result.appendChild(items[i]);
+														node.div = this.div;
+														node.search_input = this;
+														node.device_id = u.cv(node, "item_id");
+														this.options.push(node);
+														u.e.click(node);
+														node.clicked = function() {
+															if(!this.bn_merge) {
+																this.bn_merge = u.ie(this, "div", {"class":"mergewith", "html":"Merge"});
+																this.bn_merge.node = this;
+																u.e.click(this.bn_merge);
+																this.bn_merge.clicked = function() {
+																	this.iterateSelections = function() {
+																		this.ua_to_move = u.qs("li.result", this.node.div.not_matched_result);
+																		if(this.ua_to_move) {
+																			this.response = function(response) {
+																				page.notify(response);
+																				this.node.div.not_matched_result.removeChild(this.ua_to_move);
+																				this.iterateSelections();
+																			}
+																			u.request(this, this.node.div.url_useragent_move+"/"+this.ua_to_move._ua_id+"/"+this.node.device_id, {method:"post", timeout:3000, data:"csrf-token="+this.node.div.csrf_token});
+																		}
+																	}
+																	this.iterateSelections();
+																}
+															}
+															else {
+																this.removeChild(this.bn_merge);
+																this.bn_merge = false;
+															}
+														}
+						 							}
+												}
+												else {
+													u.ae(this.search_result, "li", {html:"<h3>No results</h3>"});
+												}
+												u.rc(this, "loading");
+											}
+											u.ac(search_input, "loading");
+											u.request(search_input, this.div.url_device_list, {"params":"search=1&search_string="+this.value, "method":"post"})
+										}
+									}
+								}
+								else {
+									this.div.not_matched_div.removeChild(this.search_option);
+									this.div.not_matched_div.removeChild(this.search_option.search_result);
+									delete this.search_option;
+								}
+							}
 						}
 						else {
 							this.div.not_matched_header = u.ae(this.div, "h3", {"html":"NO unmatched useragents"});
 						}
 						if(Object.keys(bad_matched).length) {
-							this.div.bad_matched_header = u.ae(this.div, "h3", {"class":"bad", "html":"The markers also matched these devices"});
-							this.div.bad_matched_result = u.ae(this.div, "ul", {"class":"results bad"});
+							this.div.bad_matched_div = u.ae(this.div, "div", {class:"bad"});
+							this.div.bad_matched_header = u.ae(this.div.bad_matched_div, "h3", {class:"bad", html:"The markers also matched these devices"});
+							this.div.bad_matched_result = u.ae(this.div.bad_matched_div, "ul", {class:"results bad"});
 							for(x in bad_matched) {
-								node = u.ae(this.div.bad_matched_result, "li", {"class":"device device_id:"+x+(bad_matched[x].marked ? " marked" : "")});
+								node = u.ae(this.div.bad_matched_result, "li", {class:"device device_id:"+x+(bad_matched[x].marked ? " marked" : "")});
 								node._marked = bad_matched[x].marked;
 								node._device = u.ae(node, "h4", {"html":bad_matched[x].name});
 								node.actions = u.ae(node, "ul", {"class":"actions"});
 								li = u.ae(node.actions, "li", {"class":"show"});
 								node._device_link = u.ae(li, "a", {"href":this.div.url_device_edit+"/"+bad_matched[x].id, "html":"Show device", "target":"_blank"});
-								node._device_merge = u.ae(node.actions, "li", {"class":"merge", "html":"Merge"});
+								node._device_merge = u.ae(node.actions, "li", {"class":"merge", "html":"Merge "+bad_matched[x].name+" into current"});
 								node._device_merge.url = this.div.url_device_merge+"/"+bad_matched[x].id+"/"+this.div.item_id;
 								node._device_merge.div = this.div;
 								node._device_merge.node = node;
@@ -10432,8 +11496,8 @@ Util.Objects["testMarkers"] = new function() {
 									u.bug("show useragents");
 								}
 							}
-							this.div.bad_match_actions = u.ae(this.div, "ul", {"class":"actions"});
-							this.div.bad_match_merge = u.ae(this.div.bad_match_actions, "li", {"class":"merge", "html":"Merge all NON-MARKED devices"});
+							this.div.bad_match_actions = u.ae(this.div.bad_matched_div, "ul", {"class":"actions"});
+							this.div.bad_match_merge = u.ae(this.div.bad_match_actions, "li", {"class":"merge", "html":"Merge all NON-MARKED devices", title:"Only merge devices above which does not have markers already."});
 							this.div.bad_match_merge.div = this.div;
 							u.e.click(this.div.bad_match_merge);
 							this.div.bad_match_merge.reset = function() {
@@ -10452,6 +11516,7 @@ Util.Objects["testMarkers"] = new function() {
 											node._device_merge.clicked();
 										}
 									}
+									this.reset();
 								}
 								else {
 									this.org_text = this.innerHTML;
@@ -10470,27 +11535,27 @@ Util.Objects["testMarkers"] = new function() {
 				u.ac(this.div, "loading");
 				if(this.div.not_matched_header) {
 					this.div.not_matched_header.parentNode.removeChild(this.div.not_matched_header);
-					this.div.not_matched_header = null;
+					delete this.div.not_matched_header;
 				}
 				if(this.div.not_matched_result) {
 					this.div.not_matched_result.parentNode.removeChild(this.div.not_matched_result);
-					this.div.not_matched_result = null;
+					delete this.div.not_matched_result;
 				}
 				if(this.div.not_matched_actions) {
 					this.div.not_matched_actions.parentNode.removeChild(this.div.not_matched_actions);
-					this.div.not_matched_actions = null;
+					delete this.div.not_matched_actions;
 				}
 				if(this.div.bad_matched_header) {
 					this.div.bad_matched_header.parentNode.removeChild(this.div.bad_matched_header);
-					this.div.bad_matched_header = null;
+					delete this.div.not_matched_header;
 				}
 				if(this.div.bad_matched_result) {
 					this.div.bad_matched_result.parentNode.removeChild(this.div.bad_matched_result);
-					this.div.bad_matched_result = null;
+					delete this.div.bad_matched_result;
 				}
 				if(this.div.bad_match_actions) {
 					this.div.bad_match_actions.parentNode.removeChild(this.div.bad_match_actions);
-					this.div.bad_match_actions = null;
+					delete this.div.bad_match_actions;
 				}
 				this.div.loading = u.ae(this.div, "h3", {"class":"not", "html":"Performing test ... wait"});
 				u.request(this, this.div.url_device_test+"/"+this.div.item_id, {"params":"csrf-token="+this.div.csrf_token, "method":"post"})
@@ -10801,13 +11866,13 @@ Util.Objects["unidentifiedList"] = new function() {
 		div.device_list = div.getAttribute("data-device-list");
 		document.body.unidentified_div = div;
 		div.bn_all = u.ie(div.list, "li", {"class":"all"});
-		div.bn_all._text = u.ae(div.bn_all, "span", {"html":"Select all"})
+		div.bn_all._text = u.ae(div.bn_all, "span", {"html":"Select all"});
 		div.bn_all._checkbox = u.ie(div.bn_all, "input", {"type":"checkbox"});
 		div.bn_all.onclick = function(event) {u.e.kill(event);}
 		div.bn_all.div = div;
 		div.bn_all._checkbox.div = div;
-		u.e.click(div.bn_all);
-		div.bn_all.clicked = function(event) {
+		u.e.click(div.bn_all._checkbox);
+		div.bn_all._checkbox.clicked = function(event) {
 			var i, node;
 			u.e.kill(event);
 			var inputs = u.qsa("li:not(.all) input:checked", this.div.list);
@@ -10820,9 +11885,12 @@ Util.Objects["unidentifiedList"] = new function() {
 					node._checkbox.checked = true;
 				}
 			}
+			this.div.bn_range._from.value = "";
+			this.div.bn_range._to.value = "";
 			this.div.toggleAddToOption();
 		}
 		div.bn_all.updateState = function() {
+			u.bug("updateState");
 			this.div.checked_inputs = u.qsa("li:not(.all) input:checked", this.div.list);
 			this.div.visible_inputs = u.qsa("li:not(.all):not(.hidden) input", this.div.list);
 			if(this.div.checked_inputs.length == this.div.visible_inputs.length) {
@@ -10841,15 +11909,96 @@ Util.Objects["unidentifiedList"] = new function() {
 				this._checkbox.checked = false;
 			}
 		}
+		div.bn_range = u.ae(div.bn_all, "div", {class:"range"});
+		div.bn_range._text = u.ae(div.bn_range, "span", {html:"Select range:"});
+		div.bn_range._from = u.ae(div.bn_range, "input", {type:"text", name:"range_from", maxlength:4});
+		div.bn_range._text = u.ae(div.bn_range, "span", {html:"to"});
+		div.bn_range._to = u.ae(div.bn_range, "input", {type:"text", name:"range_to", maxlength:4});
+		div.bn_range.div = div;
+		div.bn_range._from.bn_range = div.bn_range;
+		div.bn_range._to.bn_range = div.bn_range;
+		div.bn_range._updated = function(event) {
+			var key = event.key;
+			if(key == "ArrowUp" && event.shiftKey) {
+				u.e.kill(event);
+				this.value = this.value > 0 ? Number(this.value)+10 : 10;
+			}
+			else if(key == "ArrowUp") {
+				u.e.kill(event);
+				this.value = this.value > 0 ? Number(this.value)+1 : 1;
+			}
+			else if(key == "ArrowDown" && event.shiftKey) {
+				u.e.kill(event);
+				this.value = this.value > 10 ? Number(this.value)-10 : 1;
+			}
+			else if(key == "ArrowDown") {
+				u.e.kill(event);
+				this.value = this.value > 1 ? Number(this.value)-1 : 1;
+			}
+			else if((parseInt(key) != key) && (key != "Backspace" && key != "Delete" && key != "Tab" && key != "ArrowLeft" && key != "ArrowRight" && !event.metaKey && !event.ctrlKey)) {
+				u.e.kill(event);
+			}
+			var value = false;
+			var to, from;
+			if(parseInt(key) == key) {
+				value = this.value.length < 4 ? this.value + key : this.value;
+			}
+			else if(key == "Backspace") {
+				value = this.value.substring(0, this.value.length-1);
+			}
+			else if(key == "Delete") {
+				value = this.value.substring(1);
+			}
+			else if(key == "ArrowUp" || key == "ArrowDown") {
+				value = this.value;
+			}
+			if(value !== false) {
+				value = Number(value);
+				if(this.name == "range_from") {
+					if(Number(this.bn_range._to.value) < value) {
+						this.bn_range._to.value = value;
+					}
+					from = value;
+					to = Number(this.bn_range._to.value);
+				}
+				else if(this.name == "range_to") {
+					if(!this.bn_range._from.value) {
+						this.bn_range._from.value = 1;
+					}
+					else if(Number(this.bn_range._from.value) > value) {
+						this.bn_range._from.value = value;
+					}
+					to = value;
+					from = Number(this.bn_range._from.value);
+				}
+				to = to-1;
+				from = from-1;
+				if(!isNaN(from && !isNaN(to))) {
+					var inputs = u.qsa("li:not(.all):not(.hidden) input", this.bn_range.div.list);
+					var i, input;
+					for(i = 0; i < inputs.length; i++) {
+						input = inputs[i];
+						if(i >= from && i <= to) {
+							input.checked = true;
+						}
+						else {
+							input.checked = false;
+						}
+					}
+					this.bn_range.div.toggleAddToOption();
+				}
+			}
+		}
+		u.e.addEvent(div.bn_range._from, "keypress", div.bn_range._updated);
+		u.e.addEvent(div.bn_range._to, "keypress", div.bn_range._updated);
 		div.unselectNode = function(node) {
-			node.response = null;
-			u.rc(node, "identifying");
-			node._is_identifying = false;
+			// 
 			if(node.option_node) {
 				node.option_node.ua_nodes.splice(node.option_node.ua_nodes.indexOf(node), 1);
-				u.rc(node, "mapped");
-				node.option_node = false;
+				u.rc(node, "mapped", false);
+				delete node.option_node;
 			}
+			// 
 		}
 		for(i = 0; i < div.nodes.length; i++) {
 			node = div.nodes[i];
@@ -10908,7 +12057,7 @@ Util.Objects["unidentifiedList"] = new function() {
 						if(response.cms_status == "success") {
 							var action = u.ae(this, "ul", {"class":"actions"});
 							var li = u.ae(action, "li", {"class":"delete"});
-							this._delete = u.ae(li, "input", {"class":"button delete", "type":"button", "value":"delete"})
+							this._delete = u.ae(li, "input", {"class":"button delete", "type":"button", "value":"Delete", title:"This will delete this useragent permanently"})
 							this._delete.node = this;
 							u.e.click(this._delete);
 							this._delete.restore = function(event) {
@@ -10981,6 +12130,121 @@ Util.Objects["unidentifiedList"] = new function() {
 		}
 		if(u.hc(div, "filters")) {
 			u.defaultFilters(div);
+			div.filtered = function() {
+				this.bn_all.updateState();
+				this.bn_range._to.value = "";
+				this.bn_range._from.value = "";
+			}
+		}
+		div._selected_clicked = function() {
+			if(this.t_execute) {
+				u.ac(this.option.div._add_to, "adding");
+				this.iterateSelections = function() {
+					var input = u.qs("li:not(.all):not(.hidden) input:checked", this.option.div.list);
+					if(input) {
+						input._selected = this;
+						input.response = function(response) {
+							if(this.node.option_node) {
+								this.node.option_node.ua_nodes.splice(this.node.option_node.ua_nodes.indexOf(this.node), 1);
+							}
+							this.node.parentNode.removeChild(this.node);
+							if(!response.cms_status) {
+								page.notify({"cms_message":{"errors":["The request failed. The UA may reappear in your list after you refresh."]}, "isJSON":true})
+							}
+							this.node.div.toggleAddToOption();
+							this._selected.iterateSelections();
+						}
+						u.request(input, input.node.div.useragent_add+"/"+this.option.device_id+"/"+input.node.ua_id, {method:"post", timeout:3000, data:"csrf-token="+input.node.div.csrf_token});
+					}
+					else {
+						u.rc(this.option.div._add_to, "adding");
+					}
+				}
+				this.iterateSelections();
+			}
+			else {
+				this.t_execute = u.t.setTimer(this, this.option.div._not_confirmed, 1500);
+				this._content = this.innerHTML;	
+				this.innerHTML = "Sure?";
+				u.ac(this, "confirm");
+			}
+		}
+		div._matching_clicked = function() {
+			if(this.t_execute) {
+				u.ac(this.option.div._add_to, "adding");
+				this.iterateSelections = function() {
+					var node = this.option.ua_nodes.shift();
+					if(node) {
+						var input = node._checkbox;
+						if(input && input.node._identified.id == this.option.device_id) {
+							input._matching = this;
+							input.response = function(response) {
+								this.node.parentNode.removeChild(this.node);
+								if(!response.cms_status) {
+									page.notify({"cms_message":{"errors":["The request failed. The UA may reappear in your list after you refresh."]}, "isJSON":true})
+								}
+								this.node.div.toggleAddToOption();
+								this._matching.iterateSelections();
+							}
+							u.request(input, input.node.div.useragent_add+"/"+this.option.device_id+"/"+input.node.ua_id, {method:"post", timeout:3000, data:"csrf-token="+input.node.div.csrf_token});
+						}
+					}
+					else {
+						u.rc(this.option.div._add_to, "adding");
+					}
+				}
+				this.iterateSelections();
+			}
+			else {
+				this.t_execute = u.t.setTimer(this, this.option.div._not_confirmed, 1500);
+				this._content = this.innerHTML;	
+				this.innerHTML = "Sure?";
+				u.ac(this, "confirm");
+			}
+		}
+		div._addtoclone_clicked = function() {
+			if(this.t_execute) {
+				u.ac(this.option.div._add_to, "adding");
+				this.response = function(response) {
+					if(response.cms_status == "success" && response.cms_object.id) {
+						this.cloned_device_id = response.cms_object.id;
+						this.iterateSelections = function() {
+							var input = u.qs("li:not(.all):not(.hidden) input:checked", this.option.div.list);
+							if(input) {
+								input._clone = this;
+								input.response = function(response) {
+									this.node.parentNode.removeChild(this.node);
+									if(!response.cms_status) {
+										page.notify({"cms_message":{"errors":["The request failed. The UA may reappear in your list after you refresh."]}, "isJSON":true})
+									}
+									this.node.div.toggleAddToOption();
+									this._clone.iterateSelections();
+								}
+								u.request(input, input.node.div.useragent_add+"/"+input._clone.cloned_device_id+"/"+input.node.ua_id, {method:"post", timeout: 3000, data:"csrf-token="+input.node.div.csrf_token});
+							}
+							else {
+								u.rc(this.option.div._add_to, "adding");
+							}
+						}
+						this.iterateSelections();
+					}
+					else {
+						page.notify(response);
+					}
+				}
+				u.request(this, this.option.div.device_clone+"/"+this.option.device_id, {method:"post", data:"csrf-token="+this.option.div.csrf_token});
+			}
+			else {
+				this.t_execute = u.t.setTimer(this, this.option.div._not_confirmed, 1500);
+				this._content = this.innerHTML;	
+				this.innerHTML = "Sure?";
+				u.ac(this, "confirm");
+			}
+		}
+		div._not_confirmed = function() {
+			u.rc(this, "confirm");
+			this.innerHTML = this._content;
+			this.t_execute = false;
 		}
 		div.addOption = function(option, ua_node) {
 			if(this._add_to.identified_options.indexOf(option.id) == -1) {
@@ -10997,44 +12261,44 @@ Util.Objects["unidentifiedList"] = new function() {
 				option_node.closeOption = function() {
 					if(this._info) {
 						this._info.parentNode.removeChild(this._info);
-						this._info = false;
+						delete this._info;
 					}
 					if(this._show_selected_only) {
 						this._show_selected_only.parentNode.removeChild(this._show_selected_only);
-						this._show_selected_only = false;
+						delete this._info;
 					}
 					if(this._selected) {
 						this._selected.parentNode.removeChild(this._selected);
-						this._selected = false;
+						delete this._info;
 					}
 					if(this._matching) {
 						this._matching.parentNode.removeChild(this._matching);
-						this._matching = false;
+						delete this._info;
 					}
 					if(this._addtoclone) {
 						this._addtoclone.parentNode.removeChild(this._addtoclone);
-						this._addtoclone = false;
+						delete this._info;
 					}
 					var i, node;
-					for(i = 0; node < this.ua_nodes.length; i++) {
+					for(i = 0; i < this.ua_nodes.length; i++) {
 						node = this.ua_nodes[i];
-						u.rc(node, "mapped");
+						u.rc(node, "mapped", false);
 					}
 				}
 				option_node.clicked = function() {
 					if(!this._info) {
+						var i, node, li;
 						for(i = 0; i < this.div._add_to.identified_options_lis.length; i++) {
 							li = this.div._add_to.identified_options_lis[i];
 							if(li != this) {
 								li.closeOption();
 							}
 						}
-						var i, node;
 						for(i = 0; i < this.ua_nodes.length; i++) {
 							node = this.ua_nodes[i];
 							u.ac(node, "mapped");
 						}
-						if(this.device_id != "unknown") {
+						if(this.device_id && this.device_id != "unknown") {
 							var info_array = [];
 							if(this.details["description"]) {
 								info_array.push(this.details["description"]);
@@ -11045,123 +12309,21 @@ Util.Objects["unidentifiedList"] = new function() {
 								}
 							}
 							this._info = u.ae(this, "div", {"class":"info", "html":info_array.join(", ")});
-							this._selected = u.ae(this, "div", {"class":"selected", "html":"Add all SELECTED"});
+							this._selected = u.ae(this, "div", {class:"selected", html:"Add all SELECTED", title:"Not including hidden UAs"});
 							this._selected.option = this;
-							this._matching = u.ae(this, "div", {"class":"matching", "html":"Add all MATCHING"});
+							this._matching = u.ae(this, "div", {class:"matching", html:"Add all MATCHING", title:"Not including hidden UAs"});
 							this._matching.option = this;
-							this._addtoclone = u.ae(this, "div", {"class":"addtoclone", "html":"Add SELECTED to CLONE"});
+							this._addtoclone = u.ae(this, "div", {class:"addtoclone", html:"Add SELECTED to CLONE", title:"Not including hidden UAs"});
 							this._addtoclone.option = this;
-							// 	
-							// 		
-							// 		
 							u.e.click(this._selected);
-							this._selected.clicked = function() {
-								if(this.t_execute) {
-									this.inputs = u.qsa("li:not(.all) input:checked", this.option.div.list);
-									this.inputs_i = 0;
-									this.iterateSelections = function() {
-										if(this.inputs_i < this.inputs.length) {
-											var input = this.inputs[this.inputs_i++];
-											input._selected = this;
-											input.response = function(response) {
-												if(this.node.option_node) {
-													this.node.option_node.ua_nodes.splice(this.node.option_node.ua_nodes.indexOf(this.node), 1);
-												}
-												this.node.parentNode.removeChild(this.node);
-												this.node.div.toggleAddToOption();
-												this._selected.iterateSelections();
-											}
-											u.request(input, input.node.div.useragent_add+"/"+this.option.device_id+"/"+input.node.ua_id, {"method":"post", "params":"csrf-token="+input.node.div.csrf_token});
-										}
-									}
-									this.iterateSelections();
-								}
-								else {
-									this.t_execute = u.t.setTimer(this, this.not_confirmed, 1500);
-									this._content = this.innerHTML;	
-									this.innerHTML = "Sure?";
-									u.ac(this, "confirm");
-								}
-							}
+							this._selected.clicked = this.div._selected_clicked;
 							u.e.click(this._matching);
-							this._matching.clicked = function() {
-								if(this.t_execute) {
-									this.inputs = u.qsa("li:not(.all) input:checked", this.option.div.list);
-									this.inputs_i = 0;
-									this.iterateSelections = function() {
-										if(this.inputs_i < this.inputs.length) {
-											var input = this.inputs[this.inputs_i++];
-											while(input.node._identified.id != this.option.device_id) {
-												if(this.inputs_i < this.inputs.length) {
-													input = this.inputs[this.inputs_i++];
-												}
-												else {
-													break;
-												}
-											}
-											if(input && input.node._identified.id == this.option.device_id) {
-												input._matching = this;
-												input.response = function(response) {
-													if(this.node.option_node) {
-														this.node.option_node.ua_nodes.splice(this.node.option_node.ua_nodes.indexOf(this.node), 1);
-													}
-													this.node.parentNode.removeChild(this.node);
-													this.node.div.toggleAddToOption();
-													this._matching.iterateSelections();
-												}
-												u.request(input, input.node.div.useragent_add+"/"+this.option.device_id+"/"+input.node.ua_id, {"method":"post", "params":"csrf-token="+input.node.div.csrf_token});
-											}
-										}
-									}
-									this.iterateSelections();
-								}
-								else {
-									this.t_execute = u.t.setTimer(this, this.not_confirmed, 1500);
-									this._content = this.innerHTML;	
-									this.innerHTML = "Sure?";
-									u.ac(this, "confirm");
-								}
-							}
+							this._matching.clicked = this.div._matching_clicked;
 							u.e.click(this._addtoclone);
-							this._addtoclone.clicked = function() {
-								if(this.t_execute) {
-									this.response = function(response) {
-										if(response.cms_status == "success" && response.cms_object.id) {
-											var inputs = u.qsa("li:not(.all) input:checked", this.option.div.list);
-											var i, input;
-											for(i = 0; i < inputs.length; i++) {
-												input = inputs[i];
-												input.node.response = function(response) {
-													if(this.option_node) {
-														this.option_node.ua_nodes.splice(this.option_node.ua_nodes.indexOf(this), 1);
-													}
-													this.parentNode.removeChild(this);
-													this.div.toggleAddToOption();
-												}
-												u.request(input.node, input.node.div.useragent_add+"/"+response.cms_object.id+"/"+input.node.ua_id, {"method":"post", "params":"csrf-token="+input.node.div.csrf_token});
-											}
-										}
-										else {
-											page.notify(response);
-										}
-									}
-									u.request(this, this.option.div.device_clone+"/"+this.option.device_id, {"method":"post", "params":"csrf-token="+this.option.div.csrf_token});
-								}
-								else {
-									this.t_execute = u.t.setTimer(this, this.not_confirmed, 1500);
-									this._content = this.innerHTML;	
-									this.innerHTML = "Sure?";
-									u.ac(this, "confirm");
-								}
-							}
-							this._matching.not_confirmed = this._addtoclone.not_confirmed = this._selected.not_confirmed = function() {
-								u.rc(this, "confirm");
-								this.innerHTML = this._content;
-								this.t_execute = false;
-							}
+							this._addtoclone.clicked = this.div._addtoclone_clicked;
 						}
 						else {
-							this._info = u.ae(this, "div", {"class":"info", "html":"identification did not return a valid device id"});
+							this._info = u.ae(this, "div", {class:"info", html:this.details.guess ? this.details.guess : "Unknown error"});
 						}
 					}
 					else {
@@ -11242,99 +12404,63 @@ Util.Objects["unidentifiedList"] = new function() {
 						search_input.search_result.innerHTML = "";
 						if(this.value && this.value != this._default_value) {
 							search_input.response = function(response) {
+								this.options = [];
 								var items = u.qsa(".all_items li.item", response);
 								if(items.length) {
 									var i, node;
 									for(i = 0; i < items.length; i++) {
-										node = items[i];
-										node = this.search_result.appendChild(node);
+										node = this.search_result.appendChild(items[i]);
 										node.div = this.div;
+										node.search_input = this;
 										node.device_id = u.cv(node, "item_id");
+										this.options.push(node);
 										u.e.click(node);
 										node.clicked = function() {
 											if(!this._info) {
-												var i, info_string;
-												var brand = u.qs("ul.tags li.brand .value", this);
-												if(brand) {
-													info_string = brand.innerHTML;
+												var i, node, li;
+												for(i = 0; i < this.search_input.options.length; i++) {
+													li = this.search_input.options[i];
+													if(li != this) {
+														li.closeOption();
+													}
 												}
-												this._info = u.ae(this, "div", {"class":"info", "html":info_string});
-												this._selected = u.ae(this, "div", {"class":"selected", "html":"Add all SELECTED"});
+												var info_array = [];
+												var tags = u.qsa("ul.tags li .value", this);
+												for(i  = 0; i < tags.length; i++) {
+													info_array.push(tags[i].innerHTML);
+												}
+												this._info = u.ae(this, "div", {"class":"info", "html":info_array.join(", ")});
+												this._selected = u.ae(this, "div", {class:"selected", html:"Add all SELECTED", title:"Not including hidden UAs"});
 												this._selected.option = this;
-												this._addtoclone = u.ae(this, "div", {"class":"addtoclone", "html":"Add SELECTED to CLONE"});
+												this._addtoclone = u.ae(this, "div", {class:"addtoclone", html:"Add SELECTED to CLONE", title:"Not including hidden UAs"});
 												this._addtoclone.option = this;
 												u.e.click(this._selected);
-												this._selected.clicked = function() {
-													if(this.t_execute) {
-														var inputs = u.qsa("li:not(.all) input:checked", this.option.div.list);
-														var i, input;
-														for(i = 0; i < inputs.length; i++) {
-															input = inputs[i];
-															input.node.response = function(response) {
-																this.parentNode.removeChild(this);
-																this.div.toggleAddToOption();
-															}
-															u.request(input.node, input.node.div.useragent_add+"/"+this.option.device_id+"/"+input.node.ua_id, {"method":"post", "params":"csrf-token="+input.node.div.csrf_token});
-														}
-													}
-													else {
-														this.t_execute = u.t.setTimer(this, this.not_confirmed, 1500);
-														this._content = this.innerHTML;	
-														this.innerHTML = "Sure?";
-														u.ac(this, "confirm");
-													}
-												}
+												this._selected.clicked = this.div._selected_clicked;
 												u.e.click(this._addtoclone);
-												this._addtoclone.clicked = function() {
-													if(this.t_execute) {
-														this.response = function(response) {
-															if(response.cms_status == "success" && response.cms_object.id) {
-																var inputs = u.qsa("li:not(.all) input:checked", this.option.div.list);
-																var i, input;
-																for(i = 0; i < inputs.length; i++) {
-																	input = inputs[i];
-																	input.node.response = function(response) {
-																		this.parentNode.removeChild(this);
-																		this.div.toggleAddToOption();
-																	}
-																	u.request(input.node, input.node.div.useragent_add+"/"+response.cms_object.id+"/"+input.node.ua_id, {"method":"post", "params":"csrf-token="+input.node.div.csrf_token});
-																}
-															}
-															else {
-																page.notify(response);
-															}
-														}
-														u.request(this, this.option.div.device_clone+"/"+this.option.device_id, {"method":"post", "params":"csrf-token="+this.option.div.csrf_token});
-													}
-													else {
-														this.t_execute = u.t.setTimer(this, this.not_confirmed, 1500);
-														this._content = this.innerHTML;	
-														this.innerHTML = "Sure?";
-														u.ac(this, "confirm");
-													}
-												}
-												this._selected.not_confirmed = this._addtoclone.not_confirmed = function() {
-													u.rc(this, "confirm");
-													this.innerHTML = this._content;
-													this.t_execute = false;
-												}
+												this._addtoclone.clicked = this.div._addtoclone_clicked;
 											}
 											else {
-												if(this._info) {
-													this._info.parentNode.removeChild(this._info);
-													this._info = false;
-												}
-												if(this._selected) {
-													this._selected.parentNode.removeChild(this._selected);
-													this._selected = false;
-												}
-												if(this._addtoclone) {
-													this._addtoclone.parentNode.removeChild(this._addtoclone);
-													this._addtoclone = false;
-												}
+												this.closeOption();
+											}
+										}
+										node.closeOption = function() {
+											if(this._info) {
+												this._info.parentNode.removeChild(this._info);
+												delete this._info;
+											}
+											if(this._selected) {
+												this._selected.parentNode.removeChild(this._selected);
+												delete this._selected;
+											}
+											if(this._addtoclone) {
+												this._addtoclone.parentNode.removeChild(this._addtoclone);
+												delete this._addtoclone;
 											}
 										}
 		 							}
+								}
+								else {
+									u.ae(this.search_result, "li", {html:"No results"});
 								}
 								u.rc(this, "loading");
 							}
@@ -11352,12 +12478,14 @@ Util.Objects["unidentifiedList"] = new function() {
 				u.ac(this._add_to, "loading");
 				this.checked_inputs_i = 0;
 				this.iterateSelections = function() {
+					this.is_identifying = true;
 					if(this.checked_inputs_i < this.checked_inputs.length) {
 						var input = this.checked_inputs[this.checked_inputs_i++];
 						u.ac(input.node, "identifying");
 						input.node._is_identifying = true;
 						if(!input.node._identified) {
-							input.response = function(response) {
+							input.response = function(response, request_id) {
+								delete this.response;
 								u.rc(this.node, "identifying");
 								this.node._is_identifying = false;
 								this.node._identified = {};
@@ -11368,42 +12496,53 @@ Util.Objects["unidentifiedList"] = new function() {
 									this.node._identified.method = response.cms_object.method;
 									this.node._identified.guess = response.cms_object.guess;
 								}
-								else {
+								else if(!response.error) {
 									this.node._identified.id = "unknown";
-									this.node._identified.name = "unknown";
+									this.node._identified.name = "Unknown device";
 									this.node._identified.tags = [];
-									this.node._identified.method = "unknown";
-									this.node._identified.guess = "unknown";
+									this.node._identified.method = "N/A";
+									this.node._identified.guess = "Device could not be identified";
 								}
-								this.node.div.addOption(this.node._identified, this.node);
+								else if(this[request_id].status == 0) {
+									this.node._identified.id = "unknown";
+									this.node._identified.name = "Request timeout";
+									this.node._identified.tags = [];
+									this.node._identified.method = "N/A";
+									this.node._identified.guess = "Request timeout";
+								}
 								this.node.div.wait_for_uas--;
-								if(!this.node.div.wait_for_uas && this.node.div._add_to) {
-									u.rc(this.node.div._add_to, "loading");
+								if(this.node.div._add_to && this.checked) {
+									this.node.div.addOption(this.node._identified, this.node);
 								}
 								this.node.div.iterateSelections();
 							}
-							u.request(input, input.node.div.useragent_identify+"/"+input.node.ua_id, {"method":"post", "params":"csrf-token="+input.node.div.csrf_token});
+							u.request(input, input.node.div.useragent_identify+"/"+input.node.ua_id, {method:"post", timeout:3000, data:"csrf-token="+input.node.div.csrf_token});
 						}
 						else {
 							u.rc(input.node, "identifying");
 							input.node._is_identifying = false;
-							this.addOption(input.node._identified, input.node);
 							this.wait_for_uas--;
-							if(!this.wait_for_uas) {
-								u.rc(this._add_to, "loading");
+							if(this._add_to) {
+								this.addOption(input.node._identified, input.node);
+								this.iterateSelections();
 							}
-							this.iterateSelections();
 						}
 					}
 					else {
+						if(!this.wait_for_uas && this._add_to) {
+							u.rc(this._add_to, "loading");
+						}
+						this.is_identifying = false;
 					}
 				}
-				this.iterateSelections();
+				if(!this.is_identifying) {
+					this.iterateSelections();
+				}
 			}
 			else {
 				if(this._add_to) {
 					this._add_to.parentNode.removeChild(this._add_to);
-					this._add_to = false;
+					delete this._add_to;
 					u.as(page, "width", "auto");
 				}
 			}

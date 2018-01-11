@@ -17,9 +17,13 @@ class Identify {
 		$this->db_unidentified = SITE_DB.".unidentified_useragents";
 
 		$this->trimming_patterns = [
+//			'^\\\"',
+//			'\\\"$',
 			"[ ]+\[FB[^\]]+\]$",
 			"[ ]+\(iPhone[^\)]+scale[^\)]+gamut[^\)]+\)$",
-			"[ ]+[a-zA-Z]{2}[-_][a-zA-Z]{2}( ;|;)"
+			"[ ]+[a-zA-Z]{2}[-_][a-zA-Z]{2}( ;|;)",
+			"^UserAgent:",
+			" \.NET [^;]+;",
 		];
 
 
@@ -29,6 +33,7 @@ class Identify {
 
 		//		Mozilla/5.0 (iPhone; CPU iPhone OS 10_2_1 like Mac OS X) AppleWebKit/602.4.6 (KHTML, like Gecko) Mobile/14D27 Instagram 10.12.0 (iPhone7,2; iOS 10_2_1; en_GB; en-GB; scale=2.00; gamut=normal; 750x1334)
 
+		// Mozilla/5.0 (compatible; MSIE 11.0; Windows NT 6.2; Trident/7.0; .NET CLR 2.0.50727; .NET CLR 3.5.30729; .NET CLR 3.0.30729; Media Center PC 6.0; .NET4.0C; .NET4.0E) 
 
 	}
 
@@ -37,14 +42,8 @@ class Identify {
 
 //		print "IDENTIFYING:" . $useragent . "\n";
 
-
-		// no useragent - don't try to identify, just return basic
-		if(!$useragent) {
-			return array("segment" => "basic");
-//			return "basic";
-		}
-
-
+		// manually remove wrapping quotes
+		$useragent = trim($useragent, '\"');
 
 		// Experiment with trimming UA before doing analysis
 		// The goal is to remove non-identifying fragments to make regex process faster
@@ -52,6 +51,14 @@ class Identify {
 			$useragent = preg_replace("/".$pattern."/", "", $useragent);
 		}
 
+
+		// no useragent - don't try to identify, just return basic
+		if(!$useragent) {
+			return array("segment" => "seo");
+//			return "basic";
+		}
+
+//		print $useragent;
 
 
 		// Include static detection script for initial test
