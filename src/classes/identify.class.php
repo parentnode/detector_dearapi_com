@@ -23,9 +23,8 @@ class Identify {
 		$this->trimming_patterns = [
 			"[ ]+\[FB[^\]]+\][ ]?$",
 			"[ ]+\((iP(hone|ad|od)|Windows Device)[^\)]+scale[^\)]+\)[ ]?$",
-			"[;]? \.NET[ ]?[^;\)]+",
-//			" \.NET[ ]?[^;\)]+(;|(?=\)))",
-//			"[ ]+[a-zA-Z]{2}[-_][a-zA-Z]{2}( ;|;|(?=\)))", // language 
+			"[;]? \.NET[ ]?[^;\)]+", // Stupid windows .NET addons
+			" AppEngine-Google; \([^\)]+\)",
 			"[;]?[ ]*[a-zA-Z]{2}[-_][a-zA-Z]{2}(?=(\)|;))", // language 
 			" \(via translate\.google\.com\)",
 			" Yandex\.Translate",

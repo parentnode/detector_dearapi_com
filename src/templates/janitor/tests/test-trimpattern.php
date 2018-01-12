@@ -44,6 +44,9 @@ $useragents[] = 'Opera/9.80 (Linux armv7l; HbbTV/1.2.1 (; Philips; 40PFS570912; 
 $useragents[] = 'Mozilla/4.0 (compatible MSIE 8.0 Windows NT 6.1 Trident/4.0 MRSPUTNIK 2, 3, 0, 301 Mozilla/4.0 (compatible MSIE 6.0 Windows NT 5.1 SV1) SLCC2 .NET CLR 2.0.50727 .NET CLR 3.5.30729 .NET CLR 3.0.30729 Media Center PC 6.0 InfoPath.3 .NET4.0C';
 $useragents[] = 'Mozilla/4.0 (compatible MSIE 8.0 ; Windows NT 6.1 Trident/4.0 SLCC2 .NET CLR 2.0.50727 .NET CLR 3.5.30729 .NET CLR 3.0.30729 Media Center PC 6.0 Tablet PC 2.0)';
 $useragents[] = 'Mozilla/4.0 (compatible  MSIE 8.0  Windows NT 6.1  Trident/4.0  MRSPUTNIK 2, 4, 0, 270  MRA 5.6 (build 03403)  SLCC2  .NET CLR 2.0.50727  .NET CLR 3.5.30729  .NET CLR 3.0.30729  Media Center PC 6.0  Tablet PC 2.0)';
+$useragents[] = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36 AppEngine-Google; (+http://code.google.com/appengine; appid: s~fullstoryapp)';
+$useragents[] = 'iPad AppleWebKit AppEngine-Google; (+http://code.google.com/appengine; appid: s~qmksync-hrd) ';
+$useragents[] = 'Mozilla/5.0 (compatible; AhrefsBot/5.0; +http://ahrefs.com/robot/) AppEngine-Google; (+http://code.google.com/appengine; appid: s~proxy6000-hrd)';
 
 ?>
 <div class="scene defaultList purgeUseragentRegex tests">
