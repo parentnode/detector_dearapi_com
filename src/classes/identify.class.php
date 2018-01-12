@@ -21,17 +21,17 @@ class Identify {
 		// but also to get less corrupted UAs in the DB, because that makes identification better
 		// should be ordered so the longest replacements happens first
 		$this->trimming_patterns = [
-			"[ ]+\[FB[^\]]+\][ ]?$",
+			"[ ]+\[FB[^\]]+\][ ]?$", // Stupid FB shit data
 			"[ ]+\((iP(hone|ad|od)|Windows Device)[^\)]+scale[^\)]+\)[ ]?$",
 			"[;]? \.NET[ ]?[^;\)]+", // Stupid windows .NET addons
 			" AppEngine-Google; \([^\)]+\)",
 			"[;]?[ ]*[a-zA-Z]{2}[-_][a-zA-Z]{2}(?=(\)|;))", // language 
 			" \(via translate\.google\.com\)",
 			" Yandex\.Translate",
-			"^UserAgent:",
-			"[;]? WOW64",
-			"[;]? SLCC[1-2]",
-			"[;]? InfoPath\.[1-3]",
+			"^UserAgent:", // seems to occasionally come from the Ruby gem
+			"[;]? WOW64", // windows
+			"[;]? SLCC[1-2]",  // windows
+			"[;]? InfoPath\.[1-3]",  // windows
 			",gzip\(gfe\)",
 			"[ ]?\([ ;]*\)", // empty parentesis
 			";[ ]?(?=;)", // double semi-colon
