@@ -2374,17 +2374,41 @@ class TypeDevice extends Itemtype {
 		// first find some UAs which match trim pattern
 		foreach($Identify->trimming_patterns as $check_pattern) {
 
-//			print $pattern."<br>\n";
+
+			// MySQL doesn't support look-ahead/behind, so modify pattern before query
+
+			// avoid any escaped parentheses' - the fuck up the regex
+			$mysql_pattern = str_replace("\)", "###1###", $check_pattern);
+			$mysql_pattern = str_replace("\(", "###2###", $mysql_pattern);
+
+
+			// find look aheads and look behinds
+			// (because we are looking for these occurences, only the regex is not intended to replace the whole bit)
+			$mysql_pattern = preg_replace("/\(\?[\<]?\=([^\)]+)\)/", "$1", $mysql_pattern);
+
+	
+			// double escape any parentesis, to make DB happy - weirdo shit
+			$mysql_pattern = str_replace("###1###", "\\\)", $mysql_pattern);
+			$mysql_pattern = str_replace("###2###", "\\\(", $mysql_pattern);
+
+
+//			print $mysql_pattern."<br>";
+
 
 			// limit query to 200 to keep load on server bareable
-			$sql = "SELECT id, item_id, useragent FROM ".$this->db_useragents." AS ua WHERE ua.useragent REGEXP '".(preg_replace("/(\\\\\(|\\\\\[)/", "\\\\$1", $check_pattern))."' LIMIT 200";
-//			print $sql;
-			if($query->sql($sql)) {
+			$find_sql = "SELECT id, item_id, useragent FROM ".$this->db_useragents." WHERE useragent REGEXP '".(preg_replace("/(\\\\\(|\\\\\[)/", "\\\\$1", $mysql_pattern))."' LIMIT 200";
+//			print $sql."<br>";
+			if($query->sql($find_sql)) {
 
 				$results = $query->results();
+				// print "<code style='white-space: pre;'>";
+				// print_r($results);
+				// print "</code>";
 				foreach($results as $i => $result) {
 
 					$ua_id = $result["id"];
+
+					$result["sql"] = $find_sql;
 
 					$result["trimmed_useragent"] = $result["useragent"];
 					$result["diff_useragent"] = $result["useragent"];
@@ -2392,24 +2416,16 @@ class TypeDevice extends Itemtype {
 					// Also check other trim patterns on this useragent while we're at it
 					foreach($Identify->trimming_patterns as $pattern) {
 
-
-						//$useragent = preg_replace("/".$pattern."/", "", $result["useragent"]);
-
 						$result["diff_useragent"] = preg_replace("/(".$pattern.")/", "<span class=\"trimmed\">$1</span>", $result["diff_useragent"]);
 						$result["trimmed_useragent"] = preg_replace("/".$pattern."/", "", $result["trimmed_useragent"]);
 
 					}
 
-					// remove any whitespace
-					$result["trimmed_useragent"] = trim($result["trimmed_useragent"]);
-
 					// only do something if useragent still contains something
 					if($result["trimmed_useragent"]) {
 
-//							$result["useragent"] = preg_replace("/(".$pattern.")/", "<span class=\"trimmed\">$1</span>", $result["useragent"]);
-
-						// check if trimmed version already exists
-						$sql = "SELECT id FROM ".$this->db_useragents." WHERE useragent = '".$result["trimmed_useragent"]."'";
+						// check if trimmed version already exists (and isn't same UA)
+						$sql = "SELECT id FROM ".$this->db_useragents." WHERE useragent = '".$result["trimmed_useragent"]."' AND id != $ua_id";
 		//				print $sql;
 						// if it already exists, delete it
 						if($query->sql($sql)) {

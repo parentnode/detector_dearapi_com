@@ -9,7 +9,7 @@ global $model;
 $Identify = new Identify();
 
 
-$useragents[] = 'Mozilla/5.0 (iPhone; CPU iPhone OS 10_2_1 like Mac OS X) AppleWebKit/602.4.6 (KHTML, like Gecko) Mobile/14D27 [FBAN/FBIOS;FBAV/83.0.0.38.70;FBBV/51754296;FBDV/iPhone8,4;FBMD/iPhone;FBSN/iOS;FBSV/10.2.1;FBSS/2;FBCR/TELIA;FBID/phone;FBLC/da_DK;FBOP/5;FBRV/52433023]';
+$useragents[] = ' Mozilla/5.0 (iPhone; CPU iPhone OS 10_2_1 like Mac OS X) AppleWebKit/602.4.6 (KHTML, like Gecko) Mobile/14D27 [FBAN/FBIOS;FBAV/83.0.0.38.70;FBBV/51754296;FBDV/iPhone8,4;FBMD/iPhone;FBSN/iOS;FBSV/10.2.1;FBSS/2;FBCR/TELIA;FBID/phone;FBLC/da_DK;FBOP/5;FBRV/52433023] ';
 $useragents[] = 'Mozilla/5.0 (Linux; Android 6.0.1; SM-G920F Build/MMB29K; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/56.0.2924.87 Mobile Safari/537.36 [FB_IAB/MESSENGER;FBAV/109.0.0.23.70;]';
 $useragents[] = 'Mozilla/5.0 (iPhone; CPU iPhone OS 10_2_1 like Mac OS X) AppleWebKit/602.4.6 (KHTML, like Gecko) Mobile/14D27 Instagram 10.12.0 (iPhone7,2; iOS 10_2_1; en_GB; en-GB; scale=2.00; gamut=normal; 750x1334)';
 $useragents[] = 'Mozilla/5.0 (compatible; MSIE 11.0; Windows NT 6.2; Trident/7.0; .NET CLR 2.0.50727; .NET CLR 3.5.30729; .NET CLR 3.0.30729; Media Center PC 6.0; .NET4.0C; .NET4.0E) ';
@@ -38,6 +38,13 @@ $useragents[] = 'Mozilla/5.0 (Linux; Android 6.0.1; SM-T580 Build/MMB29K; wv) Ap
 $useragents[] = 'Mozilla/5.0 (Linux; Android 4.1.2; LG-LG730 Build/JZO54K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/32.0.1700.99 Mobile Safari/537.36';
 $useragents[] = 'Mozilla/5.0 (SAMSUNG; SAMSUNG-GT-S5380D/1.0; U; Bada/2.0; en-us) AppleWebKit/534.20 (KHTML, like Gecko) Dolfin/3.0 Mobile HVGA SMM-MMS/1.2.0 OPN-B';
 $useragents[] = 'Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.1; WOW64; Trident/4.0; GTB7.3; SLCC2; .NET CLR 2.0.50727; .NET CLR 3.5.30729; .NET CLR 3.0.30729; Media Center PC 6.0; .NET4.0C; MASN),gzip(gfe) (via translate.google.com)';
+$useragents[] = 'Mozilla/5.0 (SymbianOS/9.3; Series60/3.2 NokiaN86-1/20.011;; Profile/MIDP-2.1 Configuration/CLDC-1.1 ) AppleWebKit/525 (KHTML, like Gecko) Version/3.0 BrowserNG/7.1.13380';
+$useragents[] = 'Opera/9.80 (Linux mips ; U; HbbTV/1.1.1 (; Philips; ; ; ; ) CE-HTML/1.0 NETTV/3.2.4; en) Presto/2.6.33 Version/10.70';
+$useragents[] = 'Opera/9.80 (Linux armv7l; HbbTV/1.2.1 (; Philips; 40PFS570912; ; PhilipsTV;  CE-HTML/1.0 NETTV/4.4.1 SmartTvA/3.0.0 Firmware/012.003.038.128 (PhilipsTV, 3.1.1,)en) ) Presto/2.12.407 Version/12.50';
+$useragents[] = 'Mozilla/4.0 (compatible MSIE 8.0 Windows NT 6.1 Trident/4.0 MRSPUTNIK 2, 3, 0, 301 Mozilla/4.0 (compatible MSIE 6.0 Windows NT 5.1 SV1) SLCC2 .NET CLR 2.0.50727 .NET CLR 3.5.30729 .NET CLR 3.0.30729 Media Center PC 6.0 InfoPath.3 .NET4.0C';
+$useragents[] = 'Mozilla/4.0 (compatible MSIE 8.0 ; Windows NT 6.1 Trident/4.0 SLCC2 .NET CLR 2.0.50727 .NET CLR 3.5.30729 .NET CLR 3.0.30729 Media Center PC 6.0 Tablet PC 2.0)';
+$useragents[] = 'Mozilla/4.0 (compatible  MSIE 8.0  Windows NT 6.1  Trident/4.0  MRSPUTNIK 2, 4, 0, 270  MRA 5.6 (build 03403)  SLCC2  .NET CLR 2.0.50727  .NET CLR 3.5.30729  .NET CLR 3.0.30729  Media Center PC 6.0  Tablet PC 2.0)';
+
 ?>
 <div class="scene defaultList purgeUseragentRegex tests">
 	<h1>Testing trim patterns</h1>
@@ -54,15 +61,15 @@ $useragents[] = 'Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.1; WOW64; Tride
 
 				// loop trim patterns
 				foreach($Identify->trimming_patterns as $pattern):
-					$diff_useragent = preg_replace("/(".$pattern.")/", "<span class=\"trimmed\">$1</span>", $diff_useragent);
+					$diff_useragent = preg_replace("/".$pattern."/", "<span class=\"trimmed\">$0</span>", $diff_useragent);
 					$trimmed_useragent = preg_replace("/".$pattern."/", "", $trimmed_useragent);
 
 
 				endforeach; ?>
 			<li class="item ua_id:<?= $item["id"] ?>">
-				<h3><strong>BEFORE:</strong><br /><?= $org_useragent ?></h3>
-				<h3><strong>AFTER:</strong><br /><?= $trimmed_useragent ?></h3>
-				<h3><strong>DIFF:</strong><br /><?= $diff_useragent ?></h3>
+				<h4><strong>BEFORE:</strong><br /><?= $org_useragent ?></h4>
+				<h4><strong>AFTER:</strong><br /><?= $trimmed_useragent ?></h4>
+				<h4><strong>DIFF:</strong><br /><?= $diff_useragent ?></h4>
 			 </li>
 <?			endforeach; ?>
 		</ul>

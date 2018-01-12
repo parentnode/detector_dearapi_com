@@ -18,20 +18,27 @@ class Identify {
 
 		// Experiment with trimming UA before doing analysis
 		// The goal is to remove non-identifying fragments to make regex process faster
+		// but also to get less corrupted UAs in the DB, because that makes identification better
 		// should be ordered so the longest replacements happens first
 		$this->trimming_patterns = [
-			"[ ]+\[FB[^\]]+\]$",
-			"[ ]+\((iP(hone|ad|od)|Windows Device)[^\)]+scale[^\)]+\)$",
-			" \.NET[ ]?[^;\)]+(;|(?=\)))",
-			"[ ]+[a-zA-Z]{2}[-_][a-zA-Z]{2}( ;|;|(?=\)))", // language 
+			"[ ]+\[FB[^\]]+\][ ]?$",
+			"[ ]+\((iP(hone|ad|od)|Windows Device)[^\)]+scale[^\)]+\)[ ]?$",
+			"[;]? \.NET[ ]?[^;\)]+",
+//			" \.NET[ ]?[^;\)]+(;|(?=\)))",
+//			"[ ]+[a-zA-Z]{2}[-_][a-zA-Z]{2}( ;|;|(?=\)))", // language 
+			"[;]?[ ]*[a-zA-Z]{2}[-_][a-zA-Z]{2}(?=(\)|;))", // language 
 			" \(via translate\.google\.com\)",
 			" Yandex\.Translate",
 			"^UserAgent:",
-			" WOW64",
-			" SLCC[1-2];",
-			" InfoPath\.[1-3];",
+			"[;]? WOW64",
+			"[;]? SLCC[1-2]",
+			"[;]? InfoPath\.[1-3]",
 			",gzip\(gfe\)",
-			"[ ]?\([ ;]*\)"
+			"[ ]?\([ ;]*\)", // empty parentesis
+			";[ ]?(?=;)", // double semi-colon
+			"[ ]{1}(?=( |\)|;))", // double space or space followed by parentheses
+			"(?<=\();[ ]?", // parentheses followed by semi-colon and maybe space
+			"^[ ]+|[ ]+$", // starting space, ending space
 		];
 
 		// see test-trimpatterns for test results
