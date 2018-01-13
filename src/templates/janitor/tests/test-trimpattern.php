@@ -11,6 +11,9 @@ $Identify = new Identify();
 
 $useragents[] = ' Mozilla/5.0 (iPhone; CPU iPhone OS 10_2_1 like Mac OS X) AppleWebKit/602.4.6 (KHTML, like Gecko) Mobile/14D27 [FBAN/FBIOS;FBAV/83.0.0.38.70;FBBV/51754296;FBDV/iPhone8,4;FBMD/iPhone;FBSN/iOS;FBSV/10.2.1;FBSS/2;FBCR/TELIA;FBID/phone;FBLC/da_DK;FBOP/5;FBRV/52433023] ';
 $useragents[] = 'Mozilla/5.0 (Linux; Android 6.0.1; SM-G920F Build/MMB29K; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/56.0.2924.87 Mobile Safari/537.36 [FB_IAB/MESSENGER;FBAV/109.0.0.23.70;]';
+$useragents[] = 'Mozilla/5.0 (iPhone; CPU iPhone OS 6_1_4 like Mac OS X) AppleWebKit/536.26 (KHTML, like Gecko) Mobile/10B350 [FBAN/FBIOS;FBAV/6.1.1;FBBV/202949;FBDV/iPhone5,2;FBMD/iPhone;FBSN/iPhone OS;FBSV/6.1.4;FBSS/2; FBCR/ martin/shoot';
+$useragents[] = 'Mozilla/5.0 (Linux; Android 6.0.1; SM-G920F Build/MMB29K; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/56.0.2924.87 Mobile Safari/537.36 [FB_IAB/MESSENGER;FBAV/109.0.0.23.70;] martin/shoot';
+$useragents[] = 'Mozilla/5.0 (iPhone; CPU iPhone OS 6_1_4 like Mac OS X) AppleWebKit/536.26 (KHTML, like Gecko) Mobile/10B350 [FBAN/FBIOS;FBAV/6.1.1;FBBV/202949;FBDV/iPhone5,2;FBMD/iPhone;FBSN/iPhone OS;FBSV/6.1.4;FBSS/2; FBCR/';
 $useragents[] = 'Mozilla/5.0 (iPhone; CPU iPhone OS 10_2_1 like Mac OS X) AppleWebKit/602.4.6 (KHTML, like Gecko) Mobile/14D27 Instagram 10.12.0 (iPhone7,2; iOS 10_2_1; en_GB; en-GB; scale=2.00; gamut=normal; 750x1334)';
 $useragents[] = 'Mozilla/5.0 (compatible; MSIE 11.0; Windows NT 6.2; Trident/7.0; .NET CLR 2.0.50727; .NET CLR 3.5.30729; .NET CLR 3.0.30729; Media Center PC 6.0; .NET4.0C; .NET4.0E) ';
 $useragents[] = 'Mozilla/5.0 (Windows NT 6.2; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/30.0.1599.116 Safari/537.36 Yandex.Translate';
@@ -48,6 +51,8 @@ $useragents[] = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (K
 $useragents[] = 'iPad AppleWebKit AppEngine-Google; (+http://code.google.com/appengine; appid: s~qmksync-hrd) ';
 $useragents[] = 'Mozilla/5.0 (compatible; AhrefsBot/5.0; +http://ahrefs.com/robot/) AppEngine-Google; (+http://code.google.com/appengine; appid: s~proxy6000-hrd)';
 
+$useragents[] = 'Opera/9.19 (Windows NT 5.1; U; Infopath.1) Presto/2.9.182 Version/11.00';
+
 ?>
 <div class="scene defaultList purgeUseragentRegex tests">
 	<h1>Testing trim patterns</h1>
@@ -64,8 +69,8 @@ $useragents[] = 'Mozilla/5.0 (compatible; AhrefsBot/5.0; +http://ahrefs.com/robo
 
 				// loop trim patterns
 				foreach($Identify->trimming_patterns as $pattern):
-					$diff_useragent = preg_replace("/".$pattern."/", "<span class=\"trimmed\">$0</span>", $diff_useragent);
-					$trimmed_useragent = preg_replace("/".$pattern."/", "", $trimmed_useragent);
+					$diff_useragent = preg_replace("/".$pattern."/i", "<span class=\"trimmed\">$0</span>", $diff_useragent);
+					$trimmed_useragent = preg_replace("/".$pattern."/i", "", $trimmed_useragent);
 
 
 				endforeach; ?>

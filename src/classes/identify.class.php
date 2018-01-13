@@ -21,7 +21,7 @@ class Identify {
 		// but also to get less corrupted UAs in the DB, because that makes identification better
 		// should be ordered so the longest replacements happens first
 		$this->trimming_patterns = [
-			"[ ]+\[FB[^\]]+\][ ]?$", // Stupid FB shit data
+			"[ ]+\[FB[^\]]+[\]]?", // Stupid FB shit data
 			"[ ]+\((iP(hone|ad|od)|Windows Device)[^\)]+scale[^\)]+\)[ ]?$",
 			"[;]? \.NET[ ]?[^;\)]+", // Stupid windows .NET addons
 			" AppEngine-Google; \([^\)]+\)",
