@@ -1743,15 +1743,27 @@ class TypeDevice extends Itemtype {
 			$mismatches = [];
 
 			// look for potential unique markers
+			// Example UA:
+			// Mozilla/5.0 (Linux; U; Android 4.2.2; en-us; GT-P5113 Build/JDQ39) AppleWebKit/534.30 (KHTML, like Gecko) Version/4.0 Safari/534.30
+			// Marker is: GT-P5113
 			if(preg_match("/Android[ 0-9._a-zA-Z\-]*;[ ]?([A-Za-z]{2}[-_][A-Za-z]{2}|[A-Za-z]{2}[-_]|[A-Za-z]{2})[ ;]+([A-Za-z0-9 \-_]+)/i", $ua["useragent"], $matches)) {
 				$marker = $matches[2];
 			}
+			// Example UA:
+			// Mozilla/5.0 (Linux; Android 4.1.2; GT-I8190 Build/JZO54K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.105 Mobile Safari/537.36
+			// Marker is: GT-I8190
 			else if(preg_match("/Android[ 0-9._a-zA-Z\-]*;[ ]*([A-Za-z0-9 \-_]+)/i", $ua["useragent"], $matches)) {
 				$marker = $matches[1];
 			}
+			// Example UA:
+			// Samsung-SPHA680 AU-MIC/2.0 MMP/2.0
+			// Marker is: Samsung-SPHA680
 			else if(!preg_match("/^Mozilla/i", $ua["useragent"]) && preg_match("/^([A-Za-z0-9 \-_]+)/i", $ua["useragent"], $matches)) {
 				$marker = $matches[1];
 			}
+			// Example UA:
+			// Mozilla/4.0 (compatible; MSIE 6.0; Windows CE; IEMobile 7.11) HPiPAQ610/1.0 (PPC; 240x320)
+			// Marker is: MSIE 6.0
 			else if(preg_match("/compatible;[ ]*([A-Za-z0-9 \-_]+)/i", $ua["useragent"], $matches)) {
 				$marker = $matches[1];
 			}
@@ -1768,7 +1780,11 @@ class TypeDevice extends Itemtype {
 				$ua["marker"] = $marker;
 
 				// find any existing devices with the marker
-				$sql = "SELECT devices.name, devices.item_id, tags.value as segment, ua.useragent FROM ".$this->db." as devices, ".$this->db_useragents." AS ua, ".UT_TAG." as tags, ".UT_TAGGINGS." WHERE devices.item_id = taggings.item_id AND taggings.tag_id = tags.id AND tags.context = 'segment' AND ua.item_id = devices.item_id AND ua.useragent LIKE '%$marker%'";
+//				$sql = "SELECT devices.name, devices.item_id, tags.value as segment, ua.useragent FROM ".$this->db." as devices, ".$this->db_useragents." AS ua, ".UT_TAG." as tags, ".UT_TAGGINGS." WHERE devices.item_id = taggings.item_id AND taggings.tag_id = tags.id AND tags.context = 'segment' AND ua.item_id = devices.item_id AND ua.useragent LIKE '%$marker%'";
+
+				// don't find fragment inside other strings, only standalone strings like the marker
+				$sql = "SELECT devices.name, devices.item_id, tags.value as segment, ua.useragent FROM ".$this->db." as devices, ".$this->db_useragents." AS ua, ".UT_TAG." as tags, ".UT_TAGGINGS." WHERE devices.item_id = taggings.item_id AND taggings.tag_id = tags.id AND tags.context = 'segment' AND ua.item_id = devices.item_id AND ua.useragent REGEXP '[\b ]{1}".$marker."[\b ]{1}'";
+
 //				print $sql."<br>\n";
 				if($query->sql($sql)) {
 					$similar_items = $query->results();
@@ -1928,8 +1944,8 @@ class TypeDevice extends Itemtype {
 			// get all useragents
 			$query = new Query();
 
+//			$sql = "SELECT id, useragent FROM ".$this->db_unidentified." GROUP BY useragent ORDER BY id";
 			$sql = "SELECT id, useragent FROM ".$this->db_unidentified." GROUP BY useragent ORDER BY useragent";
-//			$sql = "SELECT id, useragent FROM ".$this->db_unidentified." WHERE useragent like '%Chrome%' GROUP BY useragent";
 			$query->sql($sql);
 			$all_useragents = $query->results();
 			$matched_useragents = array();
