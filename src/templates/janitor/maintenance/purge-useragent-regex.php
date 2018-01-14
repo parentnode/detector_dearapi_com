@@ -8,7 +8,7 @@ $all_items = $model->purgeUseragentRegex($action);
 
 //print_r($all_items);
 ?>
-<div class="scene defaultList purgeUseragentRegex">
+<div class="scene defaultList purgeUseragentRegex i:purgeUseragentRegex">
 	<h1>purge Useragent Regex</h1>
 	<h2>Removing trim-patterns from existing useragents</h2>
 
@@ -18,9 +18,11 @@ $all_items = $model->purgeUseragentRegex($action);
 <?			foreach($all_items as $item): ?>
 			<li class="item ua_id:<?= $item["id"] ?>">
 				<h3 class="<?= superNormalize($item["status"]) ?>" title="<?= $item["sql"] ?>"><strong><?= $item["status"] ?></strong></h3>
-				<h4><strong>BEFORE:</strong><br /><?= $item["useragent"] ?></h4>
-				<h4><strong>TRIMMED:</strong><br /><?= $item["trimmed_useragent"] ?></h4>
-				<h4><strong>DIFF:</strong><br /><?= $item["diff_useragent"] ?></h4>
+				<div class="uas">
+					<h4><strong>BEFORE:</strong><br /><?= $item["useragent"] ?></h4>
+					<h4><strong>TRIMMED:</strong><br /><?= $item["trimmed_useragent"] ?></h4>
+					<h4><strong>DIFF:</strong><br /><?= $item["diff_useragent"] ?></h4>
+				</div>
 			 </li>
 <?			endforeach; ?>
 		</ul>

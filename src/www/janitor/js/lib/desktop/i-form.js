@@ -314,7 +314,34 @@ Util.Objects["generate"] = new function() {
 
 
 
+u.o.purgeUseragentRegex = new function() {
+	this.init = function(div) {
 
+
+		// handle horisontal scroll to avoid page navigation when inspection long uas
+		div._scrolled = function(event) {
+			// We don't want to scroll too far left or right
+			var max = this.scrollWidth - this.offsetWidth;
+
+			// prevent it and set the scroll to the boundary manually when it reached either end
+			if(this.scrollLeft + event.deltaX < 0 || this.scrollLeft + event.deltaX > max) {
+				event.preventDefault();
+
+				// Manually set the scroll to the boundary
+				this.scrollLeft = Math.max(0, Math.min(max, this.scrollLeft + event.deltaX));
+			}
+	
+		}
+
+		var scrollable_panes = u.qsa("ul.items li.item div.uas", div);
+		var i, node;
+		for(i = 0; i < scrollable_panes.length; i++) {
+			node = scrollable_panes[i];
+			u.e.addEvent(node, "wheel", div._scrolled);
+		}
+
+	}
+}
 
 
 
