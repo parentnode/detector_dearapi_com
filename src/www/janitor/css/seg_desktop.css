@@ -1168,20 +1168,23 @@ body.invoice #content div.scene .all_items ul.items li span.amount {float: right
 #content .scene.unidentifiedList .stats {padding: 5px 30px; border-bottom: 1px solid #dedede;}
 #content .scene.unidentifiedList .stats p {padding: 0;}
 #content .scene.unidentifiedList .items > li {padding: 10px 125px 10px 30px; position: relative; overflow: visible;}
-#content .scene.unidentifiedList .items > li > input {position: absolute; top: 10px; left: 30px;}
-#content .scene.unidentifiedList .items > li h3 {font-size: 13px; padding: 0 0 0 25px; overflow: hidden; word-wrap: break-word;}
-#content .scene.unidentifiedList .items > li h4 {font-size: 12px; font-weight: 700; padding: 7px 0 0 25px; overflow: hidden; word-wrap: break-word;}
+#content .scene.unidentifiedList .items > li > input {position: absolute; top: 10px; left: 30px; cursor: pointer;}
+#content .scene.unidentifiedList .items > li h3 {font-size: 13px; padding: 0 0 0 25px; overflow: hidden; word-wrap: break-word; cursor: pointer;}
+#content .scene.unidentifiedList .items > li h4 {font-size: 12px; font-weight: 700; padding: 5px 0 0 25px; overflow: hidden; word-wrap: break-word; cursor: pointer;}
 #content .scene.unidentifiedList .items > li h5 {font-size: 12px; font-weight: 500; color: #df0000; padding: 0 0 4px;}
 #content .scene.unidentifiedList .items > li h4.mismatches {color: #df0000;}
 #content .scene.unidentifiedList .items > li > ul.matches > li,
-#content .scene.unidentifiedList .items > li > ul.mismatches > li {font-size: 13px; padding: 0 0 0 25px; overflow: hidden; word-wrap: break-word;}
+#content .scene.unidentifiedList .items > li > ul.mismatches > li {font-size: 13px; padding: 0 0 5px 25px; overflow: hidden; word-wrap: break-word;}
 #content .scene.unidentifiedList .items > li > ul.matches > li {display: none;}
+#content .scene.unidentifiedList .items > li > ul.matches li.note,
+#content .scene.unidentifiedList .items > li > ul.mismatches li.note {color: orange;}
 #content .scene.unidentifiedList .items > li > ul.matches > li:first-child {display: block;}
 #content .scene.unidentifiedList .items > li > ul.matches.show > li {display: block;}
 #content .scene.unidentifiedList .items > li > ul.mismatches > li {color: #df0000; display: block;}
 #content .scene.unidentifiedList .items > li > ul.mismatches > li ul li {display: none;}
 #content .scene.unidentifiedList .items > li > ul.mismatches > li ul li:first-child {display: block;}
 #content .scene.unidentifiedList .items > li > ul.mismatches.show > li ul li {display: block;}
+#content .scene.unidentifiedList .items > li > ul.mismatches + ul.actions + ul.info {padding-top: 10px;}
 #content .scene.unidentifiedList .items > li.all {padding-left: 55px; padding-right: 30px;}
 #content .scene.unidentifiedList .items > li.all > input {position: absolute; top: 8px; left: 30px;}
 #content .scene.unidentifiedList .items > li.all.deselect input[type=checkbox] {opacity: 0.4;}

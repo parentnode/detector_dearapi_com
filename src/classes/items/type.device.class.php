@@ -1719,8 +1719,10 @@ class TypeDevice extends Itemtype {
 
 		set_time_limit(0);
 
-		// $s_t = time();
-		// $s_i = 0;
+		// to test performance (also enable memory converter function below)
+		$start_time = microtime(true);
+		$s_i = 0;
+
 		$IC = new Items();
 		$query = new Query();
 
@@ -1728,16 +1730,25 @@ class TypeDevice extends Itemtype {
 		$used_markers = [];
 		// segment of the device markers
 		$device_segment = $IC->getTags(["item_id" => $device_id, "context" => "segment"]);
-//		print_r($device_segment);
+		$segment = $device_segment[0]["value"];
+		// print "SEGMENT: " . $segment."<br>\n";;
 
-		// get all the items matching the markers 
+		// $_ts["before testMarkers ".$s_i++] = [microtime(true), memory_get_usage()];
+
+		// get all the items matching the markers, to limit the test scope
 		$uas = $this->testMarkersOnUnidentified($device_id);
-//		$uas = array_slice($uas, 0, 200);
+		// print "number of potential devices:".count($uas)."<br>\n";
 
-//		$_ts["before foreach ".$s_i++] = time();
+		// $_ts["after testMarkers ".$s_i++] = [microtime(true), memory_get_usage()];
+
+		// to test on a limited number of devices (for dev purposes)
+//		$uas = array_slice($uas, 0, 10);
+		// $_ts["before foreach ".$s_i++] = [microtime(true), memory_get_usage()];
 
 		// loop the matches
 		foreach($uas as $ua) {
+
+			// $_ts["new loop ".$s_i++] = [microtime(true), memory_get_usage()];
 			$marker = "";
 			$similar_items = [];
 			$mismatches = [];
@@ -1768,17 +1779,19 @@ class TypeDevice extends Itemtype {
 				$marker = $matches[1];
 			}
 
-//			$_ts["ua after regexp ".$s_i++] = time();
+			// $_ts["ua after regexp ".$s_i++] = [microtime(true), memory_get_usage()];
 
 			// TODO: filter more values after testing
-			$marker = trim(preg_replace("/build|mozilla|uweb|android/i", "", $marker));
-//			print $marker."<br>\n";
-			// if marker apears to be valid
+			$marker = trim(preg_replace("/build|mozilla|uweb|android|samsung/i", "", $marker));
+			// print "marker:". $marker."<br>\n";
+
+			// if marker apears to be valid - and don't search for the same marker twice
 			if($marker && strlen($marker) > 2 && array_search($marker, $used_markers) === false) {
 
 				array_push($used_markers, $marker);
 				$ua["marker"] = $marker;
-
+				$ua["matched_by"] = false;
+				$ua["mismatched_by"] = false;
 				// find any existing devices with the marker
 //				$sql = "SELECT devices.name, devices.item_id, tags.value as segment, ua.useragent FROM ".$this->db." as devices, ".$this->db_useragents." AS ua, ".UT_TAG." as tags, ".UT_TAGGINGS." WHERE devices.item_id = taggings.item_id AND taggings.tag_id = tags.id AND tags.context = 'segment' AND ua.item_id = devices.item_id AND ua.useragent LIKE '%$marker%'";
 
@@ -1786,54 +1799,113 @@ class TypeDevice extends Itemtype {
 				// let the end of the marker be optional, because a lot of device markers has some letter variants in the end
 				// like SM-C1234 and SM-C1234UM would be the same device (or at least same form factor)
 				$sql = "SELECT devices.name, devices.item_id, tags.value as segment, ua.useragent FROM ".$this->db." as devices, ".$this->db_useragents." AS ua, ".UT_TAG." as tags, ".UT_TAGGINGS." WHERE devices.item_id = taggings.item_id AND taggings.tag_id = tags.id AND tags.context = 'segment' AND ua.item_id = devices.item_id AND ua.useragent REGEXP '[\b ]{1}".$marker."'";
-
-//				print $sql."<br>\n";
+				// print $sql."<br>\n";
 				if($query->sql($sql)) {
 					$similar_items = $query->results();
 				}
 
-//				$_ts["ua after similar_items ".$s_i++] = time();
+				// print "number of similar UAs:".count($similar_items)."<br>\n";
+				// print_r($similar_items);
+				// $_ts["ua after get similar_items (".count($similar_items).") ".$s_i++] = [microtime(true), memory_get_usage()];
 
-
+				// if(!$similar_items) {
+				// 	print "NO MATCHES<br>\n";
+				// }
 //				$i = 0;
 
-				foreach($similar_items as $item) {
-//					print $ua["useragent"] . " =? " . $item["useragent"]."<br>\n";
+				foreach($similar_items as $i => $item) {
+					// print "SIMILAR ITEM:<br>\n";
+					// print_r($item);
 
-					if($item["segment"] == $device_segment[0]["value"]) {
-//						print "\n<br>###Potential marker: " . $marker . "<br>\n";
+					// segment matches
+					if($item["segment"] == $segment) {
+						// print "### Potential match identified: " . $item["useragent"] . "<br>\n";
+
+						// if not already matched
+						if(!$ua["matched_by"]) {
+							// print "### Matched: " . $item["useragent"] . "<br>\n";
 
 
-						$ua["unid"] = $this->unidentifiedUseragents($marker);
-						foreach($ua["unid"] as $i => $unid) {
-							if($unid["useragent"] == $ua["useragent"]) {
-								array_splice($ua["unid"], $i, 1);
+							$ua["matched_by"][] = $item["item_id"];
+							// get other unidentified UAs with same marker (will also return current UA)
+							$ua["unid"] = $this->unidentifiedUseragents("[\b ]{1}".$marker);
+							// print "number of potential other matches:".count($ua["unid"])."<br>\n";
+							// print_r($ua["unid"]);
+
+							// $_ts["ua after potential (".count($ua["unid"]).") ".$s_i++] = [microtime(true), memory_get_usage()];
+
+							// remove current test UA from returned result
+							foreach($ua["unid"] as $i => $unid) {
+								if($unid["useragent"] == $ua["useragent"]) {
+									array_splice($ua["unid"], $i, 1);
+								}
 							}
+							// $_ts["ua after filtering potential ".$s_i++] = [microtime(true), memory_get_usage()];
+
+							// add to matches array for this UA
+							if(!isset($ua["matches"])) {
+								$ua["matches"] = [];
+							}
+							array_push($ua["matches"], ["useragent" => $item["useragent"], "name" => $item["name"], "item_id" => $item["item_id"]]);
+
+							// $_ts["ua after match ".$s_i++] = [microtime(true), memory_get_usage()];
+
+						}
+						// still look for potential matches on other devices
+						else if(array_search($item["item_id"], $ua["matched_by"]) === false) {
+							// print "### ALSO Matches: " . $item["name"] . ", " . $item["useragent"] . "<br>\n";
+
+							$ua["matched_by"][] = $item["item_id"];
+
+							array_push($ua["matches"], ["useragent" => $item["useragent"], "name" => $item["name"], "item_id" => $item["item_id"]]);
+
+							// $_ts["ua after additional match ".$s_i++] = [microtime(true), memory_get_usage()];
 						}
 
-
-						if(!isset($ua["matches"])) {
-							$ua["matches"] = [];
-						}
-
-						array_push($ua["matches"], ["useragent" => $item["useragent"], "name" => $item["name"], "item_id" => $item["item_id"]]);
 					}
+					// flag this useragent to indicate the useragent exists in a different segment
 					else {
-///						print "\n<br>###Skipped marker: " . $marker . ", ". $segment.", " . $ua["useragent"] . "<br>\n";
+						// print "### Register marker as mismatch because it is identified as other segment.<br>\n";
 
-						if(!isset($ua["mismatches"])) {
-							$ua["mismatches"] = [];
-						}
-						if(!isset($ua["mismatches"][$item["segment"]])) {
-							$ua["mismatches"][$item["segment"]] = [];
-						}
+						// if not already matched
+						if(!$ua["mismatched_by"]) {
+							// print "### MISMatched: " . $item["useragent"] . "<br>\n";
 
-						array_push($ua["mismatches"][$item["segment"]], ["name" => $item["name"], "useragent" => $item["useragent"], "item_id" => $item["item_id"]]);
+
+							$ua["mismatched_by"][] = $item["item_id"];
+
+							// add to matches array for this UA
+							if(!isset($ua["mismatches"])) {
+								$ua["mismatches"] = [];
+							}
+							if(!isset($ua["mismatches"][$item["segment"]])) {
+								$ua["mismatches"][$item["segment"]] = [];
+							}
+							array_push($ua["mismatches"][$item["segment"]], ["name" => $item["name"], "useragent" => $item["useragent"], "item_id" => $item["item_id"]]);
+
+						}
+						// still look for potential matches on other devices (but ignore more matches on existing mismatch devices)
+						else if(array_search($item["item_id"], $ua["mismatched_by"]) === false) {
+							// print "### ALSO MISMatched: " . $item["name"] . ", " . $item["useragent"] . "<br>\n";
+
+							$ua["mismatched_by"][] = $item["item_id"];
+
+							if(!isset($ua["mismatches"][$item["segment"]])) {
+								$ua["mismatches"][$item["segment"]] = [];
+							}
+
+							array_push($ua["mismatches"][$item["segment"]], ["name" => $item["name"], "useragent" => $item["useragent"], "item_id" => $item["item_id"]]);
+
+						}
+						// $_ts["ua after mismatch ".$s_i++] = [microtime(true), memory_get_usage()];
 					}
-//					$_ts["ua after similar_item ".$s_i++] = time();
 
+					// print "UA MATCH ARRAY AFTER INDEXING SIMILAR ITEM ($i):<br>\n";
+					// print_r($ua);
 
 				}
+
+				// $_ts["after checking similar items ".$s_i++] = [microtime(true), memory_get_usage()];
 
 				if(isset($ua["matches"])) {
 					$i = array_push($potential_items, $ua);
@@ -1851,11 +1923,29 @@ class TypeDevice extends Itemtype {
 
 		}
 
-		// foreach($_ts as $t => $time) {
-		// 	print "$t: ".($time-$s_t)."<br>\n";
-		// }
+// 		$time_passed_since_last_event = 0;
+// 		foreach($_ts as $t => $time) {
+// 			// show increments
+// 			$time_of_event = round($time[0] - $start_time, 4);
+// 			print number_format(round($time_of_event-$time_passed_since_last_event, 4), 4)." / ".$this->formatBytes($time[1]).": $t:<br>\n";
+//
+// 			// include timestamp since beginning
+// //			print round($time_of_event-$time_passed_since_last_event, 4)." ($time_of_event): $t:<br>\n";
+// 			$time_passed_since_last_event = $time_of_event;
+//
+// 			// just show timestamps since beginning
+// //			print $time_of_event.": $t<br>\n";
+//
+// 		}
+// 		print "Total time: ".number_format(round($time[0]-$start_time, 4), 4)."<br>\n";
 
 		return $potential_items;
+	}
+
+	function formatBytes($size, $precision = 2) {
+		$base = log($size, 1024);
+		$suffixes = array('', 'Kb', 'Mb', 'Gb', 'Tb');   
+		return number_format(round(pow(1024, $base - floor($base)), $precision), $precision) . $suffixes[floor($base)];
 	}
 
 	// test device markers on unidentified useragents
@@ -1946,8 +2036,9 @@ class TypeDevice extends Itemtype {
 			// get all useragents
 			$query = new Query();
 
-//			$sql = "SELECT id, useragent FROM ".$this->db_unidentified." GROUP BY useragent ORDER BY id";
-			$sql = "SELECT id, useragent FROM ".$this->db_unidentified." GROUP BY useragent ORDER BY useragent";
+			// sorting by id makes it easier to debug, by adding relevant test UAs to the beginning of the db table
+			$sql = "SELECT id, useragent FROM ".$this->db_unidentified." GROUP BY useragent ORDER BY id";
+//			$sql = "SELECT id, useragent FROM ".$this->db_unidentified." GROUP BY useragent ORDER BY useragent";
 			$query->sql($sql);
 			$all_useragents = $query->results();
 			$matched_useragents = array();
@@ -2309,23 +2400,29 @@ class TypeDevice extends Itemtype {
 	}
 
 
-	// get unidentified useragents, all or based on pattern
+	// get unidentified useragents, all or based on REGEX pattern
+	// used for main search and finding crossreference patterns
 	function unidentifiedUseragents($pattern = false) {
 
 		$query = new Query();
 
 		if($pattern) {
-			$sql = "SELECT *, MAX(identified_at) as lastentry FROM ".$this->db_unidentified." WHERE useragent LIKE '%$pattern%' GROUP BY useragent ORDER BY lastentry DESC";
+			// $sql = "SELECT *, MAX(identified_at) as lastentry FROM ".$this->db_unidentified." WHERE useragent LIKE '%$pattern%' GROUP BY useragent ORDER BY lastentry DESC";
+			// switched to REGEX to get more flexibility
+			$mysql_pattern = preg_replace("/(\\\\\(|\\\\\)|\\\\\[|\\\\\.)/", "\\\\$1", $pattern);
+			$sql = "SELECT id, useragent, MAX(identified_at) as lastentry FROM ".$this->db_unidentified." WHERE useragent REGEXP '$mysql_pattern' GROUP BY useragent ORDER BY lastentry DESC limit 3";
 		}
 		else {
-			$sql = "SELECT *, MAX(identified_at) as lastentry FROM ".$this->db_unidentified." GROUP BY useragent ORDER BY lastentry DESC";
+			$sql = "SELECT id, useragent, MAX(identified_at) as lastentry FROM ".$this->db_unidentified." GROUP BY useragent ORDER BY lastentry DESC";
 //			$sql = "SELECT * FROM ".$this->db_unidentified." GROUP BY useragent";
 		}
 
-//		print $sql."<br>";
+//		print $sql."<br>\n";
 		if($query->sql($sql)) {
 			return $query->results();
 		}
+		
+		return false;
 	}
 
 

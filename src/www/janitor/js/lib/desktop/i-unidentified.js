@@ -493,6 +493,12 @@ Util.Objects["unidentifiedList"] = new function() {
 			node.ul_matches = u.qs("ul.matches", node);
 			if(node.h4_matches && node.ul_matches) {
 				node.h4_matches.node = node;
+
+				u.ce(node.ul_matches);
+				node.ul_matches.clicked = function(event) {
+					u.e.kill(event);
+				}
+
 				u.ce(node.h4_matches);
 				node.h4_matches.clicked = function() {
 					u.toggleClass(this.node.ul_matches, "show");
@@ -503,6 +509,11 @@ Util.Objects["unidentifiedList"] = new function() {
 			node.ul_mismatches = u.qs("ul.mismatches", node);
 			if(node.h4_mismatches && node.ul_mismatches) {
 				node.h4_mismatches.node = node;
+
+				u.ce(node.ul_mismatches);
+				node.ul_mismatches.clicked = function(event) {
+					u.e.kill(event);
+				}
 				u.ce(node.h4_mismatches);
 				node.h4_mismatches.clicked = function() {
 					u.toggleClass(this.node.ul_mismatches, "show");

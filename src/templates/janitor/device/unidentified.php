@@ -42,7 +42,7 @@ else {
 	<?= $model->formStart("/janitor/".$itemtype."/unidentified", array("class" => "options i:searchUnidentified labelstyle:inject")) ?>
 		<?= $model->input("search", array("type" => "hidden", "value" => "true")) ?>
 		<fieldset>
-			<?= $model->input("search_string", array("type" => "string", "label" => "DB search (MySQL LIKE syntax)", "value" => $search_string)) ?>
+			<?= $model->input("search_string", array("type" => "string", "label" => "DB search (MySQL REGEX syntax)", "value" => $search_string)) ?>
 		</fieldset>
 		<ul class="actions">
 			<?= $model->submit("Search", array("wrapper" => "li.search")) ?>
@@ -84,39 +84,41 @@ else {
 			<li class="item ua_id:<?= $item["id"] ?>">
 				<h3><?= stringOr($item["useragent"], "&nbsp;") ?></h3>
 
-				<? if(isset($item["matches"])): ?>
-				<h4 class="matches"><em><?= $item["marker"] ?></em> matches (<?= count($item["matches"]) ?>):</h4>
+<? 				if(isset($item["matches"])): ?>
+				<h4 class="matches<?= count($item["matches"]) > 1 ? " system_warning" : "" ?>"><em><?= $item["marker"] ?></em> matches <span>(<?= count($item["matches"]) ?>)</span>:</h4>
 				<ul class="matches">
-				<? foreach($item["matches"] as $match): ?>
+<? 					foreach($item["matches"] as $match): ?>
 					<li><em><?= $match["name"] ?></em>, <?= $match["useragent"] ?></li>
-				<? endforeach; ?>
+<? 					endforeach; ?>
+					<li class="note">This is not a complete list of matching useragents</li>
 				</ul>
-				<? endif; ?>
+<? 				endif; ?>
 
-				<? if(isset($item["mismatches"])): ?>
+<? 				if(isset($item["mismatches"])): ?>
 				<h4 class="mismatches">Also found in these segments:</h4>
 				<ul class="mismatches">
-				<? foreach($item["mismatches"] as $segment => $mismatch): ?>
+<? 					foreach($item["mismatches"] as $segment => $mismatch): ?>
 					<li>
 						<h5><?= $segment ?></h5>
 						<ul>
-						<? foreach($mismatch as $match): ?>
-							<li><?= $match["name"] ?>, <?= $match["useragent"] ?></li>
-						<? endforeach; ?>
+<? 						foreach($mismatch as $match): ?>
+							<li><em><?= $match["name"] ?></em>, <?= $match["useragent"] ?></em></li>
+<? 						endforeach; ?>
+							<li class="note">This is not a complete list of mismatching useragents</li>
 						</ul>
 					</li>
-				<? endforeach; ?>
+<? 					endforeach; ?>
 				</ul>
-				<? endif; ?>
+<? 				endif; ?>
 			</li>
 
-			<? if(isset($item["unid"])): ?>
-				<? foreach($item["unid"] as $unid): ?>
+<? 				if(isset($item["unid"])): ?>
+<? 					foreach($item["unid"] as $unid): ?>
 			<li class="item secondary ua_id:<?= $unid["id"] ?>">
 				<h3><?= stringOr($unid["useragent"], "&nbsp;") ?></h3>
 			</li>
-				<? endforeach; ?>
-			<? endif; ?>
+<? 					endforeach; ?>
+<? 				endif; ?>
 
 
 <?			endforeach; ?>

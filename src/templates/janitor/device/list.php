@@ -72,7 +72,7 @@ else {
 		<?= $model->formStart("list", array("class" => "options labelstyle:inject")) ?>
 			<?= $model->input("search", array("type" => "hidden", "value" => "true")) ?>
 			<fieldset>
-				<?= $model->input("search_string", array("type" => "string", "label" => "Global search (regular expression)", "value" => $search_string)) ?>
+				<?= $model->input("search_string", array("type" => "string", "label" => "Global search (MySQL LIKE syntax)", "value" => $search_string)) ?>
 			</fieldset>
 			<ul class="actions">
 				<?= $model->submit("Search", array("wrapper" => "li.search")) ?>
