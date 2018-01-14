@@ -25,7 +25,7 @@ class Identify {
 			"[ ]+\((iP(hone|ad|od)|Windows Device)[^\)]+scale[^\)]+\)[ ]?$",
 			"[;]? \.NET[ ]?[^;\)]+", // Stupid windows .NET addons
 			" AppEngine-Google; \([^\)]+\)",
-			"[;]?[ ]*[a-zA-Z]{2}[-_][a-zA-Z]{2}(?=(\)|;))", // language 
+			"[; ]+[a-zA-Z]{2}[-_][a-zA-Z]{2}(?=(\)|;))", // language 
 			" \(via translate\.google\.com\)",
 			" Yandex\.Translate",
 			"^UserAgent:", // seems to occasionally come from the Ruby gem
