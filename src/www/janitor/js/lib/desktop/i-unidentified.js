@@ -236,6 +236,69 @@ Util.Objects["unidentifiedList"] = new function() {
 		u.e.addEvent(div.bn_range._from, "keypress", div.bn_range._updated);
 		u.e.addEvent(div.bn_range._to, "keypress", div.bn_range._updated);
 
+
+		// inject input for timeout setting
+		div.div_timeout = u.ae(div.bn_all, "div", {class:"timeout"});
+		div.div_timeout._text = u.ae(div.div_timeout, "span", {html:"Timeout:"});
+		div.div_timeout._inut = u.ae(div.div_timeout, "input", {type:"text", name:"timeout", maxlength:5, value:u.getRequestTimeoutSetting()});
+
+		// attached to inputs
+		div.div_timeout._updated = function(event) {
+
+
+//			console.log(event)
+			var key = event.key;
+			// console.log(key);
+			// console.log(event.code)
+
+//			return;
+			// increment
+			if(key == "ArrowUp") {
+				u.e.kill(event);
+
+				this.value = this.value > 0 ? Number(this.value)+100 : 3000;
+			}
+
+			// decrement
+			else if(key == "ArrowDown") {
+				u.e.kill(event);
+
+				this.value = this.value > 100 ? Number(this.value)-100 : 100;
+			}
+
+// 			// kill non-numeric keys
+			else if((parseInt(key) != key) && (key != "Backspace" && key != "Delete" && key != "Tab" && key != "ArrowLeft" && key != "ArrowRight" && !event.metaKey && !event.ctrlKey)) {
+				u.e.kill(event);
+			}
+
+			var value = false;
+
+			// figure out what the value will be after keyup
+			if(parseInt(key) == key) {
+				value = this.value.length < 5 ? this.value + key : this.value;
+			}
+			else if(key == "Backspace") {
+				value = this.value.substring(0, this.value.length-1);
+			}
+			else if(key == "Delete") {
+				value = this.value.substring(1);
+			}
+			else if(key == "ArrowUp" || key == "ArrowDown") {
+				value = this.value;
+			}
+
+			if(value !== false) {
+
+				value = Number(value);
+				u.setRequestTimeoutSetting(value);
+
+			}
+
+		}
+
+		u.e.addEvent(div.div_timeout._inut, "keypress", div.div_timeout._updated);
+
+
 		// node is unselected - update option_node references
 		div.unselectNode = function(node) {
 
@@ -509,8 +572,8 @@ Util.Objects["unidentifiedList"] = new function() {
 
 						}
 						// make request
-						u.request(input, input.node.div.useragent_add+"/"+this.option.device_id+"/"+input.node.ua_id, {method:"post", timeout:3000, data:"csrf-token="+input.node.div.csrf_token});
-//											u.request(input, "/temp", {"method":"post", timeout:3000, "params":"csrf-token="+input.node.div.csrf_token});
+						u.request(input, input.node.div.useragent_add+"/"+this.option.device_id+"/"+input.node.ua_id, {method:"post", timeout:u.getRequestTimeoutSetting(), data:"csrf-token="+input.node.div.csrf_token});
+//											u.request(input, "/temp", {"method":"post", timeout:u.getRequestTimeoutSetting(), "params":"csrf-token="+input.node.div.csrf_token});
 
 					}
 					else {
@@ -568,8 +631,8 @@ Util.Objects["unidentifiedList"] = new function() {
 								this._matching.iterateSelections();
 							}
 							// make request
-							u.request(input, input.node.div.useragent_add+"/"+this.option.device_id+"/"+input.node.ua_id, {method:"post", timeout:3000, data:"csrf-token="+input.node.div.csrf_token});
-//												u.request(input, "/temp", {"method":"post", timeout:3000, "params":"csrf-token="+input.node.div.csrf_token});
+							u.request(input, input.node.div.useragent_add+"/"+this.option.device_id+"/"+input.node.ua_id, {method:"post", timeout:u.getRequestTimeoutSetting(), data:"csrf-token="+input.node.div.csrf_token});
+//							u.request(input, "/temp", {"method":"post", timeout:u.getRequestTimeoutSetting(), "params":"csrf-token="+input.node.div.csrf_token});
 						}
 
 					}
@@ -637,7 +700,7 @@ Util.Objects["unidentifiedList"] = new function() {
 								
 								}
 								// add useragent to device
-								u.request(input, input.node.div.useragent_add+"/"+input._clone.cloned_device_id+"/"+input.node.ua_id, {method:"post", timeout: 3000, data:"csrf-token="+input.node.div.csrf_token});
+								u.request(input, input.node.div.useragent_add+"/"+input._clone.cloned_device_id+"/"+input.node.ua_id, {method:"post", timeout: u.getRequestTimeoutSetting(), data:"csrf-token="+input.node.div.csrf_token});
 
 							}
 							else {
@@ -1204,7 +1267,7 @@ Util.Objects["unidentifiedList"] = new function() {
 
 							}
 							// request identification
-							u.request(input, input.node.div.useragent_identify+"/"+input.node.ua_id, {method:"post", timeout:3000, data:"csrf-token="+input.node.div.csrf_token});
+							u.request(input, input.node.div.useragent_identify+"/"+input.node.ua_id, {method:"post", timeout:u.getRequestTimeoutSetting(), data:"csrf-token="+input.node.div.csrf_token});
 //							u.request(input, "/temp", {method:"post", timeout:8000, data:"csrf-token="+input.node.div.csrf_token});
 
 						}

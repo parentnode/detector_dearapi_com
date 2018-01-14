@@ -31,6 +31,21 @@ u.toggleHeader = function(div, header) {
 }
 
 
+// get request timeout value
+u.getRequestTimeoutSetting = function() {
+	
+	var timeout = u.getCookie("request_timeout");
+	if(!timeout) {
+		timeout = 3000;
+	}
+	return Number(timeout);
+
+}
+// set cookie for request timeout
+u.setRequestTimeoutSetting = function(timeout) {
+	console.log(timeout);
+	u.saveCookie("request_timeout", timeout);
+}
 
 
 // device search 
