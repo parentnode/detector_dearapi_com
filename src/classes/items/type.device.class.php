@@ -1772,7 +1772,7 @@ class TypeDevice extends Itemtype {
 
 			// TODO: filter more values after testing
 			$marker = trim(preg_replace("/build|mozilla|uweb|android/i", "", $marker));
-			print $marker."<br>\n";
+//			print $marker."<br>\n";
 			// if marker apears to be valid
 			if($marker && strlen($marker) > 2 && array_search($marker, $used_markers) === false) {
 
@@ -1782,8 +1782,10 @@ class TypeDevice extends Itemtype {
 				// find any existing devices with the marker
 //				$sql = "SELECT devices.name, devices.item_id, tags.value as segment, ua.useragent FROM ".$this->db." as devices, ".$this->db_useragents." AS ua, ".UT_TAG." as tags, ".UT_TAGGINGS." WHERE devices.item_id = taggings.item_id AND taggings.tag_id = tags.id AND tags.context = 'segment' AND ua.item_id = devices.item_id AND ua.useragent LIKE '%$marker%'";
 
-				// don't find fragment inside other strings, only standalone strings like the marker
-				$sql = "SELECT devices.name, devices.item_id, tags.value as segment, ua.useragent FROM ".$this->db." as devices, ".$this->db_useragents." AS ua, ".UT_TAG." as tags, ".UT_TAGGINGS." WHERE devices.item_id = taggings.item_id AND taggings.tag_id = tags.id AND tags.context = 'segment' AND ua.item_id = devices.item_id AND ua.useragent REGEXP '[\b ]{1}".$marker."[\b ]{1}'";
+				// don't find fragment inside other strings, only strings with word boundary in front of the marker
+				// let the end of the marker be optional, because a lot of device markers has some letter variants in the end
+				// like SM-C1234 and SM-C1234UM would be the same device (or at least same form factor)
+				$sql = "SELECT devices.name, devices.item_id, tags.value as segment, ua.useragent FROM ".$this->db." as devices, ".$this->db_useragents." AS ua, ".UT_TAG." as tags, ".UT_TAGGINGS." WHERE devices.item_id = taggings.item_id AND taggings.tag_id = tags.id AND tags.context = 'segment' AND ua.item_id = devices.item_id AND ua.useragent REGEXP '[\b ]{1}".$marker."'";
 
 //				print $sql."<br>\n";
 				if($query->sql($sql)) {
