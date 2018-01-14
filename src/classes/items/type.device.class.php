@@ -2410,7 +2410,7 @@ class TypeDevice extends Itemtype {
 			// $sql = "SELECT *, MAX(identified_at) as lastentry FROM ".$this->db_unidentified." WHERE useragent LIKE '%$pattern%' GROUP BY useragent ORDER BY lastentry DESC";
 			// switched to REGEX to get more flexibility
 			$mysql_pattern = preg_replace("/(\\\\\(|\\\\\)|\\\\\[|\\\\\.)/", "\\\\$1", $pattern);
-			$sql = "SELECT id, useragent, MAX(identified_at) as lastentry FROM ".$this->db_unidentified." WHERE useragent REGEXP '$mysql_pattern' GROUP BY useragent ORDER BY lastentry DESC limit 3";
+			$sql = "SELECT id, useragent, MAX(identified_at) as lastentry FROM ".$this->db_unidentified." WHERE useragent REGEXP '$mysql_pattern' GROUP BY useragent ORDER BY lastentry DESC";
 		}
 		else {
 			$sql = "SELECT id, useragent, MAX(identified_at) as lastentry FROM ".$this->db_unidentified." GROUP BY useragent ORDER BY lastentry DESC";
