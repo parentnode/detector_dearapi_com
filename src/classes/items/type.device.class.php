@@ -1910,8 +1910,8 @@ class TypeDevice extends Itemtype {
 				if(isset($ua["matches"])) {
 					$i = array_push($potential_items, $ua);
 //					$i++;
-					if($i == 20) {
-//					if($i == 10) {
+					// should not work with more than 10 in production to avoid serious CPU overload looking for something that is not there.
+					if($i == 10) {
 						break;
 					}
 				}
