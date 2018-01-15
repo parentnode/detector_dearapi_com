@@ -1719,9 +1719,10 @@ class TypeDevice extends Itemtype {
 
 		set_time_limit(0);
 
-		// to test performance (also enable memory converter function below)
 		$start_time = microtime(true);
-		$s_i = 0;
+
+		// to test performance (also enable memory converter function below)
+		// $s_i = 0;
 
 		$IC = new Items();
 		$query = new Query();
@@ -1910,8 +1911,9 @@ class TypeDevice extends Itemtype {
 				if(isset($ua["matches"])) {
 					$i = array_push($potential_items, $ua);
 //					$i++;
-					// should not work with more than 10 in production to avoid serious CPU overload looking for something that is not there.
-					if($i == 10) {
+					// should not work with more than 20 or 30 seconds in production to avoid serious CPU overload looking for something that might not be there.
+					// If it takes that long, it's time to try something different, to bring the number of unidentified useragents down
+					if($i == 20 || $start_time - microtime(true) > 30000) {
 						break;
 					}
 				}
