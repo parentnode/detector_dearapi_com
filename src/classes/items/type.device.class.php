@@ -2726,6 +2726,94 @@ class TypeDevice extends Itemtype {
 	}
 
 
+	// delete duplet useragents from unidentified and identified lists
+	function deleteDupletUseragents($_options = false) {
+
+
+		set_time_limit(0);
+
+		$deleted_useragent = [];
+
+		$query = new Query();
+
+		// get all unidentified useragent
+		$sql = "SELECT id, useragent FROM ".$this->db_unidentified." GROUP BY useragent";
+//		print $sql;
+		if($query->sql($sql)) {
+			$unidentified_useragents = $query->results();
+
+			// get all identified useragents for comparison
+			$sql = "SELECT useragent FROM ".$this->db_useragents." GROUP BY useragent";
+			if($query->sql($sql)) {
+				$useragents = $query->results("useragent");
+
+				foreach($unidentified_useragents as $i => $unidentified_useragent) {
+
+					// check for existence
+					if(array_search($unidentified_useragent["useragent"], $useragents) !== false) {
+
+						// delete it
+						$sql = "DELETE FROM ".$this->db_unidentified." WHERE useragent = '".prepareForDB($unidentified_useragent["useragent"])."'";
+						$query->sql($sql);
+
+						// add to return list
+						$unidentified_useragent["type"] = "unidentified";
+						$deleted_useragent[] = $unidentified_useragent;
+
+					}
+				}
+
+				// lighten the burden
+				$unidentified_useragents[$i] = null;
+
+			}
+
+		}
+
+		unset($unidentified_useragents);
+		unset($useragents);
+
+//		return $deleted_useragent;
+
+		// get all identified useragent grouped and counter (don't get useragent, it takes up too much memory)
+		$sql = "SELECT id, count(*) as count FROM ".$this->db_useragents." GROUP BY useragent ORDER BY count DESC ";
+//		print $sql;
+		if($query->sql($sql)) {
+			$useragents = $query->results();
+
+			foreach($useragents as $i => $useragent) {
+
+				// delete duplicates only if count higher than 1
+				if($useragent["count"] > 1) {
+
+					// get actual useragent
+					$sql = "SELECT useragent FROM ".$this->db_useragents." WHERE id = ".$useragent["id"]; 
+					if($query->sql($sql)) {
+						$useragent["useragent"] = $query->result(0, "useragent");
+
+						$sql = "DELETE FROM ".$this->db_useragents." WHERE useragent = '".prepareForDB($useragent["useragent"])."' AND id != ".$useragent["id"];
+						$query->sql($sql);
+
+						// add to return list
+						$useragent["type"] = "identified";
+						$deleted_useragent[] = $useragent;
+					}
+
+				}
+				// useragents are ordered by count, so first entry with count !> 1, means we are done
+				else {
+					break;
+				}
+
+			}
+
+		}
+
+		return $deleted_useragent;
+
+	}
+
+
 	// Somehow some items are left without device
 	// could be the result an old error - should not be possible anymore
 	function listLostDevices($_options = false) {

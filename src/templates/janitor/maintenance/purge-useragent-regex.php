@@ -12,6 +12,12 @@ $all_items = $model->purgeUseragentRegex($action);
 	<h1>purge Useragent Regex</h1>
 	<h2>Removing trim-patterns from indexed and unidentified useragents</h2>
 
+	<ul class="actions">
+		<?= $HTML->link("Back", "/janitor/maintenance", array("class" => "button", "wrapper" => "li.back")) ?>
+	</ul>
+
+
+
 <?		if($all_items): ?>
 	<p class="note system_warning">This must be repeated until no more results show up. Purging all at once, will have too much impact on the server.</p>
 	<p>Please be careful to look through the list to check that purging did not overdo it.</p>
