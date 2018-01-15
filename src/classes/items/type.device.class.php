@@ -928,6 +928,7 @@ class TypeDevice extends Itemtype {
 
 
 		// global group priority
+		// prioritized for fastest all-over identification
 
 
 		// desktop_ie
@@ -1064,7 +1065,6 @@ class TypeDevice extends Itemtype {
 		$fallback_patterns[] = $this->getFallbackPattern("desktop_ie9");
 		$fallback_patterns[] = $this->getFallbackPattern("desktop_ie10");
 		$fallback_patterns[] = $this->getFallbackPattern("desktop_ie11");
-		$fallback_patterns[] = $this->getFallbackPattern("desktop_edge");
 		$fallback_patterns[] = $this->getFallbackPattern("desktop");
 		$fallback_patterns[] = $this->getFallbackPattern("tv");
 		$fallback_patterns[] = $this->getFallbackPattern("desktop_ie_light");

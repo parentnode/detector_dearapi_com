@@ -133,9 +133,29 @@ $useragent = "Mozilla/5.0 (compatible; Dataprovider.com;)";
 //$useragent = "Mozilla/4.0 (compatible; MS FrontPage 12.0)";
 //$useragent = "Mozilla/4.0 (compatible; Getleft 1.2)";
 $useragent = "Mozilla/5.0 (compatible; CsQuery/1.3)";
-$useragent = "Mozilla/5.0 (Mobile; $LYF/$F30C/$LYF_F30C-000-09-05-131117; rv:48.0) Gecko/48.0 Firefox/48.0 KAIOS/2.0";
+$useragent = 'Mozilla/5.0 (Mobile; $LYF/$F30C/$LYF_F30C-000-09-05-131117; rv:48.0) Gecko/48.0 Firefox/48.0 KAIOS/2.0';
 
-$reg_exp_pos = "mobile[^$]+firefox";
+$useragent = "Mozilla/5.0 (Linux; U; KFTT Build/IML74K) AppleWebKit/535.19 (KHTML, like Gecko) Silk/3.17 Safari/535.19 Silk-Accelerated=true";
+$useragent = "Mozilla/5.0 (Linux; Android 4.4.2; A7_PTAB735 Build/KOT49H) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.125 Safari/537.36";
+
+$useragent = "Mozilla/5.0 (Linux; U; Android 5.0.1; Nexus 4 Build/LRX22C) AppleWebKit/537.16 (KHTML, like Gecko) Version/4.0 Mobile Safari/537.16";
+$useragent = "Mozilla/5.0 (Linux; U; Android 2.0; Milestone Build/SHOLS_U2_01.03.1) AppleWebKit/525.10+ (KHTML, like Gecko) Version/3.0.4 Mobile Safari/523.12.2";
+$useragent = "Mozilla/5.0 (Linux; Android 4.1.2; XT918 Build/2_330_2009) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.105 Mobile Safari/537.36";
+
+$useragent = "Mozilla/5.0 (Linux; Android 4.4.2; MID721 Build/KOT49H) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/30.0.0.0 Safari/537.36";
+//$useragent = "Mozilla/5.0 (Linux; Android 4.4.2; MID-707QC Build/KVT49L) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/30.0.0.0 Safari/537.36";
+//$useragent = "Mozilla/5.0 (Linux; Android 6.0.1; MID-786 Build/MID-786) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.84 Safari/537.36";
+//$useragent = "Mozilla/5.0 (Linux; U; Android 4.0.4; MID0714PGE01.133 Build/IMM76D) AppleWebKit/534.30 (KHTML, like Gecko) Version/4.0 Mobile Safari/534.30";
+//$useragent = "Mozilla/5.0 (Linux; U; Android 4.0.4; A7_PTAB735 Build/IMM76D) AppleWebKit/534.30 (KHTML, like Gecko) Version/4.0 Mobile Safari/534.30";
+//$useragent = "Mozilla/5.0 (Linux; U; Android 4.2.2; MID0834 Build/MID0834-V1.0-2013.09.13) AppleWebKit/534.30 (KHTML, like Gecko) Version/4.0 Safari/534.30";
+$useragent = "Mozilla/5.0 (Linux; U; Android 4.0.4; MID7047 Build/IMM76D) AppleWebKit/534.30 (KHTML, like Gecko) Version/4.0 Safari/534.30";
+$useragent = "Mozilla/5.0 (Linux; Android 6.0; BTV-DL09 Build/HUAWEIBEETHOVEN-DL09; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/57.0.2987.132 Mobile Safari/537.36";
+
+//$reg_exp_pos = "Linux; U; KF[A-Z]+ [^$]+bkit\/(53[0-9]|60[01])[^$]+(silk)";
+$reg_exp_pos = "android[^$]+AppleWebKit\/(4[0-9]{2}|5([0-2][0-9]|3[0-6]))";
+$reg_exp_pos = "mediapad|m2-[A8]0[12]W|BTV-(DL|W)09";
+//$reg_exp_pos = "( MID[\-]?[014789][0-9]{2,3})";
+//$reg_exp_pos = "(PTAB|PMID)(7|9|10)\d\d|MIDC430|Polaroid Tablet";
 $reg_exp_neg = false; 
 
 

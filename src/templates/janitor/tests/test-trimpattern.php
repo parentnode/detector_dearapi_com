@@ -8,6 +8,11 @@ global $model;
 //include_once("classes/identify.class.php");
 $Identify = new Identify();
 
+// TODO: find simple to add comment to each UA, which can be printed in view to make it easier to check if trimming is doing as expected
+
+
+// RT-TV should not be replaced
+$useragents[] = 'Mozilla/5.0 (SMART-TV; X11; Linux i686) AppleWebKit/535.20+ (KHTML, like Gecko) Version/5.0 Safari/535.20+';
 
 $useragents[] = ' Mozilla/5.0 (iPhone; CPU iPhone OS 10_2_1 like Mac OS X) AppleWebKit/602.4.6 (KHTML, like Gecko) Mobile/14D27 [FBAN/FBIOS;FBAV/83.0.0.38.70;FBBV/51754296;FBDV/iPhone8,4;FBMD/iPhone;FBSN/iOS;FBSV/10.2.1;FBSS/2;FBCR/TELIA;FBID/phone;FBLC/da_DK;FBOP/5;FBRV/52433023] ';
 $useragents[] = 'Mozilla/5.0 (Linux; Android 6.0.1; SM-G920F Build/MMB29K; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/56.0.2924.87 Mobile Safari/537.36 [FB_IAB/MESSENGER;FBAV/109.0.0.23.70;]';
@@ -52,6 +57,8 @@ $useragents[] = 'iPad AppleWebKit AppEngine-Google; (+http://code.google.com/app
 $useragents[] = 'Mozilla/5.0 (compatible; AhrefsBot/5.0; +http://ahrefs.com/robot/) AppEngine-Google; (+http://code.google.com/appengine; appid: s~proxy6000-hrd)';
 
 $useragents[] = 'Opera/9.19 (Windows NT 5.1; U; Infopath.1) Presto/2.9.182 Version/11.00';
+
+$useragents[] = 'Mozilla/5.0 (Linux; U; Android 0.5; en-us) AppleWebKit/522 (KHTML, like Gecko) Safari/419.3';
 
 ?>
 <div class="scene defaultList purgeUseragentRegex tests">
