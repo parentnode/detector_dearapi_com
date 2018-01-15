@@ -2542,7 +2542,7 @@ class TypeDevice extends Itemtype {
 
 			// limit query to 200 to keep load on server bareable
 			$find_sql = "SELECT id, useragent FROM ".$this->db_unidentified." WHERE useragent REGEXP '".($mysql_pattern)."' GROUP BY useragent LIMIT 200";
-//			print $find_sql."<br>";
+			// print $find_sql."<br>";
 			if($query->sql($find_sql)) {
 
 				$results = $query->results();
@@ -2660,7 +2660,6 @@ class TypeDevice extends Itemtype {
 				}
 
 			}
-			return $all_results;
 
 		}
 
