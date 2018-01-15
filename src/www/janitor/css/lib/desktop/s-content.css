@@ -382,9 +382,12 @@
 	-moz-tab-size: 4;
 }
 
-#content .scene.purgeUseragentRegex li h3.deleted {background: #df0000;}
-#content .scene.purgeUseragentRegex li h3.updated {background: green;}
+#content .scene.purgeUseragentRegex li h3.deleted {background: #df0000; color: #ffffff;}
+#content .scene.purgeUseragentRegex li h3.updated {background: green; color: #ffffff;}
 #content .scene.purgeUseragentRegex li h3.trimmed-to-death {background: orange;}
+#content .scene.purgeUseragentRegex li h3 span.identified,
+#content .scene.purgeUseragentRegex li h3 span.unidentified {position: absolute; right: 30px; top: 10px;}
+
 #content .scene.purgeUseragentRegex li div.uas {overflow-x: auto;}
 #content .scene.purgeUseragentRegex li h4 {padding-bottom: 8px; white-space: pre;}
 #content .scene.purgeUseragentRegex li h4 span.trimmed {background-color: #df0000; color: #ffffff; white-space: pre;}

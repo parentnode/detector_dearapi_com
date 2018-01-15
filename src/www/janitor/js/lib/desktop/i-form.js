@@ -339,7 +339,8 @@ u.o.purgeUseragentRegex = new function() {
 			var max = this.scrollWidth - this.offsetWidth;
 
 			// prevent it and set the scroll to the boundary manually when it reached either end
-			if(this.scrollLeft + event.deltaX < 0 || this.scrollLeft + event.deltaX > max) {
+			// only do it if horisontal scroll is larger than vertical, to avoid interfering with vertical scroll
+			if(Math.abs(event.deltaX) > Math.abs(event.deltaY) && (this.scrollLeft + event.deltaX < 0 || this.scrollLeft + event.deltaX > max)) {
 				event.preventDefault();
 
 				// Manually set the scroll to the boundary

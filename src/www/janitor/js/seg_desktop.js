@@ -10848,7 +10848,7 @@ u.o.purgeUseragentRegex = new function() {
 	this.init = function(div) {
 		div._scrolled = function(event) {
 			var max = this.scrollWidth - this.offsetWidth;
-			if(this.scrollLeft + event.deltaX < 0 || this.scrollLeft + event.deltaX > max) {
+			if(Math.abs(event.deltaX) > Math.abs(event.deltaY) && (this.scrollLeft + event.deltaX < 0 || this.scrollLeft + event.deltaX > max)) {
 				event.preventDefault();
 				this.scrollLeft = Math.max(0, Math.min(max, this.scrollLeft + event.deltaX));
 			}
