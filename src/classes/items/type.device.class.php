@@ -2574,13 +2574,13 @@ class TypeDevice extends Itemtype {
 						// check if trimmed version already exists in identified table
 						$sql = "SELECT id FROM ".$this->db_useragents." WHERE useragent = '".prepareForDB($result["trimmed_useragent"])."'";
 
-						// if it already exists, delete it
+						// if trimmed version it already exists, delete it (and all like it)
 						if($query->sql($sql)) {
-							$sql = "DELETE FROM ".$this->db_unidentified." WHERE useragent = '".prepareForDB($result["trimmed_useragent"])."'";
+							$sql = "DELETE FROM ".$this->db_unidentified." WHERE useragent = '".prepareForDB($result["useragent"])."'";
+//							print $sql."<br>\n";
 							$query->sql($sql);
 							$result["status"] = "deleted";
 							$result["status_text"] = "Deleted";
-
 						}
 						// update it and all identical to trimmed version
 						else {
