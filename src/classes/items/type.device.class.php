@@ -2571,14 +2571,29 @@ class TypeDevice extends Itemtype {
 					// only do something if useragent still contains something
 					if($result["trimmed_useragent"]) {
 
-						// update it to trimmed version
-//						$sql = "UPDATE ".$this->db_unidentified." SET useragent = '".prepareForDB($result["trimmed_useragent"])."' WHERE useragent = '".prepareForDB($result["useragent"])."'";
-						$sql = "UPDATE ".$this->db_unidentified." SET useragent = '".prepareForDB($result["trimmed_useragent"])."' WHERE useragent = '".prepareForDB($result["useragent"])."'";
-						$query->sql($sql);
-						// only after next janitor update (where the function is included)
-						$update_count = method_exists($query, "affected") ? $query->affected() : "?"; 
-						$result["status"] = "updated";
-						$result["status_text"] = "Updated (".$update_count.")";
+						// check if trimmed version already exists in identified table
+						$sql = "SELECT id FROM ".$this->db_useragents." WHERE useragent = '".prepareForDB($result["trimmed_useragent"])."'";
+
+						// if it already exists, delete it
+						if($query->sql($sql)) {
+							$sql = "DELETE FROM ".$this->db_unidentified." WHERE useragent = '".prepareForDB($result["trimmed_useragent"])."'";
+							$query->sql($sql);
+							$result["status"] = "deleted";
+							$result["status_text"] = "Deleted";
+
+						}
+						// update it and all identical to trimmed version
+						else {
+
+	//						$sql = "UPDATE ".$this->db_unidentified." SET useragent = '".prepareForDB($result["trimmed_useragent"])."' WHERE useragent = '".prepareForDB($result["useragent"])."'";
+							$sql = "UPDATE ".$this->db_unidentified." SET useragent = '".prepareForDB($result["trimmed_useragent"])."' WHERE useragent = '".prepareForDB($result["useragent"])."'";
+							$query->sql($sql);
+							// only after next janitor update (where the function is included)
+							$update_count = method_exists($query, "affected") ? $query->affected() : "?"; 
+							$result["status"] = "updated";
+							$result["status_text"] = "Updated (".$update_count.")";
+
+						}
 
 					}
 					// trimmed to oblivion
