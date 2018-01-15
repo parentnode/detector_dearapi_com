@@ -59,9 +59,9 @@ class Identify {
 		}
 
 
-		// no useragent - don't try to identify, just return basic
-		if(!$useragent) {
-			return array("segment" => "seo");
+		// no useragent - don't try to identify, just return desktop (default)
+		if(!$useragent || $useragent == "null") {
+			return array("segment" => "desktop");
 //			return "basic";
 		}
 
