@@ -1743,7 +1743,7 @@ class TypeDevice extends Itemtype {
 		// $_ts["after testMarkers ".$s_i++] = [microtime(true), memory_get_usage()];
 
 		// to test on a limited number of devices (for dev purposes)
-//		$uas = array_slice($uas, 0, 10);
+		// $uas = array_slice($uas, 0, 1);
 		// $_ts["before foreach ".$s_i++] = [microtime(true), memory_get_usage()];
 
 		// loop the matches
@@ -1758,7 +1758,7 @@ class TypeDevice extends Itemtype {
 			// Example UA:
 			// Mozilla/5.0 (Linux; U; Android 4.2.2; en-us; GT-P5113 Build/JDQ39) AppleWebKit/534.30 (KHTML, like Gecko) Version/4.0 Safari/534.30
 			// Marker is: GT-P5113
-			if(preg_match("/Android[ 0-9._a-zA-Z\-]*;[ ]?([A-Za-z]{2}[-_][A-Za-z]{2}|[A-Za-z]{2}[-_]|[A-Za-z]{2})[ ;]+([A-Za-z0-9 \-_]+)/i", $ua["useragent"], $matches)) {
+			if(preg_match("/Android[ 0-9._a-zA-Z\-]*;[ ]?([A-Za-z]{2}[-_][A-Za-z]{2}|[A-Za-z]{2}[-_])[ ;]+([A-Za-z0-9 \-_]+)/i", $ua["useragent"], $matches)) {
 				$marker = $matches[2];
 			}
 			// Example UA:
@@ -1783,7 +1783,7 @@ class TypeDevice extends Itemtype {
 			// $_ts["ua after regexp ".$s_i++] = [microtime(true), memory_get_usage()];
 
 			// TODO: filter more values after testing
-			$marker = trim(preg_replace("/build|mozilla|uweb|android|samsung/i", "", $marker));
+			$marker = trim(preg_replace("/build|mozilla|uweb|android|samsung[-]?/i", "", $marker));
 			// print "marker:". $marker."<br>\n";
 
 			// if marker apears to be valid - and don't search for the same marker twice
@@ -1803,6 +1803,30 @@ class TypeDevice extends Itemtype {
 				// print $sql."<br>\n";
 				if($query->sql($sql)) {
 					$similar_items = $query->results();
+				}
+				// insist
+				else if(strlen($marker) >= 7 && preg_match("/^[A-Za-z]/", substr($marker, -1))) {
+
+					// print "LENGTH:" . strlen($marker)."<br>\n";
+					// print "LAST CHAR:" .substr($marker, -1)."<br>\n";
+					// print "MATCH: " . preg_match("/^[A-Za-z]/", substr($marker, -1))."<br>\n";
+
+
+					// a lot of times markers come with some variation
+					// like SM-G955U, SM-G955WM, SM-G955H etc ...
+					// if the marker is longer than 7 chars and end char is A-Za-z (just to try something that is not too crazy)
+					// then remove the last char from the marker and try finding match again
+					
+					// new marker
+					$ua["marker"] = substr($marker, 0, -1) . " (" . $marker . ")";
+					$marker = substr($marker, 0, -1);
+//					print "NEW marker:". $marker."<br>\n";
+
+					$sql = "SELECT devices.name, devices.item_id, tags.value as segment, ua.useragent FROM ".$this->db." as devices, ".$this->db_useragents." AS ua, ".UT_TAG." as tags, ".UT_TAGGINGS." WHERE devices.item_id = taggings.item_id AND taggings.tag_id = tags.id AND tags.context = 'segment' AND ua.item_id = devices.item_id AND ua.useragent REGEXP '[\b ]{1}".$marker."'";
+
+					if($query->sql($sql)) {
+						$similar_items = $query->results();
+					}
 				}
 
 				// print "number of similar UAs:".count($similar_items)."<br>\n";
@@ -1944,11 +1968,11 @@ class TypeDevice extends Itemtype {
 		return $potential_items;
 	}
 
-	function formatBytes($size, $precision = 2) {
-		$base = log($size, 1024);
-		$suffixes = array('', 'Kb', 'Mb', 'Gb', 'Tb');   
-		return number_format(round(pow(1024, $base - floor($base)), $precision), $precision) . $suffixes[floor($base)];
-	}
+	// function formatBytes($size, $precision = 2) {
+	// 	$base = log($size, 1024);
+	// 	$suffixes = array('', 'Kb', 'Mb', 'Gb', 'Tb');
+	// 	return number_format(round(pow(1024, $base - floor($base)), $precision), $precision) . $suffixes[floor($base)];
+	// }
 
 	// test device markers on unidentified useragents
 	// testMarkersOnUnidentified/#device_id#
