@@ -9,8 +9,8 @@ $all_items = $model->deleteDupletUseragents();
 //print_r($all_items);
 ?>
 <div class="scene defaultList deleteDupletUseragents">
-	<h1>Delete duplet useragents from both unidentified and identified</h1>
-	<h2>Heavy duty processing - don't exaggerate.</h2>
+	<h1>Delete duplet useragents</h1>
+	<h2>Will delete from both unidentified and identified – Heavy duty processing - don't exaggerate.</h2>
 
 	<ul class="actions">
 		<?= $HTML->link("Back", "/janitor/maintenance", array("class" => "button", "wrapper" => "li.back")) ?>
