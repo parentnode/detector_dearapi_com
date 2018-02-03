@@ -14,13 +14,10 @@ $action = $page->actions();
 
 $ua = stringOr(getVar("ua"), isset($_SERVER["HTTP_USER_AGENT"]) ? $_SERVER["HTTP_USER_AGENT"] : "");
 
-
 // Add useragent to unidentified without doing any identification
 $query = new Query();
-
-$site = getVar("site");
+$site = stringOr(getVar("site"), isset($_SERVER["HTTP_ORIGIN"]) ? $_SERVER["HTTP_ORIGIN"] : "");
 $file = getVar("file");
-
 $comment = "Submitted from: ";
 if($site) {
 	$comment .= preg_replace("/\/$/", "", $site)."/".$file . "\n";
