@@ -20,7 +20,7 @@ $site = stringOr(getVar("site"), isset($_SERVER["HTTP_ORIGIN"]) ? $_SERVER["HTTP
 $file = getVar("file");
 $comment = "Submitted from: ";
 if($site) {
-	$comment .= preg_replace("/\/$/", "", $site)."/".$file . "\n";
+	$comment .= preg_replace("/\/$/", "", $site).($file ? "/".$file : ""). "\n";
 }
 else {
 	$comment .= "Unknown\n";
