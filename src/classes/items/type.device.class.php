@@ -1937,7 +1937,7 @@ class TypeDevice extends Itemtype {
 //					$i++;
 					// should not work with more than 30-60 seconds in production to avoid serious CPU overload looking for something that might not be there.
 					// If it takes that long, it's time to try something different, to bring the number of unidentified useragents down
-					if($i == 20 || microtime(true) - $start_time > 600) {
+					if($i == 20 || microtime(true) - $start_time > 120) {
 						break;
 					}
 				}
