@@ -4546,7 +4546,9 @@ Util.Objects["collapseHeader"] = new function() {
 		div._toggle_header.clicked = function() {
 			if(this.div._toggle_is_closed) {
 				u.ac(this.div, "open");
-				u.as(this.div, "height", "auto");
+				u.ass(this.div, {
+					height: "auto"
+				});
 				this.div._toggle_is_closed = false;
 				u.saveNodeCookie(this.div, "open", 1, {"ignore_classvars":true, "ignore_classnames":"open"});
 				u.addCollapseArrow(this);
@@ -4556,7 +4558,9 @@ Util.Objects["collapseHeader"] = new function() {
 			}
 			else {
 				u.rc(this.div, "open");
-				u.as(this.div, "height", this.offsetHeight+"px");
+				u.ass(this.div, {
+					height: this.offsetHeight+"px"
+				});
 				this.div._toggle_is_closed = true;
 				u.saveNodeCookie(this.div, "open", 0, {"ignore_classvars":true, "ignore_classnames":"open"});
 				u.addExpandArrow(this);
@@ -4566,7 +4570,6 @@ Util.Objects["collapseHeader"] = new function() {
 			}
 		}
 		var state = u.getNodeCookie(div, "open", {"ignore_classvars":true, "ignore_classnames":"open"});
-		console.log("state:" + state + ", " + typeof(state));
 		if(!state) {
 			div._toggle_header.clicked();
 		}
@@ -5122,10 +5125,15 @@ Util.validateResponse = function(HTTPRequest){
 		request.finished = true;
 		try {
 			request.status = HTTPRequest.status;
-			if(HTTPRequest.status && !HTTPRequest.status.toString().match(/403|404|500/)) {
-				object = u.evaluateResponseText(HTTPRequest.responseText);
+			if(HTTPRequest.status && !HTTPRequest.status.toString().match(/[45][\d]{2}/)) {
+				if(HTTPRequest.responseType && HTTPRequest.response) {
+					object = HTTPRequest.response;
+				}
+				else if(HTTPRequest.responseText) {
+					object = u.evaluateResponseText(HTTPRequest.responseText);
+				}
 			}
-			else if(HTTPRequest.responseText) {
+			else if(HTTPRequest.responseText && typeof(HTTPRequest.status) == "undefined") {
 				object = u.evaluateResponseText(HTTPRequest.responseText);
 			}
 		}
@@ -5147,16 +5155,16 @@ Util.validateResponse = function(HTTPRequest){
 	}
 	else {
 		if(typeof(request.callback_error) == "function") {
-			request.callback_error({error:true}, request_id);
+			request.callback_error({error:true,status:request.status}, request_id);
 		}
 		else if(typeof(node[request.callback_error]) == "function") {
-			node[request.callback_error]({error:true}, request_id);
+			node[request.callback_error]({error:true,status:request.status}, request_id);
 		}
 		else if(typeof(request.callback_response) == "function") {
-			request.callback_response({error:true}, request_id);
+			request.callback_response({error:true,status:request.status}, request_id);
 		}
 		else if(typeof(node[request.callback_response]) == "function") {
-			node[request.callback_response]({error:true}, request_id);
+			node[request.callback_response]({error:true,status:request.status}, request_id);
 		}
 	}
 }
@@ -5254,7 +5262,9 @@ Util.isStringJSON = function(string) {
 				return test;
 			}
 		}
-		catch(exception) {}
+		catch(exception) {
+			console.log(exception)
+		}
 	}
 	return false;
 }
@@ -7910,7 +7920,7 @@ Util.Objects["page"] = new function() {
 		u.bug("init page:" + page)
 		window.page = page;
 		u.bug_force = true;
-		u.bug("This site is built using Manipulator, Janitor and Detector");
+		u.bug("This site is built using the combined powers of body, mind and spirit. Well, and also Manipulator, Janitor and Detector");
 		u.bug("Visit https://parentnode.dk for more information");
 		u.bug_force = false;
 		var i, node;
@@ -8426,20 +8436,91 @@ Util.Objects["defaultEdit"] = new function() {
 		u.e.addEvent(document.body, "keydown", form.cancelBackspace);
 	}
 }
-Util.Objects["defaultMessage"] = new function() {
+Util.Objects["newSystemMessage"] = new function() {
 	this.init = function(div) {
-		div._item_id = u.cv(div, "item_id");
 		var form = u.qs("form", div);
 		form.div = div;
+		form.ul_actions = u.qs("ul.actions", form);
+		var fieldset = u.qs("fieldset.values", form);
+		fieldset.h3_span = u.qs("h3 span.recipient", fieldset);
+		fieldset.h3_span.innerHTML = "?";
 		u.f.init(form);
+		form.fields["recipients"].keyup = function(event) {
+			var recipients = this.val().replace(/,/g, ";").split(";");
+			var fieldsets = u.qsa("fieldset.values", this._form);
+			var i, recipient, inputs, input, labels, label, fieldset;
+			if(event.key == "," || event.key == "," || event.key == "Delete" || event.key == "Backspace") {
+				if(recipients.length < fieldsets.length && fieldsets.length > 1) {
+					fieldsets[0].parentNode.removeChild(fieldsets[fieldsets.length-1]);
+					fieldsets = u.qsa("fieldset.values", this._form);
+				}
+				else if(recipients.length > fieldsets.length) {
+					fieldset = fieldsets[0].parentNode.insertBefore(fieldsets[0].cloneNode(true), this._form.ul_actions);
+					fieldset.h3_span = u.qs("h3 span.recipient", fieldset);
+					fieldsets = u.qsa("fieldset.values", this._form);
+					inputs = u.qsa("input[type=text]", fieldset);
+					for(i = 0; i < inputs.length; i++) {
+						input = inputs[i];
+						input.value = "";
+						input.name = input.name.replace(/values\[[\d]+\]/, "values["+(fieldsets.length-1)+"]");
+						input.id = input.id.replace(/values\[[\d]+\]/, "values["+(fieldsets.length-1)+"]");
+					}
+					labels = u.qsa("label", fieldset);
+					for(i = 0; i < labels.length; i++) {
+						label = labels[i];
+						label.setAttribute("for", label.getAttribute("for").replace(/values\[[\d]+\]/, "values["+(fieldsets.length-1)+"]"));
+					}
+					u.f.init(this._form);
+				}
+			}
+			for(i = 0; i < recipients.length; i++) {
+				recipient = recipients[i];
+				fieldsets[i].h3_span.innerHTML = recipient;
+			}
+		}
+		u.e.addEvent(form.fields["recipients"], "keyup", form.fields["recipients"].keyup);
 		form.submitted = function(iN) {
+			u.ac(this, "submitting");
 			this.response = function(response) {
+				u.rc(this, "submitting");
+				if(response.cms_status == "success") {
+					var div_receipt = u.ae(this.div, "div", {class:"receipt"});
+					u.ae(div_receipt, "p", {html:"Mail was successfully sent to:"});
+					var ul_receipt = u.ae(div_receipt, "ul", {class:"receipt"});
+					var i;
+					for(i = 0; i < response.cms_object.length; i++) {
+						u.ae(ul_receipt, "li", {html:response.cms_object[i]})
+					}
+					this.parentNode.replaceChild(div_receipt, this);
+				}
 				page.notify(response);
 			}
 			u.request(this, this.action, {"method":"post", "params" : u.f.getParams(this, {"send_as":"formdata"})});
 		}
 	}
 }
+Util.Objects["sendMessage"] = new function() {
+	this.init = function(div) {
+		var form = u.qs("form", div);
+		form.div = div;
+		u.f.init(form);
+		form.div_message_form = u.qs("div.item.message form");
+		form.submitted = function(iN) {
+			if(this.fields["recipients"].val() || this.fields["maillist_id"].val()) {
+				this.div_message_form.submit();
+				this.response = function(response) {
+					page.notify(response);
+				}
+				u.request(this, this.action, {"method":"post", "params" : u.f.getParams(this, {"send_as":"formdata"})});
+			}
+			else {
+				u.f.fieldError(this.fields["recipients"]);
+				u.f.fieldError(this.fields["maillist_id"]);
+			}
+		}
+	}
+}
+
 
 /*i-default_new.js*/
 Util.Objects["defaultNew"] = new function() {
@@ -10478,10 +10559,15 @@ Util.validateResponse = function(HTTPRequest){
 		request.finished = true;
 		try {
 			request.status = HTTPRequest.status;
-			if(HTTPRequest.status && !HTTPRequest.status.toString().match(/403|404|500/)) {
-				object = u.evaluateResponseText(HTTPRequest.responseText);
+			if(HTTPRequest.status && !HTTPRequest.status.toString().match(/[45][\d]{2}/)) {
+				if(HTTPRequest.responseType && HTTPRequest.response) {
+					object = HTTPRequest.response;
+				}
+				else if(HTTPRequest.responseText) {
+					object = u.evaluateResponseText(HTTPRequest.responseText);
+				}
 			}
-			else if(HTTPRequest.responseText) {
+			else if(HTTPRequest.responseText && typeof(HTTPRequest.status) == "undefined") {
 				object = u.evaluateResponseText(HTTPRequest.responseText);
 			}
 		}
@@ -10503,16 +10589,16 @@ Util.validateResponse = function(HTTPRequest){
 	}
 	else {
 		if(typeof(request.callback_error) == "function") {
-			request.callback_error({error:true}, request_id);
+			request.callback_error({error:true,status:request.status}, request_id);
 		}
 		else if(typeof(node[request.callback_error]) == "function") {
-			node[request.callback_error]({error:true}, request_id);
+			node[request.callback_error]({error:true,status:request.status}, request_id);
 		}
 		else if(typeof(request.callback_response) == "function") {
-			request.callback_response({error:true}, request_id);
+			request.callback_response({error:true,status:request.status}, request_id);
 		}
 		else if(typeof(node[request.callback_response]) == "function") {
-			node[request.callback_response]({error:true}, request_id);
+			node[request.callback_response]({error:true,status:request.status}, request_id);
 		}
 	}
 }
@@ -10610,7 +10696,9 @@ Util.isStringJSON = function(string) {
 				return test;
 			}
 		}
-		catch(exception) {}
+		catch(exception) {
+			console.log(exception)
+		}
 	}
 	return false;
 }
@@ -12330,25 +12418,27 @@ Util.Objects["unidentifiedList"] = new function() {
 				this._add_to.identified_options_lis.push(option_node);
 				u.e.click(option_node);
 				option_node.closeOption = function() {
+					console.log("option_node.closeOption");
+					console.log(option_node);
 					if(this._info) {
 						this._info.parentNode.removeChild(this._info);
 						delete this._info;
 					}
 					if(this._show_selected_only) {
 						this._show_selected_only.parentNode.removeChild(this._show_selected_only);
-						delete this._info;
+						delete this._show_selected_only;
 					}
 					if(this._selected) {
 						this._selected.parentNode.removeChild(this._selected);
-						delete this._info;
+						delete this._selected;
 					}
 					if(this._matching) {
 						this._matching.parentNode.removeChild(this._matching);
-						delete this._info;
+						delete this._matching;
 					}
 					if(this._addtoclone) {
 						this._addtoclone.parentNode.removeChild(this._addtoclone);
-						delete this._info;
+						delete this._addtoclone;
 					}
 					var i, node;
 					for(i = 0; i < this.ua_nodes.length; i++) {
@@ -12356,8 +12446,11 @@ Util.Objects["unidentifiedList"] = new function() {
 						u.rc(node, "mapped", false);
 					}
 				}
-				option_node.clicked = function() {
+				option_node.clicked = function(event) {
+					console.log("option_node.clicked");
+					console.log(event);
 					if(!this._info) {
+						console.log("build info pane");
 						var i, node, li;
 						for(i = 0; i < this.div._add_to.identified_options_lis.length; i++) {
 							li = this.div._add_to.identified_options_lis[i];
@@ -12398,6 +12491,7 @@ Util.Objects["unidentifiedList"] = new function() {
 						}
 					}
 					else {
+						console.log("info pane is already open, close info pane")
 						this.closeOption();
 					}
 				}

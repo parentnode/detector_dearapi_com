@@ -786,6 +786,8 @@ Util.Objects["unidentifiedList"] = new function() {
 
 				u.e.click(option_node);
 				option_node.closeOption = function() {
+					console.log("option_node.closeOption");
+					console.log(option_node);
 
 					if(this._info) {
 						this._info.parentNode.removeChild(this._info);
@@ -795,22 +797,22 @@ Util.Objects["unidentifiedList"] = new function() {
 					if(this._show_selected_only) {
 						this._show_selected_only.parentNode.removeChild(this._show_selected_only);
 //						this._show_selected_only = false;
-						delete this._info;
+						delete this._show_selected_only;
 					}
 					if(this._selected) {
 						this._selected.parentNode.removeChild(this._selected);
 //						this._selected = false;
-						delete this._info;
+						delete this._selected;
 					}
 					if(this._matching) {
 						this._matching.parentNode.removeChild(this._matching);
 //						this._matching = false;
-						delete this._info;
+						delete this._matching;
 					}
 					if(this._addtoclone) {
 						this._addtoclone.parentNode.removeChild(this._addtoclone);
 //						this._addtoclone = false;
-						delete this._info;
+						delete this._addtoclone;
 					}
 
 					// remove highlighting of matching nodes
@@ -826,7 +828,9 @@ Util.Objects["unidentifiedList"] = new function() {
 				}
 
 				//
-				option_node.clicked = function() {
+				option_node.clicked = function(event) {
+					console.log("option_node.clicked");
+					console.log(event);
 					// show advanced options menu if not already present 
 					// (else close it)
 
@@ -836,6 +840,7 @@ Util.Objects["unidentifiedList"] = new function() {
 					// add SELECTED to CLONE
 					if(!this._info) {
 
+						console.log("build info pane");
 						var i, node, li;
 
 						// close other options 
@@ -908,7 +913,7 @@ Util.Objects["unidentifiedList"] = new function() {
 
 					// remove advanced menu
 					else {
-
+						console.log("info pane is already open, close info pane")
 						this.closeOption();
 
 					}
