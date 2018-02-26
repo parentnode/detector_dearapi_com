@@ -1212,6 +1212,11 @@ body.invoice #content div.scene .all_items ul.items li span.amount {float: right
 #content .scene.unidentifiedList .items > li ul.info li.identified_as:before {content: ",\00a0";}
 #content .scene.unidentifiedList .items > li ul.info li.visits:after {content: "\00a0visits";}
 #content .scene.unidentifiedList .items > li ul.info li.comment {}
+#content .scene.unidentifiedList .items > li h3 span {background: green; color: white;}
+.search_result {position: absolute; z-index: 1150; top: 0; left: 0; width: 350px; font-size: 13px; line-height: 14px; text-align: center; background: #ffffff; border: 1px solid #000000; cursor: pointer; padding: 5px;}
+.search_result h3 {text-align: left; padding: 0;}
+.search_result p {text-align: left; padding: 0 0 5px; border-bottom: 1px solid #000000; margin: 0 0 5px;}
+.search_result p span.screen {font-weight: bold; color: red;}
 .addToDevice {position: fixed; z-index: 12; top: 0px; right: 0; width: 200px; height: 100%; background: #ffffff; border: 1px solid #dedede; border-top: none; border-right: none; padding: 0 20px 0 10px;}
 .addToDevice.loading {background: red;}
 .addToDevice.adding {background: green;}

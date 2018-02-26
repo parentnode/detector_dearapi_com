@@ -411,6 +411,11 @@ Util.Objects["unidentifiedList"] = new function() {
 
 			// enable node expansion (get useragent details)
 			u.e.click(node);
+			// Don't open when selecting text
+			node.moved = function(event) {
+				u.e.resetEvents(this);
+			}
+			// expand/collapse node on click
 			node.clicked = function() {
 
 				if(!this._ul) {
@@ -489,6 +494,135 @@ Util.Objects["unidentifiedList"] = new function() {
 				}
 			}
 
+			// get useragent reference (text in H3)
+			// check for text selections
+			node.h3 = u.qs("h3", node);
+			if(node.h3)  {
+
+				node.h3.CheckSelection = function() {
+//					console.log("node.h3.CheckSelection");
+
+					// get selection, to use for deletion
+					var selection = window.getSelection(); 
+//					console.log(selection);
+
+					// new selection
+					if(selection && !selection.isCollapsed) {
+						if(
+							(u.containsOrIs(selection.anchorNode, this))
+							 && 
+							(u.containsOrIs(selection.focusNode, this))
+						) {
+							
+
+							this.span = document.createElement("span");
+							this.span.node = this;
+
+							var range = selection.getRangeAt(0);
+							try {
+								range.surroundContents(this.span);
+//								selection.removeAllRanges();
+
+							}
+							catch(exception) {
+								console.log("Exception:");
+								console.log(exception);
+							}
+
+
+							// Add delete selection option
+							this.bn_delete = u.ae(document.body, "span", {"class":"delete_selection", "html":"X"});
+							this.bn_delete.node = this;
+
+							u.ce(this.bn_delete);
+							this.bn_delete.clicked = function(event) {
+								u.e.kill(event);
+
+								var fragment = document.createTextNode(this.node.span.innerHTML);
+								this.node.replaceChild(fragment, this.node.span);
+
+								// remove actions
+								this.node.bn_delete.parentNode.removeChild(this.node.bn_delete);
+								this.node.bn_search.parentNode.removeChild(this.node.bn_search);
+								console.log("delete: " + this.node.div_results);
+								if(this.node.div_results) {
+									this.node.div_results.parentNode.removeChild(this.node.div_results);
+								}
+
+							}
+
+							u.as(this.bn_delete, "top", (u.absY(this.span))+"px");
+							u.as(this.bn_delete, "left", (u.absX(this.span)-35)+"px");
+
+
+							// Add search selection option
+							this.bn_search = u.ae(document.body, "span", {"class":"edit_selection", "html":"?"});
+							this.bn_search.node = this;
+
+							u.as(this.bn_search, "top", (u.absY(this.span))+"px");
+							u.as(this.bn_search, "left", (u.absX(this.span)-17)+"px");
+
+							u.ce(this.bn_search);
+							this.bn_search.clicked = function(event) {
+								u.e.kill(event);
+
+								this.response = function(response) {
+									if(typeof(response) == "object" && response.items.length) {
+
+										this.node.div_results = u.ae(document.body, "div", {"class":"search_result"});
+										this.node.div_results.node = this;
+										this.has_results = false;
+
+										u.as(this.node.div_results, "top", (u.absY(this)+20)+"px");
+										u.as(this.node.div_results, "left", (u.absX(this)-17)+"px");
+
+
+										for(i = 0; i < response.items.length; i++) {
+											
+											result = response.items[i];
+//											console.log(result)
+//											console.log(result.snippet)
+											if(result.snippet.match(/[0-9\.\,]+[ \-]?(\"|\″|inch|pulgad)/)) {
+												var h3 = u.ae(this.node.div_results, "h3");
+												u.ae(h3, "a", {html:result.link, href:result.link, target:"_blank"});
+												u.ae(this.node.div_results, "p", {html:result.snippet.replace(/([0-9\.\,]+[ \-]?(\"|\″|inch|pulgad))/, "<span class=\"screen\">$1</span>")})
+//												console.log();
+												this.has_results = true;
+											}
+
+										}
+
+										if(!this.has_results) {
+											u.ae(this.node.div_results, "p", {html:"No sizes in results"});
+										}
+
+										
+									}
+									else {
+										page.notify({"cms_message":{"error":["Invalid search result"]}});
+									}
+//									console.log(response);
+								}
+//								u.request(this, "/janitor/maintenance/search-for-marker");
+								u.request(this, "https://www.googleapis.com/customsearch/v1?cx=006888141968518277707%3Awiqtlhmqi14&key=AIzaSyD2dkkTv2F03M2gi1TO7pAm0jz21o5GFPQ&q="+this.node.span.innerHTML+"+specs");
+//								console.log(this.node.span.innerHTML);
+							}
+
+							// console.log(selection.toString());
+							// console.log("valid selection")
+
+						}
+						else {
+							page.notify({"cms_message":{"error":["Invalid selection - crossing tag boundaries"]}});
+						}
+						
+					}
+
+				}
+
+				// content has been modified or selected (can happen with mouse or keys)
+				u.e.addEvent(node.h3, "mouseup", node.h3.CheckSelection);
+			}
 			node.h4_matches = u.qs("h4.matches", node);
 			node.ul_matches = u.qs("ul.matches", node);
 			if(node.h4_matches && node.ul_matches) {
