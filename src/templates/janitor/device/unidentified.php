@@ -66,7 +66,11 @@ else {
 
 
 	<div class="stats">
+		<? if($all_items): ?>
 		<p>A total of <?= pluralize(count($all_items), "unidentified useragent", "unidentified useragents")?> were returned by the server</p>
+		<? else: ?>
+		<p>No devices returned.</p>
+		<? endif; ?>
 	</div>
 
 	<div class="all_items i:unidentifiedList filters"
