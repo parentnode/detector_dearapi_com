@@ -103,43 +103,44 @@ class TypeDevice extends Itemtype {
 			}
 
 
-			// useragents
-			$item["useragents"] = false;
-			// get useragents
-			if($query->sql("SELECT * FROM ".$this->db_useragents." WHERE item_id = $item_id")) {
-
-				$useragents = $query->results();
-				foreach($useragents as $i => $useragent) {
-					$item["useragents"][$i]["id"] = $useragent["id"];
-					$item["useragents"][$i]["useragent"] = $useragent["useragent"];
-				}
-			}
-
-
-			// markers
-			$item["markers"] = false;
-			// get markers
-			if($query->sql("SELECT * FROM ".$this->db_markers." WHERE item_id = $item_id")) {
-
-				$markers = $query->results();
-				foreach($markers as $i => $marker) {
-					$item["markers"][$i]["id"] = $marker["id"];
-					$item["markers"][$i]["marker"] = $marker["marker"];
-				}
-			}
-
-
-			// exceptions
-			$item["exceptions"] = false;
-			// get exceptions
-			if($query->sql("SELECT * FROM ".$this->db_exceptions." WHERE item_id = $item_id")) {
-
-				$exceptions = $query->results();
-				foreach($exceptions as $i => $exception) {
-					$item["exceptions"][$i]["id"] = $exception["id"];
-					$item["exceptions"][$i]["exception"] = $exception["exception"];
-				}
-			}
+			// Excessive overload - doesn't seem to be used really
+			// // useragents
+			// $item["useragents"] = false;
+			// // get useragents
+			// if($query->sql("SELECT * FROM ".$this->db_useragents." WHERE item_id = $item_id")) {
+			//
+			// 	$useragents = $query->results();
+			// 	foreach($useragents as $i => $useragent) {
+			// 		$item["useragents"][$i]["id"] = $useragent["id"];
+			// 		$item["useragents"][$i]["useragent"] = $useragent["useragent"];
+			// 	}
+			// }
+			//
+			//
+			// // markers
+			// $item["markers"] = false;
+			// // get markers
+			// if($query->sql("SELECT * FROM ".$this->db_markers." WHERE item_id = $item_id")) {
+			//
+			// 	$markers = $query->results();
+			// 	foreach($markers as $i => $marker) {
+			// 		$item["markers"][$i]["id"] = $marker["id"];
+			// 		$item["markers"][$i]["marker"] = $marker["marker"];
+			// 	}
+			// }
+			//
+			//
+			// // exceptions
+			// $item["exceptions"] = false;
+			// // get exceptions
+			// if($query->sql("SELECT * FROM ".$this->db_exceptions." WHERE item_id = $item_id")) {
+			//
+			// 	$exceptions = $query->results();
+			// 	foreach($exceptions as $i => $exception) {
+			// 		$item["exceptions"][$i]["id"] = $exception["id"];
+			// 		$item["exceptions"][$i]["exception"] = $exception["exception"];
+			// 	}
+			// }
 
 
 			return $item;
@@ -147,6 +148,63 @@ class TypeDevice extends Itemtype {
 		else {
 			return false;
 		}
+	}
+
+
+	function getUseragents($item) {
+		$query = new Query();
+
+		// useragents
+		$item["useragents"] = false;
+		// get useragents
+		if($query->sql("SELECT * FROM ".$this->db_useragents." WHERE item_id = ". $item["item_id"])) {
+
+			$useragents = $query->results();
+			foreach($useragents as $i => $useragent) {
+				$item["useragents"][$i]["id"] = $useragent["id"];
+				$item["useragents"][$i]["useragent"] = $useragent["useragent"];
+			}
+		}
+
+
+		return $item;
+	}
+
+
+	/**
+	* Get item
+	*/
+	function getMarkersAndExceptions($item) {
+		$query = new Query();
+
+		// markers
+		$item["markers"] = false;
+		// get markers
+		if($query->sql("SELECT * FROM ".$this->db_markers." WHERE item_id = ". $item["item_id"])) {
+
+			$markers = $query->results();
+			foreach($markers as $i => $marker) {
+				$item["markers"][$i]["id"] = $marker["id"];
+				$item["markers"][$i]["marker"] = $marker["marker"];
+			}
+		}
+
+
+		// exceptions
+		$item["exceptions"] = false;
+		// get exceptions
+		if($query->sql("SELECT * FROM ".$this->db_exceptions." WHERE item_id = ". $item["item_id"])) {
+
+			$exceptions = $query->results();
+			foreach($exceptions as $i => $exception) {
+				$item["exceptions"][$i]["id"] = $exception["id"];
+				$item["exceptions"][$i]["exception"] = $exception["exception"];
+			}
+		}
+
+
+		return $item;
+
 	}
 
 
@@ -294,6 +352,8 @@ class TypeDevice extends Itemtype {
 
 			// get source device details
 			$device = $this->get($device_id_source);
+			$device = $this->getUseragents($device);
+			$device = $this->getMarkersAndExceptions($device);
 
 
 			// add comments to new device
@@ -595,6 +655,8 @@ class TypeDevice extends Itemtype {
 			$IC = new Items();
 			$device_id = $action[1];
 			$device = $this->get($device_id);
+			$device = $this->getUseragents($device);
+			$device = $this->getMarkersAndExceptions($device);
 
 			// get some additional information about device
 			$device_segment = $IC->getTags(array("item_id" => $device_id, "context" => "segment"));
@@ -749,7 +811,10 @@ class TypeDevice extends Itemtype {
 
 		$global_device = $IC->getItems(array("tags" => "segment:".$global_segment.";type:global", "limit" => 1));
 		if($global_device) {
-			return $this->get($global_device[0]["id"]);
+			$device = $this->get($global_device[0]["id"]);
+			$device = $this->getMarkersAndExceptions($device);
+			
+			return $device;
 		}
 
 
@@ -786,9 +851,10 @@ class TypeDevice extends Itemtype {
 			foreach($devices_with_patterns as $device_with_pattern) {
 				
 				$device = $IC->getItem(array("id" => $device_with_pattern["item_id"], "extend" => true));
+				$device = $this->getMarkersAndExceptions($device);
 
 				// forget unnecessary data
-				unset($device["useragents"]);
+//				unset($device["useragents"]);
 				unset($device["tags"]);
 
 				$device["segment"] = $segment;
@@ -837,9 +903,10 @@ class TypeDevice extends Itemtype {
 			foreach($devices_with_patterns as $device_with_pattern) {
 
 				$device = $IC->getItem(array("id" => $device_with_pattern["item_id"], "extend" => true));
+				$device = $this->getMarkersAndExceptions($device);
 
 				// forget unnecessary data
-				unset($device["useragents"]);
+//				unset($device["useragents"]);
 				unset($device["tags"]);
 
 				$device["segment"] = $segment;
@@ -875,8 +942,9 @@ class TypeDevice extends Itemtype {
 
 		if($fallback_device) {
 			$device = $IC->getItem(array("id" => $fallback_device[0]["id"], "extend" => true));
+			$device = $this->getMarkersAndExceptions($device);
 
-			unset($device["useragents"]);
+//			unset($device["useragents"]);
 			unset($device["tags"]);
 
 			$device["segment"] = $segment;
@@ -1980,6 +2048,7 @@ class TypeDevice extends Itemtype {
 	
 		$IC = new Items();
 		$device = $this->get($device_id);
+		$device = $this->getMarkersAndExceptions($device);
 
 		// get some additional information about device
 		$device_segment = $IC->getTags(array("item_id" => $device_id, "context" => "segment"));

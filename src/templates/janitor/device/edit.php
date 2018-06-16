@@ -6,6 +6,8 @@ global $model;
 
 $item_id = $action[1];
 $item = $IC->getItem(array("id" => $item_id, "extend" => array("tags" => true, "mediae" => true)));
+$item = $model->getUseragents($item);
+$item = $model->getMarkersAndExceptions($item);
 
 $this->pageTitle($item["name"]);
 ?>
