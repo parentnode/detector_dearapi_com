@@ -2936,6 +2936,61 @@ class TypeDevice extends Itemtype {
 	}
 
 
+	function getDevicesByUseragentCount($_options = false) {
+
+		$query = new Query();
+
+		$SELECT = array();
+		$FROM = array();
+		$LEFTJOIN = array();
+		$WHERE = array();
+		$GROUP_BY = "";
+		$HAVING = "";
+		$ORDER = array();
+
+
+		$SELECT[] = "items.id";
+		$SELECT[] = "items.sindex";
+		$SELECT[] = "items.status";
+		$SELECT[] = "items.published_at";
+
+		$SELECT[] = "count(ua.id) AS uas";
+
+	 	$FROM[] = UT_ITEMS." as items";
+	 	$FROM[] = $this->db_useragents." as ua";
+
+
+		$WHERE[] = "items.itemtype = 'device'";
+		$WHERE[] = "ua.item_id = items.id";
+
+		$GROUP_BY = "items.id";
+
+		$ORDER[] = "uas DESC";
+
+		$items = array();
+
+
+//		print $query->compileQuery($SELECT, $FROM, array("LEFTJOIN" => $LEFTJOIN, "WHERE" => $WHERE, "HAVING" => $HAVING, "GROUP_BY" => $GROUP_BY, "ORDER" => $ORDER, "LIMIT" => $LIMIT));
+//		return array();
+		$query->sql($query->compileQuery($SELECT, $FROM, array("LEFTJOIN" => $LEFTJOIN, "WHERE" => $WHERE, "HAVING" => $HAVING, "GROUP_BY" => $GROUP_BY, "ORDER" => $ORDER)));
+		for($i = 0; $i < $query->count(); $i++){
+
+			$item = array();
+
+			$item["id"] = $query->result($i, "id");
+			$item["itemtype"] = "device";
+			$item["sindex"] = $query->result($i, "sindex");
+			$item["status"] = $query->result($i, "status");
+			$item["published_at"] = $query->result($i, "published_at");
+			$item["uas"] = $query->result($i, "uas");
+
+			$items[] = $item;
+		}
+
+		return $items;
+	}
+
+
 
 
 	// OLDER MAINTENANCE FUNCTIONS
