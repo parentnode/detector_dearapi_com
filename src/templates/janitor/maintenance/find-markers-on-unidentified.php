@@ -15,7 +15,11 @@ $patterns = $model->getDevicesWithPatterns("bla");
 ?>
 <div class="scene defaultList findMarkersOnUnidentified unidentifiedList">
 	<h1>Find markers on unidentified</h1>
-	<h2>Ordered by number of occurences - to help reduce UA's faster</h2>
+	<h2>Ordered by number of occurrences - to help reduce UA's faster</h2>
+
+	<ul class="actions">
+		<?= $HTML->link("Back", "/janitor/maintenance", array("class" => "button", "wrapper" => "li.back")) ?>
+	</ul>
 
 	<div class="testmarkers">
 		<div class="filter">

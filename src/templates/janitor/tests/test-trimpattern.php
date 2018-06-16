@@ -9,7 +9,11 @@ global $model;
 $Identify = new Identify();
 
 // TODO: find simple to add comment to each UA, which can be printed in view to make it easier to check if trimming is doing as expected
+$useragents[] = 'Mozilla/5.0 (iPhone; CPU iPhone OS 9_0_2 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Mobile/13A452 Instagram 7.21.1';
 
+$useragents[] = 'Mozilla/5.0 (Linux; Android 5.0.2; HTC Desire 816 Build/LRX22G; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/56.0.2924.87 Mobile Safari/537.36 Instagram 10.10.0 Android (21/5.0.2; 320dpi; 720x1184; HTC/htc; HTC Desire 816; htc_a5ul; qcom) ';
+$useragents[] = 'Mozilla/5.0 (Linux; Android 5.0.2; HTC Desire Eye Build/LRX22G; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/51.0.2704.81 Mobile Safari/537.36 Instagram 8.5.1 Android (21/5.0.2; 480dpi; 1080x1776; HTC/htc; HTC Desire Eye; htc_eyeul_att; qcom) ';
+$useragents[] = 'Mozilla/5.0 (Linux; Android 8.0.0; SM-A520F Build/R16NW; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/67.0.3396.81 Mobile Safari/537.36 Instagram 49.0.0.15.89 Android (26/8.0.0; 480dpi; 1080x1920; samsung; SM-A520F; a5y17lte; samsungexynos7880; 113249569) ';
 
 // RT-TV should not be replaced
 $useragents[] = 'Mozilla/5.0 (SMART-TV; X11; Linux i686) AppleWebKit/535.20+ (KHTML, like Gecko) Version/5.0 Safari/535.20+';
@@ -81,7 +85,7 @@ $useragents[] = 'Mozilla/5.0 (Linux; U; Android 0.5; en-us) AppleWebKit/522 (KHT
 
 
 				endforeach; ?>
-			<li class="item ua_id:<?= $item["id"] ?>">
+			<li class="item">
 				<h4><strong>BEFORE:</strong><br /><?= $org_useragent ?></h4>
 				<h4><strong>AFTER:</strong><br /><?= $trimmed_useragent ?></h4>
 				<h4><strong>DIFF:</strong><br /><?= $diff_useragent ?></h4>

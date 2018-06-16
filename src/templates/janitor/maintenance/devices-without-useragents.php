@@ -11,6 +11,10 @@ $all_items = $model->listEmptyDevices();
 <div class="scene defaultList devicesWithoutUseragents">
 	<h1>Devices without useragents</h1>
 
+	<ul class="actions">
+		<?= $HTML->link("Back", "/janitor/maintenance", array("class" => "button", "wrapper" => "li.back")) ?>
+	</ul>
+
 	<div class="all_items i:defaultList filters"
 		data-csrf-token="<?= session()->value("csrf") ?>"
 		>

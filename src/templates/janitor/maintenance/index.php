@@ -12,6 +12,7 @@
 		<li><a href="/janitor/maintenance/devices-without-useragents">Devices without useragents</a></li>
 		<li><a href="/janitor/maintenance/devices-without-tags">Devices without tags</a></li>
 		<li><a href="/janitor/maintenance/devices-without-brand">Devices without brand</a></li>
+		<li><a href="/janitor/maintenance/devices-by-useragent-count">Devices by useragent count</a></li>
 	</ul>
 
 

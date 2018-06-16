@@ -11,6 +11,10 @@ $all_items = $model->listDevicesWithoutBrand();
 <div class="scene defaultList devicesWithoutBrand">
 	<h1>Devices without brand</h1>
 
+	<ul class="actions">
+		<?= $HTML->link("Back", "/janitor/maintenance", array("class" => "button", "wrapper" => "li.back")) ?>
+	</ul>
+
 	<div class="all_items i:defaultList filters">
 <?		if($all_items): ?>
 		<ul class="items">

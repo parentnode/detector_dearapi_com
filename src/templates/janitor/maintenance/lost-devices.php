@@ -11,6 +11,10 @@ $all_items = $model->listLostDevices();
 <div class="scene defaultList lostDevices">
 	<h1>Lost devices (items without device)</h1>
 
+	<ul class="actions">
+		<?= $HTML->link("Back", "/janitor/maintenance", array("class" => "button", "wrapper" => "li.back")) ?>
+	</ul>
+
 	<div class="all_items i:defaultList i:deleteLostDevices filters"
 		data-csrf-token="<?= session()->value("csrf") ?>"
 		data-devices-delete-lost="<?= $this->validPath("/janitor/device/deleteLostDevices") ?>" 

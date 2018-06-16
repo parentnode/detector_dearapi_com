@@ -11,6 +11,10 @@ $all_items = $model->searchForUniqueMatches();
 <div class="scene defaultList uniqueMatchList">
 	<h1>Devices with unique match</h1>
 
+	<ul class="actions">
+		<?= $HTML->link("Back", "/janitor/maintenance", array("class" => "button", "wrapper" => "li.back")) ?>
+	</ul>
+
 	<div class="all_items i:uniqueMatchList filters"
 		data-csrf-token="<?= session()->value("csrf") ?>"
 		data-useragent-delete="<?= $this->validPath("/janitor/device/deleteUnidentified") ?>"

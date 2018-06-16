@@ -12,7 +12,7 @@ $all_items = $model->searchForUniquePotential();
 	<h1>Devices with potential</h1>
 
 	<ul class="actions">
-		<?= $HTML->link("Statistics", "/janitor/statistic", array("class" => "button", "wrapper" => "li.back")) ?>
+		<?= $HTML->link("Back", "/janitor/maintenance", array("class" => "button", "wrapper" => "li.back")) ?>
 	</ul>
 
 	<div class="all_items i:defaultList taggable filters"<?= $JML->jsData() ?>>

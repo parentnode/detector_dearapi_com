@@ -11,6 +11,10 @@ $all_items = $model->listLostUseragents();
 <div class="scene defaultList lostUseragents">
 	<h1>Lost useragents (useragents without device)</h1>
 
+	<ul class="actions">
+		<?= $HTML->link("Back", "/janitor/maintenance", array("class" => "button", "wrapper" => "li.back")) ?>
+	</ul>
+
 	<div class="all_items i:defaultList i:deleteLostUseragents filters"
 		data-csrf-token="<?= session()->value("csrf") ?>"
 		data-useragent-delete-lost="<?= $this->validPath("/janitor/device/deleteLostUseragents") ?>" 
