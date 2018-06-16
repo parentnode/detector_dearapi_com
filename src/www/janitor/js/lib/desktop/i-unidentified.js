@@ -544,7 +544,7 @@ Util.Objects["unidentifiedList"] = new function() {
 								// remove actions
 								this.node.bn_delete.parentNode.removeChild(this.node.bn_delete);
 								this.node.bn_search.parentNode.removeChild(this.node.bn_search);
-								console.log("delete: " + this.node.div_results);
+								u.bug("delete: ", this.node.div_results);
 								if(this.node.div_results) {
 									this.node.div_results.parentNode.removeChild(this.node.div_results);
 								}
@@ -745,6 +745,7 @@ Util.Objects["unidentifiedList"] = new function() {
 			if(this.t_execute) {
 
 				// show that it is working
+				// console.log(this.option);
 				u.ac(this.option.div._add_to, "adding");
 
 				// recursive iteration handler (to control the number of simultaneous requests)
@@ -753,10 +754,11 @@ Util.Objects["unidentifiedList"] = new function() {
 					var node = this.option.ua_nodes.shift();
 					if(node) {
 						var input = node._checkbox;
+						// console.log(this.option.div._add_to);
 
 						// if input was found, make request
 						if(input && input.node._identified.id == this.option.device_id) {
-//												console.log("load node:" + input.node.ua_id);
+							// console.log("load node:" + input.node.ua_id);
 							input._matching = this;
 
 							// UA was added
@@ -783,7 +785,11 @@ Util.Objects["unidentifiedList"] = new function() {
 					}
 					else {
 						// done
-						u.rc(this.option.div._add_to, "adding");
+						// console.log(this);
+						// console.log(this.option.div._add_to);
+						if(this.option.div && this.option.div._add_to) {
+							u.rc(this.option.div._add_to, "adding");
+						}
 					}
 
 				}
@@ -877,6 +883,39 @@ Util.Objects["unidentifiedList"] = new function() {
 		}
 
 
+		// Mapped to ADD SELECTED TO CLONE buttons
+		div._retryIdentification_clicked = function() {
+
+			// confirm mechanism in action
+			if(this.t_execute) {
+
+				if(this.option && this.option.ua_nodes) {
+					var i, node;
+					for(i = 0; i < this.option.ua_nodes.length; i++) {
+						node = this.option.ua_nodes[i];
+						delete node._identified;
+						
+					}
+				}
+
+				// reset option node references
+				this.option.ua_nodes = [];
+
+				// Start over
+				this.option.div.toggleAddToOption();
+
+			}
+			// activate confirm mechanism
+			else {
+				this.t_execute = u.t.setTimer(this, this.option.div._not_confirmed, 1500);
+
+				this._content = this.innerHTML;	
+				this.innerHTML = "Sure?";
+				u.ac(this, "confirm");
+			}
+		}
+
+
 		// confirm timeout handler for add buttons 
 		div._not_confirmed = function() {
 			u.rc(this, "confirm");
@@ -920,8 +959,8 @@ Util.Objects["unidentifiedList"] = new function() {
 
 				u.e.click(option_node);
 				option_node.closeOption = function() {
-					console.log("option_node.closeOption");
-					console.log(option_node);
+					// u.bug("option_node.closeOption");
+					// u.bug(option_node);
 
 					if(this._info) {
 						this._info.parentNode.removeChild(this._info);
@@ -963,8 +1002,8 @@ Util.Objects["unidentifiedList"] = new function() {
 
 				//
 				option_node.clicked = function(event) {
-					console.log("option_node.clicked");
-					console.log(event);
+					// console.log("option_node.clicked");
+					// console.log(event);
 					// show advanced options menu if not already present 
 					// (else close it)
 
@@ -974,7 +1013,7 @@ Util.Objects["unidentifiedList"] = new function() {
 					// add SELECTED to CLONE
 					if(!this._info) {
 
-						console.log("build info pane");
+						// console.log("build info pane");
 						var i, node, li;
 
 						// close other options 
@@ -1039,15 +1078,29 @@ Util.Objects["unidentifiedList"] = new function() {
 						}
 
 						// option does not match device
+						else if(this.details.guess == "Request timeout") {
+							this._info = u.ae(this, "div", {class:"info", html:this.details.guess ? this.details.guess : "Unknown error"});
+
+
+							this._retryIdentification = u.ae(this, "div", {class:"retry", html:"Retry", title:"Retry identification"});
+							this._retryIdentification.option = this;
+
+							// ADD SELECTED TO CLONE handler
+							u.e.click(this._retryIdentification);
+							this._retryIdentification.clicked = this.div._retryIdentification_clicked;
+
+						}
+						// option does not match device
 						else {
 							this._info = u.ae(this, "div", {class:"info", html:this.details.guess ? this.details.guess : "Unknown error"});
+
 						}
 
 					}
 
 					// remove advanced menu
 					else {
-						console.log("info pane is already open, close info pane")
+						// console.log("info pane is already open, close info pane")
 						this.closeOption();
 
 					}
@@ -1327,13 +1380,15 @@ Util.Objects["unidentifiedList"] = new function() {
 
 				var i, ua, ua_id
 				this.wait_for_uas = this.checked_inputs.length;
+				// u.bug("this.wait_for_uas::" + this.wait_for_uas);
+
 				u.ac(this._add_to, "loading");
 
 				this.checked_inputs_i = 0;
 
 				// start identification process
 				this.iterateSelections = function() {
-//					console.log("this.iterateSelections for id");
+					//console.log("this.iterateSelections for id");
 					// console.log("this.checked_inputs.length:" + this.checked_inputs.length);
 					// console.log("this.checked_inputs_i:" + this.checked_inputs_i);
 
@@ -1402,6 +1457,7 @@ Util.Objects["unidentifiedList"] = new function() {
 
 								// check load status
 								this.node.div.wait_for_uas--;
+								// u.bug("this.node.div.wait_for_uas countdown:" + this.node.div.wait_for_uas)
 								// if(!this.node.div.wait_for_uas && this.node.div._add_to) {
 								// 	u.rc(this.node.div._add_to, "loading");
 								// }
@@ -1424,7 +1480,7 @@ Util.Objects["unidentifiedList"] = new function() {
 
 						// already identified
 						else {
-//							console.log("id'ed already:" + u.nodeId(input.node))
+							// u.bug("id'ed already:", input.node);
 
 							// leave identification mode
 							u.rc(input.node, "identifying");
@@ -1432,6 +1488,7 @@ Util.Objects["unidentifiedList"] = new function() {
 
 							// check load status
 							this.wait_for_uas--;
+							// u.bug("this.wait_for_uas countdown:" + this.wait_for_uas)
 							// if(!this.wait_for_uas) {
 							// 	u.rc(this._add_to, "loading");
 							// }
@@ -1450,8 +1507,9 @@ Util.Objects["unidentifiedList"] = new function() {
 
 					}
 					else {
-
-						if(!this.wait_for_uas && this._add_to) {
+						// u.bug("this.wait_for_uas:" + this.wait_for_uas);
+						// can become -1 if additional selection is made while indexing
+						if(this.wait_for_uas <= 0 && this._add_to) {
 							u.rc(this._add_to, "loading");
 						}
 
@@ -1586,6 +1644,8 @@ Util.Objects["testMarkersOnUnidentified"] = new function() {
 
 						u.bug("test device markers")
 						this.response = function(response) {
+							u.bug("RESPONSE:", response);
+
 							page.notify(response);
 
 							if(response.isHTML) {
@@ -1725,149 +1785,104 @@ Util.Objects["crossreferenceUnidentified"] = new function() {
 				this.div_stats = u.qs(".stats");
 
 
-				// add marker filter
-				this._filter = u.ae(this, "div", {"class":"filter"});
-
 
 				this.markers_ul = u.ae(this, "ul", {"class":"markers"});
 				var i, node, li;
 //				for(i = 0; node = response.cms_object[i]; i++) {
 				for(i = 0; i < response.cms_object.length; i++) {
 					node = response.cms_object[i];
-					li = u.ae(this.markers_ul, "li", {"html":node.name});
-					li.div = this;
-					li.item_id = node.item_id;
 
-					u.e.click(li);
-					li.clicked = function() {
+					// Only show Android, Smartphone and Android, Mobile
+					if(node.name.match(/Android, [SM]/)) {
 
-						var i, node;
-//						for(i = 0; node = this.div._markers[i]; i++) {
-						for(i = 0; i < this.div._markers.length; i++) {
-							node = this.div._markers[i];
-							u.rc(node, "selected");
-						}
-						u.ac(this, "selected");
+						li = u.ae(this.markers_ul, "li", {"html":node.name});
+						li.div = this;
+						li.item_id = node.item_id;
 
+						u.e.click(li);
+						li.clicked = function() {
 
-						// clean up existing values
-						// remove filter
-						var existing_filter = u.qs("div.filter", this.div.div_results);
-						if(existing_filter) {
-							existing_filter.parentNode.removeChild(existing_filter);
-						}
-
-						// empty exiting results
-						this.existing_results = u.qs("ul.items", this.div.div_results);
-						if(this.existing_results) {
-							
-							this.existing_results.innerHTML = "";
-						}
-						else {
-							this.existing_results = u.ae(this.div.div_results, "ul", {"class":"items"});
-						}
-
-						// remove "no results" if it exist
-						var existing_no_results = u.qs("p", this.div.div_results);
-						if(existing_no_results) {
-							existing_no_results.parentNode.removeChild(existing_no_results);
-						}
-
-						this.div.div_stats.innerHTML = "Loading ...";
-
-						// hide addtoOptions
-						this.div.div_results.toggleAddToOption();
-
-						u.bug("crossreference device markers")
-						this.response = function(response) {
-							page.notify(response);
-
-							if(response.isHTML) {
-								// result set div
-
-								// var div_results = u.qs(".all_items");
-
-								// update stats
-								this.div.div_stats.innerHTML = u.qs(".stats", response).innerHTML;
-
-
-								// inject new values
-								var new_items = u.qsa(".all_items ul.items li.item", response);
-								if(new_items) {
-									
-									var i, node;
-//									for(i = 0; node = new_items[i]; i++) {
-									for(i = 0; i < new_items.length; i++) {
-										node = new_items[i];
-										u.ae(this.existing_results, node);
-									}
-									u.o.unidentifiedList.init(this.div.div_results);
-								}
-								else {
-									u.ae(this.existing_results, u.qs(".all_items p", response));
-									// no results
-								}
-
-								u.rc(this, "loading");
-
+							var i, node;
+	//						for(i = 0; node = this.div._markers[i]; i++) {
+							for(i = 0; i < this.div._markers.length; i++) {
+								node = this.div._markers[i];
+								u.rc(node, "selected");
 							}
+							u.ac(this, "selected");
+
+
+							// clean up existing values
+							// remove filter
+							var existing_filter = u.qs("div.filter", this.div.div_results);
+							if(existing_filter) {
+								existing_filter.parentNode.removeChild(existing_filter);
+							}
+
+							// empty exiting results
+							this.existing_results = u.qs("ul.items", this.div.div_results);
+							if(this.existing_results) {
+							
+								this.existing_results.innerHTML = "";
+							}
+							else {
+								this.existing_results = u.ae(this.div.div_results, "ul", {"class":"items"});
+							}
+
+							// remove "no results" if it exist
+							var existing_no_results = u.qs("p", this.div.div_results);
+							if(existing_no_results) {
+								existing_no_results.parentNode.removeChild(existing_no_results);
+							}
+
+							this.div.div_stats.innerHTML = "Loading ...";
+
+							// hide addtoOptions
+							this.div.div_results.toggleAddToOption();
+
+							u.bug("crossreference device markers")
+							this.response = function(response) {
+								page.notify(response);
+
+								if(response.isHTML) {
+									// result set div
+
+									// var div_results = u.qs(".all_items");
+
+									// update stats
+									this.div.div_stats.innerHTML = u.qs(".stats", response).innerHTML;
+
+
+									// inject new values
+									var new_items = u.qsa(".all_items ul.items li.item", response);
+									if(new_items) {
+									
+										var i, node;
+	//									for(i = 0; node = new_items[i]; i++) {
+										for(i = 0; i < new_items.length; i++) {
+											node = new_items[i];
+											u.ae(this.existing_results, node);
+										}
+										u.o.unidentifiedList.init(this.div.div_results);
+									}
+									else {
+										u.ae(this.existing_results, u.qs(".all_items p", response));
+										// no results
+									}
+
+									u.rc(this, "loading");
+
+								}
+							}
+							u.ac(this, "loading");
+							u.request(this, this.div.url_device_test, {"params":"csrf-token="+this.div.csrf_token+"&crossreference_marker=true&device_id="+this.item_id, "method":"post"});
 						}
-						u.ac(this, "loading");
-						u.request(this, this.div.url_device_test, {"params":"csrf-token="+this.div.csrf_token+"&crossreference_marker=true&device_id="+this.item_id, "method":"post"});
 					}
+
 				}
 
 
 				this._markers = u.qsa("li", this.markers_ul);
 
-
-				// index list, to speed up filtering process
-				var i, node;
-//				for(i = 0; node = this._markers[i]; i++) {
-				for(i = 0; i < this._markers.length; i++) {
-					node = this._markers[i];
-					node._c = node.textContent.toLowerCase();
-				}
-
-				// insert tags filter
-				this._filter._field = u.ae(this._filter, "div", {"class":"field"});
-				u.ae(this._filter._field, "label", {"html":"Filter"});
-
-				this._filter._input = u.ae(this._filter._field, "input", {"class":"filter ignoreinput"});
-				this._filter._input._div = this;
-
-				this._filter._input.onkeydown = function() {
-	//				u.bug("reset timer")
-					u.t.resetTimer(this._div.t_filter);
-				}
-				this._filter._input.onkeyup = function() {
-	//				u.bug("set timer")
-					this._div.t_filter = u.t.setTimer(this._div, this._div.filter, 1500);
-					u.ac(this._div._filter, "filtering");
-				}
-				this.filter = function() {
-
-					var i, node;
-					if(this._current_filter != this._filter._input.value.toLowerCase()) {
-	//					u.bug("filter by:" + this._filter._input.value)
-
-						this._current_filter = this._filter._input.value.toLowerCase();
-//						for(i = 0; node = this._markers[i]; i++) {
-						for(i = 0; i < this._markers.length; i++) {
-							node = this._markers[i];
-
-							if(node._c.match(this._current_filter)) {
-								u.as(node, "display", "inline-block", false);
-							}
-							else {
-								u.as(node, "display", "none", false);
-							}
-						}
-					}
-
-					// leave filtering mode
-					u.rc(this._filter, "filtering");
-				}
 			}
 
 		}

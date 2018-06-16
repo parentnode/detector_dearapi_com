@@ -199,6 +199,7 @@
 #content .scene.unidentifiedList .stats {padding: 5px 30px; border-bottom: 1px solid #dedede;}
 #content .scene.unidentifiedList .stats p {padding: 0;}
 
+#content .scene.unidentifiedList .testmarkers.crossreference {background-color: yellow;}
 
 
 #content .scene.unidentifiedList .items > li {padding: 10px 125px 10px 30px; position: relative; overflow: visible;}
@@ -290,6 +291,7 @@
 
 .addToDevice ul.options > li.mappedto {background-color: #00ff00;}
 
+.addToDevice li div.retry,
 .addToDevice li div.showselectedonly,
 .addToDevice li div.selected,
 .addToDevice li div.addtoclone,
@@ -297,6 +299,7 @@
 
 .addToDevice li div.addtoclone {margin-bottom: 10px;}
 
+.addToDevice li div.retry.confirm,
 .addToDevice li div.selected.confirm,
 .addToDevice li div.addtoclone.confirm,
 .addToDevice li div.matching.confirm {background-color: #df0000;}

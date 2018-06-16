@@ -10,6 +10,9 @@ if(!u || !Util) {
 	u.bug = u.nodeId = u.exception = function() {};
 	u.stats = new function() {this.pageView = function(){};this.event = function(){};}
 }
+function fun(v) {return (typeof(v) === "function")}
+function obj(v) {return (typeof(v) === "object")}
+function str(v) {return (typeof(v) === "string")}
 u.bug_console_only = true;
 Util.debugURL = function(url) {
 	if(u.bug_force) {
@@ -51,6 +54,9 @@ Util.exception = function(name, _arguments, _exception) {
 Util.bug = function(message, corner, color) {
 	if(u.debugURL()) {
 		if(!u.bug_console_only) {
+			if(typeof(console) == "object") {
+				console.log(message);
+			}
 			var option, options = new Array([0, "auto", "auto", 0], [0, 0, "auto", "auto"], ["auto", 0, 0, "auto"], ["auto", "auto", 0, 0]);
 			if(isNaN(corner)) {
 				color = corner;
@@ -70,11 +76,13 @@ Util.bug = function(message, corner, color) {
 				d_target.style.left = option[3];
 				d_target.style.backgroundColor = u.bug_bg ? u.bug_bg : "#ffffff";
 				d_target.style.color = "#000000";
+				d_target.style.fontSize = "11px";
+				d_target.style.lineHeight = "11px";
 				d_target.style.textAlign = "left";
 				if(d_target.style.maxWidth) {
 					d_target.style.maxWidth = u.bug_max_width ? u.bug_max_width+"px" : "auto";
 				}
-				d_target.style.padding = "3px";
+				d_target.style.padding = "2px 3px";
 			}
 			if(typeof(message) != "string") {
 				message = message.toString();
@@ -83,7 +91,7 @@ Util.bug = function(message, corner, color) {
 			message = message ? message.replace(/\>/g, "&gt;").replace(/\</g, "&lt;").replace(/&lt;br&gt;/g, "<br>") : "Util.bug with no message?";
 			u.ae(debug_div, "div", {"style":"color: " + color, "html": message});
 		}
-		if(typeof(console) == "object") {
+		else if(typeof(console) == "object") {
 			console.log(message);
 		}
 	}
@@ -160,7 +168,7 @@ Util.Animation = u.a = new function() {
 							if(typeof(callback) == "function") {
 								var key = u.randomString(4);
 								node[key] = callback;
-								node[key].callback(event);
+								node[key](event);
 								node[key] = null;
 								callback = null;
 							}
@@ -337,7 +345,7 @@ Util.saveCookie = function(name, value, _options) {
 		}
 	}
 	if(!force && typeof(window.localStorage) == "object" && typeof(window.sessionStorage) == "object") {
-		if(expires === false) {
+		if(expires === true) {
 			window.sessionStorage.setItem(name, value);
 		}
 		else {
@@ -744,9 +752,10 @@ Util.clickableElement = u.ce = function(node, _options) {
 }
 Util.classVar = u.cv = function(node, var_name) {
 	try {
-		var regexp = new RegExp(var_name + ":[?=\\w/\\#~:.,?+=?&%@!\\-]*");
-		if(node.className.match(regexp)) {
-			return node.className.match(regexp)[0].replace(var_name + ":", "");
+		var regexp = new RegExp("(\^| )" + var_name + ":[?=\\w/\\#~:.,?+=?&%@!\\-]*");
+		var match = node.className.match(regexp);
+		if(match) {
+			return match[0].replace(var_name + ":", "").trim();
 		}
 	}
 	catch(exception) {
@@ -888,18 +897,18 @@ Util.inNodeList = function(node, list) {
 	}
 	return false;
 }
-Util.nodeWithin = u.nw = function(node, scope) {
-	var node_key = u.randomString(8);
-	var scope_key = u.randomString(8);
-	u.ac(node, node_key);
-	u.ac(scope, scope_key);
-	if(u.qs("."+scope_key+" ."+node_key)) {
-		u.rc(node, node_key);
-		u.rc(scope, scope_key);
-		return true;
+u.contains = Util.nodeWithin = u.nw = function(node, scope) {
+	if(scope != node) {
+		if(scope.contains(node)) {
+			return true
+		}
 	}
-	u.rc(node, node_key);
-	u.rc(scope, scope_key);
+	return false;
+}
+u.containsOrIs = function(node, scope) {
+	if(scope == node || u.contains(node, scope)) {
+		return true
+	}
 	return false;
 }
 u.easings = new function() {
@@ -1098,7 +1107,6 @@ Util.Events = u.e = new function() {
 		this.move_timestamp = event.timeStamp;
 		this.move_last_x = 0;
 		this.move_last_y = 0;
-		this._moves_cancel = 0;
 		this.swiped = false;
 		if(this.e_click || this.e_dblclick || this.e_hold) {
 			if(event.type.match(/mouse/)) {
@@ -1125,7 +1133,6 @@ Util.Events = u.e = new function() {
 		}
 		if(this.e_drag || this.e_swipe) {
 			u.e.addMoveEvent(this, u.e._pick);
-			u.e.addEndEvent(this, u.e._drop);
 		}
 		if(this.e_scroll) {
 			u.e.addMoveEvent(this, u.e._scrollStart);
@@ -1138,14 +1145,11 @@ Util.Events = u.e = new function() {
 	this._cancelClick = function(event) {
 		var offset_x = u.eventX(event) - this.start_event_x;
 		var offset_y = u.eventY(event) - this.start_event_y;
-		if(event.type.match(/mouseout/) || this._moves_cancel > 1 || (event.type.match(/move/) && (Math.abs(offset_x) > 15 || Math.abs(offset_y) > 15))) {
+		if(event.type.match(/mouseout/) || (event.type.match(/move/) && (Math.abs(offset_x) > 15 || Math.abs(offset_y) > 15))) {
 			u.e.resetClickEvents(this);
 			if(typeof(this.clickCancelled) == "function") {
 				this.clickCancelled(event);
 			}
-		}
-		else if(event.type.match(/move/)) {
-			this._moves_cancel++;
 		}
 	}
 	this._move = function(event) {
@@ -1457,11 +1461,10 @@ u.e.overlap = function(node, boundaries, strict) {
 u.e.drag = function(node, boundaries, _options) {
 	node.e_drag_options = _options ? _options : {};
 	node.e_drag = true;
-	node._moves_counted = 0;
-	node._moves_required = (u.system("android, winphone")) ? 2 : 0;
 	if(node.childNodes.length < 2 && node.innerHTML.trim() == "") {
 		node.innerHTML = "&nbsp;";
 	}
+	node.distance_to_pick = 2;
 	node.drag_strict = true;
 	node.drag_elastica = 0;
 	node.drag_dropout = true;
@@ -1528,8 +1531,7 @@ u.e._pick = function(event) {
 		(init_speed_x > init_speed_y && this.only_horizontal) || 
 		(init_speed_x < init_speed_y && this.only_vertical) ||
 		(!this.only_vertical && !this.only_horizontal)) {
-		if(this._moves_counted >= this._moves_required) {
-			this._moves_counted = 0;
+		if((init_speed_x > this.distance_to_pick || init_speed_y > this.distance_to_pick)) {
 			u.e.resetNestedEvents(this);
 			u.e.kill(event);
 			if(u.hasFixedParent(this)) {
@@ -1563,9 +1565,6 @@ u.e._pick = function(event) {
 				u.e.addOutEvent(this, u.e._drop_out);
 			}
 		}
-		else {
-			this._moves_counted++;
-		}
 	}
 }
 u.e._drag = function(event) {
@@ -1592,7 +1591,6 @@ u.e._drag = function(event) {
 		this._x = this.current_x;
 		this._y = this.current_y;
 	}
-	u.bug("locked:" + this.locked);
 	if(this.e_swipe) {
 		if(this.only_horizontal) {
 			if(this.current_xps < 0) {
@@ -2015,6 +2013,7 @@ Util.Form = u.f = new function() {
 		for(i = 0; hidden_field = hidden_fields[i]; i++) {
 			if(!_form.fields[hidden_field.name]) {
 				_form.fields[hidden_field.name] = hidden_field;
+				hidden_field._form = _form;
 				hidden_field.val = this._value;
 			}
 		}
@@ -2490,7 +2489,7 @@ Util.Form = u.f = new function() {
 		}
 	}
 	this.validate = function(iN) {
-		if(!iN._form._validation) {
+		if(!iN._form._validation || !iN.field) {
 			return true;
 		}
 		var min, max, pattern;
@@ -3502,11 +3501,11 @@ u.preloader = function(node, files, _options) {
 	if(!u._preloader_queue) {
 		u._preloader_queue = document.createElement("div");
 		u._preloader_processes = 0;
-		if(u.e && u.e.event_pref == "touch") {
+		if(u.e && u.e.event_support == "touch") {
 			u._preloader_max_processes = 1;
 		}
 		else {
-			u._preloader_max_processes = 4;
+			u._preloader_max_processes = 2;
 		}
 	}
 	if(node && files) {
@@ -3548,22 +3547,49 @@ u._queueLoader = function() {
 				u._preloader_processes++;
 				u.rc(next, "waiting");
 				u.ac(next, "loading");
-				next.loaded = function(event) {
-					this.image = event.target;
-					this._image = this.image;
-					this._queue.nodes[this.i] = this;
-					u.rc(this, "loading");
-					u.ac(this, "loaded");
-					u._preloader_processes--;
-					if(!u.qs("li.waiting,li.loading", this._queue)) {
-						u.rc(this._queue._node, "loading");
-						if(typeof(this._queue._node[this._queue._callback_loaded]) == "function") {
-							this._queue._node[this._queue._callback_loaded](this._queue.nodes);
+				if(next._file.match(/png|jpg|gif|svg/)) {
+					next.loaded = function(event) {
+						this.image = event.target;
+						this._image = this.image;
+						this._queue.nodes[this.i] = this;
+						u.rc(this, "loading");
+						u.ac(this, "loaded");
+						u._preloader_processes--;
+						if(!u.qs("li.waiting,li.loading", this._queue)) {
+							u.rc(this._queue._node, "loading");
+							if(typeof(this._queue._node[this._queue._callback_loaded]) == "function") {
+								this._queue._node[this._queue._callback_loaded](this._queue.nodes);
+							}
 						}
+						u._queueLoader();
 					}
-					u._queueLoader();
+					u.loadImage(next, next._file);
 				}
-				u.loadImage(next, next._file);
+				else if(next._file.match(/mp3|aac|wav|ogg/)) {
+					next.loaded = function(event) {
+						console.log(event);
+						this._queue.nodes[this.i] = this;
+						u.rc(this, "loading");
+						u.ac(this, "loaded");
+						u._preloader_processes--;
+						if(!u.qs("li.waiting,li.loading", this._queue)) {
+							u.rc(this._queue._node, "loading");
+							if(typeof(this._queue._node[this._queue._callback_loaded]) == "function") {
+								this._queue._node[this._queue._callback_loaded](this._queue.nodes);
+							}
+						}
+						u._queueLoader();
+					}
+					if(typeof(u.audioPlayer) == "function") {
+						next.audioPlayer = u.audioPlayer();
+						next.load(next._file);
+					}
+					else {
+						u.bug("You need u.audioPlayer to preload MP3s");
+					}
+				}
+				else {
+				}
 			}
 			else {
 				break
@@ -3616,10 +3642,12 @@ Util.request = function(node, url, _options) {
 	node[request_id].request_async = true;
 	node[request_id].request_data = "";
 	node[request_id].request_headers = false;
+	node[request_id].request_credentials = false;
 	node[request_id].response_type = false;
 	node[request_id].callback_response = "response";
 	node[request_id].callback_error = "responseError";
 	node[request_id].jsonp_callback = "callback";
+	node[request_id].request_timeout = false;
 	if(typeof(_options) == "object") {
 		var argument;
 		for(argument in _options) {
@@ -3629,10 +3657,12 @@ Util.request = function(node, url, _options) {
 				case "data"					: node[request_id].request_data				= _options[argument]; break;
 				case "async"				: node[request_id].request_async			= _options[argument]; break;
 				case "headers"				: node[request_id].request_headers			= _options[argument]; break;
+				case "credentials"			: node[request_id].request_credentials		= _options[argument]; break;
 				case "responseType"			: node[request_id].response_type			= _options[argument]; break;
 				case "callback"				: node[request_id].callback_response		= _options[argument]; break;
 				case "error_callback"		: node[request_id].callback_error			= _options[argument]; break;
 				case "jsonp_callback"		: node[request_id].jsonp_callback			= _options[argument]; break;
+				case "timeout"				: node[request_id].request_timeout			= _options[argument]; break;
 			}
 		}
 	}
@@ -3658,6 +3688,12 @@ Util.request = function(node, url, _options) {
 				var params = u.JSONtoParams(node[request_id].request_data);
 				node[request_id].request_url += params ? ((!node[request_id].request_url.match(/\?/g) ? "?" : "&") + params) : "";
 				node[request_id].HTTPRequest.open(node[request_id].request_method, node[request_id].request_url, node[request_id].request_async);
+				if(node[request_id].request_timeout) {
+					node[request_id].HTTPRequest.timeout = node[request_id].request_timeout;
+				}
+				if(node[request_id].request_credentials) {
+					node[request_id].HTTPRequest.withCredentials = true;
+				}
 				if(typeof(node[request_id].request_headers) != "object" || (!node[request_id].request_headers["Content-Type"] && !node[request_id].request_headers["content-type"])) {
 					node[request_id].HTTPRequest.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
 				}
@@ -3678,6 +3714,12 @@ Util.request = function(node, url, _options) {
 					params = node[request_id].request_data;
 				}
 				node[request_id].HTTPRequest.open(node[request_id].request_method, node[request_id].request_url, node[request_id].request_async);
+				if(node[request_id].request_timeout) {
+					node[request_id].HTTPRequest.timeout = node[request_id].request_timeout;
+				}
+				if(node[request_id].request_credentials) {
+					node[request_id].HTTPRequest.withCredentials = true;
+				}
 				if(!params.constructor.toString().match(/FormData/i) && (typeof(node[request_id].request_headers) != "object" || (!node[request_id].request_headers["Content-Type"] && !node[request_id].request_headers["content-type"]))) {
 					node[request_id].HTTPRequest.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
 				}
@@ -3700,8 +3742,18 @@ Util.request = function(node, url, _options) {
 		}
 	}
 	else if(node[request_id].request_method.match(/SCRIPT/i)) {
+		if(node[request_id].request_timeout) {
+			node[request_id].timedOut = function(requestee) {
+				this.status = 0;
+				delete this.timedOut;
+				delete this.t_timeout;
+				Util.validateResponse({node: requestee.node, request_id: requestee.request_id});
+			}
+			node[request_id].t_timeout = u.t.setTimer(node[request_id], "timedOut", node[request_id].request_timeout, {node: node, request_id: request_id});
+		}
 		var key = u.randomString();
 		document[key] = new Object();
+		document[key].key = key;
 		document[key].node = node;
 		document[key].request_id = request_id;
 		document[key].responder = function(response) {
@@ -3709,12 +3761,18 @@ Util.request = function(node, url, _options) {
 			response_object.node = this.node;
 			response_object.request_id = this.request_id;
 			response_object.responseText = response;
+			u.t.resetTimer(this.node[this.request_id].t_timeout);
+			delete this.node[this.request_id].timedOut;
+			delete this.node[this.request_id].t_timeout;
+			u.qs("head").removeChild(this.node[this.request_id].script_tag);
+			delete this.node[this.request_id].script_tag;
+			delete document[this.key];
 			u.validateResponse(response_object);
 		}
 		var params = u.JSONtoParams(node[request_id].request_data);
 		node[request_id].request_url += params ? ((!node[request_id].request_url.match(/\?/g) ? "?" : "&") + params) : "";
 		node[request_id].request_url += (!node[request_id].request_url.match(/\?/g) ? "?" : "&") + node[request_id].jsonp_callback + "=document."+key+".responder";
-		u.ae(u.qs("head"), "script", ({"type":"text/javascript", "src":node[request_id].request_url}));
+		node[request_id].script_tag = u.ae(u.qs("head"), "script", ({"type":"text/javascript", "src":node[request_id].request_url}));
 	}
 	return request_id;
 }
@@ -3731,37 +3789,6 @@ Util.JSONtoParams = function(json) {
 		return u.JSONtoParams(object);
 	}
 	return json;
-}
-Util.isStringJSON = function(string) {
-	if(string.trim().substr(0, 1).match(/[\{\[]/i) && string.trim().substr(-1, 1).match(/[\}\]]/i)) {
-		try {
-			var test = JSON.parse(string);
-			if(typeof(test) == "object") {
-				test.isJSON = true;
-				return test;
-			}
-		}
-		catch(exception) {}
-	}
-	return false;
-}
-Util.isStringHTML = function(string) {
-	if(string.trim().substr(0, 1).match(/[\<]/i) && string.trim().substr(-1, 1).match(/[\>]/i)) {
-		try {
-			var test = document.createElement("div");
-			test.innerHTML = string;
-			if(test.childNodes.length) {
-				var body_class = string.match(/<body class="([a-z0-9A-Z_: ]+)"/);
-				test.body_class = body_class ? body_class[1] : "";
-				var head_title = string.match(/<title>([^$]+)<\/title>/);
-				test.head_title = head_title ? head_title[1] : "";
-				test.isHTML = true;
-				return test;
-			}
-		}
-		catch(exception) {}
-	}
-	return false;
 }
 Util.evaluateResponseText = function(responseText) {
 	var object;
@@ -3788,41 +3815,59 @@ Util.evaluateResponseText = function(responseText) {
 		return responseText;
 	}
 }
-Util.validateResponse = function(response){
+Util.validateResponse = function(HTTPRequest){
 	var object = false;
-	if(response) {
+	if(HTTPRequest) {
+		var node = HTTPRequest.node;
+		var request_id = HTTPRequest.request_id;
+		var request = node[request_id];
+		delete request.HTTPRequest;
+		if(request.finished) {
+			return;
+		}
+		request.finished = true;
 		try {
-			if(response.status && !response.status.toString().match(/403|404|500/)) {
-				object = u.evaluateResponseText(response.responseText);
+			request.status = HTTPRequest.status;
+			if(HTTPRequest.status && !HTTPRequest.status.toString().match(/[45][\d]{2}/)) {
+				if(HTTPRequest.responseType && HTTPRequest.response) {
+					object = HTTPRequest.response;
+				}
+				else if(HTTPRequest.responseText) {
+					object = u.evaluateResponseText(HTTPRequest.responseText);
+				}
 			}
-			else if(response.responseText) {
-				object = u.evaluateResponseText(response.responseText);
+			else if(HTTPRequest.responseText && typeof(HTTPRequest.status) == "undefined") {
+				object = u.evaluateResponseText(HTTPRequest.responseText);
 			}
 		}
 		catch(exception) {
-			response.exception = exception;
-		}
-	}
-	if(object) {
-		if(typeof(response.node[response.request_id].callback_response) == "function") {
-			response.node[response.request_id].callback_response(object, response.request_id);
-		}
-		else if(typeof(response.node[response.node[response.request_id].callback_response]) == "function") {
-			response.node[response.node[response.request_id].callback_response](object, response.request_id);
+			request.exception = exception;
 		}
 	}
 	else {
-		if(typeof(response.node[response.request_id].callback_error) == "function") {
-			response.node[response.request_id].callback_error(response, response.request_id);
+		console.log("Lost track of this request. There is no way of routing it back to requestee.")
+		return;
+	}
+	if(object !== false) {
+		if(typeof(request.callback_response) == "function") {
+			request.callback_response(object, request_id);
 		}
-		else if(typeof(response.node[response.node[response.request_id].callback_error]) == "function") {
-			response.node[response.node[response.request_id].callback_error](response, response.request_id);
+		else if(typeof(node[request.callback_response]) == "function") {
+			node[request.callback_response](object, request_id);
 		}
-		else if(typeof(response.node[response.request_id].callback_response) == "function") {
-			response.node[response.request_id].callback_response(response, response.request_id);
+	}
+	else {
+		if(typeof(request.callback_error) == "function") {
+			request.callback_error({error:true,status:request.status}, request_id);
 		}
-		else if(typeof(response.node[response.node[response.request_id].callback_response]) == "function") {
-			response.node[response.node[response.request_id].callback_response](response, response.request_id);
+		else if(typeof(node[request.callback_error]) == "function") {
+			node[request.callback_error]({error:true,status:request.status}, request_id);
+		}
+		else if(typeof(request.callback_response) == "function") {
+			request.callback_response({error:true,status:request.status}, request_id);
+		}
+		else if(typeof(node[request.callback_response]) == "function") {
+			node[request.callback_response]({error:true,status:request.status}, request_id);
 		}
 	}
 }
@@ -4011,6 +4056,39 @@ Util.pluralize = function(count, singular, plural) {
 		return count + " " + plural;
 	}
 	return count + " " + singular;
+}
+Util.isStringJSON = function(string) {
+	if(string.trim().substr(0, 1).match(/[\{\[]/i) && string.trim().substr(-1, 1).match(/[\}\]]/i)) {
+		try {
+			var test = JSON.parse(string);
+			if(typeof(test) == "object") {
+				test.isJSON = true;
+				return test;
+			}
+		}
+		catch(exception) {
+			console.log(exception)
+		}
+	}
+	return false;
+}
+Util.isStringHTML = function(string) {
+	if(string.trim().substr(0, 1).match(/[\<]/i) && string.trim().substr(-1, 1).match(/[\>]/i)) {
+		try {
+			var test = document.createElement("div");
+			test.innerHTML = string;
+			if(test.childNodes.length) {
+				var body_class = string.match(/<body class="([a-z0-9A-Z_: ]+)"/);
+				test.body_class = body_class ? body_class[1] : "";
+				var head_title = string.match(/<title>([^$]+)<\/title>/);
+				test.head_title = head_title ? head_title[1] : "";
+				test.isHTML = true;
+				return test;
+			}
+		}
+		catch(exception) {}
+	}
+	return false;
 }
 Util.svg = function(svg_object) {
 	var svg, shape, svg_shape;
@@ -4324,6 +4402,8 @@ u.textscaler = function(node, _settings) {
 		window._man_text._width = u.browserW();
 		window._man_text._height = u.browserH();
 		window._man_text.scale = function() {
+			var _width = u.browserW();
+			var _height = u.browserH();
 			window._man_text._width = u.browserW();
 			window._man_text._height = u.browserH();
 			var i, node;
@@ -4382,7 +4462,7 @@ u.textscaler = function(node, _settings) {
 	var tag;
 	node._man_text = {};
 	for(tag in node.text_settings) {
-		if(tag == "min_height" || tag == "max_height" || tag == "min_width" || tag == "max_width" || tag == "unit") {
+		if(tag == "min_height" || tag == "max_height" || tag == "min_width" || tag == "max_width" || tag == "unit" || tag == "ref") {
 			node._man_text[tag] = node.text_settings[tag];
 			node.text_settings[tag] = null;
 			delete node.text_settings[tag];
@@ -5230,10 +5310,16 @@ Util.hasClass = u.hc = function(node, classname) {
 Util.addClass = u.ac = function(node, classname, dom_update) {
 	try {
 		if(classname) {
-			var regexp = new RegExp("(^|\\s)" + classname + "(\\s|$)");
-			if(!regexp.test(node.className)) {
-				node.className += node.className ? " " + classname : classname;
+			if(node.classList){
+				node.classList.add(classname);
 				dom_update === false ? false : node.offsetTop;
+			}
+			else {
+				var regexp = new RegExp("(^|\\s)" + classname + "(\\s|$)");
+				if(!regexp.test(node.className)) {
+					node.className += node.className ? " " + classname : classname;
+					dom_update === false ? false : node.offsetTop;
+				}
 			}
 			return node.className;
 		}
@@ -5246,10 +5332,15 @@ Util.addClass = u.ac = function(node, classname, dom_update) {
 Util.removeClass = u.rc = function(node, classname, dom_update) {
 	try {
 		if(classname) {
-			var regexp = new RegExp("(\\b)" + classname + "(\\s|$)", "g");
-			node.className = node.className.replace(regexp, " ").trim().replace(/[\s]{2}/g, " ");
-			dom_update === false ? false : node.offsetTop;
-			return node.className;
+			if(node.classList.contains(classname)) {
+				node.classList.remove(classname);
+			}
+			else {
+				var regexp = new RegExp("(\\b)" + classname + "(\\s|$)", "g");
+				node.className = node.className.replace(regexp, " ").trim().replace(/[\s]{2}/g, " ");
+				dom_update === false ? false : node.offsetTop;
+				return node.className;
+			}
 		}
 	}
 	catch(exception) {
@@ -5259,21 +5350,37 @@ Util.removeClass = u.rc = function(node, classname, dom_update) {
 }
 Util.toggleClass = u.tc = function(node, classname, _classname, dom_update) {
 	try {
-		var regexp = new RegExp("(^|\\s)" + classname + "(\\s|$|\:)");
-		if(regexp.test(node.className)) {
-			u.rc(node, classname, false);
-			if(_classname) {
-				u.ac(node, _classname, false);
+		if(node.classList) {
+			if(node.classList.contains(classname)) {
+				node.classList.remove(classname);
+				if(_classname) {
+					node.classList.add(_classname);
+				}
+			}
+			else {
+				node.classList.add(classname);
+				if(_classname) {
+					node.classList.remove(_classname);
+				}
 			}
 		}
 		else {
-			u.ac(node, classname, false);
-			if(_classname) {
-				u.rc(node, _classname, false);
+			var regexp = new RegExp("(^|\\s)" + classname + "(\\s|$|\:)");
+			if(regexp.test(node.className)) {
+				u.rc(node, classname, false);
+				if(_classname) {
+					u.ac(node, _classname, false);
+				}
 			}
+			else {
+				u.ac(node, classname, false);
+				if(_classname) {
+					u.rc(node, _classname, false);
+				}
+			}
+			dom_update === false ? false : node.offsetTop;
+			return node.className;
 		}
-		dom_update === false ? false : node.offsetTop;
-		return node.className;
 	}
 	catch(exception) {
 		u.exception("u.tc", arguments, exception);
@@ -5712,342 +5819,7 @@ Util.isStringHTML = function(string) {
 
 
 /*u-audio.js*/
-Util.audioPlayer = function(_options) {
-	var player = document.createElement("div");
-	u.ac(player, "audioplayer");
-	player._autoplay = false;
-	player._controls = false;
-	player._controls_playpause = false;
-	player._controls_volume = false;
-	player._controls_search = false;
-	player._ff_skip = 2;
-	player._rw_skip = 2;
-	if(typeof(_options) == "object") {
-		var _argument;
-		for(_argument in _options) {
-			switch(_argument) {
-				case "autoplay"     : player._autoplay               = _options[_argument]; break;
-				case "controls"     : player._controls               = _options[_argument]; break;
-				case "playpause"    : player._controls_playpause     = _options[_argument]; break;
-				case "volume"       : player._controls_volume        = _options[_argument]; break;
-				case "search"       : player._controls_search        = _options[_argument]; break;
-				case "ff_skip"      : player._ff_skip                = _options[_argument]; break;
-				case "rw_skip"      : player._rw_skip                = _options[_argument]; break;
-			}
-		}
-	}
-	player.audio = u.ae(player, "audio");
-	if(typeof(player.audio.play) == "function") {
-		player.load = function(src, _options) {
-			if(typeof(_options) == "object") {
-				var _argument;
-				for(_argument in _options) {
-					switch(_argument) {
-						case "autoplay"     : this._autoplay               = _options[_argument]; break;
-						case "controls"     : this._controls               = _options[_argument]; break;
-						case "playpause"    : this._controls_playpause     = _options[_argument]; break;
-						case "volume"       : this._controls_volume        = _options[_argument]; break;
-						case "search"       : this._controls_search        = _options[_argument]; break;
-						case "ff_skip"      : this._ff_skip                = _options[_argument]; break;
-						case "rw_skip"      : this._rw_skip                = _options[_argument]; break;
-					}
-				}
-			}
-			if(u.hc(this, "playing")) {
-				this.stop();
-			}
-			this.setup();
-			if(src) {
-				this.audio.src = this.correctSource(src);
-				this.audio.load();
-				this.audio.controls = player._controls;
-				this.audio.autoplay = player._autoplay;
-			}
-		}
-		player.play = function(position) {
-			if(this.audio.currentTime && position !== undefined) {
-				this.audio.currentTime = position;
-			}
-			if(this.audio.src) {
-				this.audio.play();
-			}
-		}
-		player.loadAndPlay = function(src, _options) {
-			var position = 0;
-			if(typeof(_options) == "object") {
-				var _argument;
-				for(_argument in _options) {
-					switch(_argument) {
-						case "position"		: position		= _options[_argument]; break;
-					}
-				}
-			}
-			this.load(src, _options);
-			this.play(position);
-		}
-		player.pause = function() {
-			this.audio.pause();
-		}
-		player.stop = function() {
-			this.audio.pause();
-			if(this.audio.currentTime) {
-				this.audio.currentTime = 0;
-			}
-		}
-		player.ff = function() {
-			if(this.audio.src && this.audio.currentTime && this.audioLoaded) {
-				this.audio.currentTime = (this.audio.duration - this.audio.currentTime >= this._ff_skip) ? (this.audio.currentTime + this._ff_skip) : this.audio.duration;
-				this.audio._timeupdate();
-			}
-		}
-		player.rw = function() {
-			if(this.audio.src && this.audio.currentTime && this.audioLoaded) {
-				this.audio.currentTime = (this.audio.currentTime >= this._rw_skip) ? (this.audio.currentTime - this._rw_skip) : 0;
-				this.audio._timeupdate();
-			}
-		}
-		player.togglePlay = function() {
-			if(u.hc(this, "playing")) {
-				this.pause();
-			}
-			else {
-				this.play();
-			}
-		}
-		player.setup = function() {
-			if(this.audio) {
-				var audio = this.removeChild(this.audio);
-				delete audio;
-			}
-			this.audio = u.ie(this, "audio");
-			this.audio.player = this;
-			this.setControls();
-			this.currentTime = 0;
-			this.duration = 0;
-			this.audioLoaded = false;
-			this.metaLoaded = false;
-			this.audio._loadstart = function(event) {
-				u.ac(this.player, "loading");
-				if(typeof(this.player.loading) == "function") {
-					this.player.loading(event);
-				}
-			}
-			u.e.addEvent(this.audio, "loadstart", this.audio._loadstart);
-			this.audio._canplaythrough = function(event) {
-				u.rc(this.player, "loading");
-				if(typeof(this.player.canplaythrough) == "function") {
-					this.player.canplaythrough(event);
-				}
-			}
-			u.e.addEvent(this.audio, "canplaythrough", this.audio._canplaythrough);
-			this.audio._playing = function(event) {
-				u.rc(this.player, "loading|paused");
-				u.ac(this.player, "playing");
-				if(typeof(this.player.playing) == "function") {
-					this.player.playing(event);
-				}
-			}
-			u.e.addEvent(this.audio, "playing", this.audio._playing);
-			this.audio._paused = function(event) {
-				u.rc(this.player, "playing|loading");
-				u.ac(this.player, "paused");
-				if(typeof(this.player.paused) == "function") {
-					this.player.paused(event);
-				}
-			}
-			u.e.addEvent(this.audio, "pause", this.audio._paused);
-			this.audio._stalled = function(event) {
-				u.rc(this.player, "playing|paused");
-				u.ac(this.player, "loading");
-				if(typeof(this.player.stalled) == "function") {
-					this.player.stalled(event);
-				}
-			}
-			u.e.addEvent(this.audio, "stalled", this.audio._paused);
-			this.audio._ended = function(event) {
-				u.rc(this.player, "playing|paused");
-				if(typeof(this.player.ended) == "function") {
-					this.player.ended(event);
-				}
-			}
-			u.e.addEvent(this.audio, "ended", this.audio._ended);
-			this.audio._loadedmetadata = function(event) {
-				this.player.duration = this.duration;
-				this.player.currentTime = this.currentTime;
-				this.player.metaLoaded = true;
-				if(typeof(this.player.loadedmetadata) == "function") {
-					this.player.loadedmetadata(event);
-				}
-			}
-			u.e.addEvent(this.audio, "loadedmetadata", this.audio._loadedmetadata);
-			this.audio._loadeddata = function(event) {
-				this.player.audioLoaded = true;
-				if(typeof(this.player.loadeddata) == "function") {
-					this.player.loadeddata(event);
-				}
-			}
-			u.e.addEvent(this.audio, "loadeddata", this.audio._loadeddata);
-			this.audio._timeupdate = function(event) {
-				this.player.currentTime = this.currentTime;
-				if(typeof(this.player.timeupdate) == "function") {
-					this.player.timeupdate(event);
-				}
-			}
-			u.e.addEvent(this.audio, "timeupdate", this.audio._timeupdate);
-		}
-	}
-	else if(typeof(u.audioPlayerFallback) == "function") {
-		player.removeChild(player.video);
-		player = u.audioPlayerFallback(player);
-	}
-	else {
-		player.load = function() {}
-		player.play = function() {}
-		player.loadAndPlay = function() {}
-		player.pause = function() {}
-		player.stop = function() {}
-		player.ff = function() {}
-		player.rw = function() {}
-		player.togglePlay = function() {}
-	}
-	player.correctSource = function(src) {
-		var param = src.match(/\?[^$]+/) ? src.match(/(\?[^$]+)/)[1] : "";
-		src = src.replace(/\?[^$]+/, "");
-		src = src.replace(/.mp3|.ogg|.wav/, "");
-		if(this.flash) {
-			return src+".mp3"+param;
-		}
-		if(this.audio.canPlayType("audio/mpeg")) {
-			return src+".mp3"+param;
-		}
-		else if(this.audio.canPlayType("audio/ogg")) {
-			return src+".ogg"+param;
-		}
-		else {
-			return src+".wav"+param;
-		}
-	}
-	player.setControls = function() {
-		if(this.showControls) {
-			if(u.e.event_pref == "mouse") {
-				u.e.removeEvent(this, "mousemove", this.showControls);
-				u.e.removeEvent(this.controls, "mouseenter", this._keepControls);
-				u.e.removeEvent(this.controls, "mouseleave", this._unkeepControls);
-			}
-			else {
-				u.e.removeEvent(this, "touchstart", this.showControls);
-			}
-		}
-		if(this._controls_playpause || this._controls_zoom || this._controls_volume || this._controls_search) {
-			if(!this.controls) {
-				this.controls = u.ae(this, "div", {"class":"controls"});
-				this.controls.player = this;
-				this.controls._default_display = u.gcs(this.controls, "display");
-				this.hideControls = function() {
-					if(!this._keep) {
-						this.t_controls = u.t.resetTimer(this.t_controls);
-						u.a.transition(this.controls, "all 0.3s ease-out");
-						u.a.setOpacity(this.controls, 0);
-					}
-				}
-				this.showControls = function() {
-					if(this.t_controls) {
-						this.t_controls = u.t.resetTimer(this.t_controls);
-					}
-					else {
-						u.a.transition(this.controls, "all 0.5s ease-out");
-						u.a.setOpacity(this.controls, 1);
-					}
-					this.t_controls = u.t.setTimer(this, this.hideControls, 1500);
-				}
-				this._keepControls = function() {
-					this.player._keep = true;
-				}
-				this._unkeepControls = function() {
-					this.player._keep = false;
-				}
-			}
-			else {
-				u.as(this.controls, "display", this.controls._default_display);
-			}
-			if(this._controls_playpause) {
-				if(!this.controls.playpause) {
-					this.controls.playpause = u.ae(this.controls, "a", {"class":"playpause"});
-					this.controls.playpause._default_display = u.gcs(this.controls.playpause, "display");
-					this.controls.playpause.player = this;
-					u.e.click(this.controls.playpause);
-					this.controls.playpause.clicked = function(event) {
-						this.player.togglePlay();
-					}
-				}
-				else {
-					u.as(this.controls.playpause, "display", this.controls.playpause._default_display);
-				}
-			}
-			else if(this.controls.playpause) {
-				u.as(this.controls.playpause, "display", "none");
-			}
-			if(this._controls_search) {
-				if(!this.controls.search) {
-					this.controls.search_ff = u.ae(this.controls, "a", {"class":"ff"});
-					this.controls.search_ff._default_display = u.gcs(this.controls.search_ff, "display");
-					this.controls.search_ff.player = this;
-					this.controls.search_rw = u.ae(this.controls, "a", {"class":"rw"});
-					this.controls.search_rw._default_display = u.gcs(this.controls.search_rw, "display");
-					this.controls.search_rw.player = this;
-					u.e.click(this.controls.search_ff);
-					this.controls.search_ff.ffing = function() {
-						this.t_ffing = u.t.setTimer(this, this.ffing, 100);
-						this.player.ff();
-					}
-					this.controls.search_ff.inputStarted = function(event) {
-						this.ffing();
-					}
-					this.controls.search_ff.clicked = function(event) {
-						u.t.resetTimer(this.t_ffing);
-					}
-					u.e.click(this.controls.search_rw);
-					this.controls.search_rw.rwing = function() {
-						this.t_rwing = u.t.setTimer(this, this.rwing, 100);
-						this.player.rw();
-					}
-					this.controls.search_rw.inputStarted = function(event) {
-						this.rwing();
-					}
-					this.controls.search_rw.clicked = function(event) {
-						u.t.resetTimer(this.t_rwing);
-						this.player.rw();
-					}
-					this.controls.search = true;
-				}
-				else {
-					u.as(this.controls.search_ff, "display", this.controls.search_ff._default_display);
-					u.as(this.controls.search_rw, "display", this.controls.search_rw._default_display);
-				}
-			}
-			else if(this.controls.search) {
-				u.as(this.controls.search_ff, "display", "none");
-				u.as(this.controls.search_rw, "display", "none");
-			}
-			if(this._controls_zoom && !this.controls.zoom) {}
-			else if(this.controls.zoom) {}
-			if(this._controls_volume && !this.controls.volume) {}
-			else if(this.controls.volume) {}
-			if(u.e.event_pref == "mouse") {
-				u.e.addEvent(this.controls, "mouseenter", this._keepControls);
-				u.e.addEvent(this.controls, "mouseleave", this._unkeepControls);
-				u.e.addEvent(this, "mousemove", this.showControls);
-			}
-			else {
-				u.e.addEvent(this, "touchstart", this.showControls);
-			}
-		}
-		else if(this.controls) {
-			u.as(this.controls, "display", "none");
-		}
-	}
-	return player;
-}
+
 
 /*u-sortable.js*/
 u.sortable = function(scope, _options) {
@@ -8003,17 +7775,23 @@ Util.Objects["oneButtonForm"] = new function() {
 		if(!node.childNodes.length) {
 			var csrf_token = node.getAttribute("data-csrf-token");
 			var form_action = node.getAttribute("data-form-action");
+			var form_target = node.getAttribute("data-form-target");
 			var button_value = node.getAttribute("data-button-value");
 			var button_name = node.getAttribute("data-button-name");
 			var button_class = node.getAttribute("data-button-class");
 			var inputs = node.getAttribute("data-inputs");
 			if(csrf_token && form_action && button_value) {
-				node.form = u.f.addForm(node, {"action":form_action, "class":"confirm_action_form"});
+				var form_options = {"action":form_action, "class":"confirm_action_form"};
+				if(form_target) {
+					form_options["target"] = form_target;
+				}
+				node.form = u.f.addForm(node, form_options);
 				node.form.node = node;
 				u.ae(node.form, "input", {"type":"hidden","name":"csrf-token", "value":csrf_token});
 				if(inputs) {
-					for(input_name in inputs)
-					u.ae(node.form, "input", {"type":"hidden","name":input_name, "value":inputs[input_name]});
+					for(input_name in inputs) {
+						u.ae(node.form, "input", {"type":"hidden","name":input_name, "value":inputs[input_name]});
+					}
 				}
 				u.f.addAction(node.form, {"value":button_value, "class":"button" + (button_class ? " "+button_class : ""), "name":u.stringOr(button_name, "save")});
 			}
@@ -8031,13 +7809,14 @@ Util.Objects["oneButtonForm"] = new function() {
 			node.form.success_function = node.getAttribute("data-success-function");
 			node.form.success_location = node.getAttribute("data-success-location");
 			node.form.dom_submit = node.getAttribute("data-dom-submit");
+			node.form._download = node.getAttribute("data-download");
 			node.form.restore = function(event) {
 				u.t.resetTimer(this.t_confirm);
 				this.confirm_submit_button.value = this.confirm_submit_button.org_value;
 				u.rc(this.confirm_submit_button, "confirm");
 			}
 			node.form.submitted = function() {
-				u.bug("submitted")
+				u.bug("submitted");
 				if(!u.hc(this.confirm_submit_button, "confirm") && this.confirm_submit_button.confirm_value) {
 					u.ac(this.confirm_submit_button, "confirm");
 					this.confirm_submit_button.value = this.confirm_submit_button.confirm_value;
@@ -8045,10 +7824,15 @@ Util.Objects["oneButtonForm"] = new function() {
 				}
 				else {
 					u.t.resetTimer(this.t_confirm);
+					if(typeof(this.node.submitted) == "function") {
+						u.bug("oneButtonForm");
+						this.node.submitted();
+					}
 					this.response = function(response) {
 						u.rc(this, "submitting");
 						u.rc(this.confirm_submit_button, "disabled");
 						page.notify(response);
+						this.restore();
 						if(response.cms_status == "success") {
 							if(response.cms_object && response.cms_object.constraint_error) {
 								this.confirm_submit_button.value = this.confirm_submit_button.org_value;
@@ -8056,18 +7840,20 @@ Util.Objects["oneButtonForm"] = new function() {
 							}
 							else {
 								if(this.success_location) {
-									u.bug("location:" + this.success_location)
+									u.bug("location:" + this.success_location);
 									u.ass(this.confirm_submit_button, {
 										"display": "none"
 									});
 									location.href = this.success_location;
 								}
 								else if(this.success_function) {
+									u.bug("function:" + this.success_function);
 									if(typeof(this.node[this.success_function]) == "function") {
 										this.node[this.success_function](response);
 									}
 								}
 								else if(typeof(this.node.confirmed) == "function") {
+									u.bug("confirmed");
 									this.node.confirmed(response);
 								}
 								else {
@@ -8075,16 +7861,26 @@ Util.Objects["oneButtonForm"] = new function() {
 								}
 							}
 						}
-						this.restore();
+						else {
+							if(typeof(this.node.confirmedError) == "function") {
+								u.bug("confirmedError");
+								this.node.confirmedError(response);
+							}
+						}
 					}
 					u.ac(this.confirm_submit_button, "disabled");
 					u.ac(this, "submitting");
 					this.confirm_submit_button.value = u.stringOr(this.confirm_submit_button.wait_value, "Wait");
 					if(this.dom_submit) {
+						u.bug("should submit:" + this._download);
+						if(this._download) {
+							this.response({"cms_status":"success"});
+							u.bug("wait for download");
+						}
 						this.DOMsubmit();
 					}
 					else {
-						u.request(this, this.action, {"method":"post", "params":u.f.getParams(this)});
+						u.request(this, this.action, {"method":"post", "data":u.f.getParams(this)});
 					}
 				}
 			}
@@ -8094,12 +7890,14 @@ Util.Objects["oneButtonForm"] = new function() {
 
 /*beta-u-notifier.js*/
 u.notifier = function(node) {
+	u.bug_force = true;
+	u.bug("enable notifier");
 	var notifications = u.qs("div.notifications", node);
 	if(!notifications) {
 		node.notifications = u.ae(node, "div", {"id":"notifications"});
 	}
 	node.notifications.hide_delay = 4500;
-	node.notifications.hide = function() {
+	node.notifications.hide = function(node) {
 		u.a.transition(this, "all 0.5s ease-in-out");
 		u.a.translate(this, 0, -this.offsetHeight);
 	}
@@ -8113,25 +7911,25 @@ u.notifier = function(node) {
 				}
 			}
 		}
-		var output;
-		if(typeof(response) == "object" && response.isJSON) {
+		var output = [];
+		if(typeof(response) == "object") {
 			var message = response.cms_message;
-			var cms_status = response.cms_status;
+			var cms_status = typeof(response.cms_status) != "undefined" ? response.cms_status : "";
 			if(typeof(message) == "object") {
 				for(type in message) {
 					if(typeof(message[type]) == "string") {
-						output = u.ae(this.notifications, "div", {"class":class_name+" "+cms_status, "html":message[type]});
+						output.push(u.ae(this.notifications, "div", {"class":class_name+" "+cms_status+" "+type, "html":message[type]}));
 					}
 					else if(typeof(message[type]) == "object" && message[type].length) {
 						var node, i;
 						for(i = 0; _message = message[type][i]; i++) {
-							output = u.ae(this.notifications, "div", {"class":class_name+" "+cms_status, "html":_message});
+							output.push(u.ae(this.notifications, "div", {"class":class_name+" "+cms_status+" "+type, "html":_message}));
 						}
 					}
 				}
 			}
 			else if(typeof(message) == "string") {
-				output = u.ae(this.notifications, "div", {"class":class_name+" "+cms_status, "html":message});
+				output.push(u.ae(this.notifications, "div", {"class":class_name+" "+cms_status, "html":message}));
 			}
 			if(typeof(this.notifications.show) == "function") {
 				this.notifications.show();
@@ -8205,11 +8003,11 @@ u.notifier = function(node) {
 			}
 			else if(messages) {
 				for(i = 0; message = messages[i]; i++) {
-					output = u.ae(this.notifications, "div", {"class":message.className, "html":message.innerHTML});
+					output.push(u.ae(this.notifications, "div", {"class":message.className, "html":message.innerHTML}));
 				}
 			}
 		}
-		u.t.setTimer(this.notifications, this.notifications.hide, this.notifications.hide_delay);
+		this.t_notifier = u.t.setTimer(this.notifications, this.notifications.hide, this.notifications.hide_delay, output);
 	}
 }
 
@@ -8223,7 +8021,7 @@ u.notifier = function(node) {
 		node.notifications = u.ae(node, "div", {"id":"notifications"});
 	}
 	node.notifications.hide_delay = 4500;
-	node.notifications.hide = function() {
+	node.notifications.hide = function(node) {
 		u.a.transition(this, "all 0.5s ease-in-out");
 		u.a.translate(this, 0, -this.offsetHeight);
 	}
@@ -8237,26 +8035,25 @@ u.notifier = function(node) {
 				}
 			}
 		}
-		var output;
-		u.bug("message:" + typeof(response) + "; JSON: " + response.isJSON + "; HTML: " + response.isHTML);
+		var output = [];
 		if(typeof(response) == "object") {
 			var message = response.cms_message;
 			var cms_status = typeof(response.cms_status) != "undefined" ? response.cms_status : "";
 			if(typeof(message) == "object") {
 				for(type in message) {
 					if(typeof(message[type]) == "string") {
-						output = u.ae(this.notifications, "div", {"class":class_name+" "+cms_status+" "+type, "html":message[type]});
+						output.push(u.ae(this.notifications, "div", {"class":class_name+" "+cms_status+" "+type, "html":message[type]}));
 					}
 					else if(typeof(message[type]) == "object" && message[type].length) {
 						var node, i;
 						for(i = 0; _message = message[type][i]; i++) {
-							output = u.ae(this.notifications, "div", {"class":class_name+" "+cms_status+" "+type, "html":_message});
+							output.push(u.ae(this.notifications, "div", {"class":class_name+" "+cms_status+" "+type, "html":_message}));
 						}
 					}
 				}
 			}
 			else if(typeof(message) == "string") {
-				output = u.ae(this.notifications, "div", {"class":class_name+" "+cms_status, "html":message});
+				output.push(u.ae(this.notifications, "div", {"class":class_name+" "+cms_status, "html":message}));
 			}
 			if(typeof(this.notifications.show) == "function") {
 				this.notifications.show();
@@ -8330,11 +8127,11 @@ u.notifier = function(node) {
 			}
 			else if(messages) {
 				for(i = 0; message = messages[i]; i++) {
-					output = u.ae(this.notifications, "div", {"class":message.className, "html":message.innerHTML});
+					output.push(u.ae(this.notifications, "div", {"class":message.className, "html":message.innerHTML}));
 				}
 			}
 		}
-		u.t.setTimer(this.notifications, this.notifications.hide, this.notifications.hide_delay);
+		this.t_notifier = u.t.setTimer(this.notifications, this.notifications.hide, this.notifications.hide_delay, output);
 	}
 }
 
@@ -8911,7 +8708,7 @@ Util.Objects["newSystemMessage"] = new function() {
 				u.rc(this, "submitting");
 				if(response.cms_status == "success") {
 					var div_receipt = u.ae(this.div, "div", {class:"receipt"});
-					u.ae(div_receipt, "p", {html:"Mail was successfully sent to:"});
+					u.ae(div_receipt, "p", {html:"Mail(s) was successfully sent to:"});
 					var ul_receipt = u.ae(div_receipt, "ul", {class:"receipt"});
 					var i;
 					for(i = 0; i < response.cms_object.length; i++) {
@@ -8932,10 +8729,34 @@ Util.Objects["sendMessage"] = new function() {
 		u.f.init(form);
 		form.div_message_form = u.qs("div.item.message form");
 		form.submitted = function(iN) {
-			if(this.fields["recipients"].val() || this.fields["maillist_id"].val()) {
+			if(this.fields["recipients"].val() || this.fields["maillist_id"].val() || this.fields["user_id"].val()) {
 				this.div_message_form.submit();
+				u.ac(this, "submitting");
 				this.response = function(response) {
+					u.rc(this, "submitting");
 					page.notify(response);
+					if(response.cms_status == "success") {
+						u.ass(this, {
+							display:"none",
+						});
+						this.div_receipt = u.ae(this.div, "div", {class:"receipt"});
+						u.ae(this.div_receipt, "p", {html:"Mail(s) was successfully sent to:"});
+						var ul_receipt = u.ae(this.div_receipt, "ul", {class:"receipt"});
+						var i;
+						for(i = 0; i < response.cms_object.length; i++) {
+							u.ae(ul_receipt, "li", {html:response.cms_object[i]})
+						}
+						var ul_actions = u.ae(this.div_receipt, "ul", {class:"actions"});
+						var action = u.f.addAction(ul_actions, {name:"send_another", value:"Send another", type:"button", class:"button"});
+						action._form = this
+						u.ce(action);
+						action.clicked = function() {
+							this._form.div_receipt.parentNode.removeChild(this._form.div_receipt);
+							u.ass(this._form, {
+								display: "block",
+							});
+						}
+					}
 				}
 				u.request(this, this.action, {"method":"post", "params" : u.f.getParams(this, {"send_as":"formdata"})});
 			}
@@ -10787,6 +10608,131 @@ Util.Objects["cancellationProfile"] = new function() {
 
 
 
+/*u-debug.js*/
+u.bug_console_only = true;
+Util.debugURL = function(url) {
+	if(u.bug_force) {
+		return true;
+	}
+	return document.domain.match(/(\.local|\.proxy)$/);
+}
+Util.nodeId = function(node, include_path) {
+	console.log("Util.nodeId IS DEPRECATED. Use commas in u.bug in stead.");
+	console.log(arguments.callee.caller);
+	try {
+		if(!include_path) {
+			return node.id ? node.nodeName+"#"+node.id : (node.className ? node.nodeName+"."+node.className : (node.name ? node.nodeName + "["+node.name+"]" : node.nodeName));
+		}
+		else {
+			if(node.parentNode && node.parentNode.nodeName != "HTML") {
+				return u.nodeId(node.parentNode, include_path) + "->" + u.nodeId(node);
+			}
+			else {
+				return u.nodeId(node);
+			}
+		}
+	}
+	catch(exception) {
+		u.exception("u.nodeId", arguments, exception);
+	}
+	return "Unindentifiable node!";
+}
+Util.exception = function(name, _arguments, _exception) {
+	u.bug("Exception in: " + name + " (" + _exception + ")");
+	console.error(_exception);
+	u.bug("Invoked with arguments:");
+	console.log(_arguments);
+	// 
+	// 
+}
+Util.bug = function() {
+	if(u.debugURL()) {
+		if(!u.bug_console_only) {
+			if(typeof(console) == "object") {
+				console.log(message);
+			}
+			var option, options = new Array([0, "auto", "auto", 0], [0, 0, "auto", "auto"], ["auto", 0, 0, "auto"], ["auto", "auto", 0, 0]);
+			if(isNaN(corner)) {
+				color = corner;
+				corner = 0;
+			}
+			if(typeof(color) != "string") {
+				color = "black";
+			}
+			option = options[corner];
+			if(!document.getElementById("debug_id_"+corner)) {
+				var d_target = u.ae(document.body, "div", {"class":"debug_"+corner, "id":"debug_id_"+corner});
+				d_target.style.position = u.bug_position ? u.bug_position : "absolute";
+				d_target.style.zIndex = 16000;
+				d_target.style.top = option[0];
+				d_target.style.right = option[1];
+				d_target.style.bottom = option[2];
+				d_target.style.left = option[3];
+				d_target.style.backgroundColor = u.bug_bg ? u.bug_bg : "#ffffff";
+				d_target.style.color = "#000000";
+				d_target.style.fontSize = "11px";
+				d_target.style.lineHeight = "11px";
+				d_target.style.textAlign = "left";
+				if(d_target.style.maxWidth) {
+					d_target.style.maxWidth = u.bug_max_width ? u.bug_max_width+"px" : "auto";
+				}
+				d_target.style.padding = "2px 3px";
+			}
+			if(typeof(message) != "string") {
+				message = message.toString();
+			}
+			var debug_div = document.getElementById("debug_id_"+corner);
+			message = message ? message.replace(/\>/g, "&gt;").replace(/\</g, "&lt;").replace(/&lt;br&gt;/g, "<br>") : "Util.bug with no message?";
+			u.ae(debug_div, "div", {"style":"color: " + color, "html": message});
+		}
+		else if(typeof(console) == "object") {
+			var i;
+			for(i = 0; i < arguments.length; i++) {
+				console.log(arguments[i]);
+			}
+		}
+	}
+}
+Util.xInObject = function(object, _options) {
+	if(u.debugURL()) {
+		var return_string = false;
+		var explore_objects = false;
+		if(typeof(_options) == "object") {
+			var _argument;
+			for(_argument in _options) {
+				switch(_argument) {
+					case "return"     : return_string               = _options[_argument]; break;
+					case "objects"    : explore_objects             = _options[_argument]; break;
+				}
+			}
+		}
+		var x, s = "--- start object ---\n";
+		for(x in object) {
+			if(explore_objects && object[x] && typeof(object[x]) == "object" && typeof(object[x].nodeName) != "string") {
+				s += x + "=" + object[x]+" => \n";
+				s += u.xInObject(object[x], true);
+			}
+			else if(object[x] && typeof(object[x]) == "object" && typeof(object[x].nodeName) == "string") {
+				s += x + "=" + object[x]+" -> " + u.nodeId(object[x], 1) + "\n";
+			}
+			else if(object[x] && typeof(object[x]) == "function") {
+				s += x + "=function\n";
+			}
+			else {
+				s += x + "=" + object[x]+"\n";
+			}
+		}
+		s += "--- end object ---\n";
+		if(return_string) {
+			return s;
+		}
+		else {
+			u.bug(s);
+		}
+	}
+}
+
+
 /*i-form.js*/
 u.bug_force = true;
 u.toggleHeader = function(div, header) {
@@ -12357,7 +12303,7 @@ Util.Objects["unidentifiedList"] = new function() {
 								this.node.replaceChild(fragment, this.node.span);
 								this.node.bn_delete.parentNode.removeChild(this.node.bn_delete);
 								this.node.bn_search.parentNode.removeChild(this.node.bn_search);
-								console.log("delete: " + this.node.div_results);
+								u.bug("delete: ", this.node.div_results);
 								if(this.node.div_results) {
 									this.node.div_results.parentNode.removeChild(this.node.div_results);
 								}
@@ -12494,7 +12440,9 @@ Util.Objects["unidentifiedList"] = new function() {
 						}
 					}
 					else {
-						u.rc(this.option.div._add_to, "adding");
+						if(this.option.div && this.option.div._add_to) {
+							u.rc(this.option.div._add_to, "adding");
+						}
 					}
 				}
 				this.iterateSelections();
@@ -12545,6 +12493,25 @@ Util.Objects["unidentifiedList"] = new function() {
 				u.ac(this, "confirm");
 			}
 		}
+		div._retryIdentification_clicked = function() {
+			if(this.t_execute) {
+				if(this.option && this.option.ua_nodes) {
+					var i, node;
+					for(i = 0; i < this.option.ua_nodes.length; i++) {
+						node = this.option.ua_nodes[i];
+						delete node._identified;
+					}
+				}
+				this.option.ua_nodes = [];
+				this.option.div.toggleAddToOption();
+			}
+			else {
+				this.t_execute = u.t.setTimer(this, this.option.div._not_confirmed, 1500);
+				this._content = this.innerHTML;	
+				this.innerHTML = "Sure?";
+				u.ac(this, "confirm");
+			}
+		}
 		div._not_confirmed = function() {
 			u.rc(this, "confirm");
 			this.innerHTML = this._content;
@@ -12563,8 +12530,6 @@ Util.Objects["unidentifiedList"] = new function() {
 				this._add_to.identified_options_lis.push(option_node);
 				u.e.click(option_node);
 				option_node.closeOption = function() {
-					console.log("option_node.closeOption");
-					console.log(option_node);
 					if(this._info) {
 						this._info.parentNode.removeChild(this._info);
 						delete this._info;
@@ -12592,10 +12557,7 @@ Util.Objects["unidentifiedList"] = new function() {
 					}
 				}
 				option_node.clicked = function(event) {
-					console.log("option_node.clicked");
-					console.log(event);
 					if(!this._info) {
-						console.log("build info pane");
 						var i, node, li;
 						for(i = 0; i < this.div._add_to.identified_options_lis.length; i++) {
 							li = this.div._add_to.identified_options_lis[i];
@@ -12631,12 +12593,18 @@ Util.Objects["unidentifiedList"] = new function() {
 							u.e.click(this._addtoclone);
 							this._addtoclone.clicked = this.div._addtoclone_clicked;
 						}
+						else if(this.details.guess == "Request timeout") {
+							this._info = u.ae(this, "div", {class:"info", html:this.details.guess ? this.details.guess : "Unknown error"});
+							this._retryIdentification = u.ae(this, "div", {class:"retry", html:"Retry", title:"Retry identification"});
+							this._retryIdentification.option = this;
+							u.e.click(this._retryIdentification);
+							this._retryIdentification.clicked = this.div._retryIdentification_clicked;
+						}
 						else {
 							this._info = u.ae(this, "div", {class:"info", html:this.details.guess ? this.details.guess : "Unknown error"});
 						}
 					}
 					else {
-						console.log("info pane is already open, close info pane")
 						this.closeOption();
 					}
 				}
@@ -12839,7 +12807,7 @@ Util.Objects["unidentifiedList"] = new function() {
 						}
 					}
 					else {
-						if(!this.wait_for_uas && this._add_to) {
+						if(this.wait_for_uas <= 0 && this._add_to) {
 							u.rc(this._add_to, "loading");
 						}
 						this.is_identifying = false;
@@ -12917,6 +12885,7 @@ Util.Objects["testMarkersOnUnidentified"] = new function() {
 						this.div.div_results.toggleAddToOption();
 						u.bug("test device markers")
 						this.response = function(response) {
+							u.bug("RESPONSE:", response);
 							page.notify(response);
 							if(response.isHTML) {
 								this.div.div_stats.innerHTML = u.qs(".stats", response).innerHTML;
@@ -13001,96 +12970,65 @@ Util.Objects["crossreferenceUnidentified"] = new function() {
 				this._open = true;
 				this.div_results = u.qs(".all_items");
 				this.div_stats = u.qs(".stats");
-				this._filter = u.ae(this, "div", {"class":"filter"});
 				this.markers_ul = u.ae(this, "ul", {"class":"markers"});
 				var i, node, li;
 				for(i = 0; i < response.cms_object.length; i++) {
 					node = response.cms_object[i];
-					li = u.ae(this.markers_ul, "li", {"html":node.name});
-					li.div = this;
-					li.item_id = node.item_id;
-					u.e.click(li);
-					li.clicked = function() {
-						var i, node;
-						for(i = 0; i < this.div._markers.length; i++) {
-							node = this.div._markers[i];
-							u.rc(node, "selected");
-						}
-						u.ac(this, "selected");
-						var existing_filter = u.qs("div.filter", this.div.div_results);
-						if(existing_filter) {
-							existing_filter.parentNode.removeChild(existing_filter);
-						}
-						this.existing_results = u.qs("ul.items", this.div.div_results);
-						if(this.existing_results) {
-							this.existing_results.innerHTML = "";
-						}
-						else {
-							this.existing_results = u.ae(this.div.div_results, "ul", {"class":"items"});
-						}
-						var existing_no_results = u.qs("p", this.div.div_results);
-						if(existing_no_results) {
-							existing_no_results.parentNode.removeChild(existing_no_results);
-						}
-						this.div.div_stats.innerHTML = "Loading ...";
-						this.div.div_results.toggleAddToOption();
-						u.bug("crossreference device markers")
-						this.response = function(response) {
-							page.notify(response);
-							if(response.isHTML) {
-								this.div.div_stats.innerHTML = u.qs(".stats", response).innerHTML;
-								var new_items = u.qsa(".all_items ul.items li.item", response);
-								if(new_items) {
-									var i, node;
-									for(i = 0; i < new_items.length; i++) {
-										node = new_items[i];
-										u.ae(this.existing_results, node);
-									}
-									u.o.unidentifiedList.init(this.div.div_results);
-								}
-								else {
-									u.ae(this.existing_results, u.qs(".all_items p", response));
-								}
-								u.rc(this, "loading");
+					if(node.name.match(/Android, [SM]/)) {
+						li = u.ae(this.markers_ul, "li", {"html":node.name});
+						li.div = this;
+						li.item_id = node.item_id;
+						u.e.click(li);
+						li.clicked = function() {
+							var i, node;
+							for(i = 0; i < this.div._markers.length; i++) {
+								node = this.div._markers[i];
+								u.rc(node, "selected");
 							}
+							u.ac(this, "selected");
+							var existing_filter = u.qs("div.filter", this.div.div_results);
+							if(existing_filter) {
+								existing_filter.parentNode.removeChild(existing_filter);
+							}
+							this.existing_results = u.qs("ul.items", this.div.div_results);
+							if(this.existing_results) {
+								this.existing_results.innerHTML = "";
+							}
+							else {
+								this.existing_results = u.ae(this.div.div_results, "ul", {"class":"items"});
+							}
+							var existing_no_results = u.qs("p", this.div.div_results);
+							if(existing_no_results) {
+								existing_no_results.parentNode.removeChild(existing_no_results);
+							}
+							this.div.div_stats.innerHTML = "Loading ...";
+							this.div.div_results.toggleAddToOption();
+							u.bug("crossreference device markers")
+							this.response = function(response) {
+								page.notify(response);
+								if(response.isHTML) {
+									this.div.div_stats.innerHTML = u.qs(".stats", response).innerHTML;
+									var new_items = u.qsa(".all_items ul.items li.item", response);
+									if(new_items) {
+										var i, node;
+										for(i = 0; i < new_items.length; i++) {
+											node = new_items[i];
+											u.ae(this.existing_results, node);
+										}
+										u.o.unidentifiedList.init(this.div.div_results);
+									}
+									else {
+										u.ae(this.existing_results, u.qs(".all_items p", response));
+									}
+									u.rc(this, "loading");
+								}
+							}
+							u.ac(this, "loading");
+							u.request(this, this.div.url_device_test, {"params":"csrf-token="+this.div.csrf_token+"&crossreference_marker=true&device_id="+this.item_id, "method":"post"});
 						}
-						u.ac(this, "loading");
-						u.request(this, this.div.url_device_test, {"params":"csrf-token="+this.div.csrf_token+"&crossreference_marker=true&device_id="+this.item_id, "method":"post"});
 					}
 				}
 				this._markers = u.qsa("li", this.markers_ul);
-				var i, node;
-				for(i = 0; i < this._markers.length; i++) {
-					node = this._markers[i];
-					node._c = node.textContent.toLowerCase();
-				}
-				this._filter._field = u.ae(this._filter, "div", {"class":"field"});
-				u.ae(this._filter._field, "label", {"html":"Filter"});
-				this._filter._input = u.ae(this._filter._field, "input", {"class":"filter ignoreinput"});
-				this._filter._input._div = this;
-				this._filter._input.onkeydown = function() {
-					u.t.resetTimer(this._div.t_filter);
-				}
-				this._filter._input.onkeyup = function() {
-					this._div.t_filter = u.t.setTimer(this._div, this._div.filter, 1500);
-					u.ac(this._div._filter, "filtering");
-				}
-				this.filter = function() {
-					var i, node;
-					if(this._current_filter != this._filter._input.value.toLowerCase()) {
-						this._current_filter = this._filter._input.value.toLowerCase();
-						for(i = 0; i < this._markers.length; i++) {
-							node = this._markers[i];
-							if(node._c.match(this._current_filter)) {
-								u.as(node, "display", "inline-block", false);
-							}
-							else {
-								u.as(node, "display", "none", false);
-							}
-						}
-					}
-					u.rc(this._filter, "filtering");
-				}
 			}
 		}
 		div.headerExpanded = function() {

@@ -102,7 +102,8 @@ dt {color: #7d848c; display: inline-block; vertical-align: top; font-size: 12px;
 #content .scene h1 + h2 + ul.actions {padding: 0 30px; height: 49px; margin: -49px 0 0;}
 #content .scene h1 + ul.actions li,
 #content .scene h1 + h2 + ul.actions li {padding-bottom: 0;}
-#content .scene > ul.actions li.delete {float: right; padding: 0 0 10px 10px;}
+#content .scene > ul.actions li.delete,
+#content .scene > ul.actions li.unpaid,
 #content .scene > ul.actions li.duplicate {float: right; padding: 0 0 10px 10px;}
 #content .scene h1 + p,
 #content .scene h1 + h3,
@@ -173,7 +174,7 @@ dt {color: #7d848c; display: inline-block; vertical-align: top; font-size: 12px;
 form {}
 fieldset {border: none; display: block;}
 div.field {padding: 0 28px 10px; position: relative; font-size: 0; z-index: 1;}
-div.field label {display: none;}
+div.field label {display: none; padding-left: 2px;}
 div.field input,
 div.field select,
 div.field textarea {box-shadow: inset 0 1px 2px #dedede; background: #ffffff; border: 1px solid #dcdcdc; display: inline-block; vertical-align: top; border-radius: 3px; margin: 2px; outline: none; position: relative; z-index: 1;}
@@ -192,7 +193,7 @@ div.field textarea.autoexpand {width: 366px; padding: 6px 6px 2px; overflow: hid
 div.field .pseudolabel {position: absolute; font-size: 1.077rem; display: inline-block; padding: 8px 6px; z-index: 2;}
 div.field.paragraph label {display: inline-block; vertical-align: top; line-height: 1.38em;} 
 div.field.paragraph label:after {content: ":";}
-div.field.paragraph p {display: inline-block; vertical-align: top; padding: 0 0 0 5px;} 
+div.field.paragraph p {display: inline-block; vertical-align: top; padding: 0 0 0 2px;} 
 div.field.list label {} 
 div.field.checkbox,
 div.field.boolean {padding-bottom: 15px;}
@@ -1018,6 +1019,8 @@ body.invoice #content div.scene .all_items ul.items li span.amount {float: right
 #content .scene.messageList > ul.actions li.maillists {float: right; padding: 0 0 10px 10px;}
 #content .scene.messageList > div.system {border-bottom: 1px solid #aaaaaa;}
 #content .scene.messageList > div.dynamic {padding-bottom: 30px; border-bottom: 1px solid #aaaaaa;}
+#content .scene.messageEdit ul.receipt {padding: 0 30px 20px; margin: 0 0 0 10px; list-style: disc;}
+#content .scene.messageEdit ul.receipt li {display: list-item; font-size: 15px; padding-bottom: 7px;}
 #content .scene.newSystemMessage fieldset.values {padding-top: 10px;}
 #content .scene.newSystemMessage fieldset.values h3 span.recipient {font-style: italic;}
 #content .scene.newSystemMessage ul.receipt {padding: 0 30px; margin: 0 0 0 10px; list-style: disc;}
@@ -1173,6 +1176,7 @@ body.invoice #content div.scene .all_items ul.items li span.amount {float: right
 }
 #content .scene.unidentifiedList .stats {padding: 5px 30px; border-bottom: 1px solid #dedede;}
 #content .scene.unidentifiedList .stats p {padding: 0;}
+#content .scene.unidentifiedList .testmarkers.crossreference {background-color: yellow;}
 #content .scene.unidentifiedList .items > li {padding: 10px 125px 10px 30px; position: relative; overflow: visible;}
 #content .scene.unidentifiedList .items > li > input {position: absolute; top: 10px; left: 30px; cursor: pointer;}
 #content .scene.unidentifiedList .items > li h3 {font-size: 13px; padding: 0 0 0 25px; overflow: hidden; word-wrap: break-word; cursor: pointer;}
@@ -1238,11 +1242,13 @@ body.invoice #content div.scene .all_items ul.items li span.amount {float: right
 .addToDevice div.search .results li div.matching {margin-left: -10px;}
 .addToDevice ul.options > li {cursor: pointer; font-size: 12px; border-top: none; border-bottom: 1px solid #dedede; color: #313942;}
 .addToDevice ul.options > li.mappedto {background-color: #00ff00;}
+.addToDevice li div.retry,
 .addToDevice li div.showselectedonly,
 .addToDevice li div.selected,
 .addToDevice li div.addtoclone,
 .addToDevice li div.matching {font-size: 11px; margin: 3px 0; border-radius: 10px; height: 11px; padding: 5px 10px; background: #64AD8E; text-align: center; color: #ffffff; cursor: pointer;}
 .addToDevice li div.addtoclone {margin-bottom: 10px;}
+.addToDevice li div.retry.confirm,
 .addToDevice li div.selected.confirm,
 .addToDevice li div.addtoclone.confirm,
 .addToDevice li div.matching.confirm {background-color: #df0000;}
