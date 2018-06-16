@@ -838,7 +838,7 @@ class TypeDevice extends Itemtype {
 		$sql .= ")";
 		$sql .= " AND devices.item_id NOT IN (SELECT taggings.item_id FROM ".UT_TAG." as tags, ".UT_TAGGINGS." as taggings WHERE tags.id = taggings.tag_id AND tags.context = 'type' AND tags.value = 'global')";
 //		$sql .= " AND devices.item_id NOT IN (SELECT taggings.item_id FROM ".UT_TAG." as tags, ".UT_TAGGINGS." as taggings WHERE tags.id = taggings.tag_id AND tags.context = 'type' AND tags.value = 'fallback')";
-
+$sql .= " ORDER BY name";
 //		print $sql;
 		$query->sql($sql);
 
@@ -1852,10 +1852,10 @@ class TypeDevice extends Itemtype {
 
 			// TODO: filter more values after testing
 			$marker = trim(preg_replace("/build|mozilla|uweb|android|samsung[-]?/i", "", $marker));
-			// print "marker:". $marker."<br>\n";
+//			print "marker:". $marker."<br>\n";
 
 			// if marker apears to be valid - and don't search for the same marker twice
-			if($marker && strlen($marker) > 2 && array_search($marker, $used_markers) === false) {
+			if($marker && strlen($marker) >= 2 && array_search($marker, $used_markers) === false) {
 
 				array_push($used_markers, $marker);
 				$ua["marker"] = $marker;
@@ -2005,7 +2005,8 @@ class TypeDevice extends Itemtype {
 //					$i++;
 					// should not work with more than 30-60 seconds in production to avoid serious CPU overload looking for something that might not be there.
 					// If it takes that long, it's time to try something different, to bring the number of unidentified useragents down
-					if($i == 20 || microtime(true) - $start_time > 120) {
+//					if($i == 20 || microtime(true) - $start_time > 120) {
+					if($i == 20) {
 						break;
 					}
 				}
@@ -2581,6 +2582,7 @@ class TypeDevice extends Itemtype {
 		$results = false;
 		$all_results = [];
 		$Identify = new Identify();
+		$limit = 200;
 
 		// first find some UAs which match trim pattern
 		foreach($Identify->trimming_patterns as $check_pattern) {
@@ -2610,7 +2612,7 @@ class TypeDevice extends Itemtype {
 //			print $mysql_pattern."<br>";
 
 			// limit query to 200 to keep load on server bareable
-			$find_sql = "SELECT id, useragent FROM ".$this->db_unidentified." WHERE useragent REGEXP '".($mysql_pattern)."' GROUP BY useragent LIMIT 200";
+			$find_sql = "SELECT id, useragent FROM ".$this->db_unidentified." WHERE useragent REGEXP '".($mysql_pattern)."' GROUP BY useragent LIMIT $limit";
 			// print $find_sql."<br>";
 			if($query->sql($find_sql)) {
 
@@ -2680,8 +2682,8 @@ class TypeDevice extends Itemtype {
 			// continue to trim already indexed UAs (just to be sure nothing slipped through)
 			else {
 
-				$find_sql = "SELECT id, item_id, useragent FROM ".$this->db_useragents." WHERE useragent REGEXP '".($mysql_pattern)."' LIMIT 200";
-	//			print $find_sql."<br>";
+				$find_sql = "SELECT id, item_id, useragent FROM ".$this->db_useragents." WHERE useragent REGEXP '".($mysql_pattern)."' LIMIT $limit";
+				// print $find_sql."<br>";
 				if($query->sql($find_sql)) {
 
 					$results = $query->results();
