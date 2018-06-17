@@ -2992,7 +2992,14 @@ $sql .= " ORDER BY name";
 		return $items;
 	}
 
+	function getTotalUseragentCount() {
 
+		$query = new Query();
+		$sql = "SELECT count(id) as uas FROM detector_dearapi_com.device_useragents";
+		if($query->sql($sql)) {
+			return $query->result(0, "uas");
+		}
+	}
 
 
 	// OLDER MAINTENANCE FUNCTIONS

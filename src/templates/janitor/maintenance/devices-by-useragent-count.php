@@ -15,6 +15,10 @@ $all_items = $model->getDevicesByUseragentCount();
 		<?= $HTML->link("Back", "/janitor/maintenance", array("class" => "button", "wrapper" => "li.back")) ?>
 	</ul>
 
+	<p>
+		Total useragents: <?= $model->getTotalUseragentCount() ?>
+	</p>
+
 	<div class="all_items i:defaultList filters">
 <?		if($all_items): ?>
 		<ul class="items">
