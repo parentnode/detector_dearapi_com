@@ -35,11 +35,15 @@ class Identify {
 
 
 		// no useragent - don't try to identify, just return basic
-		if(!$useragent) {
+//		if(!$useragent) {
+		if(!$useragent || $useragent == "null" || $useragent == "undefined") {
 			return array("segment" => "basic");
 //			return "basic";
 		}
 
+
+		// manually remove wrapping quotes
+		$useragent = trim($useragent, '\"');
 
 		// Experiment with trimming UA before doing analysis
 		// The goal is to remove non-identifying fragments to make regex process faster
@@ -931,8 +935,15 @@ class Identify {
 
 			// send mail
 			if($mail) {
-				global $page;
-				$page->mail(array("subject" => "UNABLE TO IDENTIFY: $useragent", "message" => $string));
+
+				mailer()->send(array(
+					"subject" => "UNABLE TO IDENTIFY: $useragent", 
+					"message" => $string,
+					"tracking" => false
+				));
+
+				// global $page;
+				// mailer()->send(array("subject" => "UNABLE TO IDENTIFY: $useragent", "message" => $string));
 			}
 		}
 
@@ -987,8 +998,7 @@ class Identify {
 		// FATAL ERROR
 		// missing ID - notify imediately
 		if($mail) {
-			global $page;
-			$page->mail(array("subject" => "MISSING UNIQUE ID: $device (".SITE_URL.")", "message" => $device.", ".$useragent));
+			mailer()->send(array("subject" => "MISSING UNIQUE ID: $device (".SITE_URL.")", "message" => $device.", ".$useragent));
 		}
 
 		// no match - return false to continue identification
@@ -1043,7 +1053,7 @@ class Identify {
 		// missing ID - notify imediately
 		if($mail) {
 			global $page;
-			$page->mail(array("subject" => "MISSING UNIQUE ID: $device (".SITE_URL.")", "message" => $device.", ".$useragent));
+			mailer()->send(array("subject" => "MISSING UNIQUE ID: $device (".SITE_URL.")", "message" => $device.", ".$useragent));
 		}
 
 		// no match - return false to continue identification

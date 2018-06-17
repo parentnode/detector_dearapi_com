@@ -10,7 +10,7 @@ include_once("classes/identify.class.php");
 
 $action = $page->actions();
 
-$ua = stringOr(getVar("ua"), isset($_SERVER["HTTP_USER_AGENT"]) ? $_SERVER["HTTP_USER_AGENT"] : "Not accessible");
+$ua = stringOr(getVar("ua"), isset($_SERVER["HTTP_USER_AGENT"]) ? $_SERVER["HTTP_USER_AGENT"] : "");
 
 $Identify = new Identify();
 $device = $Identify->identifyDevice($ua);

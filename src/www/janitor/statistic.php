@@ -32,7 +32,7 @@ if(is_array($action) && count($action)) {
 	// 	// check if custom function exists on User class
 	// 	if($model && method_exists($model, $action[0])) {
 	//
-	// 		$output->screen($model->$action[0]($action));
+	// 		$output->screen($model->{$action[0]}($action));
 	// 		exit();
 	// 	}
 	// }
@@ -100,7 +100,7 @@ if(is_array($action) && count($action)) {
 		if($model && method_exists($model, $action[0])) {
 
 			$output = new Output();
-			$output->screen($model->$action[0]($action));
+			$output->screen($model->{$action[0]}($action));
 			exit();
 		}
 	}
