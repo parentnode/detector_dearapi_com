@@ -17,9 +17,30 @@ class Identify {
 		$this->db_unidentified = SITE_DB.".unidentified_useragents";
 
 		$this->trimming_patterns = [
-			"[ ]+\[FB[^\]]+\]$",
-			"[ ]+\(iPhone[^\)]+scale[^\)]+gamut[^\)]+\)$",
-			"[ ]+[a-zA-Z]{2}[-_][a-zA-Z]{2}( ;|;)"
+			"[ ]+\[FB[^\]]+[\]]?", // Stupid FB shit data
+			"[ ]+Instagram [\d]*[^\)$]+[\)]?", // Instagram
+			"(?<=Android [1-9]\.[0-9])\.[\.0-9]+",
+			"(?<=iPhone OS [1-9]_[0-9])_[_0-9]+",
+			"(?<=iPhone OS 1[0-9]_[0-9])_[_0-9]+",
+			"(?<=Windows NT 10\.[0-9])\.[\.0-9]+",
+			"(?<=Mac OS X 1[0-9]_[0-9])_[_0-9]+",
+			"(?<=Mac OS X 1[0-9]_1[0-9])_[_0-9]+",
+			"[ ]+\((iP(hone|ad|od)|Windows Device)[^\)]+scale[^\)]+\)[ ]?$",
+			"[;]? \.NET[ ]?[^;\)]+", // Stupid windows .NET addons
+			" AppEngine-Google; \([^\)]+\)",
+			"[; ]+[a-zA-Z]{2}[-_][a-zA-Z]{2}(?=(\)|;))", // language 
+			" \(via translate\.google\.com\)",
+			" Yandex\.Translate",
+			"^UserAgent:", // seems to occasionally come from the Ruby gem
+			"[;]? WOW64", // windows
+			"[;]? SLCC[1-2]",  // windows
+			"[;]? InfoPath\.[1-3]",  // windows
+			",gzip\(gfe\)",
+			"[ ]?\([ ;]*\)", // empty parentesis
+			";[ ]?(?=;)", // double semi-colon
+			"[ ]{1}(?=( |\)|;))", // double space or space followed by parentheses
+			"(?<=\();[ ]?", // parentheses followed by semi-colon and maybe space
+			"^[ ]+|[ ]+$", // starting space, ending space
 		];
 
 	}
