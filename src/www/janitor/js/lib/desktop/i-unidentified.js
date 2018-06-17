@@ -1575,6 +1575,66 @@ Util.Objects["testMarkersOnUnidentified"] = new function() {
 		div.url_device_get = div.getAttribute("data-device-get");
 
 
+		div.auto_order = [
+			"bot-crawler-spider-fetcher-indexer",
+			"internet-explorer-9",
+			"internet-explorer-10",
+			"internet-explorer-11",
+			"microsoft-edge-desktop",
+			"firefox-desktop",
+			"chrome-desktop",
+			"safari-desktop",
+
+			"internet-explorer-desktop-light",
+			"microsoft-edge-desktop-light",
+			"firefox-desktop-light",
+			"chrome-desktop-light",
+			"safari-desktop-light",
+			"opera-desktop-light",
+			"generic-desktop-light",
+
+			"generic-tv",
+
+			"safari-tablet",
+			"firefox-tablet",
+			"android-tablet",
+
+			"safari-tablet-light",
+			"firefox-tablet-light",
+			"android-tablet-light",
+			"opera-tablet-light",
+			"generic-tablet-light",
+
+			"firefox-smartphone",
+			"microsoft-edge-smartphone",
+			"safari-smartphone",
+
+			"safari-mobile",
+			"internet-explorer-mobile",
+			"firefox-mobile",
+			"opera-mobile",
+			"generic-mobile",
+
+			"lynx",
+			"validator",
+
+			"android-smartphone",
+			"android-mobile",
+
+			"internet-explorer-mobile-light",
+			"opera-mobile-light",
+			"generic-mobile-light",
+
+			"fallback-desktop",
+			"fallback-desktop-ie10",
+			"fallback-desktop-ie9",
+			"fallback-desktop-light",
+			"fallback-tablet-light",
+			"fallback-mobile",
+			"fallback-mobile-light",
+			"fallback-seo",
+		]
+
 		div.response = function(response) {
 
 			page.notify(response);
@@ -1592,11 +1652,18 @@ Util.Objects["testMarkersOnUnidentified"] = new function() {
 
 
 				this.markers_ul = u.ae(this, "ul", {"class":"markers"});
+				// var row_marker = response.cms_object[0].name.substring(0,3);
 				var i, node, li;
 //				for(i = 0; node = response.cms_object[i]; i++) {
 				for(i = 0; i < response.cms_object.length; i++) {
 					node = response.cms_object[i];
-					li = u.ae(this.markers_ul, "li", {"html":node.name});
+
+					// if(row_marker != node.name.substring(0,3)) {
+					// 	row_marker = node.name.substring(0,3);
+					// 	this.markers_ul = u.ae(this, "ul", {"class":"markers"});
+					// }
+
+					li = u.ae(this.markers_ul, "li", {"class":node.sindex, "html":node.name});
 					li.div = this;
 					li.item_id = node.item_id;
 					li.marker_name = node.name;
@@ -1642,9 +1709,9 @@ Util.Objects["testMarkersOnUnidentified"] = new function() {
 						// hide addtoOptions
 						this.div.div_results.toggleAddToOption();
 
-						u.bug("test device markers")
+//						u.bug("test device markers")
 						this.response = function(response) {
-							u.bug("RESPONSE:", response);
+//							u.bug("RESPONSE:", response);
 
 							page.notify(response);
 
@@ -1659,17 +1726,30 @@ Util.Objects["testMarkersOnUnidentified"] = new function() {
 
 								// inject new values
 								var new_items = u.qsa(".all_items ul.items li.item", response);
-								if(new_items) {
-									
+								if(new_items.length) {
+
 									var i, node;
 									for(i = 0; node = new_items[i]; i++) {
 										u.ae(this.existing_results, node);
 									}
 									u.o.unidentifiedList.init(this.div.div_results);
+
+									// Stop autorun
+									if(this.div.li_auto) {
+										this.div.li_auto.is_auto_running = false;
+									}
+
 								}
 								else {
-									u.ae(this.existing_results, u.qs(".all_items p", response));
+
 									// no results
+//									u.ae(this.existing_results, u.qs(".all_items p", response));
+
+									// Continue autoRun
+									if(this.div.li_auto && this.div.li_auto.is_auto_running && fun(this.div.li_auto.autoRun)) {
+										this.div.li_auto.autoRun();
+									}
+
 								}
 
 								u.rc(this, "loading");
@@ -1683,6 +1763,32 @@ Util.Objects["testMarkersOnUnidentified"] = new function() {
 
 
 				this._markers = u.qsa("li", this.markers_ul);
+
+
+				this.li_auto = u.ae(this.markers_ul, "li", {"class":"auto", "html":"Auto run"});
+				this.li_auto.div = this;
+				u.e.click(this.li_auto);
+				this.li_auto.clicked = function() {
+					if(!this.is_auto_running) {
+						this.is_auto_running = true;
+
+						this.auto_run_i = 0;
+
+						this.autoRun = function() {
+							if(this.auto_run_i < this.div.auto_order.length) {
+								var button = u.qs("."+this.div.auto_order[this.auto_run_i], this.div);
+								this.auto_run_i++;
+
+								button.clicked();
+							}
+							else {
+								this.is_auto_running = false;
+								delete this.autoRun;
+							}
+						}
+						this.autoRun();
+					}
+				}
 
 
 				// index list, to speed up filtering process

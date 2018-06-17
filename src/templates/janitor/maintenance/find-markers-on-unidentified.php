@@ -10,7 +10,7 @@ if(count($action) == 2) {
 	$all_items = $model->findMarkersOnUnidentified($action[1]);
 }
 
-$patterns = $model->getDevicesWithPatterns("bla");
+$patterns = $model->getDevicesWithPatterns();
 
 ?>
 <div class="scene defaultList findMarkersOnUnidentified unidentifiedList">
