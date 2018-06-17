@@ -22,7 +22,7 @@ class Identify {
 		// should be ordered so the longest replacements happens first
 		$this->trimming_patterns = [
 			"[ ]+\[FB[^\]]+[\]]?", // Stupid FB shit data
-//			"[ ]+Instagram [\d]*[^\)$]+[\)]?", // Instagram
+			"[ ]+Instagram [\d]*[^\)$]+[\)]?", // Instagram
 			"(?<=Android [1-9]\.[0-9])\.[\.0-9]+",
 			"(?<=iPhone OS [1-9]_[0-9])_[_0-9]+",
 			"(?<=iPhone OS 1[0-9]_[0-9])_[_0-9]+",
