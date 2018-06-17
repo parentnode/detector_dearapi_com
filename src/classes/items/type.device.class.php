@@ -825,7 +825,7 @@ class TypeDevice extends Itemtype {
 
 
 	// Find all devices with markers to create list for testing unidentified devices
-	function getDevicesWithPatterns($segment) {
+	function getDevicesWithPatterns() {
 
 		$query = new Query();
 		$IC = new Items();
@@ -857,9 +857,9 @@ $sql .= " ORDER BY name";
 //				unset($device["useragents"]);
 				unset($device["tags"]);
 
-				$device["segment"] = $segment;
-
-//				print_r($device);
+				// $device["segment"] = $segment;
+				//
+				// print_r($device);
 
 				$segment_patterns[] = $device;
 
