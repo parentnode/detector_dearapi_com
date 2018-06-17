@@ -660,7 +660,7 @@ class TypeDevice extends Itemtype {
 
 			// get some additional information about device
 			$device_segment = $IC->getTags(array("item_id" => $device_id, "context" => "segment"));
-			$device_alias = $IC->getTags(array("item_id" => $device_id, "context" => "alias"));
+			// $device_alias = $IC->getTags(array("item_id" => $device_id, "context" => "alias"));
 			$device_type = $IC->getTags(array("item_id" => $device_id, "context" => "type"));
 
 
@@ -670,7 +670,7 @@ class TypeDevice extends Itemtype {
 
 
 			// don't test group for aliases, fallbacks and globals
-			if($device_alias || $device_type) {
+			if($device_type) {
 				$group_regex_pos = false;
 				$group_regex_neg = false;
 			} 
@@ -932,13 +932,13 @@ $sql .= " ORDER BY name";
 		$IC = new Items();
 
 		// TODO: make this dynamic (look for alias first, then segment)
-		if($segment == "desktop_ie_light") {
-			$fallback_device = $IC->getItems(array("tags" => "alias:".$segment.";type:fallback", "limit" => 1));
-			$segment = "desktop_light";
-		}
-		else {
-			$fallback_device = $IC->getItems(array("tags" => "segment:".$segment.";type:fallback", "limit" => 1));
-		}
+		// if($segment == "desktop_ie_light") {
+		// 	$fallback_device = $IC->getItems(array("tags" => "alias:".$segment.";type:fallback", "limit" => 1));
+		// 	$segment = "desktop_light";
+		// }
+		// else {
+		$fallback_device = $IC->getItems(array("tags" => "segment:".$segment.";type:fallback", "limit" => 1));
+		// }
 
 		if($fallback_device) {
 			$device = $IC->getItem(array("id" => $fallback_device[0]["id"], "extend" => true));
@@ -1025,8 +1025,8 @@ $sql .= " ORDER BY name";
 			// individual segment priority
 			$segment_patterns = array();
 
-			// desktop_edge
-			$segment_patterns[] = $this->getSegmentPatterns("desktop_edge");
+			// // desktop_edge
+			// $segment_patterns[] = $this->getSegmentPatterns("desktop_edge");
 
 			// desktop
 			$segment_patterns[] = $this->getSegmentPatterns("desktop");
@@ -1135,7 +1135,7 @@ $sql .= " ORDER BY name";
 		$fallback_patterns[] = $this->getFallbackPattern("desktop_ie11");
 		$fallback_patterns[] = $this->getFallbackPattern("desktop");
 		$fallback_patterns[] = $this->getFallbackPattern("tv");
-		$fallback_patterns[] = $this->getFallbackPattern("desktop_ie_light");
+		// $fallback_patterns[] = $this->getFallbackPattern("desktop_ie_light");
 		$fallback_patterns[] = $this->getFallbackPattern("desktop_light");
 		$fallback_patterns[] = $this->getFallbackPattern("tablet");
 		$fallback_patterns[] = $this->getFallbackPattern("tablet_light");
@@ -2053,7 +2053,7 @@ $sql .= " ORDER BY name";
 
 		// get some additional information about device
 		$device_segment = $IC->getTags(array("item_id" => $device_id, "context" => "segment"));
-		$device_alias = $IC->getTags(array("item_id" => $device_id, "context" => "alias"));
+		// $device_alias = $IC->getTags(array("item_id" => $device_id, "context" => "alias"));
 		$device_type = $IC->getTags(array("item_id" => $device_id, "context" => "type"));
 
 		// compile regular expression for device
@@ -2089,7 +2089,7 @@ $sql .= " ORDER BY name";
 
 
 		// don't test group aliases, fallbacks and globals
-		if($device_alias || $device_type) {
+		if($device_type) {
 			$group_regex_pos = false;
 			$group_regex_neg = false;
 		} 

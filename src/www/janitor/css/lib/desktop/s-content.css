@@ -195,6 +195,11 @@
 	background-color: #313942;
 }
 
+#content .scene.unidentifiedList .testmarkers ul.markers li.auto {
+	display: block; width: 50px; text-align: center; margin-top: 10px;
+}
+
+
 /* STATS */
 #content .scene.unidentifiedList .stats {padding: 5px 30px; border-bottom: 1px solid #dedede;}
 #content .scene.unidentifiedList .stats p {padding: 0;}
