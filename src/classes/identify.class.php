@@ -387,16 +387,11 @@ class Identify {
 
 			// send mail
 			if($mail) {
-//				global $page;
 				mailer()->send(array(
 					"subject" => "UNABLE TO IDENTIFY: $useragent", 
 					"message" => $string,
 					"tracking" => false
 				));
-				// $page->mail(array(
-				// 	"subject" => "UNABLE TO IDENTIFY: $useragent",
-				// 	"message" => $string
-				// ));
 			}
 		}
 

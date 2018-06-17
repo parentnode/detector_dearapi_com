@@ -25,8 +25,6 @@ foreach($headers as $key => $value) {
 	$message .= $key.": ".$value."<br>";
 }
 
-//$page->mail(array("subject" => "DEBUG USERAGENT: ".$ua, "message" => $message, "template" => "system"));
-
 mailer()->send(array(
 	"subject" => "DEBUG USERAGENT: ".$ua, 
 	"message" => $message, 
