@@ -970,8 +970,6 @@ class Identify {
 					"tracking" => false
 				));
 
-				// global $page;
-				// mailer()->send(array("subject" => "UNABLE TO IDENTIFY: $useragent", "message" => $string));
 			}
 		}
 
