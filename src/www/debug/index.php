@@ -25,7 +25,12 @@ foreach($headers as $key => $value) {
 	$message .= $key.": ".$value."\n";
 }
 
-$page->mail(array("subject" => "DEBUG USERAGENT: ".$ua, "message" => $message, "template" => "system"));
+mailer()->send(array(
+	"subject" => "DEBUG USERAGENT: ".$ua, 
+	"message" => $message, 
+	"template" => "system",
+	"tracking" => false
+));
 
 header("Content-type: text/html; charset=UTF-8");
 ?>

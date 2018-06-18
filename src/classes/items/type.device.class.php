@@ -214,7 +214,8 @@ class TypeDevice extends Itemtype {
 					$tags = $IC->getTags(array("item_id" => $devices[0]["id"], "context" => "segment"));
 					if($tags) {
 	//					print "segment:" . $tags[0]["value"];
-						return $tags[0]["value"];
+						return $this->translateNewSegments($tags[0]["value"]);
+						// return $tags[0]["value"];
 					}
 
 				}
@@ -226,6 +227,14 @@ class TypeDevice extends Itemtype {
 
 		// not able to find any segment for this device
 		return false;
+	}
+
+	// custom segment translator - converting new segments to old segments
+	function translateNewSegments($segment) {
+		if(preg_match("/^(desktop)$/", $segment)) {
+			return "desktop_edge";
+		}
+		return $segment;
 	}
 
 

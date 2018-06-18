@@ -17,9 +17,30 @@ class Identify {
 		$this->db_unidentified = SITE_DB.".unidentified_useragents";
 
 		$this->trimming_patterns = [
-			"[ ]+\[FB[^\]]+\]$",
-			"[ ]+\(iPhone[^\)]+scale[^\)]+gamut[^\)]+\)$",
-			"[ ]+[a-zA-Z]{2}[-_][a-zA-Z]{2}( ;|;)"
+			"[ ]+\[FB[^\]]+[\]]?", // Stupid FB shit data
+			"[ ]+Instagram [\d]*[^\)$]+[\)]?", // Instagram
+			"(?<=Android [1-9]\.[0-9])\.[\.0-9]+",
+			"(?<=iPhone OS [1-9]_[0-9])_[_0-9]+",
+			"(?<=iPhone OS 1[0-9]_[0-9])_[_0-9]+",
+			"(?<=Windows NT 10\.[0-9])\.[\.0-9]+",
+			"(?<=Mac OS X 1[0-9]_[0-9])_[_0-9]+",
+			"(?<=Mac OS X 1[0-9]_1[0-9])_[_0-9]+",
+			"[ ]+\((iP(hone|ad|od)|Windows Device)[^\)]+scale[^\)]+\)[ ]?$",
+			"[;]? \.NET[ ]?[^;\)]+", // Stupid windows .NET addons
+			" AppEngine-Google; \([^\)]+\)",
+			"[; ]+[a-zA-Z]{2}[-_][a-zA-Z]{2}(?=(\)|;))", // language 
+			" \(via translate\.google\.com\)",
+			" Yandex\.Translate",
+			"^UserAgent:", // seems to occasionally come from the Ruby gem
+			"[;]? WOW64", // windows
+			"[;]? SLCC[1-2]",  // windows
+			"[;]? InfoPath\.[1-3]",  // windows
+			",gzip\(gfe\)",
+			"[ ]?\([ ;]*\)", // empty parentesis
+			";[ ]?(?=;)", // double semi-colon
+			"[ ]{1}(?=( |\)|;))", // double space or space followed by parentheses
+			"(?<=\();[ ]?", // parentheses followed by semi-colon and maybe space
+			"^[ ]+|[ ]+$", // starting space, ending space
 		];
 
 
@@ -38,13 +59,8 @@ class Identify {
 //		print "IDENTIFYING:" . $useragent . "\n";
 
 
-		// no useragent - don't try to identify, just return basic
-		if(!$useragent) {
-			return array("segment" => "basic");
-//			return "basic";
-		}
-
-
+		// manually remove wrapping quotes
+		$useragent = trim($useragent, '\"');
 
 		// Experiment with trimming UA before doing analysis
 		// The goal is to remove non-identifying fragments to make regex process faster
@@ -53,15 +69,26 @@ class Identify {
 		}
 
 
-
-		// Include static detection script for initial test
-		$detection_script = PUBLIC_FILE_PATH."/detection_script.php";
-		if(file_exists($detection_script)) {
-			include($detection_script);
+		// no useragent - don't try to identify, just return desktop (default)
+		if(!$useragent || $useragent == "null" || $useragent == "undefined") {
+			return array("segment" => "basic");
+//			return "basic";
 		}
+
+
+		// Include most updated detection script
+		$detection_script_current = "/srv/sites/parentnode/detector_dearapi_com/src/library/public/detection_script.php";
+		// Use v3 is current hasn't been created yet
+		$detection_script_v3 = PUBLIC_FILE_PATH."/detection_script.php";
+		if(file_exists($detection_script_current)) {
+			include($detection_script_current);
+		}
+		else if(file_exists($detection_script_v3)) {
+			include($detection_script_v3);
+		}
+
+
 //		print $device_name;
-
-
 
 
 		// did static test return match
@@ -70,18 +97,20 @@ class Identify {
 			// if log is true, use fastest method to return segment
 			if($log) {
 
+				$IC = new Items();
+				$DC = $IC->typeObject("device");
 				// add to general id log
 				$this->logString("UA MARKER", $useragent, $device_segment, "marker");
 
 				// return segment
-				return array("segment" => $device_segment);
+				return array("segment" => $DC->translateNewSegments($device_segment));
 			}
 
 			// if details are required
 			if($details) {
 
-				// get additional information
 				$query = new Query();
+				// get additional information
 				if($query->sql("SELECT item_id FROM ".$this->db." WHERE name = '$device_name'")) {
 					$device_id = $query->result(0, "item_id");
 
@@ -95,9 +124,9 @@ class Identify {
 		}
 
 
-		$IC = new Items();
-		$query = new Query();
-		$DC = $IC->typeObject("device");
+		$IC = isset($IC) ? $IC : new Items();
+		$query = isset($query) ? $query : new Query();
+		$DC = isset($DC) ? $DC : $IC->typeObject("device");
 
 
 		// continue with old match patterns
@@ -366,8 +395,13 @@ class Identify {
 
 			// send mail
 			if($mail) {
-				global $page;
-				$page->mail(array("subject" => "UNABLE TO IDENTIFY: $useragent", "message" => $string));
+
+				mailer()->send(array(
+					"subject" => "UNABLE TO IDENTIFY: $useragent", 
+					"message" => $string,
+					"tracking" => false
+				));
+
 			}
 		}
 
@@ -378,6 +412,29 @@ class Identify {
 		return array("segment" => "desktop");
 
 //		return false;
+	}
+
+
+
+
+	// custom segment translator - converting new segments to old segments
+	function translateNewSegments($segment) {
+		if(preg_match("/^(desktop_edge)$/", $segment)) {
+			return "desktop";
+		}
+		else if(preg_match("/^(desktop_ie9|desktop_ie10|desktop_ie11)$/", $segment)) {
+			return "desktop_ie";
+		}
+		else if(preg_match("/^(smartphone)$/", $segment)) {
+			return "mobile_touch";
+		}
+		else if(preg_match("/^(tablet_light)$/", $segment)) {
+			return "tablet";
+		}
+		else if(preg_match("/^(seo)$/", $segment)) {
+			return "basic";
+		}
+		return $segment;
 	}
 
 
