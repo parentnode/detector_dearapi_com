@@ -54,7 +54,7 @@ class Identify {
 	// added optional logging - now function can be used for manual identification work
 	function identifyDevice($useragent, $log=true, $mail=true, $details=true) {
 
-//		print "IDENTIFYING:" . $useragent . "\n";
+		// print "IDENTIFYING:" . $useragent . "\n";
 
 		// manually remove wrapping quotes
 		$useragent = trim($useragent, '\"');
@@ -80,9 +80,9 @@ class Identify {
 		if(file_exists($detection_script)) {
 			include($detection_script);
 		}
+
+
 //		print $device_name;
-
-
 
 
 		// did static test return match
@@ -116,9 +116,11 @@ class Identify {
 		}
 
 
-		$IC = new Items();
-		$query = new Query();
+		$IC = isset($IC) ? $IC : new Items();
+		$query = isset($query) ? $query : new Query();
 		$DC = $IC->typeObject("device");
+
+
 
 
 		// continue with old match patterns
