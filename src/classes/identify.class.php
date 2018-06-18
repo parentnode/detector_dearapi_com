@@ -73,20 +73,17 @@ class Identify {
 		}
 
 
-
-		$detection_script = "/srv/sites/parentnode/detector_dearapi_com_v3/src/library/public/detection_script.php";
-		$detection_script_local = "/srv/sites/parentnode/detector_dearapi_com/src/library/public/detection_script.php";
-		if(file_exists($detection_script)) {
-			include($detection_script);
+		// Include most updated detection script
+		$detection_script_current = "/srv/sites/parentnode/detector_dearapi_com/src/library/public/detection_script.php";
+		// Use v3 is current hasn't been created yet
+		$detection_script_v3 = "/srv/sites/parentnode/detector_dearapi_com_v3/src/library/public/detection_script.php";
+		if(file_exists($detection_script_current)) {
+			include($detection_script_current);
 		}
-		else if(file_exists($detection_script_local)) {
-			include($detection_script_local);
+		else if(file_exists($detection_script_v3)) {
+			include($detection_script_v3);
 		}
 
-
-		$IC = new Items();
-		$query = new Query();
-		$DC = $IC->typeObject("device");
 
 
 		// did static test return match
@@ -98,6 +95,9 @@ class Identify {
 				// add to general id log
 				$this->logString("UA MARKER", $useragent, $device_segment, "marker");
 
+				$IC = new Items();
+				$DC = $IC->typeObject("device");
+
 				// return segment
 				return array("segment" => $DC->translateNewSegments($device_segment));
 //				return array("segment" => $device_segment);
@@ -107,16 +107,23 @@ class Identify {
 			if($details) {
 
 				// get additional information
+				$query = new Query();
 				if($query->sql("SELECT item_id FROM ".$this->db." WHERE name = '$device_name'")) {
 					$device_id = $query->result(0, "item_id");
 
 					// get complete device
+					$IC = new Items();
 					$device = $IC->getItem(array("id" => $device_id, "extend" => array("tags" => true)));
 					$device["method"] = "marker";
 					return $device;
 				}
 			}
+
 		}
+
+		$IC = isset($IC) ? $IC : new Items();
+		$query = isset($query) ? $query : new Query();
+		$DC = isset($DC) ? $DC : $IC->typeObject("device");
 
 		//
 		// if(isset($device_segment) && $device_segment) {
