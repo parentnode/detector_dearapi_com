@@ -415,30 +415,6 @@ class Identify {
 	}
 
 
-
-
-	// custom segment translator - converting new segments to old segments
-	function translateNewSegments($segment) {
-		if(preg_match("/^(desktop_edge)$/", $segment)) {
-			return "desktop";
-		}
-		else if(preg_match("/^(desktop_ie9|desktop_ie10|desktop_ie11)$/", $segment)) {
-			return "desktop_ie";
-		}
-		else if(preg_match("/^(smartphone)$/", $segment)) {
-			return "mobile_touch";
-		}
-		else if(preg_match("/^(tablet_light)$/", $segment)) {
-			return "tablet";
-		}
-		else if(preg_match("/^(seo)$/", $segment)) {
-			return "basic";
-		}
-		return $segment;
-	}
-
-
-
 	// log useragent for manual indexing
 	// only logs unidentified useragents
 	function saveForIdentification($useragent, $segment = "") {
