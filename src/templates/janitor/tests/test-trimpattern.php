@@ -9,6 +9,8 @@ global $model;
 $Identify = new Identify();
 
 // TODO: find simple to add comment to each UA, which can be printed in view to make it easier to check if trimming is doing as expected
+$useragents[] = 'Mozilla/5.0 (iPhone; CPU iPhone OS 10_0 like Mac OS X) AppleWebKit/602.1.50 (KHTML, like Gecko) Mobile/14A346 Instagram 10.4.0';
+
 $useragents[] = 'Mozilla/5.0 (iPhone; CPU iPhone OS 9_0_2 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Mobile/13A452 Instagram 7.21.1';
 
 $useragents[] = 'Mozilla/5.0 (Linux; Android 5.0.2; HTC Desire 816 Build/LRX22G; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/56.0.2924.87 Mobile Safari/537.36 Instagram 10.10.0 Android (21/5.0.2; 320dpi; 720x1184; HTC/htc; HTC Desire 816; htc_a5ul; qcom) ';
