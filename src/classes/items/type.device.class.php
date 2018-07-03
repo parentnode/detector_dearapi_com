@@ -164,7 +164,7 @@ class TypeDevice extends Itemtype {
 		if($tags) {
 			foreach($tags as $tag) {
 				if($tag["context"] == "segment") {
-					return $tag["value"];
+					return $this->translateNewSegments($tag["value"]);
 				}
 			}
 
