@@ -566,46 +566,51 @@ Util.Objects["unidentifiedList"] = new function() {
 							this.bn_search.clicked = function(event) {
 								u.e.kill(event);
 
-								this.response = function(response) {
-									if(typeof(response) == "object" && response.items.length) {
+								if(!this.node.div_results) {
 
-										this.node.div_results = u.ae(document.body, "div", {"class":"search_result"});
-										this.node.div_results.node = this;
-										this.has_results = false;
+									this.response = function(response) {
+										if(typeof(response) == "object" && response.items.length) {
 
-										u.as(this.node.div_results, "top", (u.absY(this)+20)+"px");
-										u.as(this.node.div_results, "left", (u.absX(this)-17)+"px");
+											this.node.div_results = u.ae(document.body, "div", {"class":"search_result"});
+											this.node.div_results.node = this;
+											this.has_results = false;
+
+											u.as(this.node.div_results, "top", (u.absY(this)+20)+"px");
+											u.as(this.node.div_results, "left", (u.absX(this)-17)+"px");
 
 
-										for(i = 0; i < response.items.length; i++) {
+											for(i = 0; i < response.items.length; i++) {
 											
-											result = response.items[i];
-//											console.log(result)
-//											console.log(result.snippet)
-											if(result.snippet.match(/[0-9\.\,]+[ \-]?(\"|\″|inch|pulgad)/)) {
-												var h3 = u.ae(this.node.div_results, "h3");
-												u.ae(h3, "a", {html:result.link, href:result.link, target:"_blank"});
-												u.ae(this.node.div_results, "p", {html:result.snippet.replace(/([0-9\.\,]+[ \-]?(\"|\″|inch|pulgad))/, "<span class=\"screen\">$1</span>")})
-//												console.log();
-												this.has_results = true;
+												result = response.items[i];
+	//											console.log(result)
+	//											console.log(result.snippet)
+												if(result.snippet.match(/[0-9\.\,]+[ \-]?(\"|\″|inch|pulgad)/)) {
+													var h3 = u.ae(this.node.div_results, "h3");
+													u.ae(h3, "a", {html:result.link, href:result.link, target:"_blank"});
+													u.ae(this.node.div_results, "p", {html:result.snippet.replace(/([0-9\.\,]+[ \-]?(\"|\″|inch|pulgad))/, "<span class=\"screen\">$1</span>")})
+	//												console.log();
+													this.has_results = true;
+												}
+
 											}
 
-										}
+											if(!this.has_results) {
+												u.ae(this.node.div_results, "p", {html:"No sizes in results"});
+											}
 
-										if(!this.has_results) {
-											u.ae(this.node.div_results, "p", {html:"No sizes in results"});
-										}
+											var h3 = u.ae(this.node.div_results, "h3");
+											u.ae(h3, "a", {html:"&quot;"+this.node.span.innerHTML+"&quot; on Google", href:"https://google.com/search?q="+this.node.span.innerHTML, target:"_blank"});
 
-										
+										}
+										else {
+											page.notify({"cms_message":{"error":["Invalid search result"]}});
+										}
+	//									console.log(response);
 									}
-									else {
-										page.notify({"cms_message":{"error":["Invalid search result"]}});
-									}
-//									console.log(response);
+	//								u.request(this, "/janitor/maintenance/search-for-marker");
+									u.request(this, "https://www.googleapis.com/customsearch/v1?cx=006888141968518277707%3Awiqtlhmqi14&key=AIzaSyD2dkkTv2F03M2gi1TO7pAm0jz21o5GFPQ&q="+this.node.span.innerHTML+"+specs");
+	//								console.log(this.node.span.innerHTML);
 								}
-//								u.request(this, "/janitor/maintenance/search-for-marker");
-								u.request(this, "https://www.googleapis.com/customsearch/v1?cx=006888141968518277707%3Awiqtlhmqi14&key=AIzaSyD2dkkTv2F03M2gi1TO7pAm0jz21o5GFPQ&q="+this.node.span.innerHTML+"+specs");
-//								console.log(this.node.span.innerHTML);
 							}
 
 							// console.log(selection.toString());
@@ -1954,6 +1959,7 @@ Util.Objects["crossreferenceUnidentified"] = new function() {
 
 									// var div_results = u.qs(".all_items");
 
+									var markers = [];
 									// update stats
 									this.div.div_stats.innerHTML = u.qs(".stats", response).innerHTML;
 
@@ -1962,12 +1968,20 @@ Util.Objects["crossreferenceUnidentified"] = new function() {
 									var new_items = u.qsa(".all_items ul.items li.item", response);
 									if(new_items) {
 									
-										var i, node;
+										var i, node, marker;
 	//									for(i = 0; node = new_items[i]; i++) {
 										for(i = 0; i < new_items.length; i++) {
 											node = new_items[i];
 											u.ae(this.existing_results, node);
+
+											marker = u.qs("h4 em", node);
+											if(marker) {
+//												console.log(node, u.qs("h4 em", node));
+												markers.push(marker.innerHTML);
+											}
 										}
+										this.div.div_stats.innerHTML += "<br />Markers: " + markers.join(", ");
+
 										u.o.unidentifiedList.init(this.div.div_results);
 									}
 									else {
