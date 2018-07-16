@@ -11941,7 +11941,7 @@ Util.Objects["unidentifiedList"] = new function() {
 												u.ae(this.node.div_results, "p", {html:"No sizes in results"});
 											}
 											var h3 = u.ae(this.node.div_results, "h3");
-											u.ae(h3, "a", {html:"&quot;"+this.node.span.innerHTML+"&quot; on Google", href:"https://google.com/search?q="+this.node.span.innerHTML+"+device+spec", target:"_blank"});
+											u.ae(h3, "a", {html:"&quot;"+this.node.span.innerHTML+"&quot; on Google", href:"https://google.com/search?q="+this.node.span.innerHTML+"+display+spec", target:"_blank"});
 										}
 										else {
 											page.notify({"cms_message":{"error":["Invalid search result"]}});
