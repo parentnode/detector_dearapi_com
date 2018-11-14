@@ -9,11 +9,38 @@ include_once("classes/identify.class.php");
 
 $action = $page->actions();
 
-$ua = stringOr(getVar("ua"), isset($_SERVER["HTTP_USER_AGENT"]) ? $_SERVER["HTTP_USER_AGENT"] : "");
 
+$ua = stringOr(getVar("ua"), isset($_SERVER["HTTP_USER_AGENT"]) ? $_SERVER["HTTP_USER_AGENT"] : "");
 
 // include _include in path - for development
 $dev = getVar("dev");
+
+
+// Check for parameters via referer
+if($_SERVER["HTTP_REFERER"] && preg_match("/\?(.+)/", $_SERVER["HTTP_REFERER"], $param_string)) {
+	$params = explode("&", $param_string[1]);
+	foreach($params as $param) {
+		list($key, $value) = explode("=", $param);
+
+		if(!$dev && $key === "dev") {
+			$dev = $value;
+		}
+
+		if($key === "segment") {
+			$segment = $value;
+		}
+
+	}
+
+	// Use referer as site, if site is not passed
+	if(!isset($_GET["site"])) {
+		$_GET["site"] = preg_replace("/(\?.+)/", "", $_SERVER["HTTP_REFERER"]);
+	}
+
+}
+
+// Hardcoded params always wins
+
 
 // general path - general path, if css and js follow same path pattern
 $path = getVar("path");
@@ -26,14 +53,19 @@ $js_path = getVar("js_path");
 $css_param = getVar("css_param");
 $js_param = getVar("js_param");
 
+if(!isset($segment)) {
 
-// identify device
-$Identify = new Identify();
-$device = $Identify->identifyDevice($ua);
+	// identify device
+	$Identify = new Identify();
+	$device = $Identify->identifyDevice($ua);
+	$segment = $device["segment"];
+	
+}
+
 
 // predefine file to be includes
 // what file to include?
-$file = ($dev ? "lib/" : "")."seg_".$device["segment"].($dev ? "_include" : "");
+$file = ($dev ? "lib/" : "")."seg_".$segment.($dev ? "_include" : "");
 
 header("Content-type: text/javascript; charset=UTF-8");
 ?>
