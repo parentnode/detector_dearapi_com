@@ -453,7 +453,17 @@ Util.Objects["unidentifiedList"] = new function() {
 
 										if(response.cms_status == "success") {
 
+
+											// update node references
+											this.node.div.unselectNode(this.node);
+
+											// Remove from list
 											this.node.parentNode.removeChild(this.node);
+
+											// Update identification list and select state
+											this.node.div.bn_all.updateState();
+											this.node.div.toggleAddToOption();
+											
 										}
 									}
 									u.request(this, this.node.div.useragent_delete+"/"+this.node.ua_id, {"method":"post", "params":"csrf-token="+this.node.div.csrf_token});
