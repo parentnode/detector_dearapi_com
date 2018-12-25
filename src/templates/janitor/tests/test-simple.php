@@ -150,10 +150,12 @@ $useragent = "Mozilla/5.0 (Linux; Android 4.4.2; MID721 Build/KOT49H) AppleWebKi
 //$useragent = "Mozilla/5.0 (Linux; U; Android 4.2.2; MID0834 Build/MID0834-V1.0-2013.09.13) AppleWebKit/534.30 (KHTML, like Gecko) Version/4.0 Safari/534.30";
 $useragent = "Mozilla/5.0 (Linux; U; Android 4.0.4; MID7047 Build/IMM76D) AppleWebKit/534.30 (KHTML, like Gecko) Version/4.0 Safari/534.30";
 $useragent = "Mozilla/5.0 (Linux; Android 6.0; BTV-DL09 Build/HUAWEIBEETHOVEN-DL09; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/57.0.2987.132 Mobile Safari/537.36";
-
+$useragent = '$ua.tools.random';
 //$reg_exp_pos = "Linux; U; KF[A-Z]+ [^$]+bkit\/(53[0-9]|60[01])[^$]+(silk)";
 $reg_exp_pos = "android[^$]+AppleWebKit\/(4[0-9]{2}|5([0-2][0-9]|3[0-6]))";
 $reg_exp_pos = "mediapad|m2-[A8]0[12]W|BTV-(DL|W)09";
+$reg_exp_pos = '^\$ua\.tools\.random';
+print $reg_exp_pos;
 //$reg_exp_pos = "( MID[\-]?[014789][0-9]{2,3})";
 //$reg_exp_pos = "(PTAB|PMID)(7|9|10)\d\d|MIDC430|Polaroid Tablet";
 $reg_exp_neg = false; 

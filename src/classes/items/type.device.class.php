@@ -1186,6 +1186,9 @@ $sql .= " ORDER BY name";
 			$group_regex_pos = $this->createRegex($group_patterns, "markers", "marker");
 			$group_regex_neg = $this->createRegex($group_patterns, "exceptions", "exception");
 
+			// Additional PHP compensation for $ in useragents / device markers, which will be interpreted by PHP 
+			$group_regex_pos = str_replace("\\$", "\\\\\\$", $group_regex_pos);
+			$group_regex_neg = str_replace("\\$", "\\\\\\$", $group_regex_neg);
 
 			// indent segments or keep them on global level
 			if($group_regex_pos || $group_regex_neg) {
@@ -1225,6 +1228,11 @@ $sql .= " ORDER BY name";
 						// create pattern-statement for device
 						$device_regex_pos = $this->createRegex($device_pattern, "markers", "marker");
 						$device_regex_neg = $this->createRegex($device_pattern, "exceptions", "exception");
+
+						// Additional PHP compensation for $ in useragents / device markers, which will be interpreted by PHP 
+						$device_regex_pos = str_replace("\\$", "\\\\\\$", $device_regex_pos);
+						$device_regex_neg = str_replace("\\$", "\\\\\\$", $device_regex_neg);
+
 
 
 						// if second level statement is started, add else to statement
@@ -1342,6 +1350,10 @@ $sql .= " ORDER BY name";
 			$group_regex_pos = $this->createRegex($group_patterns, "markers", "marker");
 			$group_regex_neg = $this->createRegex($group_patterns, "exceptions", "exception");
 
+			// Additional PHP compensation for $ in useragents / device markers, which will be interpreted by PHP 
+			$group_regex_pos = str_replace("\\$", "\\\\\\$", $group_regex_pos);
+			$group_regex_neg = str_replace("\\$", "\\\\\\$", $group_regex_neg);
+
 
 			// indent segments or keep them on global level
 			if($group_regex_pos || $group_regex_neg) {
@@ -1378,6 +1390,9 @@ $sql .= " ORDER BY name";
 						$device_regex_pos = $this->createRegex($device_pattern, "markers", "marker");
 						$device_regex_neg = $this->createRegex($device_pattern, "exceptions", "exception");
 
+						// Additional PHP compensation for $ in useragents / device markers, which will be interpreted by PHP 
+						$device_regex_pos = str_replace("\\$", "\\\\\\$", $device_regex_pos);
+						$device_regex_neg = str_replace("\\$", "\\\\\\$", $device_regex_neg);
 
 						// if second level statement is started, add else to statement
 						$_ .= $segment_add_else ? "\t\t".$group_indent."else " : "";
