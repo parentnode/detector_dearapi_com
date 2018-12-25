@@ -1867,7 +1867,7 @@ $sql .= " ORDER BY name";
 				// don't find fragment inside other strings, only strings with NON-word in front of the marker
 				// let the end of the marker be optional, because a lot of device markers has some letter variants in the end
 				// like SM-C1234 and SM-C1234UM would be the same device (or at least same form factor)
-				$sql = "SELECT devices.name, devices.item_id, tags.value as segment, ua.useragent FROM ".$this->db." as devices, ".$this->db_useragents." AS ua, ".UT_TAG." as tags, ".UT_TAGGINGS." WHERE devices.item_id = taggings.item_id AND taggings.tag_id = tags.id AND tags.context = 'segment' AND ua.item_id = devices.item_id AND ua.useragent REGEXP '[\\\W_]{1}".$marker."[A-Z]?'";
+				$sql = "SELECT devices.name, devices.item_id, tags.value as segment, ua.useragent FROM ".$this->db." as devices, ".$this->db_useragents." AS ua, ".UT_TAG." as tags, ".UT_TAGGINGS." WHERE devices.item_id = taggings.item_id AND taggings.tag_id = tags.id AND tags.context = 'segment' AND ua.item_id = devices.item_id AND ua.useragent REGEXP '[\\\W_]{1}".$marker."[^0-9]{1}'";
 				// writeToFile("FIND: " . $sql);
 				// print $sql."<br>\n";
 				if($query->sql($sql)) {
@@ -1891,7 +1891,7 @@ $sql .= " ORDER BY name";
 					$marker = substr($marker, 0, -1);
 //					print "NEW marker:". $marker."<br>\n";
 
-					$sql = "SELECT devices.name, devices.item_id, tags.value as segment, ua.useragent FROM ".$this->db." as devices, ".$this->db_useragents." AS ua, ".UT_TAG." as tags, ".UT_TAGGINGS." WHERE devices.item_id = taggings.item_id AND taggings.tag_id = tags.id AND tags.context = 'segment' AND ua.item_id = devices.item_id AND ua.useragent REGEXP '[\\\W_]{1}".$marker."[A-Z]?'";
+					$sql = "SELECT devices.name, devices.item_id, tags.value as segment, ua.useragent FROM ".$this->db." as devices, ".$this->db_useragents." AS ua, ".UT_TAG." as tags, ".UT_TAGGINGS." WHERE devices.item_id = taggings.item_id AND taggings.tag_id = tags.id AND tags.context = 'segment' AND ua.item_id = devices.item_id AND ua.useragent REGEXP '[\\\W_]{1}".$marker."[^0-9]{1}'";
 
 					if($query->sql($sql)) {
 						$similar_items = $query->results();
@@ -1923,7 +1923,7 @@ $sql .= " ORDER BY name";
 							$ua["matched_by"][] = $item["item_id"];
 							// get other unidentified UAs with same marker (will also return current UA)
 							// $ua["unid"] = $this->unidentifiedUseragents("[\\\W_]{1}".$marker);
-							$ua["unid"] = $this->unidentifiedUseragents("[\\\W_]{1}".$marker);
+							$ua["unid"] = $this->unidentifiedUseragents("[\\\W_]{1}".$marker."[^0-9]{1}");
 							// print "number of potential other matches:".count($ua["unid"])."<br>\n";
 							// print_r($ua["unid"]);
 
@@ -2509,6 +2509,11 @@ $sql .= " ORDER BY name";
 			// switched to REGEX to get more flexibility
 			$mysql_pattern = preg_replace("/(\\\\\(|\\\\\)|\\\\\[|\\\\\.)/", "\\\\$1", $pattern);
 			$sql = "SELECT id, useragent, MAX(identified_at) as lastentry FROM ".$this->db_unidentified." WHERE useragent REGEXP '$mysql_pattern' GROUP BY useragent ORDER BY lastentry DESC";
+
+			// To debug/check a specific pattern
+			// if(preg_match("/M6/", $pattern)){
+			// 	writeToFile("PATTERN SQL: " . $sql);
+			// }
 		}
 		else {
 			$sql = "SELECT id, useragent, MAX(identified_at) as lastentry FROM ".$this->db_unidentified." GROUP BY useragent ORDER BY lastentry DESC";
