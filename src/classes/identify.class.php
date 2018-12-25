@@ -72,8 +72,8 @@ class Identify {
 //			return "basic";
 		}
 
-//		print $useragent;
-
+		// print $useragent;
+		// writeToFile($useragent);
 
 		// Include static detection script for initial test
 		$detection_script = PUBLIC_FILE_PATH."/detection_script.php";
@@ -82,8 +82,8 @@ class Identify {
 		}
 
 
-//		print $device_name;
-
+		// print $device_name;
+		// writeToFile("AFTER SCRIPT:" . isset($device_name));
 
 		// did static test return match
 		if(isset($device_name) && isset($device_segment)) {

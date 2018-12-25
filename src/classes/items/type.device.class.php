@@ -1864,10 +1864,11 @@ $sql .= " ORDER BY name";
 				// find any existing devices with the marker
 //				$sql = "SELECT devices.name, devices.item_id, tags.value as segment, ua.useragent FROM ".$this->db." as devices, ".$this->db_useragents." AS ua, ".UT_TAG." as tags, ".UT_TAGGINGS." WHERE devices.item_id = taggings.item_id AND taggings.tag_id = tags.id AND tags.context = 'segment' AND ua.item_id = devices.item_id AND ua.useragent LIKE '%$marker%'";
 
-				// don't find fragment inside other strings, only strings with word boundary in front of the marker
+				// don't find fragment inside other strings, only strings with NON-word in front of the marker
 				// let the end of the marker be optional, because a lot of device markers has some letter variants in the end
 				// like SM-C1234 and SM-C1234UM would be the same device (or at least same form factor)
-				$sql = "SELECT devices.name, devices.item_id, tags.value as segment, ua.useragent FROM ".$this->db." as devices, ".$this->db_useragents." AS ua, ".UT_TAG." as tags, ".UT_TAGGINGS." WHERE devices.item_id = taggings.item_id AND taggings.tag_id = tags.id AND tags.context = 'segment' AND ua.item_id = devices.item_id AND ua.useragent REGEXP '[\b ]{1}".$marker."'";
+				$sql = "SELECT devices.name, devices.item_id, tags.value as segment, ua.useragent FROM ".$this->db." as devices, ".$this->db_useragents." AS ua, ".UT_TAG." as tags, ".UT_TAGGINGS." WHERE devices.item_id = taggings.item_id AND taggings.tag_id = tags.id AND tags.context = 'segment' AND ua.item_id = devices.item_id AND ua.useragent REGEXP '[\\\W_]{1}".$marker."[A-Z]?'";
+				// writeToFile("FIND: " . $sql);
 				// print $sql."<br>\n";
 				if($query->sql($sql)) {
 					$similar_items = $query->results();
@@ -1890,7 +1891,7 @@ $sql .= " ORDER BY name";
 					$marker = substr($marker, 0, -1);
 //					print "NEW marker:". $marker."<br>\n";
 
-					$sql = "SELECT devices.name, devices.item_id, tags.value as segment, ua.useragent FROM ".$this->db." as devices, ".$this->db_useragents." AS ua, ".UT_TAG." as tags, ".UT_TAGGINGS." WHERE devices.item_id = taggings.item_id AND taggings.tag_id = tags.id AND tags.context = 'segment' AND ua.item_id = devices.item_id AND ua.useragent REGEXP '[\b ]{1}".$marker."'";
+					$sql = "SELECT devices.name, devices.item_id, tags.value as segment, ua.useragent FROM ".$this->db." as devices, ".$this->db_useragents." AS ua, ".UT_TAG." as tags, ".UT_TAGGINGS." WHERE devices.item_id = taggings.item_id AND taggings.tag_id = tags.id AND tags.context = 'segment' AND ua.item_id = devices.item_id AND ua.useragent REGEXP '[\\\W_]{1}".$marker."[A-Z]?'";
 
 					if($query->sql($sql)) {
 						$similar_items = $query->results();
@@ -1921,7 +1922,8 @@ $sql .= " ORDER BY name";
 
 							$ua["matched_by"][] = $item["item_id"];
 							// get other unidentified UAs with same marker (will also return current UA)
-							$ua["unid"] = $this->unidentifiedUseragents("[\b ]{1}".$marker);
+							// $ua["unid"] = $this->unidentifiedUseragents("[\\\W_]{1}".$marker);
+							$ua["unid"] = $this->unidentifiedUseragents("[\\\W_]{1}".$marker);
 							// print "number of potential other matches:".count($ua["unid"])."<br>\n";
 							// print_r($ua["unid"]);
 
