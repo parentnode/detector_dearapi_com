@@ -523,7 +523,11 @@ Util.Objects["unidentifiedList"] = new function() {
 							 && 
 							(u.containsOrIs(selection.focusNode, this))
 						) {
-							
+
+							// If line has active selected, remove it first
+							if(this.span) {
+								this.bn_delete.clicked();
+							}
 
 							this.span = document.createElement("span");
 							this.span.node = this;
@@ -559,6 +563,11 @@ Util.Objects["unidentifiedList"] = new function() {
 									this.node.div_results.parentNode.removeChild(this.node.div_results);
 								}
 
+								delete this.node.span;
+								delete this.node.bn_delete;
+								delete this.node.bn_search;
+								delete this.node.div_results;
+
 							}
 
 							u.as(this.bn_delete, "top", (u.absY(this.span))+"px");
@@ -579,7 +588,7 @@ Util.Objects["unidentifiedList"] = new function() {
 								if(!this.node.div_results) {
 
 									this.response = function(response) {
-										if(typeof(response) == "object" && response.items.length) {
+										if(typeof(response) == "object") {
 
 											this.node.div_results = u.ae(document.body, "div", {"class":"search_result"});
 											this.node.div_results.node = this;
@@ -589,24 +598,31 @@ Util.Objects["unidentifiedList"] = new function() {
 											u.as(this.node.div_results, "left", (u.absX(this)-17)+"px");
 
 
-											for(i = 0; i < response.items.length; i++) {
+											if(response.items && response.items.length) {
+
+												for(i = 0; i < response.items.length; i++) {
 											
-												result = response.items[i];
-	//											console.log(result)
-	//											console.log(result.snippet)
-												if(result.snippet.match(/[0-9\.\,]+[ \-]?(\"|\″|inch|pulgad)/)) {
-													var h3 = u.ae(this.node.div_results, "h3");
-													u.ae(h3, "a", {html:result.link, href:result.link, target:"_blank"});
-													u.ae(this.node.div_results, "p", {html:result.snippet.replace(/([0-9\.\,]+[ \-]?(\"|\″|inch|pulgad))/, "<span class=\"screen\">$1</span>")})
-	//												console.log();
-													this.has_results = true;
+													result = response.items[i];
+		//											console.log(result)
+		//											console.log(result.snippet)
+													if(result.snippet.match(/[0-9\.\,]+[ \-]?(\"|\″|inch|pulgad)/)) {
+														var h3 = u.ae(this.node.div_results, "h3");
+														u.ae(h3, "a", {html:result.link, href:result.link, target:"_blank"});
+														u.ae(this.node.div_results, "p", {html:result.snippet.replace(/([0-9\.\,]+[ \-]?(\"|\″|inch|pulgad))/, "<span class=\"screen\">$1</span>")})
+		//												console.log();
+														this.has_results = true;
+													}
+
 												}
 
+												if(!this.has_results) {
+													u.ae(this.node.div_results, "p", {html:"No sizes in results"});
+												}
+											}
+											else {
+												u.ae(this.node.div_results, "p", {html:"Invalid search result – maybe you reached API limit"});
 											}
 
-											if(!this.has_results) {
-												u.ae(this.node.div_results, "p", {html:"No sizes in results"});
-											}
 
 											var h3 = u.ae(this.node.div_results, "h3");
 											u.ae(h3, "a", {html:"&quot;"+this.node.span.innerHTML+"&quot; on Google", href:"https://google.com/search?q="+this.node.span.innerHTML+"+display+spec", target:"_blank"});

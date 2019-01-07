@@ -11898,6 +11898,9 @@ Util.Objects["unidentifiedList"] = new function() {
 							 && 
 							(u.containsOrIs(selection.focusNode, this))
 						) {
+							if(this.span) {
+								this.bn_delete.clicked();
+							}
 							this.span = document.createElement("span");
 							this.span.node = this;
 							var range = selection.getRangeAt(0);
@@ -11921,6 +11924,10 @@ Util.Objects["unidentifiedList"] = new function() {
 								if(this.node.div_results) {
 									this.node.div_results.parentNode.removeChild(this.node.div_results);
 								}
+								delete this.node.span;
+								delete this.node.bn_delete;
+								delete this.node.bn_search;
+								delete this.node.div_results;
 							}
 							u.as(this.bn_delete, "top", (u.absY(this.span))+"px");
 							u.as(this.bn_delete, "left", (u.absX(this.span)-35)+"px");
@@ -11933,29 +11940,34 @@ Util.Objects["unidentifiedList"] = new function() {
 								u.e.kill(event);
 								if(!this.node.div_results) {
 									this.response = function(response) {
-										if(typeof(response) == "object" && response.items.length) {
+										if(typeof(response) == "object") {
 											this.node.div_results = u.ae(document.body, "div", {"class":"search_result"});
 											this.node.div_results.node = this;
 											this.has_results = false;
 											u.as(this.node.div_results, "top", (u.absY(this)+20)+"px");
 											u.as(this.node.div_results, "left", (u.absX(this)-17)+"px");
-											for(i = 0; i < response.items.length; i++) {
-												result = response.items[i];
-												if(result.snippet.match(/[0-9\.\,]+[ \-]?(\"|\″|inch|pulgad)/)) {
-													var h3 = u.ae(this.node.div_results, "h3");
-													u.ae(h3, "a", {html:result.link, href:result.link, target:"_blank"});
-													u.ae(this.node.div_results, "p", {html:result.snippet.replace(/([0-9\.\,]+[ \-]?(\"|\″|inch|pulgad))/, "<span class=\"screen\">$1</span>")})
-													this.has_results = true;
+											if(response.items && response.items.length) {
+												for(i = 0; i < response.items.length; i++) {
+													result = response.items[i];
+													if(result.snippet.match(/[0-9\.\,]+[ \-]?(\"|\″|inch|pulgad)/)) {
+														var h3 = u.ae(this.node.div_results, "h3");
+														u.ae(h3, "a", {html:result.link, href:result.link, target:"_blank"});
+														u.ae(this.node.div_results, "p", {html:result.snippet.replace(/([0-9\.\,]+[ \-]?(\"|\″|inch|pulgad))/, "<span class=\"screen\">$1</span>")})
+														this.has_results = true;
+													}
+												}
+												if(!this.has_results) {
+													u.ae(this.node.div_results, "p", {html:"No sizes in results"});
 												}
 											}
-											if(!this.has_results) {
-												u.ae(this.node.div_results, "p", {html:"No sizes in results"});
+											else {
+												u.ae(this.node.div_results, "p", {html:"Invalid search result – maybe you reached API limit"});
 											}
 											var h3 = u.ae(this.node.div_results, "h3");
 											u.ae(h3, "a", {html:"&quot;"+this.node.span.innerHTML+"&quot; on Google", href:"https://google.com/search?q="+this.node.span.innerHTML+"+display+spec", target:"_blank"});
 										}
 										else {
-											page.notify({"cms_message":{"error":["Invalid search result"]}});
+											page.notify({"cms_message":{"error":["Invalid search result – maybe you reached API limit"]}});
 										}
 									}
 									u.request(this, "https://www.googleapis.com/customsearch/v1?cx=006888141968518277707%3Awiqtlhmqi14&key=AIzaSyD2dkkTv2F03M2gi1TO7pAm0jz21o5GFPQ&q="+this.node.span.innerHTML+"+specs");
