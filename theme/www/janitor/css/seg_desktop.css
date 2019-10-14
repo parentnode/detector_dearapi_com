@@ -1,3 +1,6 @@
+/*
+asset-builder @ 2019-10-14 16:14:27
+*/
 
 /*seg_desktop_include.css*/
 
@@ -6,25 +9,25 @@
 /*s-fonts.css*/
 @font-face {
 	font-family: 'OpenSans';
-	src: url('/janitor/admin/css/fonts/opensans-regular-webfont.woff') format('woff'),
-		 url('/janitor/admin/css/fonts/opensans-regular-webfont.ttf') format('truetype'),
-		 url('/janitor/admin/css/fonts/opensans-regular-webfont.svg#OpenSansRegular') format('svg');
+	src: url('../assets/janitor/admin/css/fonts/opensans-regular-webfont.woff') format('woff'),
+		 url('../assets/janitor/admin/css/fonts/opensans-regular-webfont.ttf') format('truetype'),
+		 url('../assets/janitor/admin/css/fonts/opensans-regular-webfont.svg#OpenSansRegular') format('svg');
 	font-weight: normal;
 	font-style: normal;
 }
 @font-face {
 	font-family: 'OpenSans';
-	src: url('/janitor/admin/css/fonts/opensans-bold-webfont.woff') format('woff'),
-		 url('/janitor/admin/css/fonts/opensans-bold-webfont.ttf') format('truetype'),
-		 url('/janitor/admin/css/fonts/opensans-bold-webfont.svg#open_sansbold') format('svg');
+	src: url('../assets/janitor/admin/css/fonts/opensans-bold-webfont.woff') format('woff'),
+		 url('../assets/janitor/admin/css/fonts/opensans-bold-webfont.ttf') format('truetype'),
+		 url('../assets/janitor/admin/css/fonts/opensans-bold-webfont.svg#open_sansbold') format('svg');
 	font-weight: bold;
 	font-style: normal;
 }
 @font-face {
 	font-family: 'OpenSans';
-	src: url('/janitor/admin/css/fonts/opensans-italic-webfont.woff') format('woff'),
-		 url('/janitor/admin/css/fonts/opensans-italic-webfont.ttf') format('truetype'),
-		 url('/janitor/admin/css/fonts/opensans-italic-webfont.svg#open_sansitalic') format('svg');
+	src: url('../assets/janitor/admin/css/fonts/opensans-italic-webfont.woff') format('woff'),
+		 url('../assets/janitor/admin/css/fonts/opensans-italic-webfont.ttf') format('truetype'),
+		 url('../assets/janitor/admin/css/fonts/opensans-italic-webfont.svg#open_sansitalic') format('svg');
 	font-weight: normal;
 	font-style: italic;
 }
@@ -88,7 +91,8 @@ dt {color: #7d848c; display: inline-block; vertical-align: top; font-size: 12px;
 #navigation > ul.navigation ul {}
 #navigation > ul.navigation ul li {padding-left: 20px; border-top: 1px solid #404a56;}
 #navigation > ul.navigation > li.empty {display: none;}
-#navigation li.selected a {padding-left: 35px; color: #ffffff;}
+#navigation li.selected a {padding-left: 0px; color: #ffffff;}
+#navigation li.selected a:before {content: "●"; display: inline-block; width: 20px; text-align: center;}
 
 
 /*s-content.css*/
@@ -158,11 +162,13 @@ dt {color: #7d848c; display: inline-block; vertical-align: top; font-size: 12px;
 /*s-login_overlay.css*/
 #login_overlay {position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255, 255, 255, 0.8); z-index: 10000;}
 #login_overlay form {margin: 100px auto 0; width: 300px; position: relative; padding: 50px; background: #ffffff;}
- {padding-left: 2px; padding-right: 2px;}
+#login_overlay h1 {padding-left: 2px; padding-right: 2px;}
 #login_overlay .field {padding: 0 0 15px;}
-#login_overlay .field input {width: 286px;
+#login_overlay .field input {width: 282px;
  }
-#login_overlay .field.required .indicator {}
+#login_overlay .field.required .indicator {
+	left: 305px;
+}
 #login_overlay div.field div.help {left: 330px;}
 #login_overlay ul.actions {padding: 0 2px;}
 #login_overlay ul.actions li {padding: 0;}
@@ -183,14 +189,15 @@ div.field select {width: 381px; height: 30px; color: #333333; padding: 3px 3px 4
 div.field select option {padding: 3px 3px 4px 6px;}
 @media all and (-webkit-min-device-pixel-ratio:0) {
 	div.field select {width: 380px; height: 30px; padding: 2px 3px 2px 7px;
-		background: #ffffff url(/janitor/admin/img/bg_icons.png) no-repeat right -20px top -978px;
+		background: #ffffff url(../assets/janitor/admin/img/bg_icons.png) no-repeat right -20px top -978px;
 		-webkit-appearance: none;
 	}
 }
 div.field textarea {width: 372px; height: 80px; overflow: auto; padding: 6px 0 2px 6px; }
 div.field.short textarea {height: 40px;}
 div.field textarea.autoexpand {width: 366px; padding: 6px 6px 2px; overflow: hidden;}
-div.field .pseudolabel {position: absolute; font-size: 1.077rem; display: inline-block; padding: 8px 6px; z-index: 2;}
+div.field .pseudolabel {z-index: 2; display: none; position: absolute; font-size: 1.077rem; padding: 4px 5px; margin: 4px 2px; background-color: #ffffff;}
+div.field input.default ~ .pseudolabel {display: inline-block;}
 div.field.paragraph label {display: inline-block; vertical-align: top; line-height: 1.38em;} 
 div.field.paragraph label:after {content: ":";}
 div.field.paragraph p {display: inline-block; vertical-align: top; padding: 0 0 0 2px;} 
@@ -217,13 +224,13 @@ div.field input[type="number"]::-webkit-inner-spin-button,
 div.field input[type="number"]::-webkit-outer-spin-button {margin: 0;
 	-webkit-appearance: none;
 }
-div.field.files {border: 3px dashed #dedede; width: 374px; display: inline-block; vertical-align: top; border-radius: 5px; position: relative; padding: 0; margin: 2px 30px 20px;}
-div.field.files input[type="file"] {opacity: 0; width: 374px; border: none; height: 60px; margin: 0; padding: 0;
-	font-size: 130px;
+div.field.files {padding: 0; margin: 0 28px 10px;}
+div.field.files input[type="file"] {z-index: 10; opacity: 0; position: absolute; top: 0; left: 0; width: 384px; border: none; height: 60px; margin: 0; padding: 0; height: 100%; position: absolute; top: 0; left: 0;
 }
-div.field.files label {display: block; position: absolute; width: 120px; left: 50%; padding: 1px 4px 3px; margin: 20px 0 0 -60px; text-align: center; border-radius: 6px; background: #dedede;}
-div.field.files.loading label {display: none;}
-div.field.files.loading {background: transparent url(/janitor/admin/img/gx_loader.gif) no-repeat center center;}
+div.field.files ul.filelist {border: 3px dashed #dedede; width: 378px; text-align: center; display: block; border-radius: 5px; position: relative; padding: 20px 0; margin: 0; overflow: hidden;}
+div.field.files ul.filelist li {box-sizing: border-box; display: block; padding: 2px 0 2px; font-size: 13px; line-height: 17px; text-align: center;}
+div.field.files ul.filelist li.new {font-weight: bold;}
+div.field.files ul.filelist li.label {display: inline-block; padding: 1px 10px 3px; margin-bottom: 5px; border-radius: 6px; background: #dedede;}
 div.field.location {}
 div.field.location div.location {padding-bottom: 2px;}
 div.field.location div.latitude {padding-right: 2px;}
@@ -232,7 +239,7 @@ div.field.location div.longitude {display: inline-block; vertical-align: top;}
 div.field.location div.latitude input,
 div.field.location div.longitude input {width: 173px;}
 div.field.location.geolocation div.geolocation {width: 30px; height: 30px; display: inline-block; vertical-align: top; cursor: pointer;
-	background: transparent url(/janitor/admin/img/gx_geolocation.png) no-repeat 5px 8px;
+	background: transparent url(../assets/janitor/admin/img/gx_geolocation.png) no-repeat 5px 8px;
 }
 div.field.location.geolocation div.latitude input,
 div.field.location.geolocation div.longitude input {width: 158px;}
@@ -251,24 +258,23 @@ div.field.focus textarea {border: 3px solid #5c5c5c;}
 div.field.radiobuttons.focus input,
 div.field.checkbox.focus input,
 div.field.boolean.focus input {margin: 1px 10px 0 3px; border: none;}
+div.field.files.focus ul.filelist {border-color: #c8e183;}
+div.field.files.focus ul.filelist li.label {background-color: #c8e183;}
 div.field.location.focus input {margin: 2px; border: 1px solid #dcdcdc;}
 div.field.location.focus input.focus {margin: 0; border: 3px solid #5c5c5c;}
-div.field.files.focus {border-color: #c8e183;}
-div.field.files.focus input[type="file"] {margin: 0; border: none;}
-div.field.files.focus label {background-color: #c8e183;}
 div.field input.default,
 div.field select.default,
 div.field textarea.default,
 div.field .pseudolabel {color: #aaaaaa;}
 div.field .indicator {position: absolute; top: 4px; left: 420px; width: 25px; height: 25px;}
 div.field.required .indicator {
-	background: transparent url(/janitor/admin/img/bg_icons.png) no-repeat 0 -292px;
+	background: transparent url(../assets/janitor/admin/img/bg_icons.png) no-repeat 0 -292px;
 }
 div.field.text.required .indicator {background-position: 0 -296px;}
 div.field.radiobuttons .indicator,
 div.field.checkbox .indicator,
 div.field.boolean .indicator {top: -5px;}
-div.field.files .indicator {left: 387px; top: -1px;}
+div.field.files .indicator {left: 392px; top: 0px;}
 div.field.correct .indicator {background-position: 0 -320px;}
 div.field.text.correct .indicator {background-position: 0 -321px;}
 div.field.error input,
@@ -282,13 +288,12 @@ div.field.error textarea {border: 3px solid #f8c9bb;}
 		background-position: right -22px top -980px;
 	}
 }
-div.field.error .pseudolabel {padding: 10px 8px;}
 div.field.radiobuttons.error input,
 div.field.checkbox.error input,
 div.field.boolean.error input {margin: 1px 10px 0 3px; border: none;}
 div.field.location.error input {margin: 2px; border: 1px solid #dcdcdc;}
 div.field.location.error input.error {margin: 0; border: 3px solid #f8c9bb;}
-div.field.files.error {border-color: #f8c9bb;}
+div.field.files.error ul.filelist {border-color: #f8c9bb;}
 ul.actions {padding: 0 25px;}
 ul.actions li {width: auto; height: auto; display: inline-block; padding: 0 5px 10px; vertical-align: top;
 	-moz-user-select: none;
@@ -318,7 +323,7 @@ ul.actions a.button.primary:hover,
 .submitting input.button,
 .submitting a.button,
 #content .submitting a.button {padding-left: 40px !important;
-	background-image: url(/janitor/admin/img/gx_loader.gif);
+	background-image: url(../assets/janitor/admin/img/gx_loader.gif);
 	background-position: 9px 7px;
 	background-repeat: no-repeat;
 }
@@ -338,7 +343,7 @@ ul.actions a.button.secondary:hover,
 #content ul.actions form input.button.confirm,
 #content ul.actions form input.button.confirm:hover {color: #ffffff; background-color: #df0000;}
 #content ul.actions form input.button.loading,
-#content ul.actions form input.button.loading:hover {padding-left: 35px; background-color: #8c9399; background-image: url(/janitor/admin/img/gx_loader.gif); background-position: 10px center; background-repeat: no-repeat;}
+#content ul.actions form input.button.loading:hover {padding-left: 35px; background-color: #8c9399; background-image: url(../assets/janitor/admin/img/gx_loader.gif); background-position: 10px center; background-repeat: no-repeat;}
 ul.actions a.button.disabled,
 #content ul.actions a.button.disabled,
 ul.actions input.button.disabled,
@@ -377,6 +382,7 @@ div.field.hover div.hint+div.error {border-top-left-radius: 0; border-top-right-
 #content .field.html > .indicator {top: 33px;}
 #content .field.html .viewer {display: none;}
 #content .field.html .editor { width: 482px; position: relative; z-index: 3;}
+#content .field.html .editor .indicator {left: 490px;}
 #content .field.html ul.options {height: 40px; display: block; vertical-align: top; width: 30px; position: relative; z-index: 1; padding: 0;}
 #content .field.html ul.options li {font-size: 1rem; line-height: 1em; cursor: pointer; vertical-align: top; margin: 3px 3px 0; border-radius: 13px; background-color: #313942; padding: 6px 10px 7px; color: #ffffff; width: 330px; display: none;}
 #content .field.html ul.options li:hover {background-color: #64ad8e;}
@@ -386,11 +392,11 @@ div.field.hover div.hint+div.error {border-top-left-radius: 0; border-top-right-
 #content .field.html .editor div.tag {margin: 0 0 1px; padding: 0 0 0 30px; background-color: #dcdcdc; position: relative; border-radius: 3px; border: 2px solid #f5f7f8;}
 #content .field.html .editor div.dragged {z-index: 15;}
 #content .field.html .editor div.tag .drag {display: none; position: absolute; top: 0px; left: -20px; border-top-left-radius: 15px; border-bottom-left-radius: 15px; background: #dedede; width: 30px; height: 30px; cursor: move;
-	background: #dedede url(/janitor/admin/img/bg_icons.png) no-repeat 6px -93px;
+	background: #dedede url(../assets/janitor/admin/img/bg_icons.png) no-repeat 6px -93px;
 }
 #content .field.html .editor div.tag:hover .drag {display: block;}
 #content .field.html .editor div.tag .remove {display: none; position: absolute; top: 0px; right: -15px; border-radius: 15px; background: #dedede; width: 30px; height: 30px; cursor: pointer;
-	background: #dedede url(/janitor/admin/img/bg_icons.png) no-repeat 8px -42px;
+	background: #dedede url(../assets/janitor/admin/img/bg_icons.png) no-repeat 8px -42px;
 }
 #content .field.html .editor div.tag:hover .remove {display: block;}
 #content .field.html .editor div.tag .classname {display: none; position: absolute; top: 0px; right: -45px; border-radius: 15px; background: #dedede; width: 30px; height: 30px; cursor: pointer;}
@@ -462,34 +468,21 @@ div.field.hover div.hint+div.error {border-top-left-radius: 0; border-top-right-
 body #selection_options {z-index: 1100; position: absolute; background-color: #F5F7F8; border: 3px solid #5c5c5c; margin: 0px 0 0 10px; padding: 15px; border-radius: 5px;}
 body #selection_options h3 {padding: 0 0 10px; text-align: left; font-size: 13px;}
 body #selection_options ul.options + form {margin-top: 10px; border-top: 1px solid #5c5c5c; padding-top: 10px;}
-body #selection_options li {display: block; font-size: 13px; padding: 5px 0; cursor: pointer;}
-body #selection_options li.link {text-decoration: underline;}
-body #selection_options li.em {font-style: italic;}
-body #selection_options li.strong {font-weight: 700;}
+body #selection_options ul.options li {display: block; font-size: 13px; padding: 5px 0; cursor: pointer;}
+body #selection_options ul.options li.link {text-decoration: underline;}
+body #selection_options ul.options li.em {font-style: italic;}
+body #selection_options ul.options li.strong {font-weight: 700;}
 body #selection_options .field {margin-left: -2px; padding: 0 0 5px;}
-body #selection_options .field label {display: none;}
-body #selection_options .field input {color: #333333; box-shadow: inset 0 1px 2px #dedede; background: #ffffff; border: 1px solid #dcdcdc; display: inline-block; vertical-align: top; border-radius: 3px; margin: 2px; outline: none; position: relative; z-index: 10; width: 150px; height: 24px; padding: 2px 6px;}
-body #selection_options .field.checkbox input {width: auto; height: auto; margin-top: 5px;}
-body #selection_options .field.checkbox label {display: inline-block; vertical-align: top; font-size: 13px; padding: 5px 0 0 3px;}
-body #selection_options .field input.default {color: #cccccc;}
-body #selection_options .field input.focus {}
+body #selection_options .field.string input {width: 150px;}
+body #selection_options .field .help {left: 180px;}
 body #selection_options ul.actions {padding: 10px 0 0;}
-body #selection_options ul.actions li {width: auto; height: auto; display: inline-block; padding: 0 5px 0 0; vertical-align: top;}
-body #selection_options ul.actions input.button {width: auto; height: 26px; padding: 3px 12px;}
-@media all and (-webkit-min-device-pixel-ratio:0) {
-	body #selection_options ul.actions input.button {padding-bottom: 5px;}
-}
-body #selection_options ul.actions a.button {display: block; text-decoration: none; height: 14px; padding: 5px 12px 7px;}
-body #selection_options ul.actions input.button,
-body #selection_options ul.actions a.button {background-color: #8c9399; color: #ffffff; border: none; cursor: pointer; border-radius: 3px;}
-body #selection_options ul.actions input.button:hover,
-body #selection_options ul.actions a.button:hover {background-color: #313942;}
+body #selection_options ul.actions li {padding: 0 5px 0 0;}
 .delete_selection {position: absolute; z-index: 1150; top: 0; left: 0; border-radius: 8px; width: 14px; height: 14px; font-size: 10px; line-height: 14px; text-align: center; background: #ffffff; border: 1px solid #000000; cursor: pointer;}
 .edit_selection {position: absolute; z-index: 1150; top: 0; left: 0; border-radius: 8px; width: 14px; height: 14px; font-size: 10px; line-height: 14px; text-align: center; background: #ffffff; border: 1px solid #000000; cursor: pointer;}
 
 
 /*s-notifications.css*/
-#notifications {z-index: 1001; position: fixed; right: 0; top: 0; border-left: 1px solid #888888; border-bottom: 1px solid #888888; background-color: #b0b0b0; max-width: 300px;}
+#notifications {z-index: 1001; position: fixed; left: 50%; margin-left: -100px; top: 0; border-left: 1px solid #888888; border-right: 1px solid #888888; border-bottom: 1px solid #888888; background-color: #b0b0b0; width: 200px;}
 #notifications div {padding: 10px 65px 10px 15px;}
 #notifications .notice {color: #333333;}
 #notifications .error {background-color: #df0000; color: #ffffff;}
@@ -504,7 +497,7 @@ body #selection_options ul.actions a.button:hover {background-color: #313942;}
 #content ul.tags li span.context {text-transform: uppercase;}
 #content ul.tags li span.context:after {content: ":";}
 #content ul.tags li span.value {}
-#content ul.tags li.add {font-size: 11px;}
+#content ul.tags li.add {font-size: 11px; background-color: #dedede;}
 #content .scene > div.tags {padding: 0; border-bottom: 1px solid #aaaaaa; overflow: hidden;}
 #content .scene > div.tags ul.tags {padding: 0 125px 14px 30px;}
 #content div.tagoptions fieldset {display: inline-block; vertical-align: top;}
@@ -536,6 +529,7 @@ body #selection_options ul.actions a.button:hover {background-color: #313942;}
 #content .scene.shopList ul.tabs li.complete {color: green;}
 #content .scene.shopList ul.items > li dl.info dt.price {display: none;}
 #content .scene.shopList ul.items > li dl.info dd.price {position: absolute; top: 10px; right: 100px; font-size: 26px;}
+#content .scene.shopList ul.items > li.ship dl.info dd.price {right: 180px;}
 #content .scene.shopView > ul.actions li.invoice {float: right; padding: 0 0 10px 10px;}
 #content .scene.shopView > ul.actions li.creditnote {float: right; padding: 0 0 10px 10px;}
 #content .scene.shopView > ul.actions li.ship {float: right; padding: 0 0 10px 10px;}
@@ -544,11 +538,13 @@ body #selection_options ul.actions a.button:hover {background-color: #313942;}
 #content .scene.shopView > div > h2 > span {color: #7d848c; cursor: pointer;}
 #content .scene.shopView > div > h2 > span:before {content: "\00a0-\00a0";}
 #content .scene.shopView > div > dl.info,
-#content .scene.shopView div.payments dl.info {padding-top: 3px; padding-right: 0; padding-bottom: 25px; width: 370px;}
+#content .scene.shopView div.payments dl.info {padding: 3px 0 0 0; margin: 0 30px 30px; width: 370px; border-bottom: 1px solid #dbdfe5;}
 #content .scene.shopView > div > dl.info dt,
 #content .scene.shopView > div > dl.info dd, 
 #content .scene.shopView div.payments dl.info dt,
-#content .scene.shopView div.payments dl.info dd {padding: 5px 0; border-bottom: 1px solid #dbdfe5; height: 14px;}
+#content .scene.shopView div.payments dl.info dd {padding: 5px 0; border-top: 1px solid #dbdfe5; vertical-align: top;}
+#content .scene.shopView div.payments dl.info dt:first-child,
+#content .scene.shopView div.payments dl.info dd:nth-child(2) {border-top: none;}
 #content .scene.shopView > div > dl.info dt,
 #content .scene.shopView div.payments dl.info dt {width: 120px; float: none;}
 #content .scene.shopView > div > dl.info dd,
@@ -573,7 +569,7 @@ body #selection_options ul.actions a.button:hover {background-color: #313942;}
 #content .scene.shopView ul.items li h3 form > ul.actions {padding: 0; right: 45px;}
 #content .scene.shopView ul.items li h3 form > ul.actions li {padding: 8px 0 0;}
 #content .scene.shopView ul.items li h3 form > ul.actions input.button {width: 16px; height: 16px; padding: 0; text-indent: -9999px; border-radius: 15px;
-	background-image: url(/janitor/admin/img/gx_refresh.png);
+	background-image: url(../assets/janitor/admin/img/gx_refresh.png);
 	background-position: center center;
 	background-repeat: no-repeat;
 }
@@ -595,6 +591,8 @@ body #selection_options ul.actions a.button:hover {background-color: #313942;}
 #content .scene.orderView div.payments h3 {padding-bottom: 15px;}
 #content .scene.orderView div.payments ul.actions {padding-bottom: 15px;}
 #content .scene.paymentList ul.items > li dl.info dd.price {right: 140px;}
+#content .scene.newPayment div.notice {background: orange; padding: 25px 0 0; border-bottom: 1px solid #bbbbbb; margin: 0 0 20px;}
+#content .scene.newPayment div.notice p {font-size: 20px; color: #ffffff;}
 #content .scene.newPayment div.basics {border-top: 1px solid #bbbbbb;}
 #content .scene.newPayment div.charge,
 #content .scene.newPayment div.reminder,
@@ -634,17 +632,25 @@ body.invoice #content div.scene .all_items ul.items li span.amount {float: right
 
 /*s-user.css*/
 #content .defaultList.userList > ul.actions li.online {float: right; padding: 0 0 10px 10px;}
-#content .defaultList.userList > ul.actions li.unconfirmed_accounts {float: right; padding: 0 0 10px 10px;}
+#content .defaultList.userList > ul.actions li.unverified_usernames {float: right; padding: 0 0 10px 10px;}
 #content .defaultEdit.userEdit > ul.actions li.cancel {float: right; padding: 0 0 10px 10px;}
 #content .scene.userEdit > div.usernames {border-bottom: 1px solid #bbbbbb;}
-#content .scene.userEdit > div.usernames form.email {font-size: 0;}
+#content .scene.userEdit > div.usernames > div.email {padding-bottom: 20px; position: relative;}
+#content .scene.userEdit > div.usernames form.email {font-size: 0; display: inline-block; vertical-align: top;}
+#content .scene.userEdit > div.usernames div.send_verification_link {position: absolute; right: 5px; top: 4px; width: auto; text-align: right;}
+#content .scene.userEdit > div.usernames div.send_verification_link p {font-size: 11px; padding: 0px; padding-bottom: 4px;}
+#content .scene.userEdit > div.usernames form.email fieldset div.field {display: inline-block; vertical-align: top; position: static;}
+#content .scene.userEdit > div.usernames form.email .field.checkbox {padding-top: 10px; padding-right: 24px; padding-left: 12px;}
 #content .scene.userEdit > div.usernames form.mobile {padding-bottom: 15px; font-size: 0;}
 #content .scene.userEdit > div.usernames .actions {text-align: left; display: inline-block; vertical-align: top; padding: 4px 0;}
+#content .scene.userEdit > div.usernames form.email fieldset div.field .help {left: 500px;}
 #content .scene.userEdit > div.usernames .actions li {padding: 0;}
 #content .scene.userEdit > div.usernames .actions li input.button {padding-top: 4px;}
 #content .scene.userEdit > div.usernames fieldset {display: inline-block; vertical-align: top;}
 #content .scene.userEdit > div.usernames fieldset .field {padding-right: 5px;}
-#content .scene.userEdit > div.usernames fieldset .field input {width: 250px;}
+#content .scene.userEdit > div.usernames fieldset .field.checkbox input {display: inline-block;}
+#content .scene.userEdit > div.usernames fieldset .field.email input,
+#content .scene.userEdit > div.usernames fieldset .field.tel input {width: 250px;}
 #content .scene.userEdit > div.password {border-bottom: 1px solid #bbbbbb;}
 #content .scene.userEdit > div.password div.password_state {}
 #content .scene.userEdit > div.password div.password_state a {text-decoration: underline;}
@@ -726,7 +732,10 @@ body.invoice #content div.scene .all_items ul.items li span.amount {float: right
 #content .defaultEdit.userMember div.orders {border-bottom: 1px solid #bbbbbb;}
 #content .defaultEdit.userMember div.orders ul.items {padding-bottom: 25px;}
 #content .defaultList.userContentList div.comments ul.items > li {}
+#content .defaultList.usersNotVerified > ul.actions li.remind_selected,
 #content .defaultList.usersNotVerified > ul.actions li.remind {float: right; padding: 0 0 10px 10px;}
+#content .defaultList.usersNotVerified .item .checkbox.select_username {position: absolute; top: 15px; right: -4px; padding: 0 0 10px 10px;}
+#content .defaultList.usersNotVerified .all_items form.select_all_usernames {position: absolute; top: 15px; right: -48px;}
 #content .defaultList.maillistList > ul.actions li.download {float: right; padding: 0 0 10px 10px;}
 #content .scene.profileEdit div.password label {display: block; padding-left: 3px;}
 #content .scene.profileEdit div.password .indicator {top: 20px;}
@@ -746,25 +755,24 @@ body.invoice #content div.scene .all_items ul.items li span.amount {float: right
 #content .defaultNew.navigationNodeNew form > fieldset {padding-bottom: 15px;}
 #content .defaultNew.navigationNodeNew fieldset h3,
 #content .defaultEdit.navigationNodeEdit fieldset h3 {border-top: 1px solid #aaaaaa; font-size: 0.8em; margin: 5px 0 20px; padding-bottom: 10px; padding-top: 7px; text-transform: uppercase;}
-#content .defaultEdit.navigationEdit .sortable ul.items li ul.items { border-top: 1px solid #dedede; margin-bottom: -1px;}
-#content .defaultEdit.navigationEdit .sortable ul.items > li h3 {padding: 10px 20px 10px 0; display: inline-block; vertical-align: bottom;}
-#content .defaultEdit.navigationEdit .sortable ul.items > li.item li.item h3 {margin-left: 30px; padding-left: 40px;}
-#content .defaultEdit.navigationEdit .sortable ul.items > li.item li.item li.item h3 {margin-left: 50px;}
-#content .defaultEdit.navigationEdit .sortable ul.items > li.item li.item li.item li.item h3 {margin-left: 70px;}
-#content .defaultEdit.navigationEdit .sortable ul.items > li.item li.item li.item li.item li h3 {margin-left: 90px;}
-#content .defaultEdit.navigationEdit .sortable ul.items > li.item li.item li.item li.item li.item li.item h3 {margin-left: 110px;}
-#content .defaultEdit.navigationEdit .sortable ul.items > li li h3 {
-	background-image: url(/janitor/admin/img//bg_angle.png);
-	background-position: 23px 10px;
+#content .scene.navigationEdit .sortable ul.items li ul.items { border-top: 1px solid #dedede; margin-bottom: -1px;}
+#content .scene.navigationEdit .sortable ul.items > li h3 {padding: 15px 20px 15px 0; display: inline-block; vertical-align: bottom;}
+#content .scene.navigationEdit .sortable ul.items > li.item li.item h3 {margin-left: 30px; padding-left: 40px;}
+#content .scene.navigationEdit .sortable ul.items > li.item li.item li.item h3 {margin-left: 50px;}
+#content .scene.navigationEdit .sortable ul.items > li.item li.item li.item li.item h3 {margin-left: 70px;}
+#content .scene.navigationEdit .sortable ul.items > li.item li.item li.item li.item li h3 {margin-left: 90px;}
+#content .scene.navigationEdit .sortable ul.items > li.item li.item li.item li.item li.item li.item h3 {margin-left: 110px;}
+#content .scene.navigationEdit .sortable ul.items > li li h3 {
+	background-image: url(../assets/janitor/admin/img/bg_angle.png);
+	background-position: 23px 15px;
 	background-color: transparent;
 	background-repeat: no-repeat;
 }
-#content div.all_items ul.items > li.item:hover {background-color: transparent;}
-#content .defaultEdit.navigationEdit ul.items > li span {padding: 10px 10px 10px 0; display: inline-block; vertical-align: bottom;}
-#content .defaultEdit.navigationEdit ul.items > li.hover {background: red !important;}
-#content .defaultEdit.navigationEdit ul.items > li.dragged {
-	z-index: 3;
-}
+#content .scene.navigationEdit div.all_items ul.items li.item {overflow: visible;}
+#content .scene.navigationEdit div.all_items ul.items li.item ul.actions {top: 5px;}
+#content .scene.navigationEdit div.all_items ul.items li.item div.drag {top: 5px;}
+#content .scene.navigationEdit div.all_items ul.items > li.item:hover:not(.shadow) {background-color: transparent;}
+#content .scene.navigationEdit ul.items > li span {padding: 10px 10px 15px 0; display: inline-block; vertical-align: bottom;}
 #content .defaultEdit.navigationEdit ul.items > li.dragged .drag {background-image: none;}
 
 
@@ -819,15 +827,15 @@ body.invoice #content div.scene .all_items ul.items li span.amount {float: right
 #content div.all_items.images ul.items > li {background-repeat: no-repeat; background-position: 0px center;}
 #content div.all_items.audios ul.items > li {}
 #content div.all_items.audios ul.items > li div.audioplayer {z-index: 10; position: absolute; top: 7px; left: 25px; width: 20px; height: 20px; 
-	background: transparent url(/janitor/admin/img/bg_bn_play_small.png) no-repeat 0px 0px;
+	background: transparent url(../assets/janitor/admin/img/bg_bn_play_small.png) no-repeat 0px 0px;
 }
 #content div.all_items.audios ul.items > li.playing div.audioplayer {background-position: 0px -100px;}
 #content div.all_items.videos ul.items > li {}
 #content div.all_items.videos ul.items > li div.videoplayer {z-index: 10; position: absolute; top: 10px; left: 20px; width: 50px; height: 50px; 
-	background: transparent url(/janitor/admin/img/bg_bn_play_medium.png) no-repeat 0px 0px;
+	background: transparent url(../assets/janitor/admin/img/bg_bn_play_medium.png) no-repeat 0px 0px;
 }
 #content div.all_items.videos ul.items > li.playing div.videoplayer {background-position: 0px -100px;}
-#content div.all_items ul.items > li .description {padding-bottom: 10px; margin-top: -5px; font-size: 12px; line-height: 1em;}
+#content div.all_items ul.items > li p.description {padding-bottom: 10px; margin-top: -5px; font-size: 12px; line-height: 1em;}
 #content div.all_items ul.items > li dl.info {margin-top: -5px;}
 #content div.all_items ul.items > li ul.actions {position: absolute; top: 0px; padding: 0; right: 30px;}
 #content p + div.all_items {border-top: 1px solid #bbbbbb;}
@@ -847,7 +855,9 @@ body.invoice #content div.scene .all_items ul.items li span.amount {float: right
 #content div.all_items div.filter form {position: absolute; right: 30px; top: 9px;}
 #content div.all_items div.filter .field {padding: 0 0 6px;}
 #content div.all_items div.filter .field input {width: 100px; height: 16px; font-size: 12px;}
-#content div.all_items.sortable ul.items > li.item div.drag {width: 30px; height: 30px; position: absolute; top: 0px; left: 15px; background: transparent url(/janitor/admin/img//bg_icons2.png) no-repeat 10px -440px; cursor: move;}
+#content div.all_items.sortable ul.items > li.item div.drag {width: 30px; height: 30px; position: absolute; top: 0px; left: 15px; 
+	background: transparent url(../assets/janitor/admin/img/bg_icons2.png) no-repeat 10px -440px; cursor: move;
+}
 #content div.all_items.sortable ul.items > li.item h3,
 #content div.all_items.sortable ul.items > li.item p,
 #content div.all_items.sortable ul.items > li.item ul.tags,
@@ -864,79 +874,101 @@ body.invoice #content div.scene .all_items ul.items li span.amount {float: right
 #content div.all_items.sortable.videos ul.items > li.item p,
 #content div.all_items.sortable.videos ul.items > li.item ul.tags,
 #content div.all_items.sortable.videos ul.items > li.item dl {padding-left: 55px;}
+#content div.all_items.sortable ul.items > li.item.dragged {background-color: #ffffff;}
+#content div.all_items.sortable ul.items > li.item.shadow {opacity: 0.8; z-index: 100;}
 #content div.all_items.sortable.images ul.items > li {background-position: 50px center;}
 #content div.all_items.sortable.audios ul.items > li div.audioplayer {left: 55px;}
 #content div.all_items.sortable.videos ul.items > li div.videoplayer {left: 45px;}
-
+#content div.all_items.selectable ul.items > li > input {position: absolute; top: 10px; left: 30px; cursor: pointer;}
+#content div.all_items.selectable ul.items > li.all {padding: 10px 30px 10px 50px;}
+#content div.all_items.selectable ul.items > li.all > input {position: absolute; top: 9px; left: 30px;}
+#content div.all_items.selectable ul.items > li.all.deselect input[type=checkbox] {opacity: 0.4;}
+#content div.all_items.selectable ul.items > li.all div.range {padding-left: 25px; height: 10px; display: inline-block; vertical-align: top;}
+#content div.all_items.selectable ul.items > li.all div.range span {display: inline-block; vertical-align: top; font-size: 12px; padding: 0 5px;}
+#content div.all_items.selectable ul.items > li.all div.range > input {width: 30px; height: 14px; margin-top: -4px; font-size: 12px;}
+#content div.all_items.selectable ul.items > li h3 {padding-left: 50px;}
+#content div.pagination {min-height: 28px;}
+#content div.pagination ul {text-align:center; margin-top: 22px;}
+#content div.pagination ul li a {padding: 4px 12px 6px; font-size: 1rem; line-height: 1.2em; background-color: #8c9399; color: #ffffff; border: none; cursor: pointer; border-radius: 3px; text-decoration: none;}
+#content div.pagination ul li {padding: 0 10px 0 0}
+#content div.pagination ul li a.disabled {cursor: default !important; color: #aaaaaa !important; background-color: #eeeeee !important;}
 
 /*s-default_edit.css*/
-#content .scene > div > h2 {font-size: 0.8em; text-transform: uppercase; padding-top: 7px; padding-bottom: 10px; margin: 0 0 20px;}
-#content .scene div.togglable {overflow: hidden;}
-#content .scene div.togglable.open {overflow: visible;}
-#content .scene div.togglable > h2 {position: relative;}
-#content .scene div.togglable > h2 svg {position: absolute; top: 7px; right: 25px; stroke: #313942; stroke-width: 3px;}
+#content .scene div > h2 {font-size: 0.8em; text-transform: uppercase; padding-top: 7px; padding-bottom: 10px; margin: 0 0 20px;}
+#content .scene div.togglable,
+#content .scene li.togglable {overflow: hidden;}
+#content .scene div.togglable.open,
+#content .scene li.togglable.open {overflow: visible;}
+#content .scene div.togglable > h2,
+#content .scene div.togglable > h3,
+#content .scene div.togglable > h4,
+#content .scene li.togglable > h2,
+#content .scene li.togglable > h3,
+#content .scene li.togglable > h4 {position: relative; cursor: ns-resize;}
+#content .scene div.togglable > h2 svg,
+#content .scene div.togglable > h3 svg,
+#content .scene div.togglable > h4 svg,
+#content .scene li.togglable > h2 svg,
+#content .scene li.togglable > h3 svg,
+#content .scene li.togglable > h4 svg {position: absolute; top: 7px; right: 25px; stroke: #313942; stroke-width: 3px;}
 #content .scene.defaultEdit > div.status {border-bottom: 1px solid #bbbbbb;}
 #content .scene.defaultEdit > div.status .actions {padding: 0;}
 #content .scene.defaultEdit > div.status .actions li.status {display: block; padding: 10px 0px; text-align: right; height: 27px;}
 #content .scene.defaultEdit > div.status .actions li.status form {display: inline-block; vertical-align: top; padding-right: 30px;}
 #content .scene.defaultEdit > div.status .actions li.status form.disable:after {left: 3px;}
-#content .scene.defaultEdit > div.status .actions li.status form h3 {padding-top: 5px; padding-bottom: 0; font-size: 13px;}
 #content .scene.defaultEdit > div.status .actions li.status.disabled form.disable {display: none;}
 #content .scene.defaultEdit > div.status .actions li.status.enabled form.enable {display: none;}
-#content .scene.defaultEdit > div.status .actions li.status h3 {display: inline-block; vertical-align: top;}
 #content .scene.defaultEdit > div.status .actions li.status input {display: inline-block; vertical-align: top;}
 #content .scene.defaultEdit > div.item {padding: 0; border-bottom: 1px solid #bbbbbb;}
 #content .scene.defaultEdit > div.item .actions {text-align: left; padding-bottom: 10px;}
 #content .scene.defaultEdit > div.item .actions li {padding: 0 5px 10px;}
 #content .scene.defaultEdit > div.owner {padding: 0; border-bottom: 1px solid #bbbbbb; position: relative;}
+#content .scene.defaultEdit > div.sindex {padding: 0; border-bottom: 1px solid #bbbbbb; position: relative;}
 #content .scene.defaultEdit > div.media {padding: 0; border-bottom: 1px solid #bbbbbb; position: relative;}
 #content .scene.defaultEdit > div.media form.upload {text-align: left; position: relative; z-index: 2;}
 #content .scene.defaultEdit > div.media form.upload .actions {display: none;}
-#content .scene.defaultEdit > div.media form.delete {padding: 0; position: absolute; top: 0; right: 0;}
-#content .scene.defaultEdit > div.media form.delete ul.actions {padding: 0;}
-#content .scene.defaultEdit > div.media form.delete ul.actions li {padding: 0;}
-#content .scene.defaultEdit > div.media form.delete input {font-size: 12px; color: #df0000; width: 30px; height: 30px; display: block; text-indent: -9999px; border: none; border-radius: 0; cursor: pointer; border-bottom-left-radius: 5px;
-	background: #ffffff url(/janitor/admin/img//bg_icons.png) no-repeat 8px -42px;
+#content .scene.defaultEdit > div.media form.upload div.field.files ul.filelist li.label {margin: 0; display: inline-block;}
+#content .scene.defaultEdit > div.media form.upload div.field.files.loading ul.filelist {
+	background: transparent url(../assets/janitor/admin/img/gx_loader.gif) no-repeat center center;
+}
+#content .scene.defaultEdit > div.media form.upload div.field.files.loading ul.filelist li {visibility: hidden;}
+#content .scene.defaultEdit > div.media div.preview {position: relative; margin: 0 28px 10px; background-color: #dedede; background-position: center center; background-repeat: no-repeat; height: 120px;}
+#content .scene.defaultEdit > div.media div.preview div.play {padding: 0; position: absolute; top: 0; left: 0; width: 30px; height: 30px; display: block; text-indent: -9999px; border: none; border-radius: 0; cursor: pointer; border-bottom-right-radius: 5px;
+	background-color: #ffffff; background-repeat: no-repeat; background-position: 6px -248px;
+	background-image: url(../assets/janitor/admin/img/bg_icons.png);
+	background-size: 40px auto;
+}
+#content .scene.defaultEdit > div.media div.preview.pdf,
+#content .scene.defaultEdit > div.media div.preview.zip {
+	background-position: center 40%;
+}
+#content .scene.defaultEdit > div.media div.preview video,
+#content .scene.defaultEdit > div.media div.preview audio {width: 100%; height: 100%; display: block;}
+#content .scene.defaultEdit > div.media ul.previewlist {padding: 0 20px 10px; text-align: left; position: relative;}
+#content .scene.defaultEdit > div.media ul.previewlist > li {margin: 0 10px 20px; position: relative;}
+#content .scene.defaultEdit > div.media ul.previewlist > li.dragged {z-index: 2;}
+#content .scene.defaultEdit > div.media ul.previewlist > li div.preview {height: 100%; margin: 0; width: 100px; min-width: 50px; height: 120px;}
+#content .scene.defaultEdit > div.media div.preview form.edit {background-color: rgba(0,0,0, 0.7); position: absolute; bottom: 0; left: 0; width: 100%;}
+#content .scene.defaultEdit > div.media div.preview form.edit div.field {padding: 0px 3px;}
+#content .scene.defaultEdit > div.media div.preview form.edit div.field input {font-size: 13px; width: calc(100% - 18px);}
+#content .scene.defaultEdit > div.media div.preview form.edit div.field div.indicator {left: 392px;}
+#content .scene.defaultEdit > div.media div.preview:not(.edit) form.edit div.field input {color: #ffffff; margin: 3px; border: 0; background: none; box-shadow: none;}
+#content .scene.defaultEdit > div.media div.preview:not(.edit) form.edit div.field div.indicator {display: none;}
+#content .scene.defaultEdit > div.media div.preview form.delete {padding: 0; position: absolute; top: 0; right: 0;}
+#content .scene.defaultEdit > div.media div.preview form.delete ul.actions {padding: 0;}
+#content .scene.defaultEdit > div.media div.preview form.delete ul.actions li {padding: 0;}
+#content .scene.defaultEdit > div.media div.preview form.delete input {font-size: 12px; color: #df0000; width: 30px; height: 30px; display: block; text-indent: -9999px; border: none; border-radius: 0; cursor: pointer; border-bottom-left-radius: 5px;
+	background: #ffffff url(../assets/janitor/admin/img/bg_icons.png) no-repeat 8px -42px;
 	-webkit-appearance: none;
 }
-#content .scene.defaultEdit > div.media form.delete input:hover {background-position: 8px -67px;}
-#content .scene.defaultEdit > div.media form.delete input.confirm {text-indent: 0; width: auto; padding-left: 24px;}
-#content .scene.defaultEdit > div.media > img,
-#content .scene.defaultEdit > div.media > div.videoplayer {margin: 0 28px; position: absolute; top: 47px; left: 0; z-index: 1;}
-#content .scene.defaultEdit > div.media > form.delete {left: 412px; right: auto; top: 47px; z-index: 11;}
-#content .scene.defaultEdit > div.media > form.delete input {position: absolute; top: 0; right: 0;}
-#content .scene.defaultEdit > div.single_media form.upload {padding-bottom: 10px;}
-#content .scene.defaultEdit > div.single_media form.upload input[type=file] {height: 204px;}
-#content .scene.defaultEdit > div.single_media form.upload label {margin-top: 90px;}
-#content .scene.defaultEdit > div.media ul.mediae {padding: 0 20px 10px; text-align: left;}
-#content .scene.defaultEdit > div.media ul.mediae > li {margin: 0 10px 20px; position: relative; text-align: center;}
-#content .scene.defaultEdit > div.media ul.mediae > li.dragged {z-index: 2;}
-#content .scene.defaultEdit > div.media ul.mediae > li h4 {padding: 0 0 5px;}
-#content .scene.defaultEdit > div.media ul.mediae > li p {word-wrap: break-word; padding: 10px; font-size: 10px; text-align: left; background-color: rgba(0,0,0, 0.7); color: #ffffff; width: 100%; position: absolute; bottom: 0; left: 0; cursor: text;}
-#content .scene.defaultEdit > div.media ul.mediae > li form.edit {display: none;}
-#content .scene.defaultEdit > div.media ul.mediae > li.edit p {display: none;}
-#content .scene.defaultEdit > div.media ul.mediae > li.edit form.edit {display: block;}
-#content .scene.defaultEdit > div.media ul.mediae > li form.edit {position: absolute; bottom: 0; left: 0; width: 100%;}
-#content .scene.defaultEdit > div.media ul.mediae > li form.edit div.field {padding: 5px; background-color: rgba(255,255,255, 0.7);}
-#content .scene.defaultEdit > div.media ul.mediae > li form.edit div.field input {font-size: 12px; height: 20px;}
-#content .scene.defaultEdit > div.media.sortable ul.mediae > li {cursor: move;}
-#content .scene.defaultEdit > div.media ul.mediae li {height: 150px;}
-#content .scene.defaultEdit > div.media ul.mediae li img {width: 100%;}
-#content .scene.defaultEdit > div.media ul.mediae li.image a {display: none;}
-#content .scene.defaultEdit > div.media ul.mediae li.audio {width: 150px;}
-#content .scene.defaultEdit > div.media.image div.file a {display: none;} 
-#content .scene.defaultEdit > div.media div.file {z-index: 11; margin: 0; height: 30px; width: 384px; background-color: rgba(0,0,0, 0.7); position: absolute; bottom: 16px; left: 28px;}
-#content .scene.defaultEdit > div.media div.file a {display: inline-block; vertical-align: top; width: 30px; height: 30px; text-indent: -9999px;
-	background: transparent url(/janitor/admin/img/bg_bn_play_medium.png) no-repeat 2px 3px; background-size: 80% auto;
-}
-#content .scene.defaultEdit > div.media div.file p {display: inline-block; vertical-align: top; width: auto; height: 20px; word-wrap: break-word; padding: 10px 5px 0; font-size: 10px; line-height: 1em; color: #ffffff;}
-#content .scene.defaultEdit > div.media div.file a.playing {background-position: 2px -45px;}
-#content .scene.defaultEdit > div.media ul.mediae li.video a,
-#content .scene.defaultEdit > div.media ul.mediae li.audio a {position: absolute; top: 35px; left: 50%; margin-left: -25px; text-indent: -9999px; display: block; width: 50px; height: 50px;
-	background: transparent url(/janitor/admin/img/bg_bn_play_medium.png) no-repeat center 0px; background-size: 100% auto;
-}
-#content .scene.defaultEdit > div.media ul.mediae li.video video {width: 100%; height: 100%;}
-#content .scene.defaultEdit > div.media ul.mediae li a.playing {background-position: center -100px;}
+#content .scene.defaultEdit > div.media div.preview form.delete input:hover {background-position: 8px -67px;}
+#content .scene.defaultEdit > div.media div.preview form.delete input.confirm {text-indent: 0; width: auto; padding-left: 24px;}
+#content .scene.defaultEdit > div.media.sortable ul.previewlist > li {cursor: move;}
+#content .scene.defaultEdit > div.media.sortable ul.previewlist > li.shadow {opacity: 0.8; z-index: 100;}
+#content .scene.defaultEdit > div.media.sortable ul.previewlist > li.dragged {background: #64ad8e;}
+#content .scene.defaultEdit > div.media.sortable ul.previewlist > li.dragged .preview {opacity: 0.7;}
+#content .scene.defaultEdit > div.single_media div.preview {margin-bottom: 30px;}
+#content .scene.defaultEdit > div.single_media form.upload:last-child {padding-bottom: 20px;}
 #content .scene.defaultEdit > div.comments {padding: 0; border-bottom: 1px solid #bbbbbb; position: relative;}
 #content .scene.defaultEdit > div.comments ul.comments {border-top: 1px solid #dedede; padding-top: 15px;}
 #content .scene.defaultEdit > div.comments ul.comments > li {display: block; border-bottom: 1px solid #dedede; margin-bottom: 15px; position: relative;}
@@ -1016,6 +1048,7 @@ body.invoice #content div.scene .all_items ul.items li span.amount {float: right
 #content .scene.wishList ul.items > li dl dt.reserved {display: none;}
 #content .scene.wishList ul.items > li dl dd.reserved {font-size: 14px;}
 #content .scene.eventList ul.items > li.past {background: #dddddd;}
+#content .scene.eventEdit fieldset h2 {font-size: 0.8em; text-transform: uppercase; padding-top: 7px; padding-bottom: 10px; margin: 20px 0 0px;}
 #content .scene.messageList > ul.actions li.maillists {float: right; padding: 0 0 10px 10px;}
 #content .scene.messageList > div.system {border-bottom: 1px solid #aaaaaa;}
 #content .scene.messageList > div.dynamic {padding-bottom: 30px; border-bottom: 1px solid #aaaaaa;}
@@ -1067,7 +1100,7 @@ body.invoice #content div.scene .all_items ul.items li span.amount {float: right
 #content .scene.deviceEdit div.markers ul.markers li span.error {color: #fd0000;}
 #content .scene.deviceEdit div.markers ul.markers li:hover {background-color: #cccccc;}
 #content .scene.deviceEdit div.markers ul.markers li .delete {display: none; position: absolute; right: 30px; top: -4px; height: 24px; width: 24px; cursor: pointer; border-radius: 12px; border: 1px solid #fd0000;
-	background: #ffffff url(/janitor/admin/img/bg_icons.png) no-repeat 5px -45px;
+	background: #ffffff url(../assets/janitor/admin/img/bg_icons.png) no-repeat 5px -45px;
 }
 #content .scene.deviceEdit div.markers ul.markers li:hover .delete {display: block;}
 #content .scene.deviceEdit div.exceptions {padding: 0; border-bottom: 1px solid #aaaaaa; overflow: hidden;}
@@ -1084,7 +1117,7 @@ body.invoice #content div.scene .all_items ul.items li span.amount {float: right
 #content .scene.deviceEdit div.exceptions ul.exceptions li span.error {color: #fd0000;}
 #content .scene.deviceEdit div.exceptions ul.exceptions li:hover {background-color: #cccccc;}
 #content .scene.deviceEdit div.exceptions ul.exceptions li .delete {display: none; position: absolute; right: 30px; top: -4px; height: 24px; width: 24px; cursor: pointer; border-radius: 12px; border: 1px solid #fd0000;
-	background: #ffffff url(/janitor/admin/img/bg_icons.png) no-repeat 5px -45px;
+	background: #ffffff url(../assets/janitor/admin/img/bg_icons.png) no-repeat 5px -45px;
 }
 #content .scene.deviceEdit div.exceptions ul.exceptions li:hover .delete {display: block;}
 #content .scene.deviceEdit div.testmarkers {padding: 0; border-bottom: 1px solid #aaaaaa; overflow: hidden;}
@@ -1131,7 +1164,7 @@ body.invoice #content div.scene .all_items ul.items li span.amount {float: right
 #content .scene.deviceEdit div.useragents ul.useragents li:hover {background-color: #cccccc;}
 #content .scene.deviceEdit div.useragents ul.useragents li .delete {position: absolute; right: 30px; top: -3px; height: 24px; width: 24px;
 	cursor: pointer; border-radius: 12px;
-	background: #fd0000 url(/janitor/admin/img/bg_icons.png) no-repeat 5px -45px;
+	background: #fd0000 url(../assets/janitor/admin/img/bg_icons.png) no-repeat 5px -45px;
 	display: none;
 }
 #content .scene.deviceEdit div.useragents ul.useragents li:hover .delete {display: block;}
@@ -1169,7 +1202,7 @@ body.invoice #content div.scene .all_items ul.items li span.amount {float: right
 #content .scene.unidentifiedList .testmarkers ul.markers {padding: 0 30px 14px;}
 #content .scene.unidentifiedList .testmarkers ul.markers li {display: inline-block; vertical-align: top; padding: 5px 12px 6px; border-radius: 13px; background-color: #64ad8e; margin: 0 6px 6px 0; color: #ffffff; cursor: pointer;}
 #content .scene.unidentifiedList .testmarkers ul.markers li.loading {
-	padding-left: 35px; background-image: url(/janitor/admin/img/gx_loader.gif); background-position: 10px 6px; background-repeat: no-repeat;
+	padding-left: 35px; background-image: url(../assets/janitor/admin/img/gx_loader.gif); background-position: 10px 6px; background-repeat: no-repeat;
 }
 #content .scene.unidentifiedList .testmarkers ul.markers li.selected {
 	background-color: #313942;
