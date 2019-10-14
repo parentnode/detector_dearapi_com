@@ -5,8 +5,8 @@ Util.Objects["searchUnidentified"] = new function() {
 		
 		form.submitted = function() {
 			
-			if(!form.fields["search_string"].val()) {
-				form.fields["search_string"].val("");
+			if(!form.inputs["search_string"].val()) {
+				form.inputs["search_string"].val("");
 			}
 
 			// manual submit
@@ -466,7 +466,7 @@ Util.Objects["unidentifiedList"] = new function() {
 											
 										}
 									}
-									u.request(this, this.node.div.useragent_delete+"/"+this.node.ua_id, {"method":"post", "params":"csrf-token="+this.node.div.csrf_token});
+									u.request(this, this.node.div.useragent_delete+"/"+this.node.ua_id, {"method":"post", "data":"csrf-token="+this.node.div.csrf_token});
 								}
 							}
 
@@ -490,7 +490,7 @@ Util.Objects["unidentifiedList"] = new function() {
 							page.notify(response);
 						}
 					}
-					u.request(this, this.div.useragent_details+"/"+this.ua_id, {"method":"post","params":"csrf-token=" + this.div.csrf_token});
+					u.request(this, this.div.useragent_details+"/"+this.ua_id, {"method":"post","data":"csrf-token=" + this.div.csrf_token});
 				}
 				else {
 					var uls = u.qsa("ul.info,ul.actions", this);
@@ -749,7 +749,7 @@ Util.Objects["unidentifiedList"] = new function() {
 						}
 						// make request
 						u.request(input, input.node.div.useragent_add+"/"+this.option.device_id+"/"+input.node.ua_id, {method:"post", timeout:u.getRequestTimeoutSetting(), data:"csrf-token="+input.node.div.csrf_token});
-//											u.request(input, "/temp", {"method":"post", timeout:u.getRequestTimeoutSetting(), "params":"csrf-token="+input.node.div.csrf_token});
+//											u.request(input, "/temp", {"method":"post", timeout:u.getRequestTimeoutSetting(), "data":"csrf-token="+input.node.div.csrf_token});
 
 					}
 					else {
@@ -810,7 +810,7 @@ Util.Objects["unidentifiedList"] = new function() {
 							}
 							// make request
 							u.request(input, input.node.div.useragent_add+"/"+this.option.device_id+"/"+input.node.ua_id, {method:"post", timeout:u.getRequestTimeoutSetting(), data:"csrf-token="+input.node.div.csrf_token});
-//							u.request(input, "/temp", {"method":"post", timeout:u.getRequestTimeoutSetting(), "params":"csrf-token="+input.node.div.csrf_token});
+//							u.request(input, "/temp", {"method":"post", timeout:u.getRequestTimeoutSetting(), "data":"csrf-token="+input.node.div.csrf_token});
 						}
 
 					}
@@ -1393,7 +1393,7 @@ Util.Objects["unidentifiedList"] = new function() {
 
 							u.ac(search_input, "loading");
 							// perform search
-							u.request(search_input, this.div.device_list, {"params":"search=1&search_string="+this.value, "method":"post"})
+							u.request(search_input, this.div.device_list, {"data":"search=1&search_string="+this.value, "method":"post"})
 						}
 					}
 
@@ -1788,7 +1788,7 @@ Util.Objects["testMarkersOnUnidentified"] = new function() {
 							}
 						}
 						u.ac(this, "loading");
-						u.request(this, this.div.url_device_test, {"params":"csrf-token="+this.div.csrf_token+"&test_marker=true&device_id="+this.item_id, "method":"post"});
+						u.request(this, this.div.url_device_test, {"data":"csrf-token="+this.div.csrf_token+"&test_marker=true&device_id="+this.item_id, "method":"post"});
 					}
 				}
 
@@ -1831,17 +1831,17 @@ Util.Objects["testMarkersOnUnidentified"] = new function() {
 				}
 
 				// insert tags filter
-				this._filter._field = u.ae(this._filter, "div", {"class":"field"});
-				u.ae(this._filter._field, "label", {"html":"Filter"});
+				this._filter.field = u.ae(this._filter, "div", {"class":"field"});
+				u.ae(this._filter.field, "label", {"html":"Filter"});
 
-				this._filter._input = u.ae(this._filter._field, "input", {"class":"filter ignoreinput"});
-				this._filter._input._div = this;
+				this._filter.input = u.ae(this._filter.field, "input", {"class":"filter ignoreinput"});
+				this._filter.input._div = this;
 
-				this._filter._input.onkeydown = function() {
+				this._filter.input.onkeydown = function() {
 	//				u.bug("reset timer")
 					u.t.resetTimer(this._div.t_filter);
 				}
-				this._filter._input.onkeyup = function() {
+				this._filter.input.onkeyup = function() {
 	//				u.bug("set timer")
 					this._div.t_filter = u.t.setTimer(this._div, this._div.filter, 1500);
 					u.ac(this._div._filter, "filtering");
@@ -1849,10 +1849,10 @@ Util.Objects["testMarkersOnUnidentified"] = new function() {
 				this.filter = function() {
 
 					var i, node;
-					if(this._current_filter != this._filter._input.value.toLowerCase()) {
-	//					u.bug("filter by:" + this._filter._input.value)
+					if(this._current_filter != this._filter.input.value.toLowerCase()) {
+	//					u.bug("filter by:" + this._filter.input.value)
 
-						this._current_filter = this._filter._input.value.toLowerCase();
+						this._current_filter = this._filter.input.value.toLowerCase();
 //						for(i = 0; node = this._markers[i]; i++) {
 						for(i = 0; i < this._markers.length; i++) {
 							node = this._markers[i];
@@ -1877,7 +1877,7 @@ Util.Objects["testMarkersOnUnidentified"] = new function() {
 //			u.bug("expanded")
 
 			// load markers
-			u.request(this, this.url_device_get, {"params":"csrf-token="+this.csrf_token, "method":"post"})
+			u.request(this, this.url_device_get, {"data":"csrf-token="+this.csrf_token, "method":"post"})
 		}
 
 		div.headerCollapsed = function() {
@@ -2020,7 +2020,7 @@ Util.Objects["crossreferenceUnidentified"] = new function() {
 								}
 							}
 							u.ac(this, "loading");
-							u.request(this, this.div.url_device_test, {"params":"csrf-token="+this.div.csrf_token+"&crossreference_marker=true&device_id="+this.item_id, "method":"post"});
+							u.request(this, this.div.url_device_test, {"data":"csrf-token="+this.div.csrf_token+"&crossreference_marker=true&device_id="+this.item_id, "method":"post"});
 						}
 					}
 
@@ -2036,7 +2036,7 @@ Util.Objects["crossreferenceUnidentified"] = new function() {
 		div.headerExpanded = function() {
 //			u.bug("expanded")
 
-			u.request(this, this.url_device_get, {"params":"csrf-token="+this.csrf_token, "method":"post"})
+			u.request(this, this.url_device_get, {"data":"csrf-token="+this.csrf_token, "method":"post"})
 		}
 
 		div.headerCollapsed = function() {

@@ -22,7 +22,7 @@ Util.Objects["deleteLostUseragents"] = new function() {
 				location.reload();
 
 			}
-			u.request(this.div, this.div.url_useragent_delete_lost, {"method":"post", "params":"csrf-token="+this.div.csrf_token})
+			u.request(this.div, this.div.url_useragent_delete_lost, {"method":"post", "data":"csrf-token="+this.div.csrf_token})
 		}
 
 	}
@@ -53,7 +53,7 @@ Util.Objects["deleteLostDevices"] = new function() {
 				location.reload();
 
 			}
-			u.request(this.div, this.div.url_devices_delete_lost, {"method":"post", "params":"csrf-token="+this.div.csrf_token})
+			u.request(this.div, this.div.url_devices_delete_lost, {"method":"post", "data":"csrf-token="+this.div.csrf_token})
 		}
 
 	}
@@ -180,7 +180,7 @@ Util.Objects["uniqueMatchList"] = new function() {
 								page.notify(response);
 							}
 						}
-						u.request(this, this.div.useragent_details+"/"+this.ua_id, {"method":"post","params":"csrf-token=" + this.div.csrf_token});
+						u.request(this, this.div.useragent_details+"/"+this.ua_id, {"method":"post","data":"csrf-token=" + this.div.csrf_token});
 					}
 					else {
 						var uls = u.qsa("ul", this);
@@ -206,17 +206,17 @@ Util.Objects["uniqueMatchList"] = new function() {
 				}
 
 				// insert tags filter
-				div._filter._field = u.ae(div._filter, "div", {"class":"field"});
-				u.ae(div._filter._field, "label", {"html":"Filter"});
+				div._filter.field = u.ae(div._filter, "div", {"class":"field"});
+				u.ae(div._filter.field, "label", {"html":"Filter"});
 
-				div._filter._input = u.ae(div._filter._field, "input", {"class":"filter ignoreinput"});
-				div._filter._input._div = div;
+				div._filter.input = u.ae(div._filter.field, "input", {"class":"filter ignoreinput"});
+				div._filter.input._div = div;
 
-				div._filter._input.onkeydown = function() {
+				div._filter.input.onkeydown = function() {
 	//				u.bug("reset timer")
 					u.t.resetTimer(this._div.t_filter);
 				}
-				div._filter._input.onkeyup = function() {
+				div._filter.input.onkeyup = function() {
 	//				u.bug("set timer")
 					this._div.t_filter = u.t.setTimer(this._div, this._div.filter, 1500);
 					u.ac(this._div._filter, "filtering");
@@ -224,10 +224,10 @@ Util.Objects["uniqueMatchList"] = new function() {
 				div.filter = function() {
 
 					var i, node;
-					if(this._current_filter != this._filter._input.value.toLowerCase()) {
-	//					u.bug("filter by:" + this._filter._input.value)
+					if(this._current_filter != this._filter.input.value.toLowerCase()) {
+	//					u.bug("filter by:" + this._filter.input.value)
 
-						this._current_filter = this._filter._input.value.toLowerCase();
+						this._current_filter = this._filter.input.value.toLowerCase();
 						for(i = 0; node = this.nodes[i]; i++) {
 
 							if(node._c.match(this._current_filter)) {
@@ -327,7 +327,7 @@ Util.Objects["uniqueMatchList"] = new function() {
 												page.notify(response);
 												this.div.toggleAddToOption();
 											}
-											u.request(ua.node, ua.node.div.useragent_delete+"/"+ua.node.ua_id, {"method":"post","params":"csrf-token=" + ua.node.div.csrf_token});
+											u.request(ua.node, ua.node.div.useragent_delete+"/"+ua.node.ua_id, {"method":"post","data":"csrf-token=" + ua.node.div.csrf_token});
 
 										}
 									}
@@ -385,7 +385,7 @@ Util.Objects["uniqueMatchList"] = new function() {
 
 							}
 							// request identification
-							u.request(ua.node, ua.node.div.useragent_identify+"/"+ua.node.ua_id, {"method":"post","params":"csrf-token=" + ua.node.div.csrf_token});
+							u.request(ua.node, ua.node.div.useragent_identify+"/"+ua.node.ua_id, {"method":"post","data":"csrf-token=" + ua.node.div.csrf_token});
 						}
 						// already identified
 						else {

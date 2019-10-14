@@ -21,7 +21,7 @@ Util.Objects["editUseragents"] = new function() {
 					page.notify(response);
 				}
 			}
-			u.request(this, this.action, {"method":"post", "params" : u.f.getParams(this)});
+			u.request(this, this.action, {"method":"post", "data" : this.getData()});
 		}
 
 
@@ -51,7 +51,7 @@ Util.Objects["editUseragents"] = new function() {
 							this.ua.parentNode.removeChild(this.ua);
 						}
 					}
-					u.request(this, this.div.useragent_delete+"/"+this.ua.ua_id, {"method":"post", "params":"csrf-token=" + this.div.csrf_token});
+					u.request(this, this.div.useragent_delete+"/"+this.ua.ua_id, {"method":"post", "data":"csrf-token=" + this.div.csrf_token});
 
 				}
 			}
@@ -67,21 +67,21 @@ Util.Objects["editUseragents"] = new function() {
 		u.f.init(div._filter_form)
 		u.bug("field:" + div._filter_field)
 
-		div._filter_field._input.onkeydown = function() {
+		div._filter_field.input.onkeydown = function() {
 //				u.bug("reset timer")
 			u.t.resetTimer(this.field.div.t_filter);
 		}
-		div._filter_field._input.onkeyup = function() {
+		div._filter_field.input.onkeyup = function() {
 //				u.bug("set timer")
 			this.field.div.t_filter = u.t.setTimer(this.field.div, this.field.div.filter, 500);
 			u.ac(this.field.div._filter, "filtering");
 		}
 		div.filter = function() {
 			var i, node;
-			if(this._current_filter != this._filter_field._input.value.toLowerCase()) {
-//					u.bug("filter by:" + this._filter._input.value)
+			if(this._current_filter != this._filter_field.input.value.toLowerCase()) {
+//					u.bug("filter by:" + this._filter.input.value)
 
-				this._current_filter = this._filter_field._input.value.toLowerCase();
+				this._current_filter = this._filter_field.input.value.toLowerCase();
 				for(i = 0; node = this._uas[i]; i++) {
 
 					if(node._c.match(this._current_filter)) {
@@ -118,9 +118,9 @@ Util.Objects["editMarkers"] = new function() {
 					var li = u.ae(this.div._markers_ul, "li", {"class":"marker marker_id:"+response.cms_object.id});
 					u.ae(li, "span", {"html":response.cms_object.marker, "class":"marker"});
 					li.div = this.div;
-					this.fields["marker"].val("");
-					this.fields["marker"].focus();
-					this.fields["marker"].blur();
+					this.inputs["marker"].val("");
+					this.inputs["marker"].focus();
+					this.inputs["marker"].blur();
 					this.div.enableDeletion(li);
 					this.div.enableEditing(li);
 
@@ -129,7 +129,7 @@ Util.Objects["editMarkers"] = new function() {
 					page.notify(response);
 				}
 			}
-			u.request(this, this.action, {"method":"post", "params" : u.f.getParams(this)});
+			u.request(this, this.action, {"method":"post", "data" : this.getData()});
 		}
 
 		div._markers = u.qsa("li.marker", div);
@@ -157,7 +157,7 @@ Util.Objects["editMarkers"] = new function() {
 						this.node.parentNode.removeChild(this.node);
 					}
 				}
-				u.request(this, this.div.url_marker_delete+"/"+this.node.marker_id, {"method":"post", "params":"csrf-token=" + this.div.csrf_token});
+				u.request(this, this.div.url_marker_delete+"/"+this.node.marker_id, {"method":"post", "data":"csrf-token=" + this.div.csrf_token});
 
 			}
 		}
@@ -213,7 +213,7 @@ Util.Objects["editMarkers"] = new function() {
 						u.rc(this, "error");
 					}
 				}
-				u.request(this, this.div.url_marker_update+"/"+this.node.marker_id, {"method":"post", "params":"csrf-token="+this.div.csrf_token+"&marker="+encodeURIComponent(this.innerHTML)});
+				u.request(this, this.div.url_marker_update+"/"+this.node.marker_id, {"method":"post", "data":"csrf-token="+this.div.csrf_token+"&marker="+encodeURIComponent(this.innerHTML)});
 			}
 
 		}
@@ -254,9 +254,9 @@ Util.Objects["editExceptions"] = new function() {
 					var li = u.ae(this.div._exceptions_ul, "li", {"class":"exception exception_id:"+response.cms_object.id});
 					u.ae(li, "span", {"html":response.cms_object.exception, "class":"exception"});
 					li.div = this.div;
-					this.fields["exception"].val("");
-					this.fields["exception"].focus();
-					this.fields["exception"].blur();
+					this.inputs["exception"].val("");
+					this.inputs["exception"].focus();
+					this.inputs["exception"].blur();
 					this.div.enableDeletion(li);
 					this.div.enableEditing(li);
 				}
@@ -264,7 +264,7 @@ Util.Objects["editExceptions"] = new function() {
 					page.notify(response);
 				}
 			}
-			u.request(this, this.action, {"method":"post", "params" : u.f.getParams(this)});
+			u.request(this, this.action, {"method":"post", "data": u.f.getData()});
 		}
 
 		div._exceptions = u.qsa("li.exception", div);
@@ -292,7 +292,7 @@ Util.Objects["editExceptions"] = new function() {
 						this.node.parentNode.removeChild(this.node);
 					}
 				}
-				u.request(this, this.div.url_exception_delete+"/"+this.node.exception_id, {"method":"post", "params":"csrf-token=" + this.div.csrf_token});
+				u.request(this, this.div.url_exception_delete+"/"+this.node.exception_id, {"method":"post", "data":"csrf-token=" + this.div.csrf_token});
 			}
 		}
 
@@ -349,7 +349,7 @@ Util.Objects["editExceptions"] = new function() {
 						u.rc(this, "error");
 					}
 				}
-				u.request(this, this.div.url_exception_update+"/"+this.node.exception_id, {"method":"post", "params":"csrf-token="+this.div.csrf_token+"&exception="+encodeURIComponent(this.innerHTML)});
+				u.request(this, this.div.url_exception_update+"/"+this.node.exception_id, {"method":"post", "data":"csrf-token="+this.div.csrf_token+"&exception="+encodeURIComponent(this.innerHTML)});
 			}
 
 		}
@@ -417,7 +417,7 @@ Util.Objects["testMarkers"] = new function() {
 			u.bug("perform test")
 
 			// // only do search with valid search string
-			// if(this.search_field._input.val() && this.search_field._input.val() != this.current_search_term) {
+			// if(this.search_field.input.val() && this.search_field.input.val() != this.current_search_term) {
 			//
 				// get search response
 				this.response = function(response) {
@@ -465,7 +465,7 @@ Util.Objects["testMarkers"] = new function() {
 											this.n_node.parentNode.removeChild(this.n_node);
 										}
 									}
-									u.request(this, this.url, {"method":"post", "params":"csrf-token=" + this.div.csrf_token});
+									u.request(this, this.url, {"method":"post", "data":"csrf-token=" + this.div.csrf_token});
 
 								}
 
@@ -663,7 +663,7 @@ Util.Objects["testMarkers"] = new function() {
 
 											u.ac(search_input, "loading");
 											// perform search
-											u.request(search_input, this.div.url_device_list, {"params":"search=1&search_string="+this.value, "method":"post"})
+											u.request(search_input, this.div.url_device_list, {"data":"search=1&search_string="+this.value, "method":"post"})
 										}
 									}
 								}
@@ -728,7 +728,7 @@ Util.Objects["testMarkers"] = new function() {
 												this.node.parentNode.removeChild(this.node);
 											}
 										}
-										u.request(this, this.url, {"method":"post", "params":"csrf-token="+this.div.csrf_token});
+										u.request(this, this.url, {"method":"post", "data":"csrf-token="+this.div.csrf_token});
 
 									}
 									else {
@@ -857,7 +857,7 @@ Util.Objects["testMarkers"] = new function() {
 
 
 				// perform search
-				u.request(this, this.div.url_device_test+"/"+this.div.item_id, {"params":"csrf-token="+this.div.csrf_token, "method":"post"})
+				u.request(this, this.div.url_device_test+"/"+this.div.item_id, {"data":"csrf-token="+this.div.csrf_token, "method":"post"})
 			// }
 		}
 

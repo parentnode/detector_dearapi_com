@@ -66,13 +66,13 @@ Util.Objects["searchDevice"] = new function() {
 		form.submitted = function() {
 //			u.bug("submitted")
 
-			var params = u.f.getParams(this);
-//			u.xInObject(params);
+			var data = this.getData();
+//			u.xInObject(data);
 			var tags = u.qsa("li:not(.add)", this._tags._list);
 //			u.bug("tags:" + tags.length)
 
 			if(tags) {
-				params += "&tags=";
+				data += "&tags=";
 				var tag_array = [];
 				var i, tag;
 				for(i = 0; tag = tags[i]; i++) {
@@ -81,11 +81,11 @@ Util.Objects["searchDevice"] = new function() {
 						tag._context = u.qs(".context", tag).innerHTML;
 						tag._value = u.qs(".value", tag).innerHTML;
 					}
-//					u.bug("add tag to params:" + tag + "; " + tag._value)
+//					u.bug("add tag to data:" + tag + "; " + tag._value)
 
 					tag_array.push(tag._context+":"+tag._value);
 				}
-				params += tag_array.join(";");
+				data += tag_array.join(";");
 			}
 			
 			this.response = function(response) {
@@ -104,7 +104,7 @@ Util.Objects["searchDevice"] = new function() {
 			u.a.transition(list, "opacity 0.5s ease-in");
 			u.a.setOpacity(list, 0.2);
 			this.disableTaggedSearch();
-			u.request(this, this.action, {"params":params, "method":"post"})
+			u.request(this, this.action, {"data":data, "method":"post"})
 		}
 
 		form._tags = u.qs("div.tags", form);
@@ -139,7 +139,7 @@ Util.Objects["searchDevice"] = new function() {
 			}
 		}
 		// get tags
-		u.request(form._tags, div.get_tags_url, {"callback":"tagsResponse", "method":"post", "params":"csrf-token=" + div.csrf_token});
+		u.request(form._tags, div.get_tags_url, {"callback":"tagsResponse", "method":"post", "data":"csrf-token=" + div.csrf_token});
 
 
 		form.enableTaggedSearch = function() {
@@ -295,7 +295,7 @@ Util.Objects["cloneDevice"] = new function() {
 					page.notify(response);
 				}
 			}
-			u.request(this, this.url, {"method":"post", "params":"csrf-token="+li.csrf_token});
+			u.request(this, this.url, {"method":"post", "data":"csrf-token="+li.csrf_token});
 		}
 	}
 }
@@ -321,7 +321,7 @@ Util.Objects["generate"] = new function() {
 					u.ae(this, "p", {"html":"Script created"});
 				}
 			}
-			u.request(this, this.action, {"params":u.f.getParams(this), "method":"post"});
+			u.request(this, this.action, {"data":this.getData(), "method":"post"});
 		}
 	}
 }
@@ -396,11 +396,11 @@ Util.Objects["mergeDevices"] = new function() {
 
 
 
-		div.search_field._input.onkeyup = function() {
+		div.search_field.input.onkeyup = function() {
 			u.t.resetTimer(this.field.div.t_search);
 			this.field.div.t_search = u.t.setTimer(this.field.div, this.field.div.search, 1000);
 		}
-		div.search_field._input.onkeydown = function() {
+		div.search_field.input.onkeydown = function() {
 			u.t.resetTimer(this.field.div.t_search);
 		}
 
@@ -409,7 +409,7 @@ Util.Objects["mergeDevices"] = new function() {
 
 
 			// only do search with valid search string
-			if(this.search_field._input.val() && this.search_field._input.val() != this.current_search_term) {
+			if(this.search_field.input.val() && this.search_field.input.val() != this.current_search_term) {
 
 				// get search response
 				this.response = function(response) {
@@ -446,7 +446,7 @@ Util.Objects["mergeDevices"] = new function() {
 													page.notify(response);
 												}
 											}
-											u.request(this, this.node.div.url_device_merge+"/"+this.node.div.item_id+"/"+this.node.device_id, {"method":"post", "params":"csrf-token="+this.node.div.csrf_token});
+											u.request(this, this.node.div.url_device_merge+"/"+this.node.div.item_id+"/"+this.node.device_id, {"method":"post", "data":"csrf-token="+this.node.div.csrf_token});
 
 										}
 
@@ -467,13 +467,13 @@ Util.Objects["mergeDevices"] = new function() {
 				u.ac(this, "loading");
 
 
-				this.current_search_term = this.search_field._input.val();
+				this.current_search_term = this.search_field.input.val();
 				// empty result list
 				this.search_result.innerHTML = "";
 
 
 				// perform search
-				u.request(this, this.url_device_list, {"params":"search=ajax&search_string="+this.current_search_term, "method":"post"})
+				u.request(this, this.url_device_list, {"data":"search=ajax&search_string="+this.current_search_term, "method":"post"})
 			}
 		}
 
@@ -526,11 +526,11 @@ Util.Objects["mergeDevicesList"] = new function() {
 		div.url_device_merge = div.getAttribute("data-device-merge");
 
 
-		div.search_field._input.onkeyup = function() {
+		div.search_field.input.onkeyup = function() {
 			u.t.resetTimer(this.field.div.t_search);
 			this.field.div.t_search = u.t.setTimer(this.field.div, this.field.div.search, 1000);
 		}
-		div.search_field._input.onkeydown = function() {
+		div.search_field.input.onkeydown = function() {
 			u.t.resetTimer(this.field.div.t_search);
 		}
 
@@ -539,7 +539,7 @@ Util.Objects["mergeDevicesList"] = new function() {
 
 
 			// only do search with valid search string
-			if(this.search_field._input.val() && this.search_field._input.val() != this.current_search_term) {
+			if(this.search_field.input.val() && this.search_field.input.val() != this.current_search_term) {
 
 				// get search response
 				this.response = function(response) {
@@ -576,7 +576,7 @@ Util.Objects["mergeDevicesList"] = new function() {
 													page.notify(response);
 												}
 											}
-											u.request(this, this.device.div.url_device_merge+"/"+this.device.div.item_id+"/"+this.device.device_id, {"method":"post", "params":"csrf-token="+this.device.div.csrf_token});
+											u.request(this, this.device.div.url_device_merge+"/"+this.device.div.item_id+"/"+this.device.device_id, {"method":"post", "data":"csrf-token="+this.device.div.csrf_token});
 
 										}
 
@@ -597,13 +597,13 @@ Util.Objects["mergeDevicesList"] = new function() {
 				u.ac(this, "loading");
 
 
-				this.current_search_term = this.search_field._input.val();
+				this.current_search_term = this.search_field.input.val();
 				// empty result list
 				this.search_result.innerHTML = "";
 
 
 				// perform search
-				u.request(this, this.url_device_list, {"params":"search=ajax&search_string="+this.current_search_term, "method":"post"})
+				u.request(this, this.url_device_list, {"data":"search=ajax&search_string="+this.current_search_term, "method":"post"})
 			}
 		}
 
