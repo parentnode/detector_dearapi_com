@@ -1,5 +1,5 @@
 /*
-asset-builder @ 2020-02-25 11:41:24
+asset-builder @ 2020-02-25 12:14:58
 */
 
 /*seg_desktop_include.js*/
@@ -11671,7 +11671,7 @@ Util.Objects["editExceptions"] = new function() {
 					page.notify(response);
 				}
 			}
-			u.request(this, this.action, {"method":"post", "data": u.f.getData()});
+			u.request(this, this.action, {"method":"post", "data": this.getData()});
 		}
 		div._exceptions = u.qsa("li.exception", div);
 		div._exceptions_ul = u.qs("ul.exceptions", div);

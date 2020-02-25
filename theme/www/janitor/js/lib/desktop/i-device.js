@@ -264,7 +264,7 @@ Util.Objects["editExceptions"] = new function() {
 					page.notify(response);
 				}
 			}
-			u.request(this, this.action, {"method":"post", "data": u.f.getData()});
+			u.request(this, this.action, {"method":"post", "data": this.getData()});
 		}
 
 		div._exceptions = u.qsa("li.exception", div);
