@@ -410,14 +410,4 @@
 #content .scene.deleteDupletUseragents li h3 span.type {position: absolute; right: 30px; top: 10px;}
 
 
-/* NAVIGATION */
-body.device #navigation .device a,
-body.maintenance #navigation .maintenance a,
-body.generate #navigation .generate a,
-body.unidentified #navigation .unidentified a,
-body.tags #navigation .tags a {padding-left: 35px; color: #ffffff;}
-
-
-
-
 

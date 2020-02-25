@@ -1,5 +1,5 @@
 /*
-asset-builder @ 2020-02-25 12:14:58
+asset-builder @ 2020-02-25 14:10:16
 */
 
 /*seg_desktop_include.css*/
@@ -1355,9 +1355,4 @@ body.invoice #content div.scene .all_items ul.items li span.amount {float: right
 #content .scene.purgeUseragentRegex li h4 {padding-bottom: 8px; white-space: pre;}
 #content .scene.purgeUseragentRegex li h4 span.trimmed {background-color: #df0000; color: #ffffff; white-space: pre;}
 #content .scene.deleteDupletUseragents li h3 span.type {position: absolute; right: 30px; top: 10px;}
-body.device #navigation .device a,
-body.maintenance #navigation .maintenance a,
-body.generate #navigation .generate a,
-body.unidentified #navigation .unidentified a,
-body.tags #navigation .tags a {padding-left: 35px; color: #ffffff;}
 
