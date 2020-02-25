@@ -77,8 +77,8 @@ class Identify {
 
 
 		// Include most updated detection script
-		$detection_script_current = "/srv/sites/parentnode/detector_dearapi_com_v4/src/library/public/detection_script.php";
-		// Use v3 is current hasn't been created yet
+		$detection_script_current = "/srv/sites/parentnode/detector_dearapi_com_v4/theme/library/public/detection_script.php";
+		// Use v3 if current hasn't been created yet
 		$detection_script_v3 = PUBLIC_FILE_PATH."/detection_script.php";
 		if(file_exists($detection_script_current)) {
 			include($detection_script_current);
@@ -86,7 +86,6 @@ class Identify {
 		else if(file_exists($detection_script_v3)) {
 			include($detection_script_v3);
 		}
-
 
 //		print $device_name;
 
