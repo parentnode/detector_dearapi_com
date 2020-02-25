@@ -15,7 +15,7 @@ $all_items = $model->searchForUniquePotential();
 		<?= $HTML->link("Back", "/janitor/maintenance", array("class" => "button", "wrapper" => "li.back")) ?>
 	</ul>
 
-	<div class="all_items i:defaultList taggable filters"<?= $JML->jsData() ?>>
+	<div class="all_items i:defaultList taggable filters"<?= $HTML->jsData() ?>>
 <?		if($all_items): ?>
 		<ul class="items">
 <?			foreach($all_items as $item): 

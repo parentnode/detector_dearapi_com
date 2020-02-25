@@ -70,14 +70,6 @@ class TypeDevice extends Itemtype {
 			"hint_message" => "Device exception. Always test your exceptions."
 		));
 
-		// // Tags
-		// $this->addToModel("tags", array(
-		// 	"type" => "tags",
-		// 	"label" => "Tag",
-		// 	"hint_message" => "Start typing to filter options.",
-		// 	"error_message" => "Must be correct Tag format. A correct tag has this format: context:value."
-		// ));
-
 	}
 
 

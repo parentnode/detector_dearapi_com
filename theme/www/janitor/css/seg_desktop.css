@@ -1,5 +1,5 @@
 /*
-asset-builder @ 2019-10-14 16:14:27
+asset-builder @ 2020-02-25 11:41:24
 */
 
 /*seg_desktop_include.css*/
@@ -230,7 +230,7 @@ div.field.files input[type="file"] {z-index: 10; opacity: 0; position: absolute;
 div.field.files ul.filelist {border: 3px dashed #dedede; width: 378px; text-align: center; display: block; border-radius: 5px; position: relative; padding: 20px 0; margin: 0; overflow: hidden;}
 div.field.files ul.filelist li {box-sizing: border-box; display: block; padding: 2px 0 2px; font-size: 13px; line-height: 17px; text-align: center;}
 div.field.files ul.filelist li.new {font-weight: bold;}
-div.field.files ul.filelist li.label {display: inline-block; padding: 1px 10px 3px; margin-bottom: 5px; border-radius: 6px; background: #dedede;}
+div.field.files ul.filelist li.label {display: inline-block; padding: 1px 10px 3px; margin: 0 20px 5px; border-radius: 6px; background: #dedede;}
 div.field.location {}
 div.field.location div.location {padding-bottom: 2px;}
 div.field.location div.latitude {padding-right: 2px;}
@@ -494,7 +494,7 @@ body #selection_options ul.actions li {padding: 0 5px 0 0;}
 #content ul.tags li.add {padding: 4px 4px 6px; cursor: pointer; width: 13px; text-align: center;}
 #content ul.tags li.add:hover {background-color: #64ad8e;}
 #content ul.tags li span {font-size: 11px; line-height: 1em; color: #ffffff;}
-#content ul.tags li span.context {text-transform: uppercase;}
+#content ul.tags li span.context {text-transform: lowercase;}
 #content ul.tags li span.context:after {content: ":";}
 #content ul.tags li span.value {}
 #content ul.tags li.add {font-size: 11px; background-color: #dedede;}
@@ -521,6 +521,15 @@ body #selection_options ul.actions li {padding: 0 5px 0 0;}
 #content div.sortable div.tagoptions .field {padding-left: 48px;}
 #content .scene.tagList ul.items > li.unused {background: orange;}
 #content .scene.tagList ul.items > li h3 span {font-size: 12px;}
+
+
+/*s-taglists.css*/
+#content .scene.taglistList ul.items li.item ul.actions li.add { display: inline-block;}
+#content .scene.taglistList ul.items li.item ul.actions li.remove { display: none;}
+#content .scene.taglistList ul.items li.item.added ul.actions li.add { display: none;}
+#content .scene.taglistList ul.items li.item.added ul.actions li.remove { display: inline-block;}
+#content .scene.taglistList .taglist_tags ul.actions { padding-top: 10px;}
+#content .scene.taglistList .item p.handle { padding-top: 6px; padding-bottom: 2px;}
 
 
 /*s-shop.css*/
@@ -927,7 +936,7 @@ body.invoice #content div.scene .all_items ul.items li span.amount {float: right
 #content .scene.defaultEdit > div.media {padding: 0; border-bottom: 1px solid #bbbbbb; position: relative;}
 #content .scene.defaultEdit > div.media form.upload {text-align: left; position: relative; z-index: 2;}
 #content .scene.defaultEdit > div.media form.upload .actions {display: none;}
-#content .scene.defaultEdit > div.media form.upload div.field.files ul.filelist li.label {margin: 0; display: inline-block;}
+#content .scene.defaultEdit > div.media form.upload div.field.files ul.filelist li.label {margin-bottom: 0; display: inline-block;}
 #content .scene.defaultEdit > div.media form.upload div.field.files.loading ul.filelist {
 	background: transparent url(../assets/janitor/admin/img/gx_loader.gif) no-repeat center center;
 }
@@ -1002,8 +1011,9 @@ body.invoice #content div.scene .all_items ul.items li span.amount {float: right
 #content .scene.defaultEdit > div.prices ul.prices {padding: 0 0 15px;}
 #content .scene.defaultEdit > div.prices ul.prices li.pricedetails {display: block; position: relative; border-bottom: 1px solid #dedede;}
 #content .scene.defaultEdit > div.prices ul.prices li.pricedetails ul.info li {display: inline-block; vertical-align: top; padding: 10px 5px 10px 0; line-height: 1em;}
+#content .scene.defaultEdit > div.prices ul.prices li.pricedetails ul.info li.custom_price:before,
 #content .scene.defaultEdit > div.prices ul.prices li.pricedetails ul.info li.offer:before,
-#content .scene.defaultEdit > div.prices ul.prices li.pricedetails ul.info li.bulk:before {content: "- ";}
+#content .scene.defaultEdit > div.prices ul.prices li.pricedetails ul.info li.bulk:before{content: "- ";}
 #content .scene.defaultEdit > div.prices ul.prices > li > ul.actions {position: absolute; top: 3px; right: 0;}
 #content .scene.defaultEdit > div.subscription_method {padding: 0; border-bottom: 1px solid #bbbbbb; position: relative;}
 #content .scene.defaultEdit > div.subscription_method dl.info {padding-bottom: 20px;}

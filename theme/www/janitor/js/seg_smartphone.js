@@ -1,5 +1,5 @@
 /*
-asset-builder @ 2019-10-14 16:14:27
+asset-builder @ 2020-02-25 11:41:24
 */
 
 /*seg_smartphone_include.js*/
@@ -759,7 +759,7 @@ Util.clickableElement = u.ce = function(node, _options) {
 				if(fun(node.preClicked)) {
 					node.preClicked();
 				}
-				if(event && (event.metaKey || event.ctrlKey)) {
+				if(event && (event.metaKey || event.ctrlKey || (this._a && this._a.target))) {
 					window.open(this.url);
 				}
 				else {
@@ -2128,6 +2128,7 @@ Util.Form = u.f = new function() {
 				field.filelist.field = field;
 				field.uploaded_files = u.qsa("li.uploaded", field.filelist);
 				this._update_filelist.bind(field.input)();
+				u.e.addEvent(field.input, "change", this._update_filelist);
 				u.e.addEvent(field.input, "change", this._updated);
 				u.e.addEvent(field.input, "change", this._changed);
 				if(u.e.event_support != "touch") {
@@ -2135,7 +2136,6 @@ Util.Form = u.f = new function() {
 					u.e.addEvent(field.input, "dragleave", this._blur);
 					u.e.addEvent(field.input, "drop", this._blur);
 				}
-				u.e.addEvent(field.input, "change", this._update_filelist);
 				this.activateInput(field.input);
 			}
 			else {
@@ -2339,6 +2339,9 @@ Util.Form = u.f = new function() {
 					u.ae(this.field.filelist, this.field.uploaded_files[i]);
 				}
 			}
+			else {
+				this.field.uploaded_files = [];
+			}
 		}
 		else if(this.field.uploaded_files && this.field.uploaded_files.length) {
 			u.rc(this.field, "has_new_files");
@@ -2505,7 +2508,7 @@ Util.Form = u.f = new function() {
 				}
 			}
 		}
-		var action_name = action.name ? action.name : (action.parentNode.className ? u.normalize(action.parentNode.className) : (action.value ? u.normalize(action.value) : u.normalize(u.text(action))));
+		var action_name = action.name ? action.name : (action.parentNode.className ? u.superNormalize(action.parentNode.className) : (action.value ? u.superNormalize(action.value) : u.superNormalize(u.text(action))));
 		if(action_name && !action._form.actions[action_name]) {
 			action._form.actions[action_name] = action;
 		}
@@ -3700,11 +3703,12 @@ u.f.textEditor = function(field) {
 			input_classname.tag = tag;
 			u.ac(tag.bn_classname, "open");
 			u.f.init(form);
-			input_classname._input.focus();
-			input_classname._input.blurred = function() {
+			input_classname.input.focus();
+			input_classname.input.blurred = function() {
 				this.field.tag._classname = this.val();
 				this.field.tag.bn_classname.removeChild(this._form);
 				u.rc(this.field.tag.bn_classname, "open");
+				this.field.tag.field.update();
 			}
 		}
 	}
@@ -5121,17 +5125,27 @@ Util.History = u.h = new function() {
 	this.is_listening = false;
 	this.navigate = function(url, node, silent) {
 		silent = silent || false;
-		if(this.popstate) {
-			history.pushState({}, url, url);
-			if(!silent) {
-				this.callback(url);
+		if((!url.match(/^http[s]?\:\/\//) || url.match(document.domain)) && (!node || !node._a || !node._a.target)) {
+			if(this.popstate) {
+				history.pushState({}, url, url);
+				if(!silent) {
+					this.callback(url);
+				}
+			}
+			else {
+				if(silent) {
+					this.next_hash_is_silent = true;
+				}
+				location.hash = u.h.getCleanUrl(url);
 			}
 		}
 		else {
-			if(silent) {
-				this.next_hash_is_silent = true;
+			if(!node || !node._a || !node._a.target) {
+				location.href = url;
 			}
-			location.hash = u.h.getCleanUrl(url);
+			else {
+				window.open(this.url);
+			}
 		}
 	}
 	this.callback = function(url) {
@@ -5221,7 +5235,7 @@ Util.History = u.h = new function() {
 		this.trail.push({"url":url, "node":node});
 	}
 	this.getCleanUrl = function(string, levels) {
-		string = string.replace(location.protocol+"//"+document.domain, "").match(/[^#$]+/)[0];
+		string = string.replace(location.protocol+"//"+document.domain, "") ? string.replace(location.protocol+"//"+document.domain, "").match(/[^#$]+/)[0] : "/";
 		if(!levels) {
 			return string;
 		}
@@ -7058,11 +7072,89 @@ Util.lowerCaseFirst = u.lcfirst = function(string) {
 	return string.replace(/^(.){1}/, function($1) {return $1.toLowerCase()});
 }
 Util.normalize = function(string) {
+	var table = {
+		'À':'A',  'à':'a',
+		'Á':'A',  'á':'a',
+		'Â':'A',  'â':'a',
+		'Ã':'A',  'ã':'a',
+		'Ä':'A',  'ä':'a',
+		'Å':'Aa', 'å':'aa',
+		'Æ':'Ae', 'æ':'ae',
+		'Ç':'C',  'ç':'c',
+		'Č':'C',  'ć':'c',
+		'Ć':'C',  'č':'c',
+		'Đ':'D',  'đ':'d',  'ð':'d',
+		'È':'E',  'è':'e',
+		'É':'E',  'é':'e',
+		'Ê':'E',  'ê':'e',
+		'Ë':'E',  'ë':'e',
+		'Ģ':'G',  'ģ':'g',
+		'Ğ':'G',  'ğ':'g',
+		'Ì':'I',  'ì':'i',
+		'Í':'I',  'í':'i',
+		'Î':'I',  'î':'i',
+		'Ï':'I',  'ï':'i',
+		'Ī':'I',  'ī':'i',
+		'Ķ':'K',  'ķ':'k',
+		'Ļ':'L',  'ļ':'l',
+		'Ñ':'N',  'ñ':'n',
+		'Ņ':'N',  'ņ':'n',
+		'Ò':'O',  'ò':'o',
+		'Ó':'O',  'ó':'o',
+		'Ô':'O',  'ô':'o',
+		'Õ':'O',  'õ':'o',
+		'Ö':'O',  'ö':'o',
+		'Ō':'O',  'ō':'o',
+		'Ø':'Oe', 'ø':'oe',
+		'Ŕ':'R',  'ŕ':'r',
+		'Š':'S',  'š':'s',
+		'Ş':'S',  'ş':'s',
+		'Ṩ':'S',  'ṩ':'s',
+		'Ù':'U',  'ù':'u',
+		'Ú':'U',  'ú':'u',
+		'Û':'U',  'û':'u',
+		'Ü':'U',  'ü':'u',
+		'Ū':'U',  'ū':'u',
+		'Ų':'U',  'ų':'u',
+		'Ŭ':'U',  'ŭ':'u',
+		'Ý':'Y',  'ý':'y',
+		'Ÿ':'Y',  'ÿ':'y',
+		'Ž':'Z',  'ž':'z',
+		'Þ':'B',  'þ':'b',
+		'ß':'Ss',
+		'@':' at ',
+		'&':'and',
+		'%':' percent',
+		'\\$':'USD',
+		'¥':'JPY',
+		'€':'EUR',
+		'£':'GBP',
+		'™':'trademark',
+		'©':'copyright',
+		'§':'s',
+		'\\*':'x',
+		'×':'x'
+	}
+	var char, regex;
+	for(char in table) {
+		regex = new RegExp(char, "g");
+		string = string.replace(regex, table[char]);
+	}
+	return string;
+}
+Util.superNormalize = function(string) {
+	string = u.normalize(string);
 	string = string.toLowerCase();
+	string = u.stripTags(string);
 	string = string.replace(/[^a-z0-9\_]/g, '-');
 	string = string.replace(/-+/g, '-');
 	string = string.replace(/^-|-$/g, '');
 	return string;
+}
+Util.stripTags = function(string) {
+	var node = document.createElement("div");
+	node.innerHTML = string;
+	return u.text(node);
 }
 Util.pluralize = function(count, singular, plural) {
 	if(count != 1) {
@@ -8314,8 +8406,6 @@ Util.Objects["oneButtonForm"] = new function() {
 
 /*beta-u-notifier.js*/
 u.notifier = function(node) {
-	u.bug_force = true;
-	u.bug("enable notifier");
 	var notifications = u.qs("div.notifications", node);
 	if(!notifications) {
 		node.notifications = u.ae(node, "div", {"id":"notifications"});
@@ -8968,8 +9058,8 @@ Util.Objects["sendMessage"] = new function() {
 				u.request(this, this.action, {"method":"post", "params" : u.f.getParams(this, {"send_as":"formdata"})});
 			}
 			else {
-				u.f.fieldError(this.inputs["recipients"]);
-				u.f.fieldError(this.inputs["maillist_id"]);
+				u.f.inputHasError(this.inputs["recipients"]);
+				u.f.inputHasError(this.inputs["maillist_id"]);
 			}
 		}
 	}
@@ -9001,10 +9091,20 @@ Util.Objects["defaultNew"] = new function() {
 						}
 					}
 					else if(this.action.match(/\/save$/)) {
-						location.href = this.action.replace(/\/save/, "/edit/")+response.cms_object.item_id;
+						if(response.cms_object.item_id) {
+							location.href = this.action.replace(/\/save/, "/edit/")+response.cms_object.item_id;
+						}
+						else if (response.cms_object.id) {
+							location.href = this.action.replace(/\/save/, "/edit/")+response.cms_object.id;
+						}
 					}
 					else if(location.href.match(/\/new$/)) {
-						location.href = location.href.replace(/\/new$/, "/edit/")+response.cms_object.item_id;
+						if(response.cms_object.item_id) {
+							location.href = location.href.replace(/\/new$/, "/edit/")+response.cms_object.item_id;
+						}
+						else if (response.cms_object.id) {
+							location.href = location.href.replace(/\/new$/, "/edit/")+response.cms_object.id;
+						}
 					}
 					else if(this.actions["cancel"]) {
 						this.actions["cancel"].clicked();
@@ -9577,7 +9677,7 @@ Util.Objects["defaultPrices"] = new function() {
 			div.add_price_url = div._prices_form.action;
 			u.f.init(div._prices_form);
 			div._prices_form.inputs["item_price_type"].changed = function() {
-				if(this.val() == "bulk") {
+				if(this.val() == 3) {
 					u.ac(this._form.inputs["item_price_quantity"].field, "required");
 					u.ass(this._form.inputs["item_price_quantity"].field, {
 						"display":"inline-block"
@@ -9590,7 +9690,7 @@ Util.Objects["defaultPrices"] = new function() {
 					})
 				}
 			}
-			if(div._prices_form.inputs["item_price_type"].val() == "bulk") {
+			if(div._prices_form.inputs["item_price_type"].val() == 3) {
 				u.ass(div._prices_form.inputs["item_price_quantity"].field, {
 					"display":"inline-block"
 				})
@@ -9608,6 +9708,9 @@ Util.Objects["defaultPrices"] = new function() {
 						}
 						else if(response.cms_object["type"] == "bulk") {
 							u.ae(info, "li", {"class":"bulk", "html":"Bulk price for "+response.cms_object["quantity"] + " items"});
+						}
+						else if(response.cms_object["type"] != "default") {
+							u.ae(info, "li", {"class":"custom_price", "html":response.cms_object["description"]});
 						}
 						this.div.initPrice(price_li);
 						this.reset();
@@ -9675,7 +9778,7 @@ Util.Objects["defaultSubscriptionmethod"] = new function() {
 		div.csrf_token = div.getAttribute("data-csrf-token");
 		div._sm_form = u.qs("form", div);
 		div._sm_change_div = u.qs("div.change_subscription_method", div);
-		div._sm_setting = u.qs("dl.settings dd.subscription_method", div);
+		div._sm_setting = u.qs("dl.info dd.subscription_method", div);
 		if(div._sm_form) {
 			div._sm_form.div = div;
 			div.actions_change = u.ae(div, "ul", {"class":"actions change"});
@@ -9817,27 +9920,38 @@ Util.Objects["usernames"] = new function() {
 		var indicators = u.qsa(".indicator", form);
 		u.ass(indicators[0], {"display":"none"});
 		u.ass(indicators[1], {"display":"none"});
+		var latest_verification_link = u.qs("div.email .send_verification_link p.reminded_at", div);
+		latest_verification_link.date_time = u.qs("span.date_time", latest_verification_link);
 		var send_verification_link = u.qs("li.send_verification_link", div);
-		send_verification_link.form = u.qs("form", send_verification_link);
-		send_verification_link.input = send_verification_link.form.lastChild;
+		if(send_verification_link) {
+			send_verification_link.form = u.qs("form", send_verification_link);
+			send_verification_link.input = send_verification_link.form.lastChild;
+		}
+		else {
+			u.as(latest_verification_link, "display", "none");
+		}
 		form.inputs.email.saved_email = form.inputs.email.val();
 		form.inputs.verification_status.saved_status = form.inputs.verification_status.val();
 		form.inputs.verification_status.current_status = form.inputs.verification_status.val();
-		var latest_verification_link = u.qs("div.email .send_verification_link p.reminded_at", div);
-		latest_verification_link.date_time = u.qs("span.date_time", latest_verification_link);
 		if(u.hc(latest_verification_link.date_time, "never")) {
 			u.ass(latest_verification_link, {"display":"none"});
 		}
 		if (!form.inputs.email.saved_email) {
 			form.inputs.verification_status.disabled = true;
-			u.ac(send_verification_link.input, "disabled");
+			if(send_verification_link) {
+				u.ac(send_verification_link.input, "disabled");
+			}
 		}
 		else if( form.inputs["verification_status"].val()) {
-			u.ac(send_verification_link.input, "disabled");
+			if(send_verification_link) {
+				u.ac(send_verification_link.input, "disabled");
+			}
 		}
 		else {
 			form.inputs.verification_status.disabled = false;
-			u.rc(send_verification_link.input, "disabled");
+			if(send_verification_link) {
+				u.rc(send_verification_link.input, "disabled");
+			}
 		}
 		form.inputs.email.updated = function() {
 			if(this.val() != this.saved_email) {
@@ -9871,19 +9985,21 @@ Util.Objects["usernames"] = new function() {
 				u.ac(this._form.actions["save"], "disabled");
 			}
 		}
-		send_verification_link.confirmed = function(response) {
-			if(!latest_verification_link) {
-				latest_verification_link = u.qs("div.email .send_verification_link p.reminded_at", div);
-				latest_verification_link.date_time = u.qs("span.date_time", latest_verification_link);
+		if(send_verification_link) {
+			send_verification_link.confirmed = function(response) {
+				if(!latest_verification_link) {
+					latest_verification_link = u.qs("div.email .send_verification_link p.reminded_at", div);
+					latest_verification_link.date_time = u.qs("span.date_time", latest_verification_link);
+				}
+				latest_verification_link.date_time.textContent = response.cms_object.reminded_at;
+				u.ass(latest_verification_link, {"display":"block"});
+				u.rc(send_verification_link, "invite");
+				u.rc(send_verification_link.input, "invite");
+				u.ac(send_verification_link, "reminder");
+				u.ac(send_verification_link.input, "reminder");
+				send_verification_link.input.value = "Send reminder";
+				send_verification_link.form[1].value = "signup_reminder";
 			}
-			latest_verification_link.date_time.textContent = response.cms_object.reminded_at;
-			u.ass(latest_verification_link, {"display":"block"});
-			u.rc(send_verification_link, "invite");
-			u.rc(send_verification_link.input, "invite");
-			u.ac(send_verification_link, "reminder");
-			u.ac(send_verification_link.input, "reminder");
-			send_verification_link.input.value = "Send reminder";
-			send_verification_link.form[1].value = "signup_reminder";
 		}
 		form.submitted = function(iN) {
 			if(!latest_verification_link) {
@@ -9891,7 +10007,7 @@ Util.Objects["usernames"] = new function() {
 			}
 			this.response = function(response) {
 				if(response.cms_status == "error") {
-					u.f.fieldError(this.inputs["email"]);
+					u.f.inputHasError(this.inputs["email"]);
 				}
 				else {
 					this.inputs.email.saved_email = this.inputs.email.val();
@@ -9946,7 +10062,7 @@ Util.Objects["usernames"] = new function() {
 			this.response = function(response) {
 				page.notify(response);
 				if(response.cms_status == "error") {
-					u.f.fieldError(this.inputs["mobile"]);
+					u.f.inputHasError(this.inputs["mobile"]);
 				}
 				else {
 					u.rc(this.actions["save"], "primary");
@@ -10504,11 +10620,11 @@ Util.Objects["usernamesProfile"] = new function() {
 			this.response = function(response) {
 				if(response.cms_object && response.cms_object.status == "USER_EXISTS") {
 					page.notify({"isJSON":true, "cms_status":"error", "cms_message":["Email already exists"]});
-					u.f.fieldError(this.inputs["email"]);
+					u.f.inputHasError(this.inputs["email"]);
 				}
 				else if(response.cms_status == "error") {
 					page.notify({"isJSON":true, "cms_status":"error", "cms_message":["Email could not be updated"]});
-					u.f.fieldError(this.inputs["email"]);
+					u.f.inputHasError(this.inputs["email"]);
 				}
 				else {
 					u.rc(this.actions["save"], "primary");
@@ -10526,11 +10642,11 @@ Util.Objects["usernamesProfile"] = new function() {
 			this.response = function(response) {
 				if(response.cms_object && response.cms_object.status == "USER_EXISTS") {
 					page.notify({"isJSON":true, "cms_status":"error", "cms_message":["Mobile already exists"]});
-					u.f.fieldError(this.inputs["mobile"]);
+					u.f.inputHasError(this.inputs["mobile"]);
 				}
 				else if(response.cms_status == "error") {
 					page.notify({"isJSON":true, "cms_status":"error", "cms_message":["Mobile could not be updated"]});
-					u.f.fieldError(this.inputs["mobile"]);
+					u.f.inputHasError(this.inputs["mobile"]);
 				}
 				else {
 					u.rc(this.actions["save"], "primary");
@@ -10678,7 +10794,7 @@ Util.Objects["cancellationProfile"] = new function() {
 			div.form.div = div;
 			u.f.init(div.form);
 			div.form.actions["cancelaccount"].org_value = div.form.actions["cancelaccount"].value;
-			div.form.actions["cancelaccount"].confirm_value = "Cancelling you account cannot be undone. OK?";
+			div.form.actions["cancelaccount"].confirm_value = "Cancelling your account cannot be undone. OK?";
 			div.form.actions["cancelaccount"].submit_value = "Confirm";
 			div.form.inputs["password"].updated = function() {
 				u.bug("typing password")

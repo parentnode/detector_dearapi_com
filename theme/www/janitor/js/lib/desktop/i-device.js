@@ -449,7 +449,7 @@ Util.Objects["testMarkers"] = new function() {
 								n_node._device = u.ae(n_node, "h4", {"html":(node.useragent ? node.useragent : "--BLANK--")})
 								n_node._ua_id = node.id;
 								n_node.actions = u.ae(n_node, "ul", {"class":"actions"});
-								n_node._delete_ua = u.ae(n_node.actions, "li", {"class":"delete", "html":"Delete"});
+								n_node._delete_ua = u.ae(n_node.actions, "li", {"class":"delete", "html":"Remove from device"});
 								n_node._delete_ua.url = this.div.url_useragent_delete+"/"+node.id;
 								n_node._delete_ua.n_node = n_node;
 								n_node._delete_ua.div = this.div;
@@ -489,7 +489,7 @@ Util.Objects["testMarkers"] = new function() {
 							// add option to delete all unmatched 
 							// (needed when shifting a lot of useragents from one device to another)
 							this.div.not_matched_actions = u.ae(this.div.not_matched_div, "ul", {"class":"actions"});
-							this.div.not_matched_delete_all = u.ae(this.div.not_matched_actions, "li", {"class":"delete", "html":"Delete ALL unmatched useragents"});
+							this.div.not_matched_delete_all = u.ae(this.div.not_matched_actions, "li", {"class":"delete", "html":"Remove ALL unmatched useragents"});
 							this.div.not_matched_delete_all.div = this.div;
 
 							u.e.click(this.div.not_matched_delete_all);

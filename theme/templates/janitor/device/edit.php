@@ -21,7 +21,7 @@ $this->pageTitle($item["name"]);
 		<?= $HTML->link("List", "/janitor/".$itemtype."/list", array("class" => "button", "wrapper" => "li.cancel")) ?>
 		<?= $HTML->link("Clone", "/janitor/".$itemtype."/cloneDevice/".$item["item_id"], array("class" => "button primary", "wrapper" => "li.clone.i:cloneDevice")) ?>
 
-		<?= $JML->oneButtonForm("Delete", "/janitor/".$itemtype."/delete/".$item["item_id"], array(
+		<?= $HTML->oneButtonForm("Delete", "/janitor/".$itemtype."/delete/".$item["item_id"], array(
 			"wrapper" => "li.delete",
 			"success-location" => "/janitor/".$itemtype."/list"
 		)); ?>
