@@ -510,18 +510,18 @@ Util.Objects["unidentifiedList"] = new function() {
 			if(node.h3)  {
 
 				node.h3.CheckSelection = function() {
-//					console.log("node.h3.CheckSelection");
+					// console.log("node.h3.CheckSelection");
 
 					// get selection, to use for deletion
 					var selection = window.getSelection(); 
-//					console.log(selection);
+					// console.log(selection, selection.isCollapsed, u.containsOrIs(selection.anchorNode, this), u.containsOrIs(selection.focusNode, this));
 
 					// new selection
 					if(selection && !selection.isCollapsed) {
 						if(
-							(u.containsOrIs(selection.anchorNode, this))
+							(u.containsOrIs(this, selection.anchorNode))
 							 && 
-							(u.containsOrIs(selection.focusNode, this))
+							(u.containsOrIs(this, selection.focusNode))
 						) {
 
 							// If line has active selected, remove it first
@@ -588,6 +588,7 @@ Util.Objects["unidentifiedList"] = new function() {
 								if(!this.node.div_results) {
 
 									this.response = function(response) {
+										// console.log(response);
 										if(typeof(response) == "object") {
 
 											this.node.div_results = u.ae(document.body, "div", {"class":"search_result"});
@@ -634,7 +635,7 @@ Util.Objects["unidentifiedList"] = new function() {
 	//									console.log(response);
 									}
 	//								u.request(this, "/janitor/maintenance/search-for-marker");
-									u.request(this, "https://www.googleapis.com/customsearch/v1?cx=006888141968518277707%3Awiqtlhmqi14&key=AIzaSyD2dkkTv2F03M2gi1TO7pAm0jz21o5GFPQ&q="+this.node.span.innerHTML+"+specs");
+									u.request(this, "https://www.googleapis.com/customsearch/v1?cx=006888141968518277707%3Awiqtlhmqi14&key=AIzaSyD2dkkTv2F03M2gi1TO7pAm0jz21o5GFPQ&q="+this.node.span.innerHTML+"+display+specs");
 	//								console.log(this.node.span.innerHTML);
 								}
 							}
