@@ -1,5 +1,5 @@
 /*
-asset-builder @ 2020-02-25 14:10:16
+asset-builder @ 2020-02-26 20:56:59
 */
 
 /*seg_desktop_include.js*/
@@ -12652,9 +12652,9 @@ Util.Objects["unidentifiedList"] = new function() {
 					var selection = window.getSelection(); 
 					if(selection && !selection.isCollapsed) {
 						if(
-							(u.containsOrIs(selection.anchorNode, this))
+							(u.containsOrIs(this, selection.anchorNode))
 							 && 
-							(u.containsOrIs(selection.focusNode, this))
+							(u.containsOrIs(this, selection.focusNode))
 						) {
 							if(this.span) {
 								this.bn_delete.clicked();
@@ -12728,7 +12728,7 @@ Util.Objects["unidentifiedList"] = new function() {
 											page.notify({"cms_message":{"error":["Invalid search result"]}});
 										}
 									}
-									u.request(this, "https://www.googleapis.com/customsearch/v1?cx=006888141968518277707%3Awiqtlhmqi14&key=AIzaSyD2dkkTv2F03M2gi1TO7pAm0jz21o5GFPQ&q="+this.node.span.innerHTML+"+specs");
+									u.request(this, "https://www.googleapis.com/customsearch/v1?cx=006888141968518277707%3Awiqtlhmqi14&key=AIzaSyD2dkkTv2F03M2gi1TO7pAm0jz21o5GFPQ&q="+this.node.span.innerHTML+"+display+specs");
 								}
 							}
 						}
