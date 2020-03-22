@@ -1,5 +1,5 @@
 
-Util.Objects["editUseragents"] = new function() {
+Util.Modules["editUseragents"] = new function() {
 	this.init = function(div) {
 
 		div.item_id = u.cv(div, "item_id");
@@ -99,7 +99,7 @@ Util.Objects["editUseragents"] = new function() {
 }
 
 
-Util.Objects["editMarkers"] = new function() {
+Util.Modules["editMarkers"] = new function() {
 	this.init = function(div) {
 
 		div.item_id = u.cv(div, "item_id");
@@ -234,7 +234,7 @@ Util.Objects["editMarkers"] = new function() {
 }
 
 
-Util.Objects["editExceptions"] = new function() {
+Util.Modules["editExceptions"] = new function() {
 	this.init = function(div) {
 
 		div.item_id = u.cv(div, "item_id");
@@ -373,7 +373,7 @@ Util.Objects["editExceptions"] = new function() {
 }
 
 
-Util.Objects["testMarkers"] = new function() {
+Util.Modules["testMarkers"] = new function() {
 	this.init = function(div) {
 		u.bug("init testMarkers2")
 

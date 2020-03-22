@@ -1,4 +1,4 @@
-Util.Objects["deleteLostUseragents"] = new function() {
+Util.Modules["deleteLostUseragents"] = new function() {
 	this.init = function(div) {
 		u.bug("init deleteLostUseragents")
 
@@ -29,7 +29,7 @@ Util.Objects["deleteLostUseragents"] = new function() {
 }
 
 
-Util.Objects["deleteLostDevices"] = new function() {
+Util.Modules["deleteLostDevices"] = new function() {
 	this.init = function(div) {
 		u.bug("init deleteLostDevices")
 
@@ -64,7 +64,7 @@ Util.Objects["deleteLostDevices"] = new function() {
 
 // OLD MAINTENANCE
 
-Util.Objects["uniqueMatchList"] = new function() {
+Util.Modules["uniqueMatchList"] = new function() {
 	this.init = function(div) {
 		u.bug_force = true;
 

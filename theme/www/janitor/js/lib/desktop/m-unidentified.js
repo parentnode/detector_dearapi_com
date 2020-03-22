@@ -1,4 +1,4 @@
-Util.Objects["searchUnidentified"] = new function() {
+Util.Modules["searchUnidentified"] = new function() {
 	this.init = function(form) {
 
 		u.f.init(form);
@@ -17,7 +17,7 @@ Util.Objects["searchUnidentified"] = new function() {
 }
 
 
-Util.Objects["unidentifiedList"] = new function() {
+Util.Modules["unidentifiedList"] = new function() {
 	this.init = function(div) {
 //		console.log("init unidentifiedList")
 
@@ -1594,7 +1594,7 @@ Util.Objects["unidentifiedList"] = new function() {
 }
 
 
-Util.Objects["testMarkersOnUnidentified"] = new function() {
+Util.Modules["testMarkersOnUnidentified"] = new function() {
 	this.init = function(div) {
 		u.bug("init testMarkersOnUnidentified")
 
@@ -1897,7 +1897,7 @@ Util.Objects["testMarkersOnUnidentified"] = new function() {
 }
 
 
-Util.Objects["crossreferenceUnidentified"] = new function() {
+Util.Modules["crossreferenceUnidentified"] = new function() {
 	this.init = function(div) {
 		u.bug("init crossreferenceUnidentified")
 
