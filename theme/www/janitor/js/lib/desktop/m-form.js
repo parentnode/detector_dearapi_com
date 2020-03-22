@@ -49,7 +49,7 @@ u.setRequestTimeoutSetting = function(timeout) {
 
 
 // device search 
-Util.Objects["searchDevice"] = new function() {
+Util.Modules["searchDevice"] = new function() {
 	this.init = function(div) {
 		u.bug_force = true;
 		u.bug("searchDevice");
@@ -277,7 +277,7 @@ Util.Objects["searchDevice"] = new function() {
 }
 
 
-Util.Objects["cloneDevice"] = new function() {
+Util.Modules["cloneDevice"] = new function() {
 	this.init = function(li) {
 
 		li.csrf_token = li.parentNode.getAttribute("data-csrf-token");
@@ -304,7 +304,7 @@ Util.Objects["cloneDevice"] = new function() {
 
 
 
-Util.Objects["generate"] = new function() {
+Util.Modules["generate"] = new function() {
 	this.init = function(div) {
 
 		var form = u.qs("form", div);
@@ -329,7 +329,7 @@ Util.Objects["generate"] = new function() {
 
 
 
-u.o.purgeUseragentRegex = new function() {
+u.m.purgeUseragentRegex = new function() {
 	this.init = function(div) {
 
 
@@ -361,7 +361,7 @@ u.o.purgeUseragentRegex = new function() {
 
 
 
-Util.Objects["mergeDevices"] = new function() {
+Util.Modules["mergeDevices"] = new function() {
 	this.init = function(div) {
 		u.bug("init mergeDevices")
 
@@ -481,7 +481,7 @@ Util.Objects["mergeDevices"] = new function() {
 }
 
 
-Util.Objects["mergeDevicesList"] = new function() {
+Util.Modules["mergeDevicesList"] = new function() {
 	this.init = function(div) {
 		u.bug("init mergeDevicesList")
 

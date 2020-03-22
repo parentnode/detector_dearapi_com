@@ -1764,7 +1764,7 @@ Util.Objects["testMarkersOnUnidentified"] = new function() {
 									for(i = 0; node = new_items[i]; i++) {
 										u.ae(this.existing_results, node);
 									}
-									u.o.unidentifiedList.init(this.div.div_results);
+									u.m.unidentifiedList.init(this.div.div_results);
 
 									// Stop autorun
 									if(this.div.li_auto) {
@@ -2009,7 +2009,7 @@ Util.Objects["crossreferenceUnidentified"] = new function() {
 										}
 										this.div.div_stats.innerHTML += "<br />Markers: " + markers.join(", ");
 
-										u.o.unidentifiedList.init(this.div.div_results);
+										u.m.unidentifiedList.init(this.div.div_results);
 									}
 									else {
 										u.ae(this.existing_results, u.qs(".all_items p", response));
