@@ -249,7 +249,7 @@ class Identify {
 
 			// remove fragments by spaces from the end
 			$partial_useragent = $useragent;
-			while($partial_useragent = implode(explode(" ", $partial_useragent, -1), " ")) {
+			while($partial_useragent = implode(" ", explode(" ", $partial_useragent, -1))) {
 				$sql = "SELECT item_id FROM ".$this->db_useragents." WHERE useragent LIKE '%$partial_useragent%'";
 				if($query->sql($sql)) {
 					$device_id = $query->result(0, "item_id");
@@ -292,7 +292,7 @@ class Identify {
 
 			// remove agent parts from behind
 			$partial_useragent = $useragent;
-			while($partial_useragent = implode(explode("/", $partial_useragent, -1), "/")) {
+			while($partial_useragent = implode("/", explode("/", $partial_useragent, -1))) {
 				$sql = "SELECT item_id FROM ".$this->db_useragents." WHERE useragent LIKE '%$partial_useragent%'";
 				if($query->sql($sql)) {
 					$device_id = $query->result(0, "item_id");
