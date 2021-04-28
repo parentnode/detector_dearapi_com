@@ -1665,6 +1665,7 @@ Util.Modules["testMarkersOnUnidentified"] = new function() {
 			"fallback-desktop-ie9",
 			"fallback-desktop-light",
 			"fallback-tablet-light",
+			"fallback-smartphone",
 			"fallback-mobile",
 			"fallback-mobile-light",
 			"fallback-seo",

@@ -1,5 +1,5 @@
 /*
-asset-builder @ 2021-04-22 14:01:40
+asset-builder @ 2021-04-28 11:11:23
 */
 
 /*seg_desktop_include.js*/
@@ -13653,6 +13653,7 @@ Util.Modules["testMarkersOnUnidentified"] = new function() {
 			"fallback-desktop-ie9",
 			"fallback-desktop-light",
 			"fallback-tablet-light",
+			"fallback-smartphone",
 			"fallback-mobile",
 			"fallback-mobile-light",
 			"fallback-seo",
