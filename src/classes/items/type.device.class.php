@@ -42,14 +42,16 @@ class TypeDevice extends Itemtype {
 		$this->addToModel("description", array(
 			"type" => "text",
 			"label" => "Description/AKA",
-			"hint_message" => "Devices may have many names, especially when released under Network operator subbrands like O2, Orange, Vodafone or T-Mobile. Add these names here. You can also add any interesting details about the device."
+			"hint_message" => "Devices may have many names, especially when released under Network operator subbrands like O2, Orange, Vodafone or T-Mobile. Add these names here. You can also add any interesting details about the device.",
+			"error_message" => "Description is invalid.",
 		));
 
 		// Description
 		$this->addToModel("useragent", array(
 			"type" => "text",
 			"label" => "Useragent",
-			"hint_message" => "Device useragent. Only add actual useragents."
+			"hint_message" => "Device useragent. Only add actual useragents.",
+			"error_message" => "Useragent is invalid.",
 		));
 
 		// // Tags
