@@ -21,12 +21,10 @@ $query->checkDBExistence($model->db_exceptions);
 $query->checkDBExistence($model->db_unidentified);
 
 
-?>
-<? $page->header(array("type" => "janitor")) ?>
 
-<div class="scene front">
-	<h1><?= SITE_NAME ?></h1>
+$page->page(array(
+	"type" => "janitor",
+	"templates" => "janitor/front/index.php"
+));
+exit();
 
-</div>
-
-<? $page->footer(array("type" => "janitor")) ?>
