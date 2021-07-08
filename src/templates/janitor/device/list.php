@@ -68,7 +68,7 @@ else {
 		<?= $JML->listNew(array("label" => "New ".$itemtype)) ?>
 	</ul>
 
-	<div class="search i:searchDevice"<?= $JML->jsData() ?>>
+	<div class="search i:searchDevice"<?= $HTML->jsData() ?>>
 		<?= $model->formStart("list", array("class" => "options labelstyle:inject")) ?>
 			<?= $model->input("search", array("type" => "hidden", "value" => "true")) ?>
 			<fieldset>
@@ -92,7 +92,7 @@ else {
 		<?= $model->formEnd() ?>
 	</div>
 
-	<div class="all_items i:defaultList taggable filters"<?= $JML->jsData() ?>>
+	<div class="all_items i:defaultList taggable filters"<?= $HTML->jsData() ?>>
 <?		if($all_items): ?>
 		<ul class="items">
 <?			foreach($all_items as $item): 

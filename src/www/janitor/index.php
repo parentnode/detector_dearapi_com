@@ -7,15 +7,13 @@ if(isset($read_access) && $read_access) {
 include_once($_SERVER["FRAMEWORK_PATH"]."/config/init.php");
 
 
-$page->pageTitle("the Janitor @ ".SITE_URL)
+$page->pageTitle("the Janitor @ ".SITE_URL);
 
 
-?>
-<? $page->header(array("type" => "janitor")) ?>
 
-<div class="scene front">
-	<h1><?= SITE_NAME ?></h1>
+$page->page(array(
+	"type" => "janitor",
+	"templates" => "janitor/front/index.php"
+));
+exit();
 
-</div>
-
-<? $page->footer(array("type" => "janitor")) ?>
