@@ -17,7 +17,7 @@ $dev = getVar("dev");
 
 
 // Check for parameters via referer
-if($_SERVER["HTTP_REFERER"] && preg_match("/\?(.+)/", $_SERVER["HTTP_REFERER"], $param_string)) {
+if(isset($_SERVER["HTTP_REFERER"]) && $_SERVER["HTTP_REFERER"] && preg_match("/\?(.+)/", $_SERVER["HTTP_REFERER"], $param_string)) {
 	$params = explode("&", $param_string[1]);
 	foreach($params as $param) {
 		list($key, $value) = explode("=", $param);
