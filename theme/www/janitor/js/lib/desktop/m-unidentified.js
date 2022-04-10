@@ -332,7 +332,19 @@ Util.Modules["unidentifiedList"] = new function() {
 			// this.bn_range._to.value = "";
 		}
 
+		div.cancelSelection = function(event) {
 
+			u.e.removeWindowEvent(this, "mousedown", this.e_cancel_selection);
+
+			var selections = u.qsa(".delete_selection");
+			if(selections) {
+				var i, selection;
+				for(i = 0; i < selections.length; i++) {
+					selection = selections[i];
+					selection.node.bn_delete.clicked();
+				}
+			}
+		}
 
 		// add checkboxes and handlers to all rows
 //		for(i = 0; node = div.nodes[i]; i++) {
@@ -351,6 +363,11 @@ Util.Modules["unidentifiedList"] = new function() {
 			// enable multiple selection on drag
 			node._checkbox.inputStarted = function(event) {
 				u.e.kill(event);
+
+
+				// Cancel selections
+				this.node.div.cancelSelection(event);
+
 
 				if(this.checked) {
 					this.checked = false;
@@ -509,6 +526,8 @@ Util.Modules["unidentifiedList"] = new function() {
 			node.h3 = u.qs("h3", node);
 			if(node.h3)  {
 
+				node.h3.node = node;
+
 				node.h3.CheckSelection = function() {
 					// console.log("node.h3.CheckSelection");
 
@@ -554,6 +573,7 @@ Util.Modules["unidentifiedList"] = new function() {
 
 								var fragment = document.createTextNode(this.node.span.innerHTML);
 								this.node.replaceChild(fragment, this.node.span);
+								this.node.innerHTML = this.node.innerHTML;
 
 								// remove actions
 								this.node.bn_delete.parentNode.removeChild(this.node.bn_delete);
@@ -582,6 +602,9 @@ Util.Modules["unidentifiedList"] = new function() {
 							u.as(this.bn_search, "left", (u.absX(this.span)-17)+"px");
 
 							u.ce(this.bn_search);
+							this.bn_search.inputStarted = function(event) {
+								u.e.kill(event);
+							}
 							this.bn_search.clicked = function(event) {
 								u.e.kill(event);
 
@@ -597,6 +620,8 @@ Util.Modules["unidentifiedList"] = new function() {
 
 											u.as(this.node.div_results, "top", (u.absY(this)+20)+"px");
 											u.as(this.node.div_results, "left", (u.absX(this)-17)+"px");
+
+											u.e.addEvent(this.node.div_results, "mousedown", function(event) {u.e.kill(event)});
 
 
 											if(response.items && response.items.length) {
@@ -642,6 +667,10 @@ Util.Modules["unidentifiedList"] = new function() {
 								}
 							}
 
+							// Cancel selections on windows click
+							this.node.div.e_cancel_selection = u.e.addWindowEvent(this.node.div, "mousedown", this.node.div.cancelSelection);
+
+
 							// console.log(selection.toString());
 							// console.log("valid selection")
 
@@ -665,7 +694,9 @@ Util.Modules["unidentifiedList"] = new function() {
 					var range = sel.getRangeAt(0);
 					var node = sel.anchorNode;
 					var string = node.textContent.substring(range.startOffset, range.endOffset);
-					var regex = new RegExp("[^;]*"+string+"[^(;|\\)|Build]*");
+					// console.log("node", node, "string", string);
+					var regex = new RegExp("[^;]*"+string+"[^(;|\)|Build)]*");
+					var regex = new RegExp("[^;]*"+string+".*?(?=;|\\)|\\(|Build)");
 					var match = node.textContent.match(regex);
 					// console.log(string, regex, match);
 
@@ -679,6 +710,7 @@ Util.Modules["unidentifiedList"] = new function() {
 
 					this.CheckSelection();
 					this.bn_search.clicked();
+
 				}
 
 				u.e.dblclick(node.h3);

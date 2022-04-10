@@ -1,5 +1,5 @@
 /*
-asset-builder @ 2022-04-10 14:01:05
+asset-builder @ 2022-04-11 00:57:41
 */
 
 /*seg_desktop_include.js*/
@@ -12957,6 +12957,17 @@ Util.Modules["unidentifiedList"] = new function() {
 			}
 			// 
 		}
+		div.cancelSelection = function(event) {
+			u.e.removeWindowEvent(this, "mousedown", this.e_cancel_selection);
+			var selections = u.qsa(".delete_selection");
+			if(selections) {
+				var i, selection;
+				for(i = 0; i < selections.length; i++) {
+					selection = selections[i];
+					selection.node.bn_delete.clicked();
+				}
+			}
+		}
 		for(i = 0; i < div.nodes.length; i++) {
 			node = div.nodes[i];
 			node.ua_id = u.cv(node, "ua_id");
@@ -12967,6 +12978,7 @@ Util.Modules["unidentifiedList"] = new function() {
 			node._checkbox.onclick = function(event) {u.e.kill(event);}
 			node._checkbox.inputStarted = function(event) {
 				u.e.kill(event);
+				this.node.div.cancelSelection(event);
 				if(this.checked) {
 					this.checked = false;
 					document.body._multideselection = true;
@@ -13074,6 +13086,7 @@ Util.Modules["unidentifiedList"] = new function() {
 			}
 			node.h3 = u.qs("h3", node);
 			if(node.h3)  {
+				node.h3.node = node;
 				node.h3.CheckSelection = function() {
 					var selection = window.getSelection(); 
 					if(selection && !selection.isCollapsed) {
@@ -13102,6 +13115,7 @@ Util.Modules["unidentifiedList"] = new function() {
 								u.e.kill(event);
 								var fragment = document.createTextNode(this.node.span.innerHTML);
 								this.node.replaceChild(fragment, this.node.span);
+								this.node.innerHTML = this.node.innerHTML;
 								this.node.bn_delete.parentNode.removeChild(this.node.bn_delete);
 								this.node.bn_search.parentNode.removeChild(this.node.bn_search);
 								u.bug("delete: ", this.node.div_results);
@@ -13120,6 +13134,9 @@ Util.Modules["unidentifiedList"] = new function() {
 							u.as(this.bn_search, "top", (u.absY(this.span))+"px");
 							u.as(this.bn_search, "left", (u.absX(this.span)-17)+"px");
 							u.ce(this.bn_search);
+							this.bn_search.inputStarted = function(event) {
+								u.e.kill(event);
+							}
 							this.bn_search.clicked = function(event) {
 								u.e.kill(event);
 								if(!this.node.div_results) {
@@ -13130,6 +13147,7 @@ Util.Modules["unidentifiedList"] = new function() {
 											this.has_results = false;
 											u.as(this.node.div_results, "top", (u.absY(this)+20)+"px");
 											u.as(this.node.div_results, "left", (u.absX(this)-17)+"px");
+											u.e.addEvent(this.node.div_results, "mousedown", function(event) {u.e.kill(event)});
 											if(response.items && response.items.length) {
 												for(i = 0; i < response.items.length; i++) {
 													result = response.items[i];
@@ -13157,6 +13175,7 @@ Util.Modules["unidentifiedList"] = new function() {
 									u.request(this, "https://www.googleapis.com/customsearch/v1?cx=8722299267bc1d3fd&key=AIzaSyAsUm7qtOSVuEq-LZ6fD7aLGxsOMkaEae4&q="+this.node.span.innerHTML+"+display+specs");
 								}
 							}
+							this.node.div.e_cancel_selection = u.e.addWindowEvent(this.node.div, "mousedown", this.node.div.cancelSelection);
 						}
 						else {
 							page.notify({"cms_message":{"error":["Invalid selection - crossing tag boundaries"]}});
@@ -13168,7 +13187,8 @@ Util.Modules["unidentifiedList"] = new function() {
 					var range = sel.getRangeAt(0);
 					var node = sel.anchorNode;
 					var string = node.textContent.substring(range.startOffset, range.endOffset);
-					var regex = new RegExp("[^;]*"+string+"[^(;|\\)|Build]*");
+					var regex = new RegExp("[^;]*"+string+"[^(;|\)|Build)]*");
+					var regex = new RegExp("[^;]*"+string+".*?(?=;|\\)|\\(|Build)");
 					var match = node.textContent.match(regex);
 					if(match) {
 						var match_string = match[0].trim();
