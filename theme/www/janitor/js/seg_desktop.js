@@ -1,5 +1,5 @@
 /*
-asset-builder @ 2021-04-28 11:11:23
+asset-builder @ 2022-04-10 14:01:05
 */
 
 /*seg_desktop_include.js*/
@@ -8950,6 +8950,9 @@ Util.Modules["defaultList"] = new function() {
 				else if(u.hc(action, "delete")) {
 					action.node = node;
 					u.m.oneButtonForm.init(action);
+					if(u.hc(action, "has_dependencies")) {
+						action.setAttribute("title", "This item has dependencies and cannot be deleted.");
+					}
 					action.confirmed = function(response) {
 						if(response.cms_status == "success") {
 							if(response.cms_object && response.cms_object.constraint_error) {
@@ -9378,6 +9381,10 @@ Util.Modules["defaultEditActions"] = new function() {
 				console.log(response)
 				location.href = location.href.replace(/edit\/.+/, "edit/"+response.cms_object["id"]);
 			}
+		}
+		var bn_delete = u.qs("li.delete", node);
+		if(bn_delete && u.hc(bn_delete, "has_dependencies")) {
+			bn_delete.setAttribute("title", "This item has dependencies and cannot be deleted.");
 		}
 	}
 }
@@ -10899,6 +10906,43 @@ Util.Modules["editDataSection"] = new function() {
 		}
 	}
 }
+Util.Modules["editComment"] = new function() {
+	this.init = function(div) {
+		var header = u.qs("h2", div);
+		var form = u.qs("form", div);
+		if(header && form) {
+			var action = u.ae(header, "span", {"html":"edit"});
+			action.change_form = form;
+			u.ce(action);
+			u.f.init(form);
+			action.clicked = function(event) {
+				if(this.change_form.is_open) {
+					this.change_form.is_open = false;
+					this.innerHTML = "Edit";
+					u.ass(this.change_form, {
+						"display":"none"
+					})
+				}
+				else {
+					this.change_form.is_open = true;
+					this.innerHTML = "Cancel";
+					u.ass(this.change_form, {
+						"display":"block"
+					})
+				}
+			}
+			form.submitted = function() {
+				this.response = function(response) {
+					page.notify(response);
+					if(response && response.cms_status == "success") {
+						location.reload(true);
+					}
+				}
+				u.request(this, this.action, {"method":"post", "data":this.getData()});
+			}
+		}
+	}
+}
 Util.Modules["newOrderFromCart"] = new function() {
 	this.init = function(div) {
 		var bn_convert = u.qs("li.convert", div);
@@ -11375,7 +11419,13 @@ Util.Modules["resetPassword"] = new function() {
 		form.submitted = function() {
 			this.response = function(response) {
 				if(response.cms_status == "success") {
-					location.href = "/login";
+					var login = u.qs("li.user.login a");
+					if(login) {
+						location.href = login.href;
+					}
+					else {
+						location.href = "/login";
+					}
 				}
 				else {
 					page.notify({"isJSON":true, "cms_status":"error", "cms_message":"Password could not be updated"});
@@ -13113,7 +13163,24 @@ Util.Modules["unidentifiedList"] = new function() {
 						}
 					}
 				}
-				u.e.addEvent(node.h3, "mouseup", node.h3.CheckSelection);
+				node.h3.dblclicked = function(event) {
+					var sel = window.getSelection();
+					var range = sel.getRangeAt(0);
+					var node = sel.anchorNode;
+					var string = node.textContent.substring(range.startOffset, range.endOffset);
+					var regex = new RegExp("[^;]*"+string+"[^(;|\\)|Build]*");
+					var match = node.textContent.match(regex);
+					if(match) {
+						var match_string = match[0].trim();
+						var new_start = node.textContent.indexOf(match_string);
+						var new_end = new_start+match_string.length;
+						range.setStart(node, new_start);
+						range.setEnd(node, new_end);
+					}
+					this.CheckSelection();
+					this.bn_search.clicked();
+				}
+				u.e.dblclick(node.h3);
 			}
 			node.h4_matches = u.qs("h4.matches", node);
 			node.ul_matches = u.qs("ul.matches", node);

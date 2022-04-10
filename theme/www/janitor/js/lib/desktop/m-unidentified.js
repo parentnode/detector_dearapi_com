@@ -655,7 +655,33 @@ Util.Modules["unidentifiedList"] = new function() {
 				}
 
 				// content has been modified or selected (can happen with mouse or keys)
-				u.e.addEvent(node.h3, "mouseup", node.h3.CheckSelection);
+				// u.e.addEvent(node.h3, "mouseup", node.h3.CheckSelection);
+
+				// Add double click to select entire string
+				node.h3.dblclicked = function(event) {
+					// console.log("dblClicked", event, window.getSelection());
+
+					var sel = window.getSelection();
+					var range = sel.getRangeAt(0);
+					var node = sel.anchorNode;
+					var string = node.textContent.substring(range.startOffset, range.endOffset);
+					var regex = new RegExp("[^;]*"+string+"[^(;|\\)|Build]*");
+					var match = node.textContent.match(regex);
+					// console.log(string, regex, match);
+
+					if(match) {
+						var match_string = match[0].trim();
+						var new_start = node.textContent.indexOf(match_string);
+						var new_end = new_start+match_string.length;
+						range.setStart(node, new_start);
+						range.setEnd(node, new_end);
+					}
+
+					this.CheckSelection();
+					this.bn_search.clicked();
+				}
+
+				u.e.dblclick(node.h3);
 			}
 			node.h4_matches = u.qs("h4.matches", node);
 			node.ul_matches = u.qs("ul.matches", node);
