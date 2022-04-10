@@ -20,6 +20,10 @@ class Identify {
 		// The goal is to remove non-identifying fragments to make regex process faster
 		// but also to get less corrupted UAs in the DB, because that makes identification better
 		// should be ordered so the longest replacements happens first
+		
+		// Consideration for next step
+		// – consider removing build info
+
 		$this->trimming_patterns = [
 			"[ ]+\[FB[^\]]+[\]]?", // Stupid FB shit data
 			"[ ]+Instagram [\d]*[^\)$]+[\)]?", // Instagram
