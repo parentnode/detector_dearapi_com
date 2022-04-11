@@ -695,13 +695,21 @@ Util.Modules["unidentifiedList"] = new function() {
 					var node = sel.anchorNode;
 					var string = node.textContent.substring(range.startOffset, range.endOffset);
 					// console.log("node", node, "string", string);
-					var regex = new RegExp("[^;]*"+string+"[^(;|\)|Build)]*");
-					var regex = new RegExp("[^;]*"+string+".*?(?=;|\\)|\\(|Build)");
+					// var regex = new RegExp("[^;]*"+string+".*?(?=;|\\)|\\(|Build)");
+					var regex = new RegExp("[^;]*"+string+"(?:(?!;|\\)|\\(|Build).)*");
+
 					var match = node.textContent.match(regex);
 					// console.log(string, regex, match);
 
 					if(match) {
 						var match_string = match[0].trim();
+
+						// Fix huawai double marker UA: LYA-L29 Build/HUAWEILYA-L29
+						// (was not able to fix the regex to avoid this)
+						if(match_string.match(/Build/)) {
+							match_string = match_string.replace(/Build[^$]+/, "").trim();
+						}
+
 						var new_start = node.textContent.indexOf(match_string);
 						var new_end = new_start+match_string.length;
 						range.setStart(node, new_start);

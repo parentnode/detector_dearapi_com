@@ -1,5 +1,5 @@
 /*
-asset-builder @ 2022-04-11 00:57:41
+asset-builder @ 2022-04-11 12:56:07
 */
 
 /*seg_desktop_include.js*/
@@ -13187,11 +13187,13 @@ Util.Modules["unidentifiedList"] = new function() {
 					var range = sel.getRangeAt(0);
 					var node = sel.anchorNode;
 					var string = node.textContent.substring(range.startOffset, range.endOffset);
-					var regex = new RegExp("[^;]*"+string+"[^(;|\)|Build)]*");
-					var regex = new RegExp("[^;]*"+string+".*?(?=;|\\)|\\(|Build)");
+					var regex = new RegExp("[^;]*"+string+"(?:(?!;|\\)|\\(|Build).)*");
 					var match = node.textContent.match(regex);
 					if(match) {
 						var match_string = match[0].trim();
+						if(match_string.match(/Build/)) {
+							match_string = match_string.replace(/Build[^$]+/, "").trim();
+						}
 						var new_start = node.textContent.indexOf(match_string);
 						var new_end = new_start+match_string.length;
 						range.setStart(node, new_start);
