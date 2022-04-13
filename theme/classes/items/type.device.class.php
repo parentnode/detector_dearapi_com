@@ -974,7 +974,7 @@ $sql .= " ORDER BY name";
 				array_push($matches, $marker[$value]);
 			}
 
-			return implode($matches, "|");
+			return implode("|", $matches);
 		}
 
 		return false;

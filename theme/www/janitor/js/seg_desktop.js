@@ -1,5 +1,5 @@
 /*
-asset-builder @ 2022-04-11 12:56:07
+asset-builder @ 2022-04-13 08:14:31
 */
 
 /*seg_desktop_include.js*/
@@ -13192,7 +13192,7 @@ Util.Modules["unidentifiedList"] = new function() {
 					if(match) {
 						var match_string = match[0].trim();
 						if(match_string.match(/Build/)) {
-							match_string = match_string.replace(/Build[^$]+/, "").trim();
+							match_string = match_string.replace(/Build[^$]+/i, "").trim();
 						}
 						var new_start = node.textContent.indexOf(match_string);
 						var new_end = new_start+match_string.length;
