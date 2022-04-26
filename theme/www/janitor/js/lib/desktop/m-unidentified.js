@@ -16,10 +16,9 @@ Util.Modules["searchUnidentified"] = new function() {
 	}
 }
 
-
 Util.Modules["unidentifiedList"] = new function() {
 	this.init = function(div) {
-//		console.log("init unidentifiedList")
+		// console.log("init unidentifiedList");
 
 //		u.bug_force = true;
 
@@ -433,7 +432,8 @@ Util.Modules["unidentifiedList"] = new function() {
 				u.e.resetEvents(this);
 			}
 			// expand/collapse node on click
-			node.clicked = function() {
+			node.clicked = function(event) {
+				// console.log("node clicked", event);
 
 				if(!this._ul) {
 					this.response = function(response) {
@@ -696,7 +696,7 @@ Util.Modules["unidentifiedList"] = new function() {
 					var string = node.textContent.substring(range.startOffset, range.endOffset);
 					// console.log("node", node, "string", string);
 					// var regex = new RegExp("[^;]*"+string+".*?(?=;|\\)|\\(|Build)");
-					var regex = new RegExp("[^;]*"+string+"(?:(?!;|\\)|\\(|Build).)*");
+					var regex = new RegExp("[^;]*"+string+"(?:(?!;|\\)|\\(|Build|build).)*");
 
 					var match = node.textContent.match(regex);
 					// console.log(string, regex, match);
@@ -722,6 +722,12 @@ Util.Modules["unidentifiedList"] = new function() {
 				}
 
 				u.e.dblclick(node.h3);
+
+				node.h3.clicked = function(event) {
+					this.node.clicked();
+				}
+
+				u.e.click(node.h3);
 			}
 			node.h4_matches = u.qs("h4.matches", node);
 			node.ul_matches = u.qs("ul.matches", node);

@@ -1,5 +1,5 @@
 /*
-asset-builder @ 2022-04-13 08:14:31
+asset-builder @ 2022-04-26 16:40:31
 */
 
 /*seg_desktop_include.js*/
@@ -13023,7 +13023,7 @@ Util.Modules["unidentifiedList"] = new function() {
 			node.moved = function(event) {
 				u.e.resetEvents(this);
 			}
-			node.clicked = function() {
+			node.clicked = function(event) {
 				if(!this._ul) {
 					this.response = function(response) {
 						if(response.cms_status == "success") {
@@ -13187,7 +13187,7 @@ Util.Modules["unidentifiedList"] = new function() {
 					var range = sel.getRangeAt(0);
 					var node = sel.anchorNode;
 					var string = node.textContent.substring(range.startOffset, range.endOffset);
-					var regex = new RegExp("[^;]*"+string+"(?:(?!;|\\)|\\(|Build).)*");
+					var regex = new RegExp("[^;]*"+string+"(?:(?!;|\\)|\\(|Build|build).)*");
 					var match = node.textContent.match(regex);
 					if(match) {
 						var match_string = match[0].trim();
@@ -13203,6 +13203,10 @@ Util.Modules["unidentifiedList"] = new function() {
 					this.bn_search.clicked();
 				}
 				u.e.dblclick(node.h3);
+				node.h3.clicked = function(event) {
+					this.node.clicked();
+				}
+				u.e.click(node.h3);
 			}
 			node.h4_matches = u.qs("h4.matches", node);
 			node.ul_matches = u.qs("ul.matches", node);
