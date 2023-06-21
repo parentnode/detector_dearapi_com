@@ -53,8 +53,8 @@ $item = $IC->getItem(array("id" => $item_id, "extend" => array("tags" => true, "
 
 	<div class="markers i:editMarkers i:collapseHeader item_id:<?= $item["item_id"] ?>"
 		data-csrf-token="<?= session()->value("csrf") ?>"
-		data-marker-delete="<?= $this->validPath("/janitor/device/deleteMarker/".$item["item_id"]) ?>" 
-		data-marker-update="<?= $this->validPath("/janitor/device/updateMarker/".$item["item_id"]) ?>" 
+		data-marker-delete="<?= security()->validPath("/janitor/device/deleteMarker/".$item["item_id"]) ?>" 
+		data-marker-update="<?= security()->validPath("/janitor/device/updateMarker/".$item["item_id"]) ?>" 
 		>
 		<h2>Markers</h2>
 		<?= $model->formStart("addMarker/".$item["item_id"], array("class" => "labelstyle:inject")) ?>
@@ -81,8 +81,8 @@ $item = $IC->getItem(array("id" => $item_id, "extend" => array("tags" => true, "
 
 	<div class="exceptions i:editExceptions i:collapseHeader item_id:<?= $item["item_id"] ?>"
 		data-csrf-token="<?= session()->value("csrf") ?>"
-		data-exception-delete="<?= $this->validPath("/janitor/device/deleteException/".$item["item_id"]) ?>" 
-		data-exception-update="<?= $this->validPath("/janitor/device/updateException/".$item["item_id"]) ?>" 
+		data-exception-delete="<?= security()->validPath("/janitor/device/deleteException/".$item["item_id"]) ?>" 
+		data-exception-update="<?= security()->validPath("/janitor/device/updateException/".$item["item_id"]) ?>" 
 		>
 		<h2>Exceptions</h2>
 		<?= $model->formStart("addException/".$item["item_id"], array("class" => "labelstyle:inject")) ?>
@@ -109,17 +109,17 @@ $item = $IC->getItem(array("id" => $item_id, "extend" => array("tags" => true, "
 
 	<div class="testmarkers i:testMarkers i:collapseHeader item_id:<?= $item["item_id"] ?>"
 		data-csrf-token="<?= session()->value("csrf") ?>"
-		data-device-test="<?= $this->validPath("/janitor/device/testMarkers") ?>"
-		data-device-edit="<?= $this->validPath("/janitor/device/edit") ?>"
-		data-device-merge="<?= $this->validPath("/janitor/device/mergeDevice") ?>"
-		data-useragent-delete="<?= $this->validPath("/janitor/device/deleteUseragent/".$item["item_id"]) ?>" 
+		data-device-test="<?= security()->validPath("/janitor/device/testMarkers") ?>"
+		data-device-edit="<?= security()->validPath("/janitor/device/edit") ?>"
+		data-device-merge="<?= security()->validPath("/janitor/device/mergeDevice") ?>"
+		data-useragent-delete="<?= security()->validPath("/janitor/device/deleteUseragent/".$item["item_id"]) ?>" 
 		>
 	</div>
 
 
 	<div class="useragents i:editUseragents i:collapseHeader item_id:<?= $item["item_id"] ?>"
 		data-csrf-token="<?= session()->value("csrf") ?>"
-		data-useragent-delete="<?= $this->validPath("/janitor/device/deleteUseragent/".$item["item_id"]) ?>" 
+		data-useragent-delete="<?= security()->validPath("/janitor/device/deleteUseragent/".$item["item_id"]) ?>" 
 		>
 		<h2>Useragents</h2>
 		<?= $model->formStart("addUseragent/".$item["item_id"], array("class" => "labelstyle:inject")) ?>
@@ -147,9 +147,9 @@ $item = $IC->getItem(array("id" => $item_id, "extend" => array("tags" => true, "
 
 	<div class="merge i:mergeDevices i:collapseHeader item_id:<?= $item["item_id"] ?>"
 		data-csrf-token="<?= session()->value("csrf") ?>"
-		data-device-list="<?= $this->validPath("/janitor/device/list") ?>"
-		data-device-edit="<?= $this->validPath("/janitor/device/edit") ?>"
-		data-device-merge="<?= $this->validPath("/janitor/device/mergeDevice") ?>"
+		data-device-list="<?= security()->validPath("/janitor/device/list") ?>"
+		data-device-edit="<?= security()->validPath("/janitor/device/edit") ?>"
+		data-device-merge="<?= security()->validPath("/janitor/device/mergeDevice") ?>"
 		>
 	</div>
 

@@ -6,6 +6,13 @@
 
 class Identify {
 
+
+	public $db;
+	public $db_useragents;
+	public $db_unidentified;
+	public $trimming_patterns;
+
+
 	/**
 	* Init, set varnames, validation rules
 	*/
@@ -448,7 +455,7 @@ class Identify {
 		}
 
 
-		$page->collectNotification($string, $collection);
+		logger()->collectNotification($string, $collection);
 	}
 
 	/**
@@ -461,7 +468,7 @@ class Identify {
 
 
 		$string = "$status: " . $segment . "; UA: ".$useragent;
-		$page->addLog($string, $collection);
+		logger()->addLog($string, $collection);
 	}
 
 }

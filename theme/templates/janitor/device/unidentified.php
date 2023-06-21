@@ -52,15 +52,15 @@ else {
 
 	<div class="testmarkers i:testMarkersOnUnidentified i:collapseHeader"
 		data-csrf-token="<?= session()->value("csrf") ?>"
-		data-device-get="<?= $this->validPath("/janitor/device/getDevicesWithPatterns") ?>"
-		data-device-test="<?= $this->validPath("/janitor/device/unidentified") ?>"
+		data-device-get="<?= security()->validPath("/janitor/device/getDevicesWithPatterns") ?>"
+		data-device-test="<?= security()->validPath("/janitor/device/unidentified") ?>"
 		>
 	</div>
 
 	<div class="testmarkers crossreference i:crossreferenceUnidentified i:collapseHeader"
 		data-csrf-token="<?= session()->value("csrf") ?>"
-		data-device-get="<?= $this->validPath("/janitor/device/getDevicesWithPatterns") ?>"
-		data-device-test="<?= $this->validPath("/janitor/device/unidentified") ?>"
+		data-device-get="<?= security()->validPath("/janitor/device/getDevicesWithPatterns") ?>"
+		data-device-test="<?= security()->validPath("/janitor/device/unidentified") ?>"
 		>
 	</div>
 
@@ -71,12 +71,12 @@ else {
 
 	<div class="all_items i:unidentifiedList filters"
 		data-csrf-token="<?= session()->value("csrf") ?>"
-		data-useragent-delete="<?= $this->validPath("/janitor/device/deleteUnidentified") ?>"
-		data-useragent-details="<?= $this->validPath("/janitor/device/unidentifiedUseragentDetails") ?>"
-		data-useragent-identify="<?= $this->validPath("/janitor/device/identifyUnidentifiedId") ?>"
-		data-useragent-add="<?= $this->validPath("/janitor/device/addUnidentifiedToDevice") ?>"
-		data-device-clone="<?= $this->validPath("/janitor/device/cloneDevice") ?>"
-		data-device-list="<?= $this->validPath("/janitor/device/list") ?>"
+		data-useragent-delete="<?= security()->validPath("/janitor/device/deleteUnidentified") ?>"
+		data-useragent-details="<?= security()->validPath("/janitor/device/unidentifiedUseragentDetails") ?>"
+		data-useragent-identify="<?= security()->validPath("/janitor/device/identifyUnidentifiedId") ?>"
+		data-useragent-add="<?= security()->validPath("/janitor/device/addUnidentifiedToDevice") ?>"
+		data-device-clone="<?= security()->validPath("/janitor/device/cloneDevice") ?>"
+		data-device-list="<?= security()->validPath("/janitor/device/list") ?>"
 	>
 <?		if($all_items): ?>
 		<ul class="items">

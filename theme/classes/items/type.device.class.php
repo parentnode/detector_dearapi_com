@@ -6,6 +6,14 @@
 
 class TypeDevice extends Itemtype {
 
+
+	public $db;
+	public $db_useragents;
+	public $db_markers;
+	public $db_exceptions;
+	public $db_unidentified;
+
+
 	/**
 	* Init, set varnames, validation rules
 	*/
@@ -113,9 +121,13 @@ class TypeDevice extends Itemtype {
 			if($query->sql("SELECT * FROM ".$this->db_useragents." WHERE item_id = $item_id")) {
 
 				$useragents = $query->results();
-				foreach($useragents as $i => $useragent) {
-					$item["useragents"][$i]["id"] = $useragent["id"];
-					$item["useragents"][$i]["useragent"] = $useragent["useragent"];
+				if($useragents) {
+					$item["useragents"] = [];
+
+					foreach($useragents as $i => $useragent) {
+						$item["useragents"][$i]["id"] = $useragent["id"];
+						$item["useragents"][$i]["useragent"] = $useragent["useragent"];
+					}
 				}
 			}
 
@@ -126,9 +138,14 @@ class TypeDevice extends Itemtype {
 			if($query->sql("SELECT * FROM ".$this->db_markers." WHERE item_id = $item_id")) {
 
 				$markers = $query->results();
-				foreach($markers as $i => $marker) {
-					$item["markers"][$i]["id"] = $marker["id"];
-					$item["markers"][$i]["marker"] = $marker["marker"];
+				if($markers) {
+
+					$item["markers"] = [];
+
+					foreach($markers as $i => $marker) {
+						$item["markers"][$i]["id"] = $marker["id"];
+						$item["markers"][$i]["marker"] = $marker["marker"];
+					}
 				}
 			}
 
@@ -139,9 +156,13 @@ class TypeDevice extends Itemtype {
 			if($query->sql("SELECT * FROM ".$this->db_exceptions." WHERE item_id = $item_id")) {
 
 				$exceptions = $query->results();
-				foreach($exceptions as $i => $exception) {
-					$item["exceptions"][$i]["id"] = $exception["id"];
-					$item["exceptions"][$i]["exception"] = $exception["exception"];
+				if($exceptions) {
+					$item["exceptions"] = [];
+
+					foreach($exceptions as $i => $exception) {
+						$item["exceptions"][$i]["id"] = $exception["id"];
+						$item["exceptions"][$i]["exception"] = $exception["exception"];
+					}
 				}
 			}
 

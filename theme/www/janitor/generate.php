@@ -24,7 +24,7 @@ $page->pageTitle("Generate detection script");
 if(is_array($action) && count($action)) {
 
 	// Class interface
-	if($page->validateCsrfToken() && preg_match("/[a-zA-Z]+/", $action[0])) {
+	if(security()->validateCsrfToken() && preg_match("/[a-zA-Z]+/", $action[0])) {
 
 		// check if custom function exists on User class
 		if($model && method_exists($model, $action[0])) {

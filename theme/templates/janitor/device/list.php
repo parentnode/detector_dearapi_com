@@ -107,9 +107,9 @@ else {
 
 				<div class="merge i:mergeDevicesList item_id:<?= $item["item_id"] ?>"
 					data-csrf-token="<?= session()->value("csrf") ?>"
-					data-device-list="<?= $this->validPath("/janitor/device/list") ?>"
-					data-device-edit="<?= $this->validPath("/janitor/device/edit") ?>"
-					data-device-merge="<?= $this->validPath("/janitor/device/mergeDevice") ?>"
+					data-device-list="<?= security()->validPath("/janitor/device/list") ?>"
+					data-device-edit="<?= security()->validPath("/janitor/device/edit") ?>"
+					data-device-merge="<?= security()->validPath("/janitor/device/mergeDevice") ?>"
 					>
 				</div>
 			 </li>
