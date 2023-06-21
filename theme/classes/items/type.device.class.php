@@ -6,6 +6,12 @@
 
 class TypeDevice extends Itemtype {
 
+
+	public $db;
+	public $db_useragents;
+	public $db_unidentified;
+
+
 	/**
 	* Init, set varnames, validation rules
 	*/
@@ -94,9 +100,13 @@ class TypeDevice extends Itemtype {
 			if($query->sql("SELECT * FROM ".$this->db_useragents." WHERE item_id = $item_id")) {
 
 				$useragents = $query->results();
-				foreach($useragents as $i => $useragent) {
-					$item["useragents"][$i]["id"] = $useragent["id"];
-					$item["useragents"][$i]["useragent"] = $useragent["useragent"];
+				if($useragents) {
+					$item["useragents"] = [];
+
+					foreach($useragents as $i => $useragent) {
+						$item["useragents"][$i]["id"] = $useragent["id"];
+						$item["useragents"][$i]["useragent"] = $useragent["useragent"];
+					}
 				}
 			}
 

@@ -6,6 +6,13 @@
 
 class Identify {
 
+
+	public $db;
+	public $db_useragents;
+	public $db_unidentified;
+	public $trimming_patterns;
+
+
 	/**
 	* Init, set varnames, validation rules
 	*/
