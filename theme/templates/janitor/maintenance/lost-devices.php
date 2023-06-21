@@ -17,7 +17,7 @@ $all_items = $model->listLostDevices();
 
 	<div class="all_items i:defaultList i:deleteLostDevices filters"
 		data-csrf-token="<?= session()->value("csrf") ?>"
-		data-devices-delete-lost="<?= $this->validPath("/janitor/device/deleteLostDevices") ?>" 
+		data-devices-delete-lost="<?= security()->validPath("/janitor/device/deleteLostDevices") ?>" 
 		>
 <?		if($all_items): ?>
 		<ul class="items">

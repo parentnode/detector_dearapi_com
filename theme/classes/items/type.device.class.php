@@ -6,6 +6,14 @@
 
 class TypeDevice extends Itemtype {
 
+
+	public $db;
+	public $db_useragents;
+	public $db_markers;
+	public $db_exceptions;
+	public $db_unidentified;
+
+
 	/**
 	* Init, set varnames, validation rules
 	*/
@@ -156,9 +164,13 @@ class TypeDevice extends Itemtype {
 		if($query->sql("SELECT * FROM ".$this->db_useragents." WHERE item_id = ". $item["item_id"])) {
 
 			$useragents = $query->results();
-			foreach($useragents as $i => $useragent) {
-				$item["useragents"][$i]["id"] = $useragent["id"];
-				$item["useragents"][$i]["useragent"] = $useragent["useragent"];
+			if($useragents) {
+				$item["useragents"] = [];
+
+				foreach($useragents as $i => $useragent) {
+					$item["useragents"][$i]["id"] = $useragent["id"];
+					$item["useragents"][$i]["useragent"] = $useragent["useragent"];
+				}
 			}
 		}
 
@@ -179,9 +191,14 @@ class TypeDevice extends Itemtype {
 		if($query->sql("SELECT * FROM ".$this->db_markers." WHERE item_id = ". $item["item_id"])) {
 
 			$markers = $query->results();
-			foreach($markers as $i => $marker) {
-				$item["markers"][$i]["id"] = $marker["id"];
-				$item["markers"][$i]["marker"] = $marker["marker"];
+			if($markers) {
+
+				$item["markers"] = [];
+
+				foreach($markers as $i => $marker) {
+					$item["markers"][$i]["id"] = $marker["id"];
+					$item["markers"][$i]["marker"] = $marker["marker"];
+				}
 			}
 		}
 
@@ -192,9 +209,13 @@ class TypeDevice extends Itemtype {
 		if($query->sql("SELECT * FROM ".$this->db_exceptions." WHERE item_id = ". $item["item_id"])) {
 
 			$exceptions = $query->results();
-			foreach($exceptions as $i => $exception) {
-				$item["exceptions"][$i]["id"] = $exception["id"];
-				$item["exceptions"][$i]["exception"] = $exception["exception"];
+			if($exceptions) {
+				$item["exceptions"] = [];
+
+				foreach($exceptions as $i => $exception) {
+					$item["exceptions"][$i]["id"] = $exception["id"];
+					$item["exceptions"][$i]["exception"] = $exception["exception"];
+				}
 			}
 		}
 
@@ -1930,7 +1951,7 @@ $sql .= " ORDER BY name";
 						if(!$ua["matched_by"]) {
 							// print "### Matched: " . $item["useragent"] . "<br>\n";
 
-
+							$ua["matched_by"] = [];
 							$ua["matched_by"][] = $item["item_id"];
 							// get other unidentified UAs with same marker (will also return current UA)
 							// $ua["unid"] = $this->unidentifiedUseragents("[\\\W_]{1}".$marker);
@@ -1977,7 +1998,7 @@ $sql .= " ORDER BY name";
 						if(!$ua["mismatched_by"]) {
 							// print "### MISMatched: " . $item["useragent"] . "<br>\n";
 
-
+							$ua["mismatched_by"] = [];
 							$ua["mismatched_by"][] = $item["item_id"];
 
 							// add to matches array for this UA

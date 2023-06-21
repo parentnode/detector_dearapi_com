@@ -661,7 +661,7 @@ Util.Modules["unidentifiedList"] = new function() {
 									}
 	//								u.request(this, "/janitor/maintenance/search-for-marker");
 									// u.request(this, "https://www.googleapis.com/customsearch/v1?cx=006888141968518277707%3Awiqtlhmqi14&key=AIzaSyD2dkkTv2F03M2gi1TO7pAm0jz21o5GFPQ&q="+this.node.span.innerHTML+"+display+specs");
-									u.request(this, "https://www.googleapis.com/customsearch/v1?cx=8722299267bc1d3fd&key=AIzaSyAsUm7qtOSVuEq-LZ6fD7aLGxsOMkaEae4&q="+this.node.span.innerHTML+"+display+specs");
+									u.request(this, "https://www.googleapis.com/customsearch/v1?cx=8722299267bc1d3fd&key="+u.gapi_key+"&q="+this.node.span.innerHTML+"+display+specs");
 
 	//								console.log(this.node.span.innerHTML);
 								}

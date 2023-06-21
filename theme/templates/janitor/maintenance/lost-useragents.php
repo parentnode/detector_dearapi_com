@@ -17,7 +17,7 @@ $all_items = $model->listLostUseragents();
 
 	<div class="all_items i:defaultList i:deleteLostUseragents filters"
 		data-csrf-token="<?= session()->value("csrf") ?>"
-		data-useragent-delete-lost="<?= $this->validPath("/janitor/device/deleteLostUseragents") ?>" 
+		data-useragent-delete-lost="<?= security()->validPath("/janitor/device/deleteLostUseragents") ?>" 
 		>
 <?		if($all_items): ?>
 		<ul class="items">

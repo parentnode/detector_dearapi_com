@@ -1,0 +1,1 @@
+u.gapi_key = "AIzaSyAsUm7qtOSVuEq-LZ6fD7aLGxsOMkaEae4";

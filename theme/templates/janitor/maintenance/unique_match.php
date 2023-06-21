@@ -17,9 +17,9 @@ $all_items = $model->searchForUniqueMatches();
 
 	<div class="all_items i:uniqueMatchList filters"
 		data-csrf-token="<?= session()->value("csrf") ?>"
-		data-useragent-delete="<?= $this->validPath("/janitor/device/deleteUnidentified") ?>"
-		data-useragent-details="<?= $this->validPath("/janitor/device/unidentifiedUseragentDetails") ?>"
-		data-useragent-identify="<?= $this->validPath("/janitor/device/identifyUnidentifiedId") ?>"
+		data-useragent-delete="<?= security()->validPath("/janitor/device/deleteUnidentified") ?>"
+		data-useragent-details="<?= security()->validPath("/janitor/device/unidentifiedUseragentDetails") ?>"
+		data-useragent-identify="<?= security()->validPath("/janitor/device/identifyUnidentifiedId") ?>"
 		>
 <?		if($all_items): ?>
 		<ul class="items">
