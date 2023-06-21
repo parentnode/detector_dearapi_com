@@ -2,11 +2,11 @@
 asset-builder @ 2023-06-21 13:28:49
 */
 
-/*seg_desktop_include.js*/
+/*seg_smartphone_include.js*/
 
-/*seg_desktop_include.js*/
+/*seg_smartphone_include.js*/
 
-/*seg_desktop.js*/
+/*seg_smartphone.js*/
 if(!u || !Util) {
 	var u, Util = u = new function() {};
 	u.version = "0.9.3";
@@ -9420,13 +9420,13 @@ u.notifier = function(node) {
 
 /*u-form-custom.js*/
 u.f.fixFieldHTML = function(field) {
-	if(u.hc(field, "checkbox|boolean|radiobuttons") && field.indicator && field.label) {
+	if(field.indicator && field.label) {
 		u.ae(field.label, field.indicator);
 	}
 }
 
-
 /*m-page.js*/
+u.bug_force = true;
 u.bug_console_only = true;
 Util.Modules["page"] = new function() {
 	this.init = function(page) {
@@ -9435,95 +9435,185 @@ Util.Modules["page"] = new function() {
 		u.bug("This site is built using the combined powers of body, mind and spirit. Well, and also Manipulator, Janitor and Detector");
 		u.bug("Visit https://parentnode.dk for more information");
 		u.bug_force = false;
-		var i, node;
-		page.hN = u.qs("#header", page);
+		page.hN = u.qs("#header");
+		page.hN.service = u.qs(".servicenavigation", page.hN);
+		page.hN = u.ae(document.body, page.hN);
+		u.e.drag(page.hN, page.hN);
+		page._title = u.ae(page.hN, "div", {"class":"title"});
 		page.cN = u.qs("#content", page);
 		page.nN = u.qs("#navigation", page);
-		if(page.nN) {
-			page.nN = page.hN.appendChild(page.nN);
-		}
-		page.fN = u.qs("#footer", page);
+		page.nN = u.ae(document.body, page.nN);
+		page.fN = u.qs("#footer");
+		page.fN.service = u.qs(".servicenavigation", page.fN);
 		page.resized = function() {
-			this.browser_h = u.browserH();
-			this.browser_w = u.browserW();
-			if(this.cN && this.cN.scene && fun(this.cN.scene.resized)) {
-				this.cN.scene.resized();
+			u.bug("page resized")
+			page.browser_h = u.browserH();
+			page.browser_w = u.browserW();
+			var available_height = page.browser_h - page.hN.offsetHeight - page.fN.offsetHeight;
+			u.as(page.cN, "height", "auto", false);
+			if(available_height >= page.cN.offsetHeight) {
+				u.as(page.cN, "height", available_height+"px", false);
 			}
+			u.ass(page, {
+				"width":page.browser_w+"px"
+			})
+			u.ass(page.nN, {
+				"width": (page.offsetWidth - page.bn_nav.offsetWidth) + "px",
+				"height": (window.innerHeight) + "px"
+			});
+			if(!page.bn_nav.is_open) {
+				u.a.translate(page.nN, -(page.offsetWidth - page.bn_nav.offsetWidth), 0);
+			}
+			else {
+				page.nN.list.updateDragBoundaries();
+				u.a.translate(page, page.offsetWidth - page.bn_nav.offsetWidth, 0);
+				u.a.translate(page.hN, page.offsetWidth - page.bn_nav.offsetWidth, 0);
+			}
+			if(page.cN && page.cN.scene && typeof(page.cN.scene.resized) == "function") {
+				page.cN.scene.resized();
+			}
+			page.offsetHeight;
 		}
 		page.scrolled = function() {
-			this.scroll_y = u.scrollY();
-			if(this.cN && this.cN.scene && fun(this.cN.scene.scrolled)) {
-				this.cN.scene.scrolled();
+			if(page.cN && page.cN.scene && typeof(page.cN.scene.scrolled) == "function") {
+				page.cN.scene.scrolled();
 			}
+			page.offsetHeight;
 		}
 		page.orientationchanged = function() {
-			if(this.cN && this.cN.scene && fun(this.cN.scene.orientationchanged)) {
-				this.cN.scene.orientationchanged();
+			page.resized();
+			if(page.cN && page.cN.scene && typeof(page.cN.scene.orientationchanged) == "function") {
+				page.cN.scene.orientationchanged();
 			}
+			page.offsetHeight;
 		}
 		page.ready = function() {
 			if(!this.is_ready) {
 				this.is_ready = true;
-				u.e.addEvent(window, "resize", this.resized);
-				u.e.addEvent(window, "scroll", this.scrolled);
-				u.e.addEvent(window, "orientationchange", this.orientationchanged);
-				this.initHeader();
-				u.notifier(this);
+				u.e.addEvent(window, "resize", page.resized);
+				u.e.addEvent(window, "scroll", page.scrolled);
+				u.e.addEvent(window, "orientationchange", page.orientationchanged);
+				page.initNavigation();
+				u.notifier(page);
 				u.navigation();
-				this.resized();
+				page.resized();
 			}
 		}
 		page.cN.navigate = function(url) {
-			u.bug("page.navigated:", url);
 			location.href = url;
 		}
-		page.initHeader = function() {
-			var janitor = u.ie(this.hN, "ul", {"class":"janitor"});
-			u.ae(janitor, u.qs(".servicenavigation .front", this.hN));
-			var janitor_text = u.qs("li a", janitor);
-			if(janitor_text) {
-				janitor_text.innerHTML = "<span>"+janitor_text.innerHTML.split("").join("</span><span>")+"</span>"; 
-				page.hN.janitor_spans = u.qsa("span", janitor_text);
-				var i, span, j, section, node;
-				for(i = 0; span = page.hN.janitor_spans[i]; i++) {
-					if(i == 0) {
-						u.ass(span, {
-							"transform":"translate(-8px, 0)"
-						});
-					}
-					else {
-						u.ass(span, {
-							"opacity":0,
-							"transform":"translate(-8px, -30px)"
-						});
-					}
+		page.initNavigation = function() {
+			page.nN.list = u.qs("ul.navigation", page.nN);
+			page.bn_nav = u.ae(page.hN, "div", {"class":"nav"});
+			u.ae(page.bn_nav, "div");
+			u.ae(page.bn_nav, "div");
+			u.ae(page.bn_nav, "div");
+			u.ce(page.bn_nav);
+			page.bn_nav.clicked = function(event) {
+				if(this.is_open) {
+					this.close();
 				}
-				u.ass(janitor_text, {"opacity": 1});
+				else {
+					u.bug("open navigation")
+					this.is_open = true;
+					u.ass(document.body, {
+						"overflow-y":"hidden"
+					});
+					u.a.transition(page, "all 0.2s ease-in-out");
+					u.a.transition(page.nN, "all 0.2s ease-in-out");
+					u.a.transition(page.hN, "all 0.2s ease-in-out");
+					u.a.translate(page, page.offsetWidth - this.offsetWidth, 0);
+					u.a.translate(page.hN, page.offsetWidth - this.offsetWidth, 0);
+					u.a.translate(page.nN, 0, 0);
+					page.nN.list.updateDragBoundaries();
+				}
 			}
-			u.ae(this, u.qs(".servicenavigation", this.hN));
-			var sections = u.qsa("ul.navigation > li", this.nN);
-			if(sections.length) {
+			page.bn_nav.close = function(event) {
+				u.bug("close navigation")
+				this.is_open = false;
+				u.ass(document.body, {
+					"overflow-y":"auto"
+				});
+				u.a.transition(page, "all 0.2s ease-in-out");
+				u.a.transition(page.nN, "all 0.2s ease-in-out");
+				u.a.transition(page.hN, "all 0.2s ease-in-out");
+				u.a.translate(page, 0, 0);
+				u.a.translate(page.hN, 0, 0);
+				u.a.translate(page.nN, - (page.offsetWidth - this.offsetWidth), 0);
+			}
+			if(page.fN.service) {
+				nodes = u.qsa("li:not(.totop)", page.fN.service);
+				for(i = 0; node = nodes[i]; i++) {
+					u.ae(page.nN.list, node);
+				}
+			}
+			var to_top = u.qs("li.totop", page.fN.service);
+			if(to_top) {
+				u.svgIcons("totoparrow", to_top);
+				u.ce(to_top);
+				to_top.clicked = function() {
+					u.scrollTo(window, page.hN);
+				}
+			}
+			if(page.hN.service) {
+				nodes = u.qsa("li", page.hN.service);
+				nodes = u.qsa("li:not(.front)", page.hN.service);
+				for(i = 0; node = nodes[i]; i++) {
+					u.ae(page.nN.list, node);
+				}
+				u.ie(page.nN.list, u.qs("li.front", page.hN.service));
+			}
+			u.ae(page.nN.list, u.qs("li.copyright", page.nN.list));
+			u.ass(page.nN, {
+				"width": (page.offsetWidth - page.bn_nav.offsetWidth) + "px",
+				"height": (window.innerHeight) + "px"
+			});
+			u.a.translate(page.nN, -(page.offsetWidth - page.bn_nav.offsetWidth), 0);
+			u.ass(page.nN, {
+				"display": "block",
+				"opacity": 1
+			});
+			u.e.drag(page.nN.list, [0, (window.innerHeight) - page.nN.list.offsetHeight, page.nN.offsetWidth, page.nN.list.offsetHeight], {"strict":false, "elastica":200, "vertical_lock":true});
+			page.nN.list.updateDragBoundaries = function() {
+				u.bug("updateDragBoundaries:" + this.offsetHeight + ", " + window.innerHeight)
+				if(this.offsetHeight > window.innerHeight) {					
+					this.start_drag_y = (window.innerHeight - 0) - this.offsetHeight;
+					this.end_drag_y = this.offsetHeight;
+					this.locked = false;
+				}
+				else {
+					this.start_drag_y = 0;
+					this.end_drag_y = this.offsetHeight;
+					this.locked = true;
+				}
+			}
+			var sections = u.qsa("ul.navigation > li", page.nN);
+			if(sections) {
 				for(i = 0; section = sections[i]; i++) {
 					section.header = u.qs("h3", section);
 					if(section.header) {
 						section.nodes = u.qsa("li", section);
 						if(section.nodes.length) {
+							for(j = 0; node = section.nodes[j]; j++) {
+								u.ce(node, {"type":"link"});
+							}
 							if(section.header) {
 								section.header.section = section;
 								u.e.click(section.header);
-								section.header.clicked = function(event) {
-									u.e.kill(event);
+								section.header.clicked = function() {
 									if(this.section.is_open) {
 										this.section.is_open = false;
 										u.as(this.section, "height", this.offsetHeight+"px");
 										u.saveNodeCookie(this.section, "open", 0, {"ignore_classvars":true});
 										u.addExpandArrow(this);
+										page.nN.list.updateDragBoundaries();
 									}
 									else {
 										this.section.is_open = true;
 										u.as(this.section, "height", "auto");
 										u.saveNodeCookie(this.section, "open", 1, {"ignore_classvars":true});
 										u.addCollapseArrow(this);
+										page.nN.list.updateDragBoundaries();
 									}
 								}
 								var state = u.getNodeCookie(section, "open", {"ignore_classvars":true});
@@ -9531,14 +9621,6 @@ Util.Modules["page"] = new function() {
 									section.is_open = true;
 								}
 								section.header.clicked();
-							}
-							for(j = 0; node = section.nodes[j]; j++) {
-								u.ce(node, {"type":"link"});
-								if(u.hc(node, "selected|path")) {
-									if(!section.is_open) {
-										section.header.clicked();
-									}
-								}
 							}
 						}
 						else {
@@ -9550,103 +9632,11 @@ Util.Modules["page"] = new function() {
 					}
 				}
 			}
-			if(this.nN) {
-				u.ass(this.nN, {
-					"display":"none"
-				});
-			}
-			if(sections.length && janitor_text) {
-				if(u.e.event_support == "mouse") {
-					u.e.hover(this.hN, {"delay_over":300});
-				}
-				else {
-					u.e.click(page.hN);
-					page.hN.clicked = function(event) {
-						if(!this.is_open) {
-							u.e.kill(event);
-							this.over();
-						}
-					}
-					page.hN.close = function(event) {
-						if(this.is_open) {
-							u.e.kill(event);
-							this.out();
-						}
-					}
-					u.e.addWindowEndEvent(page.hN, "close");
-				}
-				page.hN.over = function() {
-					this.is_open = true;
-					u.a.transition(page.nN, "none");
-					page.nN.transitioned = null;
-					u.t.resetTimer(this.t_navigation);
-					u.a.transition(this, "all 0.3s ease-in-out");
-					u.ass(this, {
-						"width":"230px"
-					});
-					u.ass(page.nN, {
-						"display":"block"
-					});
-					u.a.transition(page.nN, "all 0.3s ease-in");
-					u.ass(page.nN, {
-						"opacity":1
-					});
-					for(i = 0; span = page.hN.janitor_spans[i]; i++) {
-						if(i == 0) {
-							u.a.transition(span, "all 0.2s ease-in " + (i*50) + "ms");
-							u.ass(span, {
-								"transform":"translate(0, 0)"
-							});
-						}
-						else {
-							u.a.transition(span, "all 0.2s ease-in " + (i*50) + "ms");
-							u.ass(span, {
-								"opacity":1,
-								"transform":"translate(0, 0)"
-							});
-						}
-					}
-				}
-				page.hN.out = function() {
-					this.is_open = false;
-					u.a.transition(page.nN, "none");
-					page.nN.transitioned = null;
-					var span, i;
-					for(i = 0; span = page.hN.janitor_spans[i]; i++) {
-						if(i == 0) {
-							u.a.transition(span, "all 0.2s ease-in " + ((page.hN.janitor_spans.length-i)*50) + "ms");
-							u.ass(span, {
-								"transform":"translate(-8px, 0)"
-							});
-						}
-						else {
-							u.a.transition(span, "all 0.2s ease-in " + ((page.hN.janitor_spans.length-i)*50) + "ms");
-							u.ass(span, {
-								"opacity":0,
-								"transform":"translate(-8px, -30px)"
-							});
-						}
-					}
-					page.nN.transitioned = function() {
-						u.ass(this, {
-							"display":"none"
-						});
-					}
-					u.a.transition(page.nN, "all 0.2s ease-in");
-					u.ass(page.nN, {
-						"opacity":0
-					});
-					u.a.transition(this, "all 0.2s ease-in-out 300ms");
-					u.ass(this, {
-						"width":"30px"
-					});
-				}
-			}
 		}
 		page.ready();
 	}
 }
-u.e.addDOMReadyEvent(u.init)
+u.e.addDOMReadyEvent(u.init);
 
 
 /*m-scene.js*/
@@ -9658,6 +9648,15 @@ Util.Modules["scene"] = new function() {
 		}
 		scene.ready = function() {
 			page.cN.scene = this;
+			var h1 = u.qs("h1", this);
+			var h2 = u.qs("h1 + h2", this);
+			if(h1) {
+				u.ae(page._title, h1);
+			}
+			if(h2) {
+				u.ac(page._title, "double");
+				u.ae(page._title, h2);
+			}
 			page.resized();
 		}
 		scene.ready();
@@ -9673,6 +9672,15 @@ Util.Modules["login"] = new function() {
 		}
 		scene.ready = function() {
 			page.cN.scene = this;
+			var h1 = u.qs("h1", this);
+			var h2 = u.qs("h1 + h2", this);
+			if(h1) {
+				u.ae(page._title, h1);
+			}
+			if(h2) {
+				u.ac(page._title, "double");
+				u.ae(page._title, h2);
+			}
 			this._form = u.qs("form", this);
 			u.f.init(this._form);
 			this._form.inputs["username"].focus();
@@ -9714,188 +9722,50 @@ Util.Modules["defaultList"] = new function() {
 					initialized++;
 				}
 			}
-			if(initialized == this.nodes.length && this.scroll_event_id) {
-				u.e.removeWindowEvent(this, "scroll", this.scroll_event_id);
-				this.scroll_event_id = false;
+			if(initialized == this.nodes.length) {
+				this.scroll_event_id = u.e.removeWindowEvent(this, "scroll", this.scroll_event_id);
 			}
 		}
 		div.scroll_event_id = u.e.addWindowEvent(div, "scroll", div.scrolled);
 		div.buildNode = function(node) {
-			node._actions = u.qsa(".actions li", node);
-			var i, action, form, bn_detele, form_disable, form_enable;
-			for(i = 0; action = node._actions[i]; i++) {
-				if(u.hc(action, "status")) {
-					if(!action.childNodes.length) {
-						action.update_status_url = action.getAttribute("data-item-status");
-						if(action.update_status_url) {
-							form_disable = u.f.addForm(action, {"action":action.update_status_url+"/"+node._item_id+"/0", "class":"disable"});
-							u.f.addField(form_disable, {"type":"hidden", "name":"csrf-token", "value":this.csrf_token});
-							u.f.addAction(form_disable, {"value":"Disable", "class":"button status"});
-							form_enable = u.f.addForm(action, {"action":action.update_status_url+"/"+node._item_id+"/1", "class":"enable"});
-							u.f.addField(form_enable, {"type":"hidden", "name":"csrf-token", "value":this.csrf_token});
-							u.f.addAction(form_enable, {"value":"Enable", "class":"button status"});
-						}
-					}
-					else {
-						form_disable = u.qs("form.disable", action);
-						form_enable = u.qs("form.enable", action);
-					}
-					if(form_disable && form_enable) {
-						u.f.init(form_disable);
-						form_disable.submitted = function() {
-							this.response = function(response) {
-								page.notify(response);
-								if(response.cms_status == "success") {
-									u.ac(this.parentNode, "disabled");
-									u.rc(this.parentNode, "enabled");
-								}
-							}
-							u.request(this, this.action, {"method":"post", "data":this.getData()});
-						}
-						u.f.init(form_enable);
-						form_enable.submitted = function() {
-							this.response = function(response) {
-								page.notify(response);
-								if(response.cms_status == "success") {
-									u.rc(this.parentNode, "disabled");
-									u.ac(this.parentNode, "enabled");
-								}
-							}
-							u.request(this, this.action, {"method":"post", "data":this.getData()});
-						}
-					}
-				}
-				else if(u.hc(action, "delete")) {
-					action.node = node;
-					u.m.oneButtonForm.init(action);
-					if(u.hc(action, "has_dependencies")) {
-						action.setAttribute("title", "This item has dependencies and cannot be deleted.");
-					}
-					action.confirmed = function(response) {
-						if(response.cms_status == "success") {
-							if(response.cms_object && response.cms_object.constraint_error) {
-								u.ac(this.form.confirm_submit_button, "disabled");
-							}
-							else {
-								this.node.parentNode.removeChild(this.node);
-								this.node.div.scrolled();
-								if(fun(this.node.div.list.updateDraggables)) {
-									this.node.div.list.updateDraggables();
-								}
-							}
-						}
-					}
-				}
-			}
-			if(div._images) {
-				u.ass(node._text, {
-					"padding-left": div._node_padding_left + "px"
-				});
-				node._format = u.cv(node, "format");
-				node._variant = u.cv(node, "variant");
-				if(node._format && node.div._media_width) {
-					node._image_src = "/images/"+node._item_id+"/"+(node._variant ? node._variant+"/" : "")+node.div._media_width+"x."+node._format;
-				}
-				else {
-					node._image_src = "/images/0/missing/"+node.div._media_width+"x.png";
-				}
-				if(node._image_src) {
-					u.as(node, "backgroundImage", "url("+node._image_src+")");
-				}
-			}
-			else if(div._audios) {
-				u.ass(node._text, {
-					"padding-left": div._node_padding_left + "px"
-				});
-				node._format = u.cv(node, "format");
-				node._variant = u.cv(node, "variant");
-				if(node._format) {
-					node._audio = u.ie(node, "div", {"class":"audioplayer"});
-					if(!page.audioplayer) {
-						page.audioplayer = u.audioPlayer();
-					}
-					node._audio.scene = this;
-					node._audio.url = "/audios/"+node._item_id+"/" + (node._variant ? node._variant+"/" : "") + "128."+node._format;
-					u.e.click(node._audio);
-					node._audio.clicked = function(event) {
-						if(!u.hc(this.parentNode, "playing")) {
-							var node, i;
-							for(i = 0; node = this.scene.nodes[i]; i++) {
-								u.rc(node, "playing");
-							}
-							page.audioplayer.loadAndPlay(this.url);
-							u.ac(this.parentNode, "playing");
-						}
-						else {
-							page.audioplayer.stop();
-							u.rc(this.parentNode, "playing");
-						}
-					}
-				}
-				else {
-					u.ac(audio, "disabled");
-				}
-			}
-			else if(div._videos) {
-			}
+			// 	
+			// 	
+			// 		
+			// 				
+			// 				
+			// 		
+			// 		
+			// 			
+			// 			
+			// 		
+			// 		
+			// 		
+			// 				
+			// 				
+			// 							
+			// 
+			// 	
+			// 	
+			// 	
+			// 	
+			// 
+			// 	
+			// 	
+			// 		
+			// 		
+			// 		
+			// 				
+			// 	
+			// 
+			// 
 			node._ready = true;
 			node.div.scrolled();
 		}
-		if(u.hc(div, "images") || u.hc(div, "videos") || u.hc(div, "audios")) {
-			div._images = u.hc(div, "images");
-			div._videos = u.hc(div, "videos");
-			div._audios = u.hc(div, "audios");
-			div._media_width = u.cv(div, "width") ? u.cv(div, "width") : (div._audios ? 40 : 100);
-			div._node_padding_left = ((Number(div._media_width) - 15) + ((u.hc(div, "sortable") && div.list) ? 25 : 0));
-		}
-		if(u.hc(div, "taggable")) {
-			div.add_tag_url = div.getAttribute("data-tag-add");
-			div.delete_tag_url = div.getAttribute("data-tag-delete");
-			div.get_tags_url = div.getAttribute("data-tag-get");
-			if(div.csrf_token && div.get_tags_url && div.delete_tag_url && div.add_tag_url) {
-				div.tagsResponse = function(response) {
-					if(response.cms_status == "success" && response.cms_object) {
-						this.all_tags = response.cms_object;
-						if(this.div_filter && fun(this.div_filter.tagsLoaded)) {
-							this.div_filter.tagsLoaded();
-						}
-					}
-					else {
-						page.notify(response);
-						this.all_tags = [];
-					}
-					var i, node;
-					for(i = 0; node = this.nodes[i]; i++) {
-						node.data_div = this;
-						node._tags = u.qs("ul.tags", node);
-						if(!node._tags) {
-							node._tags = u.ae(node, "ul", {"class":"tags"});
-						}
-						node._tags.div = this;
-						node._bn_add = u.ae(node._tags, "li", {"class":"add","html":"+"});
-						node._bn_add.node = node;
-						u.enableTagging(node);
-					}
-				}
-				u.request(div, div.get_tags_url, {"callback":"tagsResponse", "method":"post", "data":"csrf-token=" + div.csrf_token});
-			}
-		}
-		if(u.hc(div, "filters") && !div.div_filter) {
+		if(u.hc(div, "filters")) {
 			u.defaultFilters(div);
-			div.filtered = function() {
-				this.scrolled();
-				if(this.bn_all) {
-					this.bn_all.updateState();
-					this.bn_range._to.value = "";
-					this.bn_range._from.value = "";
-				}
-			}
 		}
 		if(u.hc(div, "sortable")) {
 			u.defaultSortableList(div.list);
-		}
-		if(u.hc(div, "selectable")) {
-			u.defaultSelectable(div);
 		}
 		div.scrolled();
 	}
@@ -12342,922 +12212,3 @@ Util.Modules["taglist_tags"] = new function() {
 	}
 }
 
-
-/*i-form.js*/
-u.bug_force = true;
-Util.Modules["searchDevice"] = new function() {
-	this.init = function(div) {
-		var form = u.qs("form", div);
-		form.div = div;
-		div.csrf_token = div.getAttribute("data-csrf-token");
-		div.add_tag_url = div.getAttribute("data-tag-add");
-		div.delete_tag_url = div.getAttribute("data-tag-delete");
-		div.get_tags_url = div.getAttribute("data-tag-get");
-		u.f.init(form);
-		form.submitted = function() {
-			var params = u.f.getParams(this);
-			var tags = u.qsa("li:not(.add)", this._tags._list);
-			if(tags) {
-				params += "&tags=";
-				var tag_array = [];
-				var i, tag;
-				for(i = 0; tag = tags[i]; i++) {
-					if(!tag._context) {
-						tag._context = u.qs(".context", tag).innerHTML;
-						tag._value = u.qs(".value", tag).innerHTML;
-					}
-					tag_array.push(tag._context+":"+tag._value);
-				}
-				params += tag_array.join(";");
-			}
-			this.response = function(response) {
-				var list = u.qs(".all_items");
-				list.parentNode.replaceChild(u.qs(".all_items", response), list);
-				u.e.removeWindowScrollEvent(list, list.scroll_event_id);
-				u.init();
-			}
-			var list = u.qs(".all_items");
-			u.a.transition(list, "opacity 0.5s ease-in");
-			u.a.setOpacity(list, 0.2);
-			this.disableTaggedSearch();
-			u.request(this, this.action, {"params":params, "method":"post"})
-		}
-		form._tags = u.qs("div.tags", form);
-		if(!form._tags) {
-			form._tags = u.ae(form, "div", {"class":"tags"});
-		}
-		form._tags._form = form;
-		form._tags._list = u.qs("ul.tags", form);
-		if(!form._tags._list) {
-			form._tags._list = u.ae(form._tags, "ul", {"class":"tags"});
-		}
-		form._tags.tagsResponse = function(response) {
-			if(response.cms_status == "success" && response.cms_object) {
-				this._alltags = response.cms_object;
-				this._bn_add = u.ae(this._list, "li", {"class":"add","html":"+"});
-				this._bn_add._form = this._form;
-				u.e.click(this._bn_add);
-				this._bn_add.clicked = function() {
-					this._form.enableTaggedSearch();
-				}
-			}
-			else {
-			}
-		}
-		u.request(form._tags, div.get_tags_url, {"callback":"tagsResponse", "method":"post", "params":"csrf-token=" + div.csrf_token});
-		form.enableTaggedSearch = function() {
-			u.ac(this._tags, "addTags");
-			this._tags.field = u.ae(this._tags, "div", {"class":"field"});
-			this._tags._tagfilter = u.ae(this._tags.field, "input", {"class":"filter ignoreinput"});
-			this._tags._tagfilter._tags = this._tags;
-			this._tags._tagfilter.onkeyup = function() {
-				if(this._tags._taglist) {
-					var tags = u.qsa(".tag", this._tags._taglist);
-					var i, tag;
-					for(i = 0; tag = tags[i]; i++) {
-						if(tag.textContent.toLowerCase().match(this.value.toLowerCase())) {
-							u.as(tag, "display", "inline-block");
-						}
-						else {
-							u.as(tag, "display", "none");
-						}
-					}
-				}
-			}
-			this._tags._bn_add.innerHTML = "-";
-			this._tags._bn_add.clicked = function() {
-				this._form.disableTaggedSearch();
-			}
-			this._tags._usedtags = {};
-			var itemTags = u.qsa("li:not(.add)", this._tags._list);
-			var i, tag, context, value;
-			for(i = 0; tag = itemTags[i]; i++) {
-				tag._context = u.qs(".context", tag).innerHTML;
-				tag._value = u.qs(".value", tag).innerHTML;
-				if(!this._tags._usedtags[tag._context]) {
-					this._tags._usedtags[tag._context] = {}
-				}
-				if(!this._tags._usedtags[tag._context][tag._value]) {
-					this._tags._usedtags[tag._context][tag._value] = tag;
-				}
-			}
-			this._tags._taglist = u.ae(this._tags, "ul", {"class":"taglist"});
-			for(tag in this._tags._alltags) {
-				context = this._tags._alltags[tag].context;
-				value = this._tags._alltags[tag].value.replace(/ & /, " &amp; ");
-				if(this._tags._usedtags && this._tags._usedtags[context] && this._tags._usedtags[context][value]) {
-					tag_node = this._tags._usedtags[context][value];
-				}
-				else {
-					tag_node = u.ae(this._tags._taglist, "li", {"class":"tag"});
-					tag_node._context = context;
-					tag_node._value = value;
-					u.ae(tag_node, "span", {"class":"context", "html":tag_node._context});
-					u.ae(tag_node, "span", {"class":"value", "html":tag_node._value});
-				}
-				tag_node._tags = this._tags;
-				tag_node._id = this._tags._alltags[tag].id;
- 				u.e.click(tag_node);
- 				tag_node.clicked = function() {
-						if(u.hc(this.parentNode, "tags")) {
-							u.ae(this._tags._taglist, this);
-						}
-						else {
-							u.ie(this._tags._list, this);
-						}
-				}
-			}
-		}
-		form.disableTaggedSearch = function() {
-			this._tags._bn_add.innerHTML = "+";
-			this._tags._bn_add.clicked = function() {
-				this._form.enableTaggedSearch();
-			}
-			if(this._tags._taglist) {
-				u.rc(this._tags, "addTags");
-				this._tags.removeChild(this._tags.field);
-				this._tags.removeChild(this._tags._taglist);
-				this._tags._taglist = false;
-			}
-		}
-	}
-}
-Util.Modules["cloneDevice"] = new function() {
-	this.init = function(li) {
-		li.csrf_token = li.parentNode.getAttribute("data-csrf-token");
-		u.ce(li);
-		li.clicked = function() {
-			this.response = function(response) {
-				if(response.cms_status == "success" && response.cms_object.id) {
-					location.href = location.href.replace(/[\d]+$/, response.cms_object.id);
-				}
-				else {
-					page.notify(response);
-				}
-			}
-			u.request(this, this.url, {"method":"post", "params":"csrf-token="+li.csrf_token});
-		}
-	}
-}
-Util.Modules["editUseragents"] = new function() {
-	this.init = function(div) {
-		div.item_id = u.cv(div, "item_id");
-		div._form = u.qs("form", div);
-		u.f.init(div._form);
-		div._form.submitted = function(iN) {
-			this.response = function(response) {
-				if(response.cms_status == "success") {
-					location.reload();
-				}
-				else {
-					page.notify(response);
-				}
-			}
-			u.request(this, this.action, {"method":"post", "params" : u.f.getParams(this)});
-		}
-		div._uas = u.qsa("li.useragent", div);
-		div.csrf_token = div.getAttribute("data-csrf-token");
-		div.useragent_delete = div.getAttribute("data-useragent-delete");
-		if(div.useragent_delete) {
-			var i, ua, bn_delete;
-			for(i = 0; ua = div._uas[i]; i++) {
-				ua.ua_id = u.cv(ua, "ua_id")
-				bn_delete = u.ae(ua, "div", {"class":"delete"});
-				bn_delete.ua = ua;
-				bn_delete.div = div;
-				u.e.click(bn_delete);
-				bn_delete.clicked = function(event) {
-					this.response = function(response) {
-						page.notify(response);
-						if(response.cms_status == "success") {
-							this.ua.parentNode.removeChild(this.ua);
-						}
-					}
-					u.request(this, this.div.useragent_delete+"/"+this.ua.ua_id, {"method":"post", "params":"csrf-token=" + this.div.csrf_token});
-				}
-			}
-		}
-	}
-}
-Util.Modules["searchUnidentified"] = new function() {
-	this.init = function(form) {
-		u.f.init(form);
-		form.submitted = function() {
-			if(!form.fields["search_string"].val()) {
-				form.fields["search_string"].val("");
-			}
-			form.DOMsubmit();
-		}
-	}
-}
-Util.Modules["unidentifiedList"] = new function() {
-	this.init = function(div) {
-		u.bug("init unidentifiedList")
-		var i, node;
-		div.list = u.qs("ul.items", div);
-		div.nodes = u.qsa("li.item", div.list);
-		div.csrf_token = div.getAttribute("data-csrf-token");
-		div.useragent_delete = div.getAttribute("data-useragent-delete");
-		div.useragent_details = div.getAttribute("data-useragent-details");
-		div.useragent_identify = div.getAttribute("data-useragent-identify");
-		div.useragent_add = div.getAttribute("data-useragent-add");
-		div.device_clone = div.getAttribute("data-device-clone");
-		div.device_list = div.getAttribute("data-device-list");
-		document.body.unidentified_div = div;
-		div.bn_all = u.ie(div.list, "li", {"class":"all", "html":"Select all"});
-		div.bn_all._checkbox = u.ie(div.bn_all, "input", {"type":"checkbox"});
-		div.bn_all.div = div;
-		div.bn_all._checkbox.div = div;
-		u.e.click(div.bn_all);
-		div.bn_all.clicked = function() {
-			var i, node;
-			var inputs = u.qsa("li:not(.all) input:checked", this.div.list);
-			for(i = 0; node = div.nodes[i]; i++) {
-				if(inputs.length) {
-					node._checkbox.checked = false;
-				}
-				else if(!node._hidden) {
-					node._checkbox.checked = true;
-				}
-			}
-			this.div.toggleAddToOption();
-		}
-		for(i = 0; node = div.nodes[i]; i++) {
-			node.ua_id = u.cv(node, "ua_id");
-			node.div = div;
-			node._checkbox = u.ie(node, "input", {"type":"checkbox"});
-			node._checkbox.node = node;
-			u.e.click(node._checkbox);
-			node._checkbox.onclick = function(event) {u.e.kill(event);}
-			node._checkbox.inputStarted = function(event) {
-				u.e.kill(event);
-				if(this.checked) {
-					this.checked = false;
-					document.body._multideselection = true;
-				}
-				else {
-					this.checked = true;
-					document.body._multiselection = true;
-				}
-				document.body.onmouseup = function() {
-					this.onmouseup = null;
-					this._multiselection = false;
-					this._multideselection = false;
-					this.unidentified_div.toggleAddToOption();
-				}
-			}
-			node._checkbox.onmouseover = function() {
-				if(document.body._multiselection) {
-					this.checked = true;
-				}
-				else if(document.body._multideselection) {
-					this.checked = false;
-				}
-			}
-			u.e.click(node);
-			node.clicked = function() {
-				if(!this._ul) {
-					this.response = function(response) {
-						if(response.cms_status == "success") {
-							var action = u.ae(this, "ul", {"class":"actions"});
-							var li = u.ae(action, "li", {"class":"delete"});
-							this._delete = u.ae(li, "input", {"class":"button delete", "type":"button", "value":"delete"})
-							this._delete.node = this;
-							u.e.click(this._delete);
-							this._delete.restore = function(event) {
-								this.value = "Delete";
-								u.rc(this, "confirm");
-							}
-							this._delete.clicked = function(event) {
-								u.e.kill(event);
-								if(!u.hc(this, "confirm")) {
-									u.ac(this, "confirm");
-									this.value = "Confirm";
-									this.t_confirm = u.t.setTimer(this, this.restore, 3000);
-								}
-								else {
-									u.t.resetTimer(this.t_confirm);
-									u.bug("node.ua_id:" + this.node.ua_id);
-									this.response = function(response) {
-										page.notify(response);
-										if(response.cms_status == "success") {
-											this.node.parentNode.removeChild(this.node);
-										}
-									}
-									u.request(this, this.node.div.useragent_delete+"/"+this.node.ua_id, {"method":"post", "params":"csrf-token="+this.node.div.csrf_token});
-								}
-							}
-							this._ul = u.ae(this, "ul", {"class":"info"});
-							u.ae(this._ul, "li", {"class":"visits", "html":response.cms_object.length})
-							u.ae(this._ul, "li", {"class":"identified_as", "html":response.cms_object[0].identified_as_device})
-							var i, node;
-							for(i = 0; node = response.cms_object[i]; i++) {
-								var ul = u.ae(this, "ul", {"class":"info"});
-								u.ae(ul, "li", {"class":"identified_at", "html":node.identified_at})
-								u.ae(ul, "li", {"class":"comment", "html":node.comment})
-							}
-						}
-						else {
-							page.notify(response);
-						}
-					}
-					u.request(this, this.div.useragent_details+"/"+this.ua_id, {"method":"post","params":"csrf-token=" + this.div.csrf_token});
-				}
-				else {
-					var uls = u.qsa("ul", this);
-					var i, ul;
-					for(i = 0; ul = uls[i]; i++) {
-						this.removeChild(ul);
-					}
-					this._ul = false;
-				}
-			}
-		}
-		if(u.hc(div, "filters")) {
-			div._filter = u.ie(div, "div", {"class":"filter"});
-			var i, node;
-			for(i = 0; node = div.nodes[i]; i++) {
-				node._c = node.textContent.toLowerCase();
-			}
-			div._filter._field = u.ae(div._filter, "div", {"class":"field"});
-			u.ae(div._filter._field, "label", {"html":"Filter"});
-			div._filter._input = u.ae(div._filter._field, "input", {"class":"filter ignoreinput"});
-			div._filter._input._div = div;
-			div._filter._input.onkeydown = function() {
-				u.t.resetTimer(this._div.t_filter);
-			}
-			div._filter._input.onkeyup = function() {
-				this._div.t_filter = u.t.setTimer(this._div, this._div.filter, 1500);
-				u.ac(this._div._filter, "filtering");
-			}
-			div.filter = function() {
-				var i, node;
-				if(this._current_filter != this._filter._input.value.toLowerCase()) {
-					this._current_filter = this._filter._input.value.toLowerCase();
-					for(i = 0; node = this.nodes[i]; i++) {
-						if(node._c.match(this._current_filter)) {
-							node._hidden = false;
-							u.as(node, "display", "block", false);
-						}
-						else {
-							node._hidden = true;
-							u.as(node, "display", "none", false);
-							node._checkbox.checked = false;
-						}
-					}
-				}
-				u.rc(this._filter, "filtering");
-			}
-		}
-		div.addOption = function(option) {
-			if(this._add_to.identified_options && this._add_to.identified_options.indexOf(option.id) == -1) {
-				this._add_to.identified_options.push(option.id);
-				var li_option = u.ae(this._add_to._list, "li", {"html":option.name});
-				li_option.details = option;
-				li_option.div = this;
-				li_option.device_id = option.id;
-				u.e.click(li_option);
-				li_option.clicked = function() {
-					if(!this._info) {
-						var i;
-						var info_string = "";
-						info_string = this.details["method"];
-						if(this.details["guess"]) {
-							info_string += ", " + this.details["guess"];
-						}
-						if(this.details["tags"]) {
-							for(i in this.details["tags"]) {
-								if(this.details["tags"][i]["context"] == "brand") {
-									info_string += ", " + this.details["tags"][i]["value"]
-								}
-							}
-						}
-						info_string += ", " + this.details["description"];
-						this._info = u.ae(this, "div", {"class":"info", "html":info_string});
-						if(this.device_id != "unknown") {
-							this._selected = u.ae(this, "div", {"class":"selected", "html":"Add all SELECTED"});
-							this._selected.option = this;
-							this._matching = u.ae(this, "div", {"class":"matching", "html":"Add all MATCHING"});
-							this._matching.option = this;
-							this._addtoclone = u.ae(this, "div", {"class":"addtoclone", "html":"Add SELECTED to CLONE"});
-							this._addtoclone.option = this;
-							u.e.click(this._selected);
-							this._selected.clicked = function() {
-								if(this.t_execute) {
-									var inputs = u.qsa("li:not(.all) input:checked", this.option.div.list);
-									for(i = 0; input = inputs[i]; i++) {
-										input.node.response = function(response) {
-											this.parentNode.removeChild(this);
-											this.div.toggleAddToOption();
-										}
-										u.request(input.node, input.node.div.useragent_add+"/"+this.option.device_id+"/"+input.node.ua_id, {"method":"post", "params":"csrf-token="+input.node.div.csrf_token});
-									}
-								}
-								else {
-									this.t_execute = u.t.setTimer(this, this.not_confirmed, 1500);
-									this._content = this.innerHTML;	
-									this.innerHTML = "Sure?";
-									u.ac(this, "confirm");
-								}
-							}
-							u.e.click(this._matching);
-							this._matching.clicked = function() {
-								if(this.t_execute) {
-									var inputs = u.qsa("li:not(.all) input:checked", this.option.div.list);
-									for(i = 0; input = inputs[i]; i++) {
-										if(input.node._identified.id == this.option.device_id) {
-											input.node.response = function(response) {
-												this.parentNode.removeChild(this);
-												this.div.toggleAddToOption();
-											}
-											u.request(input.node, input.node.div.useragent_add+"/"+this.option.device_id+"/"+input.node.ua_id, {"method":"post", "params":"csrf-token="+input.node.div.csrf_token});
-										}
-									}
-								}
-								else {
-									this.t_execute = u.t.setTimer(this, this.not_confirmed, 1500);
-									this._content = this.innerHTML;	
-									this.innerHTML = "Sure?";
-									u.ac(this, "confirm");
-								}
-							}
-							u.e.click(this._addtoclone);
-							this._addtoclone.clicked = function() {
-								if(this.t_execute) {
-									this.response = function(response) {
-										if(response.cms_status == "success" && response.cms_object.id) {
-											var inputs = u.qsa("li:not(.all) input:checked", this.option.div.list);
-											var i, input;
-											for(i = 0; input = inputs[i]; i++) {
-												input.node.response = function(response) {
-													this.parentNode.removeChild(this);
-													this.div.toggleAddToOption();
-												}
-												u.request(input.node, input.node.div.useragent_add+"/"+response.cms_object.id+"/"+input.node.ua_id, {"method":"post", "params":"csrf-token="+input.node.div.csrf_token});
-											}
-										}
-										else {
-											page.notify(response);
-										}
-									}
-									u.request(this, this.option.div.device_clone+"/"+this.option.device_id, {"method":"post", "params":"csrf-token="+this.option.div.csrf_token});
-								}
-								else {
-									this.t_execute = u.t.setTimer(this, this.not_confirmed, 1500);
-									this._content = this.innerHTML;	
-									this.innerHTML = "Sure?";
-									u.ac(this, "confirm");
-								}
-							}
-							this._matching.not_confirmed = this._addtoclone.not_confirmed = this._selected.not_confirmed = function() {
-								u.rc(this, "confirm");
-								this.innerHTML = this._content;
-								this.t_execute = false;
-							}
-						}
-						else {
-							this._error = u.ae(this, "div", {"class":"info", "html":"identification did not return a valid device id"});
-						}
-					}
-					else {
-						if(this._info) {
-							this._info.parentNode.removeChild(this._info);
-							this._info = false;
-						}
-						if(this._selected) {
-							this._selected.parentNode.removeChild(this._selected);
-							this._selected = false;
-						}
-						if(this._matching) {
-							this._matching.parentNode.removeChild(this._matching);
-							this._matching = false;
-						}
-						if(this._addtoclone) {
-							this._addtoclone.parentNode.removeChild(this._addtoclone);
-							this._addtoclone = false;
-						}
-						if(this._error) {
-							this._error.parentNode.removeChild(this._error);
-							this._error = false;
-						}
-					}
-				}
-			}
-		}
-		div.toggleAddToOption = function() {
-			var inputs = u.qsa("li:not(.all) input:checked", this.list);
-			if(inputs.length) {
-				if(!this._add_to) {
-					this._add_to = u.ae(document.body, "div", {"class":"addToDevice"});
-					u.ae(this._add_to, "h2", {"html":"Add to device"});
-					var count_div = u.ae(this._add_to, "div", {"html":"Selected useragents:", "class":"counter"});
-					this._add_to._count = u.ae(count_div, "span", {"class":"count"});
-					u.as(page, "width", parseInt(u.gcs(page, "width")) - this._add_to.offsetWidth + "px");
-					var search_option = u.ae(this._add_to, "div", {"class":"field search"});
-					search_option.div = this;
-					var search_input = u.ae(search_option, "input", {"class":"search default ignoreinput"});
-					search_input.div = this;
-					search_input.search_result = u.ae(search_option, "ul", {"class":"results"});
-					search_input._default_value = "Search";
-					search_input.value = search_input._default_value;
-					search_input.onfocus = function() {
-						u.rc(this, "default");
-						if(this.value == this._default_value) {
-							this.value = "";
-						}
-					}
-					search_input.onblur = function() {
-						if(this.value == "") {
-							u.ac(this, "default");
-							this.value = this._default_value;
-						}
-					}
-					search_input.onkeyup = function() {
-						u.t.resetTimer(this.t_search);
-						this.t_search = u.t.setTimer(this, this.search, 1000);
-					}
-					search_input.onkeydown = function() {
-						u.t.resetTimer(this.t_search);
-					}
-					search_input.search = function() {
-						search_input.search_result.innerHTML = "";
-						if(this.value && this.value != this._default_value) {
-							search_input.response = function(response) {
-								var items = u.qsa(".all_items li.item", response);
-								if(items.length) {
-									var i, node;
-									for(i = 0; node = items[i]; i++) {
-										node = this.search_result.appendChild(node);
-										node.div = this.div;
-										node.device_id = u.cv(node, "item_id");
-										u.e.click(node);
-										node.clicked = function() {
-											if(!this._info) {
-												var i, info_string;
-												var brand = u.qs("ul.tags li.brand .value", this);
-												if(brand) {
-													info_string = brand.innerHTML;
-												}
-												this._info = u.ae(this, "div", {"class":"info", "html":info_string});
-												this._selected = u.ae(this, "div", {"class":"selected", "html":"Add all SELECTED"});
-												this._selected.option = this;
-												this._addtoclone = u.ae(this, "div", {"class":"addtoclone", "html":"Add SELECTED to CLONE"});
-												this._addtoclone.option = this;
-												u.e.click(this._selected);
-												this._selected.clicked = function() {
-													if(this.t_execute) {
-														var inputs = u.qsa("li:not(.all) input:checked", this.option.div.list);
-														var i, input;
-														for(i = 0; input = inputs[i]; i++) {
-															input.node.response = function(response) {
-																this.parentNode.removeChild(this);
-																this.div.toggleAddToOption();
-															}
-															u.request(input.node, input.node.div.useragent_add+"/"+this.option.device_id+"/"+input.node.ua_id, {"method":"post", "params":"csrf-token="+input.node.div.csrf_token});
-														}
-													}
-													else {
-														this.t_execute = u.t.setTimer(this, this.not_confirmed, 1500);
-														this._content = this.innerHTML;	
-														this.innerHTML = "Sure?";
-														u.ac(this, "confirm");
-													}
-												}
-												u.e.click(this._addtoclone);
-												this._addtoclone.clicked = function() {
-													if(this.t_execute) {
-														this.response = function(response) {
-															if(response.cms_status == "success" && response.cms_object.id) {
-																var inputs = u.qsa("li:not(.all) input:checked", this.option.div.list);
-																var i, input;
-																for(i = 0; input = inputs[i]; i++) {
-																	input.node.response = function(response) {
-																		this.parentNode.removeChild(this);
-																		this.div.toggleAddToOption();
-																	}
-																	u.request(input.node, input.node.div.useragent_add+"/"+response.cms_object.id+"/"+input.node.ua_id, {"method":"post", "params":"csrf-token="+input.node.div.csrf_token});
-																}
-															}
-															else {
-																page.notify(response);
-															}
-														}
-														u.request(this, this.option.div.device_clone+"/"+this.option.device_id, {"method":"post", "params":"csrf-token="+this.option.div.csrf_token});
-													}
-													else {
-														this.t_execute = u.t.setTimer(this, this.not_confirmed, 1500);
-														this._content = this.innerHTML;	
-														this.innerHTML = "Sure?";
-														u.ac(this, "confirm");
-													}
-												}
-												this._selected.not_confirmed = this._addtoclone.not_confirmed = function() {
-													u.rc(this, "confirm");
-													this.innerHTML = this._content;
-													this.t_execute = false;
-												}
-											}
-											else {
-												if(this._info) {
-													this._info.parentNode.removeChild(this._info);
-													this._info = false;
-												}
-												if(this._selected) {
-													this._selected.parentNode.removeChild(this._selected);
-													this._selected = false;
-												}
-												if(this._addtoclone) {
-													this._addtoclone.parentNode.removeChild(this._addtoclone);
-													this._addtoclone = false;
-												}
-											}
-										}
-		 							}
-								}
-								u.rc(this, "loading");
-							}
-							u.ac(search_input, "loading");
-							u.request(search_input, this.div.device_list, {"params":"search=1&search_string="+this.value, "method":"post"})
-						}
-					}
-					this._add_to._list = u.ae(this._add_to, "ul", {"class":"options"});
-				}
-				this._add_to._count.innerHTML = inputs.length;
-				this._add_to._list.innerHTML = "";
-				this._add_to.identified_options = [];
-				var i, ua, ua_id
-				this.wait_for_uas = inputs.length;
-				u.ac(this._add_to, "loading");
-				for(i = 0; ua = inputs[i]; i++) {
-					if(!ua.node._identified) {
-						ua.node.response = function(response) {
-							if(response.cms_status == "success") {
-								if(response.cms_object.id) {
-									this._identified = response.cms_object;
-								}
-							}
-							if(!this._identified) {
-								this._identified = {};
-								this._identified.id = "unknown";
-								this._identified.name = "Unknown";
-							}
-							this.div.addOption(this._identified);
-							this.div.wait_for_uas--;
-							if(!this.div.wait_for_uas && this.div._add_to) {
-								u.rc(this.div._add_to, "loading");
-							}
-						}
-						u.request(ua.node, ua.node.div.useragent_identify+"/"+ua.node.ua_id, {"method":"post", "params":"csrf-token="+ua.node.div.csrf_token});
-					}
-					else {
-						this.addOption(ua.node._identified);
-						this.wait_for_uas--;
-						if(!this.wait_for_uas) {
-							u.rc(this._add_to, "loading");
-						}
-					}
-				}
-			}
-			else {
-				if(this._add_to) {
-					this._add_to.parentNode.removeChild(this._add_to);
-					this._add_to = false;
-					u.as(page, "width", "auto");
-				}
-			}
-		}
-	}
-}
-Util.Modules["uniqueMatchList"] = new function() {
-	this.init = function(div) {
-		u.bug_force = true;
-		u.bug("init uniqueMatchList")
-		var i, node;
-		div.list = u.qs("ul.items", div);
-		if(div.list) {
-			div.nodes = u.qsa("li.item", div.list);
-			div.csrf_token = div.getAttribute("data-csrf-token");
-			div.useragent_delete = div.getAttribute("data-useragent-delete");
-			div.useragent_details = div.getAttribute("data-useragent-details");
-			div.useragent_identify = div.getAttribute("data-useragent-identify");
-			div.useragent_add = div.getAttribute("data-useragent-add");
-			div.device_clone = div.getAttribute("data-device-clone");
-			div.device_list = div.getAttribute("data-device-list");
-			document.body.unidentified_div = div;
-			div.bn_all = u.ie(div.list, "li", {"class":"all", "html":"Select all"});
-			div.bn_all._checkbox = u.ie(div.bn_all, "input", {"type":"checkbox"});
-			div.bn_all.div = div;
-			div.bn_all._checkbox.div = div;
-			u.e.click(div.bn_all);
-			div.bn_all.clicked = function() {
-				var i, node;
-				var inputs = u.qsa("li:not(.all) input:checked", this.div.list);
-				for(i = 0; node = div.nodes[i]; i++) {
-					if(inputs.length) {
-						node._checkbox.checked = false;
-					}
-					else if(!node._hidden) {
-						node._checkbox.checked = true;
-					}
-				}
-				this.div.toggleAddToOption();
-			}
-			for(i = 0; node = div.nodes[i]; i++) {
-				node.ua_id = u.cv(node, "ua_id");
-				node.div = div;
-				node._checkbox = u.ie(node, "input", {"type":"checkbox"});
-				node._checkbox.node = node;
-				u.e.click(node._checkbox);
-				node._checkbox.onclick = function(event) {u.e.kill(event);}
-				node._checkbox.inputStarted = function(event) {
-					u.e.kill(event);
-					if(this.checked) {
-						this.checked = false;
-						document.body._multideselection = true;
-					}
-					else {
-						this.checked = true;
-						document.body._multiselection = true;
-					}
-					document.body.onmouseup = function() {
-						this.onmouseup = null;
-						this._multiselection = false;
-						this._multideselection = false;
-						this.unidentified_div.toggleAddToOption();
-					}
-				}
-				node._checkbox.onmouseover = function() {
-					if(document.body._multiselection) {
-						this.checked = true;
-					}
-					else if(document.body._multideselection) {
-						this.checked = false;
-					}
-				}
-				u.e.click(node);
-				node.clicked = function() {
-					if(!this._ul) {
-						this.response = function(response) {
-							if(response.cms_status == "success") {
-								this._ul = u.ae(this, "ul", {"class":"info"});
-								u.ae(this._ul, "li", {"class":"visits", "html":response.cms_object.length})
-								u.ae(this._ul, "li", {"class":"identified_as", "html":response.cms_object[0].identified_as_device})
-								var i, node;
-								for(i = 0; node = response.cms_object[i]; i++) {
-									var ul = u.ae(this, "ul", {"class":"info"});
-									u.ae(ul, "li", {"class":"identified_at", "html":node.identified_at})
-									u.ae(ul, "li", {"class":"comment", "html":node.comment})
-								}
-							}
-							else {
-								page.notify(response);
-							}
-						}
-						u.request(this, this.div.useragent_details+"/"+this.ua_id, {"method":"post","params":"csrf-token=" + this.div.csrf_token});
-					}
-					else {
-						var uls = u.qsa("ul", this);
-						var i, ul;
-						for(i = 0; ul = uls[i]; i++) {
-							this.removeChild(ul);
-						}
-						this._ul = false;
-					}
-				}
-			}
-			if(u.hc(div, "filters")) {
-				div._filter = u.ie(div, "div", {"class":"filter"});
-				var i, node;
-				for(i = 0; node = div.nodes[i]; i++) {
-					node._c = node.textContent.toLowerCase();
-				}
-				div._filter._field = u.ae(div._filter, "div", {"class":"field"});
-				u.ae(div._filter._field, "label", {"html":"Filter"});
-				div._filter._input = u.ae(div._filter._field, "input", {"class":"filter ignoreinput"});
-				div._filter._input._div = div;
-				div._filter._input.onkeydown = function() {
-					u.t.resetTimer(this._div.t_filter);
-				}
-				div._filter._input.onkeyup = function() {
-					this._div.t_filter = u.t.setTimer(this._div, this._div.filter, 1500);
-					u.ac(this._div._filter, "filtering");
-				}
-				div.filter = function() {
-					var i, node;
-					if(this._current_filter != this._filter._input.value.toLowerCase()) {
-						this._current_filter = this._filter._input.value.toLowerCase();
-						for(i = 0; node = this.nodes[i]; i++) {
-							if(node._c.match(this._current_filter)) {
-								node._hidden = false;
-								u.as(node, "display", "block", false);
-							}
-							else {
-								node._hidden = true;
-								u.as(node, "display", "none", false);
-								node._checkbox.checked = false;
-							}
-						}
-					}
-					u.rc(this._filter, "filtering");
-				}
-			}
-			div.addOption = function(option) {
-				u.xInObject(option, {"objects":true});
-				if(this._delete_uas.identified_options.indexOf(option.name) == -1) {
-					this._delete_uas.identified_options.push(option.name);
-					var li_option = u.ae(this._delete_uas._list, "li", {"html":option.name});
-					li_option.details = option;
-					li_option.div = this;
-				}
-			}
-			div.toggleAddToOption = function() {
-				var inputs = u.qsa("li:not(.all) input:checked", this.list);
-				if(inputs.length) {
-					if(!this._delete_uas) {
-						this._delete_uas = u.ae(document.body, "div", {"class":"deleteUnique"});
-						u.ae(this._delete_uas, "h2", {"html":"Delete useragents"});
-						var count_div = u.ae(this._delete_uas, "div", {"html":"Selected useragents:", "class":"counter"});
-						this._delete_uas._count = u.ae(count_div, "span", {"class":"count"});
-						u.as(page, "width", parseInt(u.gcs(page, "width")) - this._delete_uas.offsetWidth + "px");
-						this._delete_uas._list = u.ae(this._delete_uas, "ul", {"class":"options"});
-						this._delete = u.ae(this._delete_uas, "div", {"class":"delete", "html":"Delete selected"})
-						this._delete.node = this;
-						u.e.click(this._delete);
-						this._delete.restore = function(event) {
-							this.value = "Delete selected";
-							u.rc(this, "confirm");
-						}
-						this._delete.clicked = function(event) {
-							u.e.kill(event);
-							if(!u.hc(this, "confirm")) {
-								u.ac(this, "confirm");
-								this.value = "Confirm";
-								this.t_confirm = u.t.setTimer(this, this.restore, 3000);
-							}
-							else {
-								u.t.resetTimer(this.t_confirm);
-								var inputs = u.qsa("li:not(.all) input:checked", this.list);
-								var i, ua;
-								if(inputs.length) {
-									for(i = 0; ua = inputs[i]; i++) {
-										if(ua.node.ua_id) {
-											ua.node.response = function(response) {
-												if(response.cms_status == "success") {
-													this.parentNode.removeChild(this);
-												}
-												page.notify(response);
-												this.div.toggleAddToOption();
-											}
-											u.request(ua.node, ua.node.div.useragent_delete+"/"+ua.node.ua_id, {"method":"post","params":"csrf-token=" + ua.node.div.csrf_token});
-										}
-									}
-								}
-							}
-						}
-					}
-					this._delete_uas._count.innerHTML = inputs.length;
-					this._delete_uas._list.innerHTML = "";
-					this._delete_uas.identified_options = [];
-					var i, ua, ua_id
-					this.wait_for_uas = inputs.length;
-					u.ac(this._delete_uas, "loading");
-					for(i = 0; ua = inputs[i]; i++) {
-						if(!ua.node._identified) {
-							ua.node.response = function(response) {
-								if(response.cms_status == "success") {
-									if(response.cms_object) {
-										this._identified = response.cms_object;
-									}
-								}
-								else {
-									this._identified = {};
-									this._identified.name = "Unknown";
-								}
-								this.div.addOption(this._identified);
-								this.div.wait_for_uas--;
-								if(!this.div.wait_for_uas) {
-									u.rc(this.div._delete_uas, "loading");
-								}
-							}
-							u.request(ua.node, ua.node.div.useragent_identify+"/"+ua.node.ua_id, {"method":"post","params":"csrf-token=" + ua.node.div.csrf_token});
-						}
-						else {
-							this.addOption(ua.node._identified);
-							this.wait_for_uas--;
-							if(!this.wait_for_uas) {
-								u.rc(this._delete_uas, "loading");
-							}
-						}
-					}
-				}
-				else {
-					if(this._delete_uas) {
-						this._delete_uas.parentNode.removeChild(this._delete_uas);
-						this._delete_uas = false;
-						u.as(page, "width", "auto");
-					}
-				}
-			}
-		}
-	}
-}

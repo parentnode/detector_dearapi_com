@@ -1130,7 +1130,7 @@ class Identify {
 		}
 
 
-		$page->collectNotification($string, $collection);
+		logger()->collectNotification($string, $collection);
 	}
 
 	/**
@@ -1142,7 +1142,7 @@ class Identify {
 		$this->saveForIdentification($useragent, $segment);
 
 		$string = "$status: " . $segment . "; UA: ".$useragent;
-		$page->addLog($string, $collection);
+		logger()->addLog($string, $collection);
 	}
 
 }

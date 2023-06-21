@@ -47,7 +47,7 @@ $item = $IC->getItem(array("id" => $item_id, "extend" => array("tags" => true, "
 
 	<div class="useragents i:editUseragents item_id:<?= $item["item_id"] ?>"
 		data-csrf-token="<?= session()->value("csrf") ?>"
-		data-useragent-delete="<?= $this->validPath("/janitor/device/deleteUseragent/".$item["item_id"]) ?>" 
+		data-useragent-delete="<?= security()->validPath("/janitor/device/deleteUseragent/".$item["item_id"]) ?>" 
 		>
 		<h2>Useragents</h2>
 		<?= $model->formStart("addUseragent/".$item["item_id"], array("class" => "labelstyle:inject")) ?>

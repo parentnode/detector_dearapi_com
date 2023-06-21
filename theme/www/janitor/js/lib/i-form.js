@@ -1,7 +1,7 @@
 u.bug_force = true;
 
 // device search 
-Util.Objects["searchDevice"] = new function() {
+Util.Modules["searchDevice"] = new function() {
 	this.init = function(div) {
 
 //		u.bug("searchDevice");
@@ -229,7 +229,7 @@ Util.Objects["searchDevice"] = new function() {
 }
 
 
-Util.Objects["cloneDevice"] = new function() {
+Util.Modules["cloneDevice"] = new function() {
 	this.init = function(li) {
 
 		li.csrf_token = li.parentNode.getAttribute("data-csrf-token");
@@ -253,7 +253,7 @@ Util.Objects["cloneDevice"] = new function() {
 }
 
 
-Util.Objects["editUseragents"] = new function() {
+Util.Modules["editUseragents"] = new function() {
 	this.init = function(div) {
 
 		div.item_id = u.cv(div, "item_id");
@@ -307,7 +307,7 @@ Util.Objects["editUseragents"] = new function() {
 }
 
 
-Util.Objects["searchUnidentified"] = new function() {
+Util.Modules["searchUnidentified"] = new function() {
 	this.init = function(form) {
 
 		u.f.init(form);
@@ -326,7 +326,7 @@ Util.Objects["searchUnidentified"] = new function() {
 }
 
 
-Util.Objects["unidentifiedList"] = new function() {
+Util.Modules["unidentifiedList"] = new function() {
 	this.init = function(div) {
 		u.bug("init unidentifiedList")
 
@@ -1041,7 +1041,7 @@ Util.Objects["unidentifiedList"] = new function() {
 }
 
 
-Util.Objects["uniqueMatchList"] = new function() {
+Util.Modules["uniqueMatchList"] = new function() {
 	this.init = function(div) {
 		u.bug_force = true;
 
