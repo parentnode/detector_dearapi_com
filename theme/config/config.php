@@ -8,7 +8,7 @@ header("Content-type: text/html; charset=UTF-8");
 error_reporting(E_ALL);
 
 define("VERSION", "0.7.9.2");
-define("UI_BUILD", false);
+define("UI_BUILD", "20230621-133228");
 
 define("SITE_UID", "DV4");
 define("SITE_NAME", "detector-v4.dearapi.com");
