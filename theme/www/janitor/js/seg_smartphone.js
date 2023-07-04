@@ -1,5 +1,5 @@
 /*
-asset-builder @ 2023-06-21 13:28:49
+asset-builder @ 2023-07-04 13:24:02
 */
 
 /*seg_smartphone_include.js*/
@@ -3568,13 +3568,22 @@ u.f.updateDefaultState = function(iN) {
 	}
 }
 Util.Form.customInit["html"] = function(field) {
-	u.bug("html field", field);
 	field.type = "html";
 	field.input = u.qs("textarea", field);
 	field.input._form = field._form;
 	field.input.label = u.qs("label[for='"+field.input.id+"']", field);
 	field.input.field = field;
-	field.input.val = u.f._value;
+	field._html_value = function(value) {
+		if(value !== undefined) {
+			this.value = value;
+			if(value !== this.default_value) {
+				u.rc(this, "default");
+			}
+			u.f.validate(this);
+		}
+		return (this.value != this.default_value && u.text(this.field._viewer)) ? this.value : "";
+	}
+	field.input.val = field._html_value;
 	u.f.textEditor(field);
 }
 Util.Form.customValidate["html"] = function(iN) {
@@ -4613,7 +4622,6 @@ u.f.textEditor = function(field) {
 		u.f.positionHint(this.field);
 	}
 	field._pasted_content = function(event) {
-		u.bug("pasted content", event, this);
 		u.e.kill(event);
 		var i, node, text, range, new_tag, current_tag, selection, paste_parts, text_parts, text_nodes;
 		var paste_content = event.clipboardData.getData("text/plain");
@@ -5045,7 +5053,7 @@ u.f.textEditor = function(field) {
 			this.field.hideSelectionOptions();
 		}
 	}
-	field._viewer.innerHTML = field.input.val();
+	field._viewer.innerHTML = field.input.value;
 	u.sortable(field._editor, {"draggables":"div.tag", "targets":"div.editor"});
 	var value, node, i, tag, j, lis, li;
 	var nodes = u.cn(field._viewer, {"exclude":"br"});
@@ -5411,39 +5419,38 @@ Util.Form.customInit["dropdown"] = function(field) {
 	u.e.addEvent(field.input, "change", u.f._changed);
 	u.e.addEvent(field.input, "update", u.f._updated);
 	var virtual_input_wrapper = u.ae(field, "div", {"class": "virtual"});
-	field.virtual_input = u.ae(virtual_input_wrapper, "div", {"class": "input"});
+	field.virtual_input = u.ae(virtual_input_wrapper, "div", {"class": "input", "contentEditable": "true"});
 	field.insertBefore(virtual_input_wrapper, field.input);
 	field.virtual_input._form = field._form;
 	field.virtual_input.field = field;
 	field._value_virtual = function(value) {
 		if(value !== undefined) {
-			if(!this.field.span_search.is_focused) {
-				this.field.span_search.innerHTML = value;
+			if(!this.is_focused) {
+				this.innerHTML = value;
 			}
 			this.field.selected_option = false;
-			u.rc(this.field.span_search, "selection");
+			u.rc(this, "selection");
 			var i, option;
 			for(i = 0; i < this.field.dropdown_options.nodes.length; i++) {
 				option = this.field.dropdown_options.nodes[i];
 				if(option.option_text == value) {
-					u.ac(this.field.span_search, "selection");
+					u.ac(this, "selection");
 					this.field.selected_option = option;
+					this.field.input.dispatchEvent(new Event("change"));
 					return;
 				}
 			}
+			this.field.input.dispatchEvent(new Event("change"));
 		}
 		else {
-			if(this.field.span_search) {
-				return u.text(this.field.span_search);
-			}
-			else {
-				return "";
-			}
+			return u.text(this);
 		}
 	}
 	field.virtual_input.val = field._value_virtual;
 	field.virtual_input.clicked = function(event) {
-		this.field.activateSearchCursor();
+		if(!this.is_focused) {
+			this.field.activateSearchCursor();
+		}
 	}
 	u.e.click(field.virtual_input);
 	field.virtual_input.preKeyEvent = function (event) {
@@ -5459,7 +5466,7 @@ Util.Form.customInit["dropdown"] = function(field) {
 			}
 		}
 		else if(event.shiftKey && event.keyCode == 9) {
-			this.field.span_search._blur({"target": document.body});
+			this._blur({"target": document.body});
 		}
 		else if(event.keyCode == 9) {
 			if(this.field.highlighted_option) {
@@ -5467,7 +5474,7 @@ Util.Form.customInit["dropdown"] = function(field) {
 				this.field.selectOption(this.field.highlighted_option);
 			}
 			else {
-				this.field.span_search._blur({"target": document.body});
+				this._blur({"target": document.body});
 			}
 		}
 		else if(event.keyCode == 32) {
@@ -5491,10 +5498,13 @@ Util.Form.customInit["dropdown"] = function(field) {
 		}
 	}
 	field.virtual_input.postKeyEvent = function(event) {
-		if(event.keyCode == 8 || event.keyCode == 32 || event.keyCode >= 65) {
+		var value = this.field.virtual_input.val();
+		if(!value) {
+			this.field._show_all = true;
+		}
+		else if(event.keyCode == 8 || event.keyCode == 32 || event.keyCode >= 65) {
 			this.field._show_all = false;
 		}
-		var value = this.field.virtual_input.val();
 		if(!this.field.selected_option || this.field.selected_option.option_text != value) {
 			this.field.selected_option = false;
 			var i, option;
@@ -5512,10 +5522,7 @@ Util.Form.customInit["dropdown"] = function(field) {
 	}
 	u.e.addEvent(field.virtual_input, "keyup", field.virtual_input.postKeyEvent);
 	u.e.addEvent(field.virtual_input, "keydown", field.virtual_input.preKeyEvent);
-	field.span_search = u.ae(field.virtual_input, "span", {"class": "search", "contentEditable": "true"});
-	field.span_search._form = field._form;
-	field.span_search.field = field;
-	field.span_search._focus = function(event) {
+	field.virtual_input._focus = function(event) {
 		if(!this.is_focused) {
 			this.field.blur_event_id = u.e.addWindowStartEvent(this, this._blur);
 		}
@@ -5537,7 +5544,7 @@ Util.Form.customInit["dropdown"] = function(field) {
 			this._form.focused(this);
 		}
 	}
-	field.span_search._blur = function(event) {
+	field.virtual_input._blur = function(event) {
 		if(!u.contains(this.field, event.target)) {
 			u.e.removeWindowStartEvent(this, this.field.blur_event_id);
 			this.field.is_focused = false;
@@ -5562,11 +5569,7 @@ Util.Form.customInit["dropdown"] = function(field) {
 			}
 		}
 	}
-	field.span_search.clicked = function(event) {
-		u.e.kill(event);
-	}
-	u.e.click(field.span_search);
-	u.e.addEvent(field.span_search, "focus", field.span_search._focus);
+	u.e.addEvent(field.virtual_input, "focus", field.virtual_input._focus);
 	field.bn_dropdown = u.ae(virtual_input_wrapper, "div", {"class": "button"});
 	field.bn_dropdown.arrow = u.svg({
 		"name":"arrow",
@@ -5603,7 +5606,7 @@ Util.Form.customInit["dropdown"] = function(field) {
 			this.field._show_all = true;
 			this.field.searchOptions();
 		}
-		this.field.span_search.focus();
+		this.field.virtual_input.focus();
 	}
 	field.bn_dropdown.keyEvent = function(event) {
 		if (event.keyCode == 13 || event.keyCode == 32 || event.keyCode == 40) {
@@ -5616,9 +5619,9 @@ Util.Form.customInit["dropdown"] = function(field) {
 	field.dropdown_options_list = u.ae(field.dropdown_options, "ul", {"class": "options"});
 	field.dropdown_options.field = field;
 	field.activateSearchCursor = function() {
-		this.span_search.focus();
+		this.virtual_input.focus();
 		var range = document.createRange();
-		range.selectNodeContents(this.span_search);
+		range.selectNodeContents(this.virtual_input);
 		if(this.input.val()) {
 			range.collapse(false);
 		}
@@ -5769,7 +5772,7 @@ Util.Form.customInit["dropdown"] = function(field) {
 	}
 	field.selectOption = function(li) {
 		this._show_all = false;
-		this.span_search.innerHTML = li.option_text;
+		this.virtual_input.innerHTML = li.option_text;
 		if(this.highlighted_option) {
 			u.rc(this.highlighted_option, "hover");
 			this.highlighted_option = false;
@@ -5784,8 +5787,11 @@ Util.Form.customInit["dropdown"] = function(field) {
 		if(this.selected_option) {
 			this.input.val(this.selected_option.option_value);
 		}
-		else {
+		else if(value) {
 			this.input.val("new::"+value);
+		}
+		else {
+			this.input.val("");
 		}
 		this.input.dispatchEvent(new Event("change"));
 	}
@@ -5808,16 +5814,17 @@ Util.Form.customInit["dropdown"] = function(field) {
 				u.ac(this, "hover");
 				this.field.highlighted_option = this;
 			}
+			this.dropdown_options.nodes.push(li);
 		}
 	}
 	field.loadOptions = function() {
 		var existing_value = this.input.val();
+		this.dropdown_options.nodes = [];
 		var i, node;
 		for(i = 0; i < this.input.options.length; i++) {
 			node = this.input.options[i];
 			this.addOption(node);
 		}
-		this.dropdown_options.nodes = u.qsa("li", this.dropdown_options);
 		this.input.val(existing_value);
 	}
 	u.f.activateInput(field.input);
