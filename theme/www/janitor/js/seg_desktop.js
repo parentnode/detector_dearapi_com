@@ -1,5 +1,5 @@
 /*
-asset-builder @ 2023-09-05 11:38:45
+asset-builder @ 2023-09-05 12:33:52
 */
 
 /*seg_desktop_include.js*/
@@ -14740,9 +14740,9 @@ Util.Modules["crossreferenceUnidentified"] = new function() {
 								u.rc(node, "selected");
 							}
 							u.ac(this, "selected");
-							var existing_filter = u.qs("div.filter", this.div.div_results);
-							if(existing_filter) {
-								existing_filter.parentNode.removeChild(existing_filter);
+							if(this.div.div_results.div_filter) {
+								this.div.div_results.div_filter.parentNode.removeChild(this.div.div_results.div_filter);
+								delete this.div.div_results.div_filter;
 							}
 							this.existing_results = u.qs("ul.items", this.div.div_results);
 							if(this.existing_results) {

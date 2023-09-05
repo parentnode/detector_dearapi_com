@@ -2031,10 +2031,15 @@ Util.Modules["crossreferenceUnidentified"] = new function() {
 
 							// clean up existing values
 							// remove filter
-							var existing_filter = u.qs("div.filter", this.div.div_results);
-							if(existing_filter) {
-								existing_filter.parentNode.removeChild(existing_filter);
+							// var existing_filter = u.qs("div.filter", this.div.div_results);
+							// if(existing_filter) {
+							// 	existing_filter.parentNode.removeChild(existing_filter);
+							// }
+							if(this.div.div_results.div_filter) {
+								this.div.div_results.div_filter.parentNode.removeChild(this.div.div_results.div_filter);
+								delete this.div.div_results.div_filter;
 							}
+
 
 							// empty exiting results
 							this.existing_results = u.qs("ul.items", this.div.div_results);
