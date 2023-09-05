@@ -1,5 +1,5 @@
 /*
-asset-builder @ 2023-09-05 12:33:52
+asset-builder @ 2023-09-05 15:31:44
 */
 
 /*seg_desktop_include.js*/
@@ -12349,6 +12349,9 @@ Util.Modules["taglist_tags"] = new function() {
 	}
 }
 
+
+/*u-settings.js*/
+u.gapi_key = "AIzaSyAsUm7qtOSVuEq-LZ6fD7aLGxsOMkaEae4";
 
 /*m-form.js*/
 u.bug_force = true;
