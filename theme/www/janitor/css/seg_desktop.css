@@ -1,5 +1,5 @@
 /*
-asset-builder @ 2023-07-04 13:23:49
+asset-builder @ 2023-09-05 11:38:45
 */
 
 /*seg_desktop_include.css*/
@@ -1349,6 +1349,8 @@ body.invoice #content div.scene .payment_info {position: absolute; bottom: 50px;
 #content .scene.unidentifiedList form.options .actions {display: inline-block; vertical-align: top; padding-left: 0;}
 #content .scene.unidentifiedList form.options .actions li {padding-left: 0;}
 #content .scene.unidentifiedList form.options .actions li input {margin-top: 4px;}
+#content .scene.unidentifiedList .testmarkers div.filter {position: relative; margin: 0 0 10px; border: none;}
+#content .scene.unidentifiedList .testmarkers div.filter div.field {position: absolute; top: 9px; right: 30px;}
 #content .scene.unidentifiedList .testmarkers {border-bottom: 1px solid #aaaaaa; overflow: hidden;}
 #content .scene.unidentifiedList .testmarkers h2 {font-size: 0.8em; margin: 0 0 20px; padding-bottom: 10px; padding-top: 7px; text-transform: uppercase; position: relative;}
 #content .scene.unidentifiedList .testmarkers h2 svg {position: absolute; top: 7px; right: 25px; stroke: #313942; stroke-width: 3px;}

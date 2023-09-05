@@ -1791,9 +1791,11 @@ Util.Modules["testMarkersOnUnidentified"] = new function() {
 
 						// clean up existing values
 						// remove filter
-						var existing_filter = u.qs("div.filter", this.div.div_results);
-						if(existing_filter) {
-							existing_filter.parentNode.removeChild(existing_filter);
+						// var existing_filter = u.qs("div.filter", this.div.div_results);
+						// if(existing_filter) {
+						if(this.div.div_results.div_filter) {
+							this.div.div_results.div_filter.parentNode.removeChild(this.div.div_results.div_filter);
+							delete this.div.div_results.div_filter;
 						}
 
 						// empty exiting results
@@ -1909,10 +1911,11 @@ Util.Modules["testMarkersOnUnidentified"] = new function() {
 
 				// insert tags filter
 				this._filter.field = u.ae(this._filter, "div", {"class":"field"});
-				u.ae(this._filter.field, "label", {"html":"Filter"});
+				u.ae(this._filter.field, "label", {"html":"Filter markers"});
 
 				this._filter.input = u.ae(this._filter.field, "input", {"class":"filter ignoreinput"});
 				this._filter.input._div = this;
+
 
 				this._filter.input.onkeydown = function() {
 	//				u.bug("reset timer")
@@ -1952,6 +1955,7 @@ Util.Modules["testMarkersOnUnidentified"] = new function() {
 
 		div.headerExpanded = function() {
 //			u.bug("expanded")
+
 
 			// load markers
 			u.request(this, this.url_device_get, {"data":"csrf-token="+this.csrf_token, "method":"post"})

@@ -182,6 +182,8 @@
 
 
 /* TEST MARKERS */
+#content .scene.unidentifiedList .testmarkers div.filter {position: relative; margin: 0 0 10px; border: none;}
+#content .scene.unidentifiedList .testmarkers div.filter div.field {position: absolute; top: 9px; right: 30px;}
 #content .scene.unidentifiedList .testmarkers {border-bottom: 1px solid #aaaaaa; overflow: hidden;}
 #content .scene.unidentifiedList .testmarkers h2 {font-size: 0.8em; margin: 0 0 20px; padding-bottom: 10px; padding-top: 7px; text-transform: uppercase; position: relative;}
 #content .scene.unidentifiedList .testmarkers h2 svg {position: absolute; top: 7px; right: 25px; stroke: #313942; stroke-width: 3px;}
