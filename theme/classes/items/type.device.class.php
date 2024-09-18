@@ -2629,7 +2629,7 @@ $sql .= " ORDER BY name";
 
 			// MySQL doesn't support look-ahead/behind, so modify pattern before query
 
-			// avoid any escaped parentheses' - the fuck up the regex
+			// avoid any escaped parentheses' - they fuck up the regex
 			$mysql_pattern = str_replace("\)", "###1###", $check_pattern);
 			$mysql_pattern = str_replace("\(", "###2###", $mysql_pattern);
 

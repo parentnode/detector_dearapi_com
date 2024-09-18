@@ -35,12 +35,82 @@ class Identify {
 		$this->trimming_patterns = [
 			"[ ]+\[FB[^\]]+[\]]?", // Stupid FB shit data
 			"[ ]+Instagram [\d]*[^\)$]+[\)]?", // Instagram
-			"(?<=Android [1-9]\.[0-9])\.[\.0-9]+", // Extended version ref
-			"(?<=iPhone OS [1-9]_[0-9])_[_0-9]+", // Extended version ref
-			"(?<=iPhone OS 1[0-9]_[0-9])_[_0-9]+", // Extended version ref
-			"(?<=Windows NT 10\.[0-9])\.[\.0-9]+", // Extended version ref
-			"(?<=Mac OS X 1[0-9]_[0-9])_[_0-9]+", // Extended version ref
-			"(?<=Mac OS X 1[0-9]_1[0-9])_[_0-9]+", // Extended version ref
+
+
+			// "(?<=Android [1-9]\.[0-9])\.[\.0-9]+", // Extended version ref
+			"(?<=Android [1-9])\.[\.0-9]+", // Extended version ref
+			"(?<=Android [1-9][0-9])\.[\.0-9]+", // Extended version ref
+
+			// "(?<=iPhone OS [1-9]_[0-9])_[_0-9]+", // Extended version ref
+			// "(?<=iPhone OS 1[0-9]_[0-9])_[_0-9]+", // Extended version ref
+			"(?<=iPhone OS [1-9])_[_0-9]+", // Extended version ref
+			"(?<=iPhone OS [1-9][0-9])_[_0-9]+", // Extended version ref
+
+
+			// "(?<=Windows NT 10\.[0-9])\.[\.0-9]+", // Extended version ref
+			"(?<=Windows NT [0-9])\.[\.0-9]+", // Extended version ref
+			"(?<=Windows NT [1-9][0-9])\.[\.0-9]+", // Extended version ref
+
+
+			// "(?<=Mac OS X 1[0-9]_[0-9])_[_0-9]+", // Extended version ref
+			// "(?<=Mac OS X 1[0-9]_1[0-9])_[_0-9]+", // Extended version ref
+			"(?<=Mac OS X [0-9])_[_0-9]+", // Extended version ref
+			"(?<=Mac OS X [1-9][0-9])_[_0-9]+", // Extended version ref
+
+
+			"(?<=AppleWebKit\/[1-9])\.[\.0-9]+", // Extended version ref
+			"(?<=AppleWebKit\/[1-9][0-9])\.[\.0-9]+", // Extended version ref
+			"(?<=AppleWebKit\/[1-9][0-9][0-9])\.[\.0-9]+", // Extended version ref
+
+			"(?<=Safari\/[1-9])\.[\.0-9]+", // Extended version ref
+			"(?<=Safari\/[1-9][0-9])\.[\.0-9]+", // Extended version ref
+			"(?<=Safari\/[1-9][0-9][0-9])\.[\.0-9]+", // Extended version ref
+
+			"(?<=rv\:[1-9])\.[\.0-9]+", // Extended version ref
+			"(?<=rv\:[1-9][0-9])\.[\.0-9]+", // Extended version ref
+			"(?<=rv\:[1-9][0-9][0-9])\.[\.0-9]+", // Extended version ref
+
+			"(?<=Firefox\/[1-9])\.[\.0-9]+", // Extended version ref
+			"(?<=Firefox\/[1-9][0-9])\.[\.0-9]+", // Extended version ref
+			"(?<=Firefox\/[1-9][0-9][0-9])\.[\.0-9]+", // Extended version ref
+
+			"(?<=Chrome\/[1-9])\.[\.0-9]+", // Extended version ref
+			"(?<=Chrome\/[1-9][0-9])\.[\.0-9]+", // Extended version ref
+			"(?<=Chrome\/[1-9][0-9][0-9])\.[\.0-9]+", // Extended version ref
+
+			"(?<=Trident\/[1-9])\.[\.0-9]+", // Extended version ref
+			"(?<=Trident\/[1-9][0-9])\.[\.0-9]+", // Extended version ref
+			"(?<=Trident\/[1-9][0-9][0-9])\.[\.0-9]+", // Extended version ref
+
+			"(?<=Silk\/[1-9])\.[\.0-9]+", // Extended version ref
+			"(?<=Silk\/[1-9][0-9])\.[\.0-9]+", // Extended version ref
+			"(?<=Silk\/[1-9][0-9][0-9])\.[\.0-9]+", // Extended version ref
+
+			"(?<=OPR\/[1-9])\.[\.0-9]+", // Extended version ref
+			"(?<=OPR\/[1-9][0-9])\.[\.0-9]+", // Extended version ref
+			"(?<=OPR\/[1-9][0-9][0-9])\.[\.0-9]+", // Extended version ref
+
+			"(?<=Edg\/[1-9])\.[\.0-9]+", // Extended version ref
+			"(?<=Edg\/[1-9][0-9])\.[\.0-9]+", // Extended version ref
+			"(?<=Edg\/[1-9][0-9][0-9])\.[\.0-9]+", // Extended version ref
+
+			"(?<=Presto\/[1-9])\.[\.0-9]+", // Extended version ref
+			"(?<=Presto\/[1-9][0-9])\.[\.0-9]+", // Extended version ref
+
+			"(?<=Opera Mini\/[1-9])\.[\.0-9]+", // Extended version ref
+			"(?<=Opera Mini\/[1-9][0-9])\.[\.0-9]+", // Extended version ref
+
+			"(?<=Version\/[1-9])\.[\.0-9]+", // Extended version ref
+			"(?<=Version\/[1-9][0-9])\.[\.0-9]+", // Extended version ref
+
+			"(?<=Browser\/[1-9])\.[\.0-9]+", // Extended version ref
+			"(?<=Browser\/[1-9][0-9])\.[\.0-9]+", // Extended version ref
+
+
+			"(?<=^WordPress\/[1-9])\.[^$]+", // Extended version ref
+			"(?<=^WordPress\/[1-9][0-9])\.[^$]+", // Extended version ref
+
+
 			"[ ]+\((iP(hone|ad|od)|Windows Device)[^\)]+scale[^\)]+\)[ ]?$",
 			"[;]? \.NET[ ]?[^;\)]+", // Stupid windows .NET addons
 			" AppEngine-Google; \([^\)]+\)",
@@ -57,6 +127,14 @@ class Identify {
 			"[ ]{1}(?=( |\)|;))", // double space or space followed by parentheses
 			"(?<=\();[ ]?", // parentheses followed by semi-colon and maybe space
 			"^[ ]+|[ ]+$", // starting space, ending space
+
+
+
+
+			// One offs – cleaning out old patterns – not needed onwards
+			"\(\.NET CLR [1-9]\.[^\)]+",
+				
+				
 		];
 
 		// see test-trimpatterns for test results
@@ -65,8 +143,7 @@ class Identify {
 
 	// added optional logging - now function can be used for manual identification work
 	function identifyDevice($useragent, $log=true, $mail=true, $details=true) {
-
-		// print "IDENTIFYING:" . $useragent . "\n";
+		// debug(["IDENTIFYING:" . $useragent]);
 
 		// manually remove wrapping quotes
 		$useragent = trim($useragent, '\"');
@@ -81,8 +158,14 @@ class Identify {
 		// no useragent - don't try to identify, just return desktop (default)
 		if(!$useragent || $useragent == "null" || $useragent == "undefined") {
 			return array("segment" => "desktop");
-//			return "basic";
 		}
+
+		$first_char = mb_substr($useragent, 0, 1);
+		// attempt to hack system - don't try to identify, just return desktop (default)
+		if($first_char === '${' || $first_char === "{") {
+			return array("segment" => "desktop");
+		}
+
 
 		// print $useragent;
 		// writeToFile($useragent);
