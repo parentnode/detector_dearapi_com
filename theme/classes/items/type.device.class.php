@@ -2621,7 +2621,7 @@ $sql .= " ORDER BY name";
 		$results = false;
 		$all_results = [];
 		$Identify = new Identify();
-		$limit = 200;
+		$limit = 500;
 
 		// first find some UAs which match trim pattern
 		foreach($Identify->trimming_patterns as $check_pattern) {
@@ -2715,6 +2715,10 @@ $sql .= " ORDER BY name";
 					}
 
 					array_push($all_results, $result);
+					
+					if(count($all_results) >= $limit) {
+						return $all_results;
+					}
 				}
 
 			}
@@ -2780,6 +2784,11 @@ $sql .= " ORDER BY name";
 						}
 
 						array_push($all_results, $result);
+
+						if(count($all_results) >= $limit) {
+							return $all_results;
+						}
+
 					}
 
 				}
