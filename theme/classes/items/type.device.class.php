@@ -2623,6 +2623,14 @@ $sql .= " ORDER BY name";
 		$Identify = new Identify();
 		$limit = 500;
 
+
+		# Stats
+		$identified_deleted = 0;
+		$unidentified_deleted = 0;
+		$identified_updated = 0;
+		$unidentified_updated = 0;
+
+
 		// first find some UAs which match trim pattern
 		foreach($Identify->trimming_patterns as $check_pattern) {
 
@@ -2649,6 +2657,7 @@ $sql .= " ORDER BY name";
 			$mysql_pattern = preg_replace("/(\\\\\(|\\\\\)|\\\\\[|\\\\\.)/", "\\\\$1", $mysql_pattern);
 
 //			print $mysql_pattern."<br>";
+
 
 			// limit query to 200 to keep load on server bareable
 			$find_sql = "SELECT id, useragent FROM ".$this->db_unidentified." WHERE useragent REGEXP '".($mysql_pattern)."' GROUP BY useragent LIMIT $limit";
@@ -2691,6 +2700,9 @@ $sql .= " ORDER BY name";
 							$query->sql($sql);
 							$result["status"] = "deleted";
 							$result["status_text"] = "Deleted";
+
+							$unidentified_updated++;
+
 						}
 						// update it and all identical to trimmed version
 						else {
@@ -2702,6 +2714,8 @@ $sql .= " ORDER BY name";
 							$update_count = method_exists($query, "affected") ? $query->affected() : "?"; 
 							$result["status"] = "updated";
 							$result["status_text"] = "Updated (".$update_count.")";
+
+							$unidentified_updated++;
 
 						}
 
@@ -2717,7 +2731,14 @@ $sql .= " ORDER BY name";
 					array_push($all_results, $result);
 					
 					if(count($all_results) >= $limit) {
-						return $all_results;
+						return [
+							"identified_deleted" => $identified_deleted,
+							"unidentified_deleted" => $unidentified_deleted,
+							"identified_updated" => $identified_updated,
+							"unidentified_updated" => $unidentified_updated,
+							"total" => count($all_results),
+							"items" => $all_results, 
+						];
 					}
 				}
 
@@ -2765,6 +2786,8 @@ $sql .= " ORDER BY name";
 								$result["status"] = "deleted";
 								$result["status_text"] = "Deleted";
 
+								$identified_deleted++;
+
 							}
 							// otherwise update it to trimmed version
 							else {
@@ -2772,6 +2795,8 @@ $sql .= " ORDER BY name";
 								$query->sql($sql);
 								$result["status"] = "updated";
 								$result["status_text"] = "Updated";
+
+								$identified_updated++;
 							}
 
 						}
@@ -2786,7 +2811,14 @@ $sql .= " ORDER BY name";
 						array_push($all_results, $result);
 
 						if(count($all_results) >= $limit) {
-							return $all_results;
+							return [
+								"identified_deleted" => $identified_deleted,
+								"unidentified_deleted" => $unidentified_deleted,
+								"identified_updated" => $identified_updated,
+								"unidentified_updated" => $unidentified_updated,
+								"total" => count($all_results),
+								"items" => $all_results, 
+							];
 						}
 
 					}
@@ -2797,7 +2829,14 @@ $sql .= " ORDER BY name";
 
 		}
 
-		return $all_results;
+		return [
+			"identified_deleted" => $identified_deleted,
+			"unidentified_deleted" => $unidentified_deleted,
+			"identified_updated" => $identified_updated,
+			"unidentified_updated" => $unidentified_updated,
+			"total" => count($all_results),
+			"items" => $all_results, 
+		];
 
 	}
 

@@ -4,9 +4,9 @@ global $IC;
 global $itemtype;
 global $model;
 
-$all_items = $model->purgeUseragentRegex($action);
+$result = $model->purgeUseragentRegex($action);
 
-//print_r($all_items);
+//print_r($result);
 ?>
 <div class="scene defaultList purgeUseragentRegex i:purgeUseragentRegex">
 	<h1>purge Useragent Regex</h1>
@@ -18,15 +18,22 @@ $all_items = $model->purgeUseragentRegex($action);
 
 
 
-<?		if($all_items): ?>
+<?		if($result && $result["items"]): ?>
 	<p class="note system_warning">This must be repeated until no more results show up. Purging all at once, will have too much impact on the server.</p>
 	<p>Please be careful to look through the list to check that purging did not overdo it.</p>
+	<p>
+		identified_deleted: <?= $result["identified_deleted"] ?><br />
+		unidentified_deleted: <?= $result["unidentified_deleted"] ?><br />
+		identified_updated: <?= $result["identified_updated"] ?><br />
+		unidentified_updated: <?= $result["unidentified_updated"] ?><br />
+	</p>
+
 <?		endif; ?>
 
-	<div class="all_items i:defaultList filters">
-<?		if($all_items): ?>
+	<div class="all_items result i:defaultList filters">
+<?		if($result): ?>
 		<ul class="items">
-<?			foreach($all_items as $item): ?>
+<?			foreach($result["items"] as $item): ?>
 			<li class="item ua_id:<?= $item["id"] ?>">
 				<h3 class="<?= $item["status"] ?>" title="<?= $item["sql"] ?>">
 					<strong><?= $item["status_text"] ?></strong>
