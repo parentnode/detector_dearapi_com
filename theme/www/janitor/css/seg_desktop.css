@@ -1,5 +1,5 @@
 /*
-asset-builder @ 2023-09-05 15:31:44
+asset-builder @ 2024-09-21 14:21:17
 */
 
 /*seg_desktop_include.css*/
@@ -523,7 +523,8 @@ div.field.html .editor div.tag.media .text label {padding: 5px 0 0; display: blo
 div.field.html .editor div.tag.media input {width: 416px; opacity: 0; height: 18px; position: relative; z-index: 2;
 	font-size: 130px;
 }
-div.field.html .editor div.tag.media img {width: 444px; margin: 2px;}
+div.field.html .editor div.tag.media img,
+div.field.html .editor div.tag.media video {width: 444px; margin: 2px;}
 div.field.html .editor div.tag.vimeo .text,
 div.field.html .editor div.tag.youtube .text {padding: 0 6px; height: 28px; color: #aaaaaa; font-size: 13px; padding: 4px 6px; line-height: 1.461em; height: auto;}
 div.field.html .editor div.tag.vimeo.focus .text,
@@ -735,7 +736,7 @@ body.invoice #content div.scene .payment_info {position: absolute; bottom: 50px;
 #content .scene.userEdit > div.usernames div.email {padding-bottom: 20px; position: relative;}
 #content .scene.userEdit > div.usernames form.email {font-size: 0; display: inline-block; vertical-align: top;}
 #content .scene.userEdit > div.usernames div.send_verification_link {position: absolute; right: 30px; top: 4px; width: auto; text-align: right;}
-#content .scene.userEdit > div.usernames div.send_verification_link p {font-size: 11px; padding: 0px; padding-bottom: 4px;}
+#content .scene.userEdit > div.usernames div.send_verification_link p {font-size: 11px; padding: 0px; padding-bottom: 4px; width: auto;}
 #content .scene.userEdit > div.usernames form.email fieldset div.field {display: inline-block; vertical-align: top; position: static;}
 #content .scene.userEdit > div.usernames form.email .field.checkbox {padding-top: 10px; padding-right: 24px; padding-left: 12px;}
 #content .scene.userEdit > div.usernames form.mobile {padding-bottom: 15px; font-size: 0;}
@@ -1496,8 +1497,14 @@ body.invoice #content div.scene .payment_info {position: absolute; bottom: 50px;
 #content .scene.purgeUseragentRegex li h3.trimmed-to-death {background: orange;}
 #content .scene.purgeUseragentRegex li h3 span.identified,
 #content .scene.purgeUseragentRegex li h3 span.unidentified {position: absolute; right: 30px; top: 10px;}
-#content .scene.purgeUseragentRegex li div.uas {overflow-x: auto;}
+#content .scene.purgeUseragentRegex li div.uas {overflow-x: auto; padding: 6px 0 3px;}
 #content .scene.purgeUseragentRegex li h4 {padding-bottom: 8px; white-space: pre;}
 #content .scene.purgeUseragentRegex li h4 span.trimmed {background-color: #df0000; color: #ffffff; white-space: pre;}
 #content .scene.deleteDupletUseragents li h3 span.type {position: absolute; right: 30px; top: 10px;}
+#content .scene.potentialPatterns li div.uas {overflow-x: auto; padding: 6px 0 3px;}
+#content .scene.potentialPatterns li div.uas p {height: 30px; overflow: hidden; padding-bottom: 0; margin-bottom: 10px;}
+#content .scene.potentialPatterns li div.uas.open p {height: auto; overflow: hidden;}
+#content .scene.potentialPatterns li div.patterns {overflow-x: auto; padding: 6px 0 3px;}
+#content .scene.potentialPatterns li div.patterns p {height: 30px; overflow: hidden; padding-bottom: 0; margin-bottom: 10px;}
+#content .scene.potentialPatterns li div.patterns.open p {height: auto; overflow: hidden;}
 
