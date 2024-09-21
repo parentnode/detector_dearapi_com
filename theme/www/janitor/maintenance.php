@@ -29,7 +29,7 @@ $page->pageTitle("Maintenance");
 if(is_array($action) && count($action)) {
 
 	// Allowed templates
-	if(preg_match("/^(devices-by-useragent-count|lost-useragents|lost-devices|devices-without-useragents|devices-without-tags|devices-without-brand|purge-useragent-regex|find-markers-on-unidentified|delete-duplet-useragents)$/", $action[0])) {
+	if(preg_match("/^(devices-by-useragent-count|lost-useragents|lost-devices|devices-without-useragents|devices-without-tags|devices-without-brand|purge-useragent-regex|find-markers-on-unidentified|delete-duplet-useragents|look-for-potential-trim-patterns|delete-crap-useragents)$/", $action[0])) {
 
 		$page->page(array(
 			"type" => "janitor",

@@ -13,6 +13,9 @@
 		<li><a href="/janitor/maintenance/devices-without-tags">Devices without tags</a></li>
 		<li><a href="/janitor/maintenance/devices-without-brand">Devices without brand</a></li>
 		<li><a href="/janitor/maintenance/devices-by-useragent-count">Devices by useragent count</a></li>
+
+		<li><a href="/janitor/maintenance/look-for-potential-trim-patterns">Look for potential trim patterns</a></li>
+		<!-- <li><a href="/janitor/maintenance/delete-crap-useragents">Delete crap useragents</a></li> -->
 	</ul>
 
 

@@ -412,4 +412,10 @@
 #content .scene.deleteDupletUseragents li h3 span.type {position: absolute; right: 30px; top: 10px;}
 
 
+#content .scene.potentialPatterns li div.uas {overflow-x: auto; padding: 6px 0 3px;}
+#content .scene.potentialPatterns li div.uas p {height: 30px; overflow: hidden; padding-bottom: 0; margin-bottom: 10px;}
+#content .scene.potentialPatterns li div.uas.open p {height: auto; overflow: hidden;}
+#content .scene.potentialPatterns li div.patterns {overflow-x: auto; padding: 6px 0 3px;}
+#content .scene.potentialPatterns li div.patterns p {height: 30px; overflow: hidden; padding-bottom: 0; margin-bottom: 10px;}
+#content .scene.potentialPatterns li div.patterns.open p {height: auto; overflow: hidden;}
 

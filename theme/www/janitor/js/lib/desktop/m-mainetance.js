@@ -61,6 +61,35 @@ Util.Modules["deleteLostDevices"] = new function() {
 
 
 
+Util.Modules["potentialPatterns"] = new function() {
+	this.init = function(div) {
+		u.bug("init potentialPatterns")
+
+
+		var rows = u.qsa("li.item", div);
+		var i, row, patterns_header, useragents_header;
+		for(i = 0; i < rows.length; i++) {
+			row = rows[i];
+
+			patterns_header = u.qs("div.patterns h4", row);
+			useragents_header = u.qs("div.uas h4", row);
+
+			u.e.click(patterns_header);
+			patterns_header.clicked = function() {
+				u.tc(this.parentNode, "open");
+			}
+
+			u.e.click(useragents_header);
+			useragents_header.clicked = function() {
+				u.tc(this.parentNode, "open");
+			}
+
+		}
+
+
+	}
+}
+
 
 // OLD MAINTENANCE
 

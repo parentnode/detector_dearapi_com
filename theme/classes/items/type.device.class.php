@@ -3204,6 +3204,173 @@ $sql .= " ORDER BY name";
 		return $items;
 	}
 
+
+	function lookForPotentialTrimPatterns() {
+
+		set_time_limit(0);
+
+		$start_time = date("Y-m-d H:i:s");
+
+		$query = new Query();
+
+		$pattern_bases = [
+			"\).*?[ ;]([a-z0-9]+[\/\:][a-z0-9_]+\.[a-z0-9_\.]+)[ ;]",
+		];
+
+
+		$trim_pattern_candidates = [];
+		$final_candidates = [];
+
+		foreach($pattern_bases as $base) {
+
+			$mysql_pattern = preg_replace("/(\\\\\(|\\\\\)|\\\\\[|\\\\\.)/", "\\\\$1", $base);
+
+
+			// Look in identified useragents
+			$find_sql = "SELECT id, item_id, useragent FROM ".$this->db_useragents." WHERE useragent REGEXP '".($mysql_pattern)."'";
+			// debug([$find_sql]);
+
+			if($query->sql($find_sql)) {
+				$results = $query->results();
+				// debug([$results]);
+
+				foreach($results as $result) {
+
+
+					if(preg_match_all("/".$base."/i", $result["useragent"], $trim_patterns)) {
+						// debug([$trim_patterns]);
+						foreach($trim_patterns[1] as $trim_pattern) {
+
+							// Split marker from variable part (typically an irrelevant version number)
+							$marker_elements = preg_split("/[ :\/]/", $trim_pattern);
+							if(count($marker_elements) > 1) {
+								$marker = $marker_elements[0];
+
+								// Collect info by Markers
+
+								if(!isset($trim_pattern_candidates[$marker])) {
+									$trim_pattern_candidates[$marker] = [
+										"useragents" => [],
+										"patterns" => [],
+										"marker" => $marker,
+									];
+								}
+
+								$trim_pattern_candidates[$marker]["useragents"][] = $result["useragent"];
+								if(!in_array($trim_pattern, $trim_pattern_candidates[$marker]["patterns"])) {
+									$trim_pattern_candidates[$marker]["patterns"][] = $trim_pattern;
+								} 
+
+							}
+
+						}
+					}
+				}
+				
+			}
+
+
+			// Look in unidentified useragents
+			$find_sql = "SELECT id, useragent FROM ".$this->db_unidentified." WHERE useragent REGEXP '".($mysql_pattern)."' GROUP BY useragent";
+			// debug([$find_sql]);
+
+			if($query->sql($find_sql)) {
+				$results = $query->results();
+				// debug([$results]);
+
+				foreach($results as $result) {
+
+
+					if(preg_match_all("/".$base."/i", $result["useragent"], $trim_patterns)) {
+						// debug([$trim_patterns]);
+						foreach($trim_patterns[1] as $trim_pattern) {
+
+							// Split marker from variable part (typically an irrelevant version number)
+							$marker_elements = preg_split("/[ :\/]/", $trim_pattern);
+							if(count($marker_elements) > 1) {
+								$marker = $marker_elements[0];
+
+
+								// Collect info by Markers
+
+								if(!isset($trim_pattern_candidates[$marker])) {
+									$trim_pattern_candidates[$marker] = [
+										"useragents" => [],
+										"patterns" => [],
+										"marker" => $marker,
+									];
+								}
+
+								$trim_pattern_candidates[$marker]["useragents"][] = $result["useragent"];
+								if(!in_array($trim_pattern, $trim_pattern_candidates[$marker]["patterns"])) {
+									$trim_pattern_candidates[$marker]["patterns"][] = $trim_pattern;
+								} 
+
+							}
+
+						}
+					}
+				}
+				
+			}
+
+		}
+
+
+		// TODO: secondary act, possible future extension of this method
+		
+		// Look through the longest UAS and split them by space, semi-colon or slash
+		// then query user-agents with these fragments to find high occurrences fragments
+
+
+
+
+		// Loop through candidates and remove cadidates with only less pattern og useragents than specified treshold
+		// (there is nothing to optimize)
+
+		$treshold = 1;
+
+		foreach($trim_pattern_candidates as $marker => $candidate) {
+			if(count($candidate["useragents"]) > $treshold && count($candidate["patterns"]) > $treshold) {
+				$final_candidates[$marker] = $candidate;
+			}
+			
+			unset($trim_pattern_candidates[$marker]);
+
+		}
+
+
+		// Sort Array so mostly used patterns are listed first
+		usort($final_candidates, [$this, "patternRankingSortHelper"]);
+
+
+		return [
+			"start_time" => $start_time,
+			"end_time" => date("Y-m-d H:i:s"),
+			"items" => $final_candidates,
+		];
+
+	}
+
+	function patternRankingSortHelper($a, $b) {
+
+		$c_ap = count($a["patterns"]);
+		$c_bp = count($b["patterns"]);
+
+		if($c_ap === $c_bp) {
+			return 0;
+		}
+		return $c_ap < $c_bp ? 1 : -1;
+	}
+
+
+	// Delete useragents that are clearly manipulated or anonymized and thus not useful as reference
+	function deleteCrapUseragents() {
+
+		
+	}
+
+
 }
 
 ?>

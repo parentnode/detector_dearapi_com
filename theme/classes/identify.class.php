@@ -34,7 +34,7 @@ class Identify {
 
 		$this->trimming_patterns = [
 
-			"[ ]+\[FB[^\]]+[\]]?", // Stupid FB shit data
+			"(?<!^)+\[FB[^\]]+[\]]?", // Stupid FB shit data
 			"[ ]+Instagram [\d]*[^\)$]+[\)]?", // Instagram
 
 
@@ -58,6 +58,9 @@ class Identify {
 			"(?<=Mac OS X [0-9])_[_0-9]+", // Extended version ref
 			"(?<=Mac OS X [1-9][0-9])_[_0-9]+", // Extended version ref
 
+			"(?<=Ubuntu\/[1-9])\.[\.0-9]+", // Extended version ref
+			"(?<=Ubuntu\/[1-9][0-9])\.[\.0-9]+", // Extended version ref
+
 
 			"(?<=AppleWebKit\/[1-9])\.[\.0-9]+", // Extended version ref
 			"(?<=AppleWebKit\/[1-9][0-9])\.[\.0-9]+", // Extended version ref
@@ -67,6 +70,7 @@ class Identify {
 			"(?<=Safari\/[1-9][0-9])\.[\.0-9]+", // Extended version ref
 			"(?<=Safari\/[1-9][0-9][0-9])\.[\.0-9]+", // Extended version ref
 
+
 			"(?<=rv\:[1-9])\.[\.0-9]+", // Extended version ref
 			"(?<=rv\:[1-9][0-9])\.[\.0-9]+", // Extended version ref
 			"(?<=rv\:[1-9][0-9][0-9])\.[\.0-9]+", // Extended version ref
@@ -74,6 +78,15 @@ class Identify {
 			"(?<=Firefox\/[1-9])\.[\.0-9]+", // Extended version ref
 			"(?<=Firefox\/[1-9][0-9])\.[\.0-9]+", // Extended version ref
 			"(?<=Firefox\/[1-9][0-9][0-9])\.[\.0-9]+", // Extended version ref
+
+			"(?<=Gecko\/[1-9])\.[\.0-9]+", // Extended version ref
+			"(?<=Gecko\/[1-9][0-9])\.[\.0-9]+", // Extended version ref
+			"(?<=Gecko\/[1-9][0-9][0-9])\.[\.0-9]+", // Extended version ref
+
+			"(?<=FxiOS\/[1-9])\.[\.0-9a-z]+", // Extended version ref
+			"(?<=FxiOS\/[1-9][0-9])\.[\.0-9a-z]+", // Extended version ref
+			"(?<=FxiOS\/[1-9][0-9][0-9])\.[\.0-9a-z]+", // Extended version ref
+
 
 			"(?<=Chrome\/[1-9])\.[\.0-9]+", // Extended version ref
 			"(?<=Chrome\/[1-9][0-9])\.[\.0-9]+", // Extended version ref
@@ -91,15 +104,28 @@ class Identify {
 			"(?<=OPR\/[1-9][0-9])\.[\.0-9]+", // Extended version ref
 			"(?<=OPR\/[1-9][0-9][0-9])\.[\.0-9]+", // Extended version ref
 
+			"(?<=CriOS\/[1-9])\.[\.0-9]+", // Extended version ref
+			"(?<=CriOS\/[1-9][0-9])\.[\.0-9]+", // Extended version ref
+			"(?<=CriOS\/[1-9][0-9][0-9])\.[\.0-9]+", // Extended version ref
+
 			"(?<=Edg\/[1-9])\.[\.0-9]+", // Extended version ref
 			"(?<=Edg\/[1-9][0-9])\.[\.0-9]+", // Extended version ref
 			"(?<=Edg\/[1-9][0-9][0-9])\.[\.0-9]+", // Extended version ref
+
 
 			"(?<=Presto\/[1-9])\.[\.0-9]+", // Extended version ref
 			"(?<=Presto\/[1-9][0-9])\.[\.0-9]+", // Extended version ref
 
 			"(?<=Opera Mini\/[1-9])\.[\.0-9]+", // Extended version ref
 			"(?<=Opera Mini\/[1-9][0-9])\.[\.0-9]+", // Extended version ref
+
+
+			"(?<=KHTML\/[1-9])\.[\.0-9]+", // Extended version ref
+			"(?<=KHTML\/[1-9][0-9])\.[\.0-9]+", // Extended version ref
+
+			"(?<=konqueror\/[1-9])\.[\.0-9]+", // Extended version ref
+			"(?<=konqueror\/[1-9][0-9])\.[\.0-9]+", // Extended version ref
+
 
 			"(?<=Version\/[1-9])\.[\.0-9]+", // Extended version ref
 			"(?<=Version\/[1-9][0-9])\.[\.0-9]+", // Extended version ref
@@ -110,6 +136,13 @@ class Identify {
 
 			"(?<=^WordPress\/[1-9])\.[^$]+", // Extended version ref
 			"(?<=^WordPress\/[1-9][0-9])\.[^$]+", // Extended version ref
+
+
+			"[ ]+GSA\/[0-9\.]+", // Irrelevant GSA marker
+			"[ ]+SnapChat\/[0-9\.]+", // Irrelevant SnapChat marker
+			"[ ]+MicroMessenger\/[0-9\.a-z_]+", // Irrelevant MicroMessenger marker
+			"[ ]+QtWebEngine\/[0-9\.]+", // Irrelevant QtWebEngine marker
+			"[ ]+WebClip\/[0-9\.]+", // Irrelevant WebClip marker
 
 
 			"[ ]+\((iP(hone|ad|od)|Windows Device)[^\)]+scale[^\)]+\)[ ]?$",
@@ -135,10 +168,11 @@ class Identify {
 			// One offs – cleaning out old patterns – not needed onwards
 
 			// the .NET statement in parentesis)
-			"\(\.NET CLR [1-9]\.[^\)]+",
+			// "\(\.NET CLR [1-9]\.[^\)]+",
+
 			// Include letters in versions numbers – only for old dumb phones, just to clean up
-			"(?<=Browser\/[1-9])[\.a-z]+[\.0-9a-z]+", // Extended version ref
-			"(?<=Browser\/[1-9][0-9])[\.a-z]+[\.0-9a-z]+", // Extended version ref
+			// "(?<=Browser\/[1-9])[\.a-z]+[\.0-9a-z]+", // Extended version ref
+			// "(?<=Browser\/[1-9][0-9])[\.a-z]+[\.0-9a-z]+", // Extended version ref
 
 		];
 
