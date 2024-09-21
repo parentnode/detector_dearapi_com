@@ -25,13 +25,16 @@ $result = $model->purgeUseragentRegex($action);
 		identified_deleted: <?= $result["identified_deleted"] ?><br />
 		unidentified_deleted: <?= $result["unidentified_deleted"] ?><br />
 		identified_updated: <?= $result["identified_updated"] ?><br />
-		unidentified_updated: <?= $result["unidentified_updated"] ?><br />
+		unidentified_updated: <?= $result["unidentified_updated"] ?><br /><br />
+
+		start_time: <?= $result["start_time"] ?><br />
+		end_time: <?= $result["end_time"] ?><br />
 	</p>
 
 <?		endif; ?>
 
 	<div class="all_items result i:defaultList filters">
-<?		if($result): ?>
+<?		if($result && $result["items"]): ?>
 		<ul class="items">
 <?			foreach($result["items"] as $item): ?>
 			<li class="item ua_id:<?= $item["id"] ?>">

@@ -1,5 +1,6 @@
 <?php
 $access_item["/purgeUseragentRegex"] = true;
+$access_item["/deleteDupletUseragents"] = true;
 if(isset($read_access) && $read_access) {
 	return;
 }
@@ -24,6 +25,25 @@ if(is_array($action) && count($action)) {
 		// check if custom function exists on User class
 		if($model && method_exists($model, $action[0])) {
 
+			// More readable in log files
+			debug([$model->{$action[0]}($action)]);
+
+			// $output = new Output();
+			// $output->screen($model->{$action[0]}($action));
+			exit();
+		}
+	}
+
+	else if(preg_match("/^(deleteDupletUseragents)$/", $action[0])) {
+
+		$itemtype = "device";
+		$model = $IC->typeObject($itemtype);
+
+
+		// check if custom function exists on User class
+		if($model && method_exists($model, $action[0])) {
+
+			// More readable in log files
 			debug([$model->{$action[0]}($action)]);
 
 			// $output = new Output();

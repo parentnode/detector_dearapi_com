@@ -33,6 +33,7 @@ class Identify {
 		// – consider removing build info
 
 		$this->trimming_patterns = [
+
 			"[ ]+\[FB[^\]]+[\]]?", // Stupid FB shit data
 			"[ ]+Instagram [\d]*[^\)$]+[\)]?", // Instagram
 
@@ -132,9 +133,13 @@ class Identify {
 
 
 			// One offs – cleaning out old patterns – not needed onwards
+
+			// the .NET statement in parentesis)
 			"\(\.NET CLR [1-9]\.[^\)]+",
-				
-				
+			// Include letters in versions numbers – only for old dumb phones, just to clean up
+			"(?<=Browser\/[1-9])[\.a-z]+[\.0-9a-z]+", // Extended version ref
+			"(?<=Browser\/[1-9][0-9])[\.a-z]+[\.0-9a-z]+", // Extended version ref
+
 		];
 
 		// see test-trimpatterns for test results

@@ -2617,6 +2617,8 @@ $sql .= " ORDER BY name";
 
 		set_time_limit(0);
 
+		$start_time = date("Y-m-d H:i:s");
+
 		$query = new Query();
 		$results = false;
 		$all_results = [];
@@ -2732,6 +2734,8 @@ $sql .= " ORDER BY name";
 					
 					if(count($all_results) >= $limit) {
 						return [
+							"start_time" => $start_time,
+							"end_time" => date("Y-m-d H:i:s"),
 							"identified_deleted" => $identified_deleted,
 							"unidentified_deleted" => $unidentified_deleted,
 							"identified_updated" => $identified_updated,
@@ -2812,6 +2816,8 @@ $sql .= " ORDER BY name";
 
 						if(count($all_results) >= $limit) {
 							return [
+								"start_time" => $start_time,
+								"end_time" => date("Y-m-d H:i:s"),
 								"identified_deleted" => $identified_deleted,
 								"unidentified_deleted" => $unidentified_deleted,
 								"identified_updated" => $identified_updated,
@@ -2830,6 +2836,8 @@ $sql .= " ORDER BY name";
 		}
 
 		return [
+			"start_time" => $start_time,
+			"end_time" => date("Y-m-d H:i:s"),
 			"identified_deleted" => $identified_deleted,
 			"unidentified_deleted" => $unidentified_deleted,
 			"identified_updated" => $identified_updated,
@@ -2887,10 +2895,15 @@ $sql .= " ORDER BY name";
 	// delete duplet useragents from unidentified and identified lists
 	function deleteDupletUseragents($_options = false) {
 
-
 		set_time_limit(0);
 
+		$start_time = date("Y-m-d H:i:s");
+
 		$deleted_useragent = [];
+
+		# Stats
+		$identified_deleted = 0;
+		$unidentified_deleted = 0;
 
 		$query = new Query();
 
@@ -2914,8 +2927,11 @@ $sql .= " ORDER BY name";
 						$sql = "DELETE FROM ".$this->db_unidentified." WHERE useragent = '".prepareForDB($unidentified_useragent["useragent"])."'";
 						$query->sql($sql);
 
+						$unidentified_deleted += $query->affected();
+
 						// add to return list
 						$unidentified_useragent["type"] = "unidentified";
+						$unidentified_useragent["no_deleted"] = $query->affected();
 						$deleted_useragent[] = $unidentified_useragent;
 
 					}
@@ -2952,8 +2968,11 @@ $sql .= " ORDER BY name";
 						$sql = "DELETE FROM ".$this->db_useragents." WHERE useragent = '".prepareForDB($useragent["useragent"])."' AND id != ".$useragent["id"];
 						$query->sql($sql);
 
+						$identified_deleted += $query->affected();
+
 						// add to return list
 						$useragent["type"] = "identified";
+						$useragent["no_deleted"] = $query->affected();
 						$deleted_useragent[] = $useragent;
 					}
 
@@ -2967,7 +2986,13 @@ $sql .= " ORDER BY name";
 
 		}
 
-		return $deleted_useragent;
+		return [
+			"start_time" => $start_time,
+			"end_time" => date("Y-m-d H:i:s"),
+			"identified_deleted" => $identified_deleted,
+			"unidentified_deleted" => $unidentified_deleted,
+			"items" => $deleted_useragent,
+		];
 
 	}
 
