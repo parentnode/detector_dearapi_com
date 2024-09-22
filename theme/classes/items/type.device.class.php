@@ -3367,7 +3367,13 @@ $sql .= " ORDER BY name";
 	// Delete useragents that are clearly manipulated or anonymized and thus not useful as reference
 	function deleteCrapUseragents() {
 
-		
+		// Notes on what to look for
+
+		// AppleWebKit/0600.1.25
+		// XXX.xx
+		// Multiple occurences of "Mozilla"
+		// Both "safari, firefox, chrome and msie in same useragent"
+
 	}
 
 
