@@ -1680,7 +1680,7 @@ Util.Modules["testMarkersOnUnidentified"] = new function() {
 		div.url_device_test = div.getAttribute("data-device-test");
 		div.url_device_get = div.getAttribute("data-device-get");
 
-
+		// This list also exists in the PHP cronjob helper – updates must be made both here and there
 		div.auto_order = [
 			"bot-crawler-spider-fetcher-indexer",
 			"internet-explorer-9",
@@ -1741,7 +1741,7 @@ Util.Modules["testMarkersOnUnidentified"] = new function() {
 			"fallback-mobile",
 			"fallback-mobile-light",
 			"fallback-seo",
-		]
+		];
 
 		div.response = function(response) {
 

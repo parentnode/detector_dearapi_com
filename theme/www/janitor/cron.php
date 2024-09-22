@@ -1,6 +1,7 @@
 <?php
 $access_item["/purgeUseragentRegex"] = true;
 $access_item["/deleteDupletUseragents"] = true;
+$access_item["/autoIndexDevice"] = true;
 if(isset($read_access) && $read_access) {
 	return;
 }
@@ -32,6 +33,16 @@ if(is_array($action) && count($action)) {
 			// $output->screen($model->{$action[0]}($action));
 			exit();
 		}
+	}
+
+	elseif(preg_match("/^(autoIndexDevice)$/", $action[0])) {
+
+		@include_once("classes/helpers/cronjob.class.php");
+		$CJ = new CronjobHelper();
+		debug([$CJ->autoIndexDevice()]);
+
+		exit();
+
 	}
 
 }
