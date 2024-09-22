@@ -11,7 +11,7 @@ global $model;
 
 <?
 
-include_once("classes/identify.class.php");
+include_once("classes/helpers/identify.class.php");
 
 
 $ua = array();

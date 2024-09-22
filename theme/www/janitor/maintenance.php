@@ -11,7 +11,7 @@ include_once($_SERVER["FRAMEWORK_PATH"]."/config/init.php");
 //include_once("classes/system/output.class.php");
 
 // include device identifier class
-include_once("classes/identify.class.php");
+include_once("classes/helpers/identify.class.php");
 
 
 $action = $page->actions();

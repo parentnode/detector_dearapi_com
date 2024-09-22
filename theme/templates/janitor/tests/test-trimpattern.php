@@ -5,7 +5,7 @@ global $itemtype;
 global $model;
 
 
-//include_once("classes/identify.class.php");
+//include_once("classes/helpers/identify.class.php");
 $Identify = new Identify();
 
 // TODO: find simple to add comment to each UA, which can be printed in view to make it easier to check if trimming is doing as expected

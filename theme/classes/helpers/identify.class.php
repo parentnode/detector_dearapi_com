@@ -212,7 +212,20 @@ class Identify {
 		// Include static detection script for initial test
 		$detection_script = PUBLIC_FILE_PATH."/detection_script.php";
 		if(file_exists($detection_script)) {
-			include($detection_script);
+
+			// If it has already been loaded
+			if(function_exists("detectionCore")) {
+				$ua = $useragent ? $useragent : stringOr(getVar("ua"), $_SERVER["HTTP_USER_AGENT"]);
+
+				$identified = detectionCore($ua);
+				if($identified) {
+					list($device_segment, $device_name) = explode(";", $identified);
+				}
+			}
+			// Include script – will also execute identification
+			else {
+				include($detection_script);
+			}
 		}
 
 
