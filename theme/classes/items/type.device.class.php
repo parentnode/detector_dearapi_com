@@ -2703,7 +2703,7 @@ $sql .= " ORDER BY name";
 							$result["status"] = "deleted";
 							$result["status_text"] = "Deleted";
 
-							$unidentified_updated++;
+							$unidentified_deleted++;
 
 						}
 						// update it and all identical to trimmed version
